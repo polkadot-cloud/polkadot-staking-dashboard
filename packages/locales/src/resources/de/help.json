@@ -55,7 +55,7 @@
 			"decentralizationAnalyticsPeriod": [
 				"Analysezeitraum für Dezentralisierung",
 				[
-					"Die Dezentralisierung deiner Nominierung wird berechnet, indem die in den letzten 30 Tagen ausgezahlten Belohnungen analysiert werden. Je nach Netzwerk entspricht dies einer bestimmten Anzahl von Eras.",
+					"Die Dezentralisierung Ihrer Nominierung wird berechnet, indem die in den letzten 30 Tagen ausgezahlten Belohnungen analysiert werden. Je nach Netzwerk entspricht dies einer bestimmten Anzahl von Eras.",
 					"30 Tage bieten ausreichend Informationen, damit die Aggregation aussagekräftig ist, und sind gleichzeitig kurz genug, damit Änderungen in den Nominierungen nach wenigen Tagen Auswirkungen auf diese Analyse haben."
 				]
 			],
@@ -85,7 +85,7 @@
 					"Jeder nominierte Validator läuft in einem bestimmten Rechenzentrum, das anhand seiner IP-Adresse geolokalisiert werden kann.",
 					"Die Tabelle zeigt die letzte Region, das Land und das Netzwerk an, wo jeder nominierte Validator geolokalisiert wurde.",
 					"Wenn der Validator während des Analysezeitraums an mehr als einem Ort lokalisiert wurde, wird ein ++ Zeichen angezeigt.",
-					"Der angezeigte Prozentsatz ist der Anteil der Belohnungen, die dieser Validator dir während des Analysezeitraums ausgezahlt hat."
+					"Der angezeigte Prozentsatz ist der Anteil der Belohnungen, die dieser Validator Ihnen während des Analysezeitraums ausgezahlt hat."
 				]
 			],
 			"halving": [
