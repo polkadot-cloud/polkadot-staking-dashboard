@@ -2,34 +2,37 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// Test script to demonstrate CLI functionality without making actual API calls
+// Script to demonstrate CLI functionality without making actual API calls
 // This shows the structure and flow of the CLI
 
-console.log('=== Locale CLI Test Demo ===\n')
+console.log('=== Locale CLI Help ===\n')
+
+console.log('Usage: pnpm add-locale [options]')
+console.log('Aliases: pnpm --filter locale-cli add-locale\n')
 
 console.log('1. Basic usage:')
 console.log(
-	'   node packages/locale-cli/bin/add-locale.js --key myKey --text "My Text"\n',
+	'   pnpm add-locale --key myKey --text "My Text"\n',
 )
 
 console.log('2. With nested key:')
 console.log(
-	'   node packages/locale-cli/bin/add-locale.js --key "validators.commission" --text "Commission"\n',
+	'   pnpm add-locale --key "validators.commission" --text "Commission"\n',
 )
 
 console.log('3. With custom file:')
 console.log(
-	'   node packages/locale-cli/bin/add-locale.js --key myKey --text "My Text" --file help\n',
+	'   pnpm add-locale --key myKey --text "My Text" --file help\n',
 )
 
 console.log('4. With description for better context:')
 console.log(
-	'   node packages/locale-cli/bin/add-locale.js --key bondMore --text "Bond More" --description "Button to bond additional funds"\n',
+	'   pnpm add-locale --key bondMore --text "Bond More" --description "Button to bond additional funds"\n',
 )
 
 console.log('5. With API key option:')
 console.log(
-	'   node packages/locale-cli/bin/add-locale.js --key myKey --text "My Text" --api-key sk-...\n',
+	'   pnpm add-locale --key myKey --text "My Text" --api-key sk-...\n',
 )
 
 console.log(

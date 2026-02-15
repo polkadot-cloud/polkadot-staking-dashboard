@@ -26,7 +26,7 @@ Set your OpenAI API key as an environment variable:
 export OPENAI_API_KEY=your_api_key_here
 ```
 
-Alternatively, create a `.env` file in the root of the repository:
+Alternatively, create a `.env` file in the **workspace root** (the root of the `polkadot-staking-dashboard` repository):
 
 ```
 OPENAI_API_KEY=your_api_key_here
@@ -42,11 +42,7 @@ From the root of the repository, use pnpm to run the CLI:
 pnpm --filter locale-cli add-locale --key <key> --text <text> [options]
 ```
 
-Or using the full path:
 
-```bash
-node packages/locale-cli/bin/add-locale.js --key <key> --text <text> [options]
-```
 
 ### Options
 
@@ -62,36 +58,25 @@ node packages/locale-cli/bin/add-locale.js --key <key> --text <text> [options]
 Add a simple key to the default app.json file:
 
 ```bash
-pnpm --filter locale-cli add-locale \
-  --key "bondMore" \
-  --text "Bond More"
+pnpm add-locale --key "bondMore" --text "Bond More"
 ```
 
 Add a nested key with description:
 
 ```bash
-pnpm --filter locale-cli add-locale \
-  --key "validators.highCommission" \
-  --text "High Commission" \
-  --description "Refers to validators charging high commission rates"
+pnpm add-locale --key "validators.highCommission" --text "High Commission" --description "Refers to validators charging high commission rates"
 ```
 
 Add a key to a specific file:
 
 ```bash
-pnpm --filter locale-cli add-locale \
-  --key "title" \
-  --text "Help Center" \
-  --file "help"
+pnpm add-locale --key "title" --text "Help Center" --file "help"
 ```
 
 Add a key with placeholder variables:
 
 ```bash
-pnpm --filter locale-cli add-locale \
-  --key "bondAmount" \
-  --text "Bond {{amount}} {{unit}}" \
-  --description "Shows the amount and unit to bond"
+pnpm add-locale --key "bondAmount" --text "Bond {{amount}} {{unit}}" --description "Shows the amount and unit to bond"
 ```
 
 ## How It Works
@@ -135,25 +120,25 @@ The package includes comprehensive protection against prototype pollution attack
 - Spanish (es)
 - Chinese Simplified (zh)
 
-## Testing
+## Usage Examples
 
-To see examples of CLI usage without making actual API calls:
+To see usage examples and all available options:
 
 ```bash
-node packages/locale-cli/demo.js
+node packages/locale-cli/help.js
 ```
 
-To test the CLI with help command:
+To view help for the CLI command:
 
 ```bash
-node packages/locale-cli/bin/add-locale.js --help
+pnpm add-locale --help
 ```
 
 To verify prototype pollution protection:
 
 ```bash
 # This should fail with an error about invalid keys
-node packages/locale-cli/bin/add-locale.js --key "__proto__.test" --text "Test"
+pnpm add-locale --key "__proto__.test" --text "Test"
 ```
 
 ## Development

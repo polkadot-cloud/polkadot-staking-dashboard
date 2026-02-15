@@ -2,19 +2,33 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { readFileSync, writeFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import OpenAI from 'openai'
 
+// Get the workspace root by tracing up from the current file location
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const WORKSPACE_ROOT = join(__dirname, '../../..')
+
+// Define supported locales directly. NOTE: Not importing `locales` package to avoid browser deps in
+// CLI
+const LOCALE_DEFINITIONS = {
+	en: { label: 'English' },
+	zh: { label: '中文' },
+	es: { label: 'Español' },
+} as const
+
 // Supported locales
-export const SUPPORTED_LOCALES = ['en', 'es', 'zh'] as const
+export const SUPPORTED_LOCALES = Object.keys(
+	LOCALE_DEFINITIONS,
+) as (keyof typeof LOCALE_DEFINITIONS)[]
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 
 // Locale names for LLM context
-export const LOCALE_NAMES: Record<Locale, string> = {
-	en: 'English',
-	es: 'Spanish',
-	zh: 'Chinese (Simplified)',
-}
+export const LOCALE_NAMES: Record<Locale, string> = Object.fromEntries(
+	Object.entries(LOCALE_DEFINITIONS).map(([key, value]) => [key, value.label]),
+) as Record<Locale, string>
 
 // Available namespace files
 export const NAMESPACE_FILES = [
@@ -24,6 +38,7 @@ export const NAMESPACE_FILES = [
 	'pages',
 	'tips',
 ] as const
+
 export type NamespaceFile = (typeof NAMESPACE_FILES)[number]
 
 // Context about Polkadot and the staking dashboard
@@ -223,7 +238,7 @@ export async function addLocaleKey(
 	apiKey?: string,
 ): Promise<void> {
 	const localesPath = join(
-		process.cwd(),
+		WORKSPACE_ROOT,
 		'packages',
 		'locales',
 		'src',

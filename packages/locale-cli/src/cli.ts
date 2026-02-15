@@ -2,12 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { execSync } from 'node:child_process'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { Command } from 'commander'
 import dotenv from 'dotenv'
 import { addLocaleKey, NAMESPACE_FILES, type NamespaceFile } from './index.js'
 
-// Load environment variables from .env file
-dotenv.config()
+// Get the workspace root by tracing up from the current file location
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+const WORKSPACE_ROOT = join(__dirname, '../../..')
+
+// Load environment variables from workspace root .env file
+dotenv.config({ path: join(WORKSPACE_ROOT, '.env') })
 
 const program = new Command()
 
@@ -65,7 +72,7 @@ program
 				console.log('\nRunning pnpm order...')
 				try {
 					execSync('pnpm order', {
-						cwd: `${process.cwd()}/packages/locales`,
+						cwd: join(WORKSPACE_ROOT, 'packages/locales'),
 						stdio: 'inherit',
 					})
 					console.log('✓ pnpm order completed')
@@ -77,7 +84,7 @@ program
 				console.log('\nRunning pnpm validate...')
 				try {
 					execSync('pnpm validate', {
-						cwd: `${process.cwd()}/packages/locales`,
+						cwd: join(WORKSPACE_ROOT, 'packages/locales'),
 						stdio: 'inherit',
 					})
 					console.log('✓ pnpm validate completed')
