@@ -36,15 +36,15 @@ Or pass the API key directly via the `--api-key` option.
 
 ## Usage
 
-From the root of the repository, use pnpm to run the CLI:
+### Add Locale Key
+
+Add a new locale key with LLM-powered translations to all supported languages:
 
 ```bash
-pnpm --filter locale-cli add-locale --key <key> --text <text> [options]
+pnpm add-locale --key <key> --text <text> [options]
 ```
 
-
-
-### Options
+#### Options
 
 - `-k, --key <key>` (required): Locale key to add (e.g., "myKey" or "nested.key")
 - `-t, --text <text>` (required): English text to translate
@@ -53,7 +53,7 @@ pnpm --filter locale-cli add-locale --key <key> --text <text> [options]
 - `-d, --description <description>` (optional): Additional context for the LLM
 - `--api-key <apiKey>` (optional): OpenAI API key (overrides env var)
 
-### Examples
+#### Examples
 
 Add a simple key to the default app.json file:
 
@@ -77,6 +77,40 @@ Add a key with placeholder variables:
 
 ```bash
 pnpm add-locale --key "bondAmount" --text "Bond {{amount}} {{unit}}" --description "Shows the amount and unit to bond"
+```
+
+### Remove Locale Key
+
+Remove a locale key from all supported languages:
+
+```bash
+pnpm remove-locale --key <key> [options]
+```
+
+#### Options
+
+- `-k, --key <key>` (required): Locale key to remove (e.g., "myKey" or "nested.key")
+- `-f, --file <file>` (optional): Locale file to remove the key from (default: "app")
+  - Available files: app, help, modals, pages, tips
+
+#### Examples
+
+Remove a key from the default app.json file:
+
+```bash
+pnpm remove-locale --key "bondMore"
+```
+
+Remove a nested key:
+
+```bash
+pnpm remove-locale --key "validators.highCommission"
+```
+
+Remove a key from a specific file:
+
+```bash
+pnpm remove-locale --key "title" --file "help"
 ```
 
 ## How It Works
@@ -148,9 +182,15 @@ The package structure:
 ```
 locale-cli/
 ├── bin/
-│   └── add-locale.js    # CLI entry point
+│   └── add-locale.js         # CLI entry point
 ├── src/
-│   └── index.ts         # Core translation logic
+│   ├── commands/
+│   │   ├── addLocale.ts      # Add locale command implementation
+│   │   └── removeLocale.ts   # Remove locale command implementation
+│   ├── cli.ts                # Main CLI entry point
+│   ├── constants.ts          # Locale and file constants
+│   ├── index.ts              # Core translation and removal logic
+│   └── types.ts              # Type definitions
 ├── package.json
 ├── tsconfig.json
 └── README.md

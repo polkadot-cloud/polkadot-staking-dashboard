@@ -5,35 +5,18 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import OpenAI from 'openai'
-import { LOCALE_NAMES, type Locale, SUPPORTED_LOCALES } from './constants'
+import {
+	LOCALE_NAMES,
+	type Locale,
+	POLKADOT_CONTEXT,
+	SUPPORTED_LOCALES,
+} from './constants'
 import type { NamespaceFile } from './types'
 
 // Get the workspace root by tracing up from the current file location
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const WORKSPACE_ROOT = join(__dirname, '../../..')
-
-// Context about Polkadot and the staking dashboard
-const POLKADOT_CONTEXT = `
-Polkadot is a blockchain platform that enables multiple specialized blockchains to interoperate in a shared security model. It uses a Nominated Proof-of-Stake (NPoS) consensus mechanism.
-
-The Polkadot Staking Dashboard is a web application that allows users to:
-- Stake their DOT tokens by nominating validators
-- Join nomination pools for collective staking
-- Monitor their staking rewards and performance
-- Manage their bonded funds and nominations
-- Track validator performance and commission rates
-
-Key staking concepts:
-- Validators: Nodes that validate blocks and secure the network
-- Nominators: Token holders who back validators with their stake
-- Nomination Pools: Allow users to pool their stake together
-- Commission: The percentage validators take from staking rewards
-- Bonding: Locking tokens for staking (with an unbonding period)
-- Era: A time period in Polkadot (approximately 24 hours)
-
-When translating, maintain technical accuracy for blockchain and staking terminology while making the interface accessible to users.
-`
 
 /**
  * Translates text using OpenAI API
@@ -197,6 +180,102 @@ export function keyExists(
 	}
 
 	return true
+}
+
+/**
+ * Recursively deletes a nested key from an object
+ */
+export function deleteNestedKey(
+	obj: Record<string, unknown>,
+	keyPath: string,
+): boolean {
+	const keys = keyPath.split('.')
+
+	// Validate keys to prevent issues
+	const dangerousKeys = ['__proto__', 'constructor', 'prototype']
+	for (const key of keys) {
+		if (dangerousKeys.includes(key)) {
+			throw new Error(
+				`Invalid key "${key}" in path "${keyPath}". Keys cannot be __proto__, constructor, or prototype.`,
+			)
+		}
+	}
+
+	let current: unknown = obj
+
+	// Navigate to the parent of the target key
+	for (let i = 0; i < keys.length - 1; i++) {
+		const key = keys[i]
+
+		if (
+			typeof current !== 'object' ||
+			current === null ||
+			!(key in (current as Record<string, unknown>))
+		) {
+			return false // Key path doesn't exist
+		}
+
+		current = (current as Record<string, unknown>)[key]
+	}
+
+	// Delete the final key
+	if (typeof current === 'object' && current !== null) {
+		const finalKey = keys[keys.length - 1]
+		delete (current as Record<string, unknown>)[finalKey]
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Main function to remove a locale key from all locales
+ */
+export async function removeLocaleKey(
+	key: string,
+	file: NamespaceFile,
+): Promise<void> {
+	const localesPath = join(
+		WORKSPACE_ROOT,
+		'packages',
+		'locales',
+		'src',
+		'resources',
+	)
+
+	console.log(`\nRemoving locale key: ${key}`)
+	console.log(`File: ${file}.json`)
+
+	// Remove from all locales
+	let removedCount = 0
+
+	for (const locale of SUPPORTED_LOCALES) {
+		console.log(`\nRemoving from ${LOCALE_NAMES[locale]} (${locale})...`)
+
+		try {
+			const localeData = readLocaleFile(locale, file, localesPath)
+			const deleted = deleteNestedKey(localeData, key)
+
+			if (deleted) {
+				writeLocaleFile(locale, file, localeData, localesPath)
+				console.log(`✓ Removed from ${locale}`)
+				removedCount++
+			} else {
+				console.warn(`⚠ Key not found in ${locale}`)
+			}
+		} catch (error) {
+			console.warn(`⚠ Error processing ${locale}: ${(error as Error).message}`)
+		}
+	}
+
+	if (removedCount === 0) {
+		throw new Error(`Key "${key}" was not found in any locale files.`)
+	}
+
+	console.log('\n✓ Key removed from locales!')
+	console.log(
+		'\nNote: Running pnpm order and pnpm validate in locales package...',
+	)
 }
 
 /**
