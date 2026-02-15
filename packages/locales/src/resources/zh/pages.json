@@ -12,8 +12,6 @@
 		"afterCommission": "除去佣金后",
 		"allPools": "所有提名池",
 		"allValidators": "所有验证人",
-		"alreadyInPool": "无需提名：已在提名池中",
-		"alreadyNominating": "无法加入池：已提名",
 		"analyticsNotAvailable": "无法使用该分布式分析器",
 		"analyticsNotSupported": "此网络不支持该分布式分析器",
 		"annual": "每年",
