@@ -5,6 +5,7 @@
 		"aboveMax": "Über dem Maximum",
 		"account": "Konto",
 		"accountAlreadyImported": "Konto wurde bereits importiert",
+		"accountAlreadyImportedOtherDevice": "Das Konto gehört zu einem anderen Gerät",
 		"accounts": "Konten",
 		"activeRoles_one": "Aktive Rollen im {{count}} Pool",
 		"activeRoles_other": "Aktive Rollen in {{count}} Pools",
@@ -66,87 +67,33 @@
 		"continue": "Weiter",
 		"controllerNotMigrated": "Das Controller-Konto wurde nicht migriert.",
 		"currencies": {
-			"ARS": {
-				"name": "Argentinischer Peso"
-			},
-			"AUD": {
-				"name": "Australischer Dollar"
-			},
-			"BGN": {
-				"name": "Bulgarischer Lew"
-			},
-			"BRL": {
-				"name": "Brasilianischer Real"
-			},
-			"CAD": {
-				"name": "Kanadischer Dollar"
-			},
-			"CHF": {
-				"name": "Schweizer Franken"
-			},
-			"CNY": {
-				"name": "Chinesischer Yuan"
-			},
-			"COP": {
-				"name": "Kolumbianischer Peso"
-			},
-			"CZK": {
-				"name": "Tschechische Krone"
-			},
-			"EUR": {
-				"name": "Euro"
-			},
-			"GBP": {
-				"name": "Britisches Pfund"
-			},
-			"IDR": {
-				"name": "Indonesische Rupiah"
-			},
-			"INR": {
-				"name": "Indische Rupie"
-			},
-			"JPY": {
-				"name": "Japanischer Yen"
-			},
-			"KRW": {
-				"name": "Südkoreanischer Won"
-			},
-			"MXN": {
-				"name": "Mexikanischer Peso"
-			},
-			"MYR": {
-				"name": "Malaysischer Ringgit"
-			},
-			"NZD": {
-				"name": "Neuseeland-Dollar"
-			},
-			"PHP": {
-				"name": "Philippinischer Peso"
-			},
-			"PLN": {
-				"name": "Polnischer Złoty"
-			},
-			"RON": {
-				"name": "Rumänischer Leu"
-			},
-			"SGD": {
-				"name": "Singapur-Dollar"
-			},
-			"THB": {
-				"name": "Thailändischer Baht"
-			},
-			"TRY": {
-				"name": "Türkische Lira"
-			},
-			"UAH": {
-				"name": "Ukrainische Hrywnja"
-			},
-			"USD": {
-				"name": "US-Dollar"
-			},
-			"ZAR": {
-				"name": "Südafrikanischer Rand"
-			}
+			"ARS": { "name": "Argentinischer Peso" },
+			"AUD": { "name": "Australischer Dollar" },
+			"BGN": { "name": "Bulgarischer Lew" },
+			"BRL": { "name": "Brasilianischer Real" },
+			"CAD": { "name": "Kanadischer Dollar" },
+			"CHF": { "name": "Schweizer Franken" },
+			"CNY": { "name": "Chinesischer Yuan" },
+			"COP": { "name": "Kolumbianischer Peso" },
+			"CZK": { "name": "Tschechische Krone" },
+			"EUR": { "name": "Euro" },
+			"GBP": { "name": "Britisches Pfund" },
+			"IDR": { "name": "Indonesische Rupiah" },
+			"INR": { "name": "Indische Rupie" },
+			"JPY": { "name": "Japanischer Yen" },
+			"KRW": { "name": "Südkoreanischer Won" },
+			"MXN": { "name": "Mexikanischer Peso" },
+			"MYR": { "name": "Malaysischer Ringgit" },
+			"NZD": { "name": "Neuseeland-Dollar" },
+			"PHP": { "name": "Philippinischer Peso" },
+			"PLN": { "name": "Polnischer Złoty" },
+			"RON": { "name": "Rumänischer Leu" },
+			"SGD": { "name": "Singapur-Dollar" },
+			"THB": { "name": "Thailändischer Baht" },
+			"TRY": { "name": "Türkische Lira" },
+			"UAH": { "name": "Ukrainische Hrywnja" },
+			"USD": { "name": "US-Dollar" },
+			"ZAR": { "name": "Südafrikanischer Rand" }
 		},
 		"days": "Tage",
 		"decentralizationAnalyticsNotAvailable": "Dezentralisierungsanalysen nicht verfügbar",
@@ -201,6 +148,7 @@
 		"ledgerAccountRemoved": "Ledger-Konto entfernt",
 		"ledgerAccounts_one": "Zeige {{count}} Ledger-Konto an",
 		"ledgerAccounts_other": "Zeige {{count}} Ledger-Konten an",
+		"ledgerDevice": "Ledger-Gerät",
 		"ledgerDeviceBusy": "Das Ledger-Gerät wird derzeit für etwas anderes verwendet.",
 		"ledgerFetchedAccount": "Ledger-Konto {{account}} abgerufen",
 		"ledgerImportedAccount": "Ledger-Konto {{account}} importiert",
@@ -223,6 +171,7 @@
 		"months": "Monate",
 		"moreFavoritesSurpassLimit": "Das Hinzufügen weiterer Favoriten überschreitet {{max}} Nominierungen.",
 		"networks": "Netzwerke",
+		"newDevice": "Neues Gerät",
 		"newTotalBond": "Neue Gesamtanlage:",
 		"newlyBondedFunds": "Neu angelegte Mittel werden ab Beginn der nächsten Ära aktive Nominierungen unterstützen.",
 		"noActiveAccount": "Kein aktives Konto",
