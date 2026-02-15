@@ -320,35 +320,58 @@ export async function addLocaleKey(
 
 	// Check if key already exists in English
 	const enData = readLocaleFile('en', file, localesPath)
+	let addedToEnglish = false
+
 	if (keyExists(enData, key)) {
-		throw new Error(
-			`Key "${key}" already exists in en/${file}.json. Use a different key or update the existing one manually.`,
-		)
+		console.warn(`⚠ Key already exists in en/${file}.json, skipping English`)
+	} else {
+		// Add to English first
+		console.log('\nAdding to English (en)...')
+		setNestedKey(enData, key, text)
+		writeLocaleFile('en', file, enData, localesPath)
+		console.log('✓ Added to en')
+		addedToEnglish = true
 	}
 
-	// Add to English first
-	console.log('\nAdding to English (en)...')
-	setNestedKey(enData, key, text)
-	writeLocaleFile('en', file, enData, localesPath)
-	console.log('✓ Added to en')
-
 	// Translate and add to other locales
+	let addedCount = 0
 	for (const locale of SUPPORTED_LOCALES) {
 		if (locale === 'en') continue
 
-		console.log(`\nTranslating to ${LOCALE_NAMES[locale]} (${locale})...`)
-		const translation = await translateWithOpenAI(
-			text,
-			locale,
-			description,
-			apiKey,
-		)
-		console.log(`Translation: "${translation}"`)
-
 		const localeData = readLocaleFile(locale, file, localesPath)
-		setNestedKey(localeData, key, translation)
-		writeLocaleFile(locale, file, localeData, localesPath)
-		console.log(`✓ Added to ${locale}`)
+
+		// Check if key already exists in this locale
+		if (keyExists(localeData, key)) {
+			console.warn(
+				`⚠ Key already exists in ${locale}/${file}.json, skipping ${locale}`,
+			)
+			continue
+		}
+
+		try {
+			console.log(`\nTranslating to ${LOCALE_NAMES[locale]} (${locale})...`)
+			const translation = await translateWithOpenAI(
+				text,
+				locale,
+				description,
+				apiKey,
+			)
+			console.log(`Translation: "${translation}"`)
+
+			setNestedKey(localeData, key, translation)
+			writeLocaleFile(locale, file, localeData, localesPath)
+			console.log(`✓ Added to ${locale}`)
+			addedCount++
+		} catch (error) {
+			console.warn(`⚠ Error adding to ${locale}: ${(error as Error).message}`)
+		}
+	}
+
+	// Check if we added the key to at least one locale
+	if (!addedToEnglish && addedCount === 0) {
+		throw new Error(
+			`Key "${key}" already exists in all locales. No translations were added.`,
+		)
 	}
 
 	console.log('\n✓ Translations added successfully!')
