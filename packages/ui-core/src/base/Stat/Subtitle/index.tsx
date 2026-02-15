@@ -36,3 +36,5 @@ export const Subtitle = forwardRef<
 		</h4>
 	)
 })
+
+Subtitle.displayName = 'Subtitle'
