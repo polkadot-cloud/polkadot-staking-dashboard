@@ -43,7 +43,7 @@
 				"Im Pool gebunden",
 				[
 					"Der Betrag an {NETWORK_UNIT}, der derzeit im Pool gebunden ist.",
-					"Im Gegensatz zur direkten Nominierung, bei der Ihre gebundenen Gelder in Ihrem Konto verbleiben, aber gesperrt werden, werden die {NETWORK_UNIT}, die Sie an einen Pool binden, auf das Stash-Konto des Pools übertragen. Dennoch haben Pool-Mitglieder jederzeit Zugriff, um ihre Gelder freizugeben."
+					"Im Gegensatz zur direkten Nominierung, bei der Ihre gebundenen Gelder in Ihrem Konto verbleiben, aber gesperrt werden, werden die {NETWORK_UNIT}, die du an einen Pool binden, auf das Stash-Konto des Pools übertragen. Dennoch haben Pool-Mitglieder jederzeit Zugriff, um ihre Gelder freizugeben."
 				]
 			],
 			"bonding": [
@@ -55,7 +55,7 @@
 			"decentralizationAnalyticsPeriod": [
 				"Analysezeitraum für Dezentralisierung",
 				[
-					"Die Dezentralisierung Ihrer Nominierung wird berechnet, indem die in den letzten 30 Tagen ausgezahlten Belohnungen analysiert werden. Je nach Netzwerk entspricht dies einer bestimmten Anzahl von Eras.",
+					"Die Dezentralisierung deiner Nominierung wird berechnet, indem die in den letzten 30 Tagen ausgezahlten Belohnungen analysiert werden. Je nach Netzwerk entspricht dies einer bestimmten Anzahl von Eras.",
 					"30 Tage bieten ausreichend Informationen, damit die Aggregation aussagekräftig ist, und sind gleichzeitig kurz genug, damit Änderungen in den Nominierungen nach wenigen Tagen Auswirkungen auf diese Analyse haben."
 				]
 			],
@@ -85,7 +85,7 @@
 					"Jeder nominierte Validator läuft in einem bestimmten Rechenzentrum, das anhand seiner IP-Adresse geolokalisiert werden kann.",
 					"Die Tabelle zeigt die letzte Region, das Land und das Netzwerk an, wo jeder nominierte Validator geolokalisiert wurde.",
 					"Wenn der Validator während des Analysezeitraums an mehr als einem Ort lokalisiert wurde, wird ein ++ Zeichen angezeigt.",
-					"Der angezeigte Prozentsatz ist der Anteil der Belohnungen, die dieser Validator Ihnen während des Analysezeitraums ausgezahlt hat."
+					"Der angezeigte Prozentsatz ist der Anteil der Belohnungen, die dieser Validator dir während des Analysezeitraums ausgezahlt hat."
 				]
 			],
 			"halving": [
@@ -115,38 +115,38 @@
 			"ledgerAppNotOnLatestRuntimeVersion": [
 				"Ledger-App nicht auf neuester Runtime-Version",
 				[
-					"Diese Meldung tritt auf, wenn Ihre Ledger-App nicht für die neuesten Runtime-Metadaten konfiguriert ist. Sie können versuchen, Ihre Transaktion trotzdem einzureichen, aber sie kann fehlschlagen.",
-					"Um diese Warnung zu vermeiden, aktualisieren Sie Ihr Ledger-Gerät auf die neueste Version.",
-					"Es gibt in der Regel eine Verzögerung zwischen der Bereitstellung von Runtime-Upgrades und Ledger-App-Updates. Wenn ein App-Update verfügbar ist, können Sie Ihre App in Ledger Live aktualisieren."
+					"Diese Meldung tritt auf, wenn deine Ledger-App nicht für die neuesten Runtime-Metadaten konfiguriert ist. du kannst versuchen, deine Transaktion trotzdem einzureichen, aber sie kann fehlschlagen.",
+					"Um diese Warnung zu vermeiden, aktualisiere dein Ledger-Gerät auf die neueste Version.",
+					"Es gibt in der Regel eine Verzögerung zwischen der Bereitstellung von Runtime-Upgrades und Ledger-App-Updates. Wenn ein App-Update verfügbar ist, kannst du deine App in Ledger Live aktualisieren."
 				]
 			],
 			"ledgerHardwareWallets": [
 				"Ledger Hardware-Wallets",
 				[
-					"Kompatible Ledger-Geräte werden vollständig auf dem Staking-Dashboard unterstützt. Verwenden Sie Ihr Ledger, um Ihre Staking-Aktivitäten auf {NETWORK_NAME} zu verwalten.",
+					"Kompatible Ledger-Geräte werden vollständig auf dem Staking-Dashboard unterstützt. Verwende dein Ledger, um Ihre Staking-Aktivitäten auf {NETWORK_NAME} zu verwalten.",
 					"Die Verwendung eines Hardware-Wallets gewährleistet ein sicheres Erlebnis, bei dem Ihre Schlüssel jederzeit auf dem Hardware-Gerät verbleiben. Dies wird auch als Cold Storage bezeichnet, da keine aktive Internetverbindung zu Ihrem Wallet besteht.",
 					"Um Transaktionen mit Ihrem Ledger-Gerät zu importieren und zu signieren, muss auf Ihrem Gerät die {NETWORK_NAME} Ledger-App installiert sein. Die {NETWORK_NAME}-App kann über Ledgers eigene Ledger Live-Anwendung installiert werden.",
-					"Weitere Informationen zu Ledger finden Sie auf der offiziellen Website ledger.com."
+					"Weitere Informationen zu Ledger findest du auf der offiziellen Website ledger.com."
 				]
 			],
 			"ledgerRejectedTransaction": [
 				"Von Ledger abgelehnte Transaktion",
 				[
 					"Die Transaktion wurde auf dem Ledger-Gerät abgelehnt und wird nicht eingereicht.",
-					"Reichen Sie eine Transaktion ein, indem Sie sie auf dem Ledger-Gerät genehmigen."
+					"Reiche eine Transaktion ein, indem du sie auf dem Ledger-Gerät genehmigen."
 				]
 			],
 			"ledgerRequestTimeout": [
 				"Ledger-Anfrage-Timeout",
 				[
 					"Timeout-Fehler können auftreten, wenn das Ledger-Gerät beschäftigt ist oder wenn ein Vorgang nicht rechtzeitig abgeschlossen wird.",
-					"Versuchen Sie, den Vorgang erneut auszuführen. Wenn der Fehler weiterhin besteht, versuchen Sie, das Ledger-Gerät neu zu starten."
+					"Versuche, den Vorgang erneut auszuführen. Wenn der Fehler weiterhin besteht, versuche, das Ledger-Gerät neu zu starten."
 				]
 			],
 			"lockedBalance": [
 				"Gesperrter Saldo",
 				[
-					"Der auf dem Staking-Dashboard angezeigte Betrag des gesperrten Guthabens stellt alle Ihre Sperren dar, mit Ausnahme der Staking-Sperre – und zeigt somit das gesamte gesperrte Guthaben an, das Ihnen zur Verfügung steht und das Sie zum Nominieren verwenden können."
+					"Der auf dem Staking-Dashboard angezeigte Betrag des gesperrten Guthabens stellt alle deine Sperren dar, mit Ausnahme der Staking-Sperre – und zeigt somit das gesamte gesperrte Guthaben an, das dir zur Verfügung steht und das du zum Nominieren verwenden können."
 				]
 			],
 			"minimumToCreatePool": [
@@ -166,8 +166,8 @@
 			"nominating": [
 				"Nominieren",
 				[
-					"Nominieren ist der Prozess, Validatoren auszuwählen, an die Sie Ihre {NETWORK_UNIT} einsetzen möchten. Sie können bis zu 16 Validatoren für jedes Ihrer Konten nominieren.",
-					"Sobald Sie Ihre ausgewählten Validatoren nominiert haben, werden sie zu Ihren Nominierungen."
+					"Nominieren ist der Prozess, Validatoren auszuwählen, an die du deine {NETWORK_UNIT} einsetzen möchten. du kannst bis zu 16 Validatoren für jedes deiner Konten nominieren.",
+					"Sobald du deine ausgewählten Validatoren nominiert haben, werden sie zu Ihren Nominierungen."
 				]
 			],
 			"nominationPayoutDistribution": [
@@ -186,12 +186,12 @@
 			],
 			"nominationStatus": [
 				"Nominierungsstatus",
-				["Ob Sie aktiv nominieren und Belohnungen verdienen oder nicht."]
+				["Ob du aktiv nominieren und Belohnungen verdienen oder nicht."]
 			],
 			"nominations": [
 				"Nominierungen",
 				[
-					"Nominierungen sind die Validatoren, die ein Staker nominiert. Sie können bis zu {MAX_NOMINATIONS} Validatoren auf {NETWORK_NAME} nominieren."
+					"Nominierungen sind die Validatoren, die ein Staker nominiert. du kannst bis zu {MAX_NOMINATIONS} Validatoren auf {NETWORK_NAME} nominieren."
 				]
 			],
 			"nominatorStake": [
@@ -204,13 +204,13 @@
 				"App auf Ledger öffnen",
 				[
 					"Diese Meldung erscheint, wenn die {NETWORK_NAME} Ledger App auf dem verbundenen Gerät nicht geöffnet ist.",
-					"Öffnen Sie die Polkadot App auf dem Ledger Gerät und versuchen Sie es erneut."
+					"Öffne die Polkadot App auf dem Ledger Gerät und versuche es erneut."
 				]
 			],
 			"payout": [
 				"Gewinnausschüttung",
 				[
-					"Auszahlungen sind Staking-Belohnungen auf {NETWORK_NAME}. Sie hängen davon ab, wie viele 'Era Points' Ihre nominierten Validatoren im Laufe der Zeit sammeln. Belohnungen werden am Ende jeder Ära bestimmt."
+					"Auszahlungen sind Staking-Belohnungen auf {NETWORK_NAME}. sie hängen davon ab, wie viele 'Era Points' deine nominierten Validatoren im Laufe der Zeit sammeln. Belohnungen werden am Ende jeder Ära bestimmt."
 				]
 			],
 			"payoutDestination": [
@@ -228,7 +228,7 @@
 			"polkadotVault": [
 				"Polkadot Vault",
 				[
-					"Polkadot Vault (ehemals Parity Signer) ist eine Cold-Storage-Lösung, mit der Sie ein Telefon im Flugzeugmodus als luftgetrenntes Wallet nutzen können."
+					"Polkadot Vault (ehemals Parity Signer) ist eine Cold-Storage-Lösung, mit der du ein Telefon im Flugzeugmodus als luftgetrenntes Wallet nutzen können."
 				]
 			],
 			"poolCommissionChangeRate": [
@@ -252,7 +252,7 @@
 			"poolMembership": [
 				"Pool-Mitgliedschaft",
 				[
-					"Ihr Pool-Mitgliedschaftsstatus zeigt, ob Sie Mitglied eines Pools sind."
+					"Ihr Pool-Mitgliedschaftsstatus zeigt, ob du Mitglied eines Pools sind."
 				]
 			],
 			"poolRewardHistory": [
@@ -280,13 +280,13 @@
 			"readOnlyAccounts": [
 				"Schreibgeschützte Konten",
 				[
-					"Schreibgeschützte Konten sind Konten, die importiert werden können, aber keine Transaktionen signieren können. Das bedeutet, dass Sie den Kontostand und die Staking-Informationen ansehen können, aber keine Staking-Aktionen damit ausführen können."
+					"Schreibgeschützte Konten sind Konten, die importiert werden können, aber keine Transaktionen signieren können. Das bedeutet, dass du den Kontostand und die Staking-Informationen ansehen kannst, aber keine Staking-Aktionen damit ausführen können."
 				]
 			],
 			"reserveBalance": [
 				"Reserveguthaben",
 				[
-					"In {NETWORK_NAME} müssen Sie einen Kontostand über einem bestimmten Betrag haben, damit Ihr Konto in der Blockchain existiert. Dieser Betrag wird als ‚Existenzialdeposit' bezeichnet.",
+					"In {NETWORK_NAME} musst du einen Kontostand über einem bestimmten Betrag haben, damit dein Konto in der Blockchain existiert. Dieser Betrag wird als ‚Existenzialdeposit' bezeichnet.",
 					"Das Staking-Dashboard stellt sicher, dass dieser Betrag an {NETWORK_UNIT} niemals angetastet wird."
 				]
 			],
@@ -333,7 +333,7 @@
 				"Validator",
 				[
 					"Eine Entität, die Blöcke für die {NETWORK_NAME} Relay Chain validiert. Validatoren spielen eine Schlüsselrolle in {NETWORK_NAME}, um das Netzwerk zu sichern und Blöcke zu erzeugen.",
-					"Als Nominator wählen Sie, welche Validatoren Sie unterstützen möchten, und erhalten Belohnungen dafür."
+					"Als Nominator wähle, welche Validatoren du unterstützen möchtest, und erhalten Belohnungen dafür."
 				]
 			],
 			"validatorRewardHistory": [
@@ -351,7 +351,7 @@
 			"yourBalance": [
 				"Ihr Guthaben",
 				[
-					"Ihr Guthaben stellt die Gesamtmenge {NETWORK_UNIT} dar, die Sie zusätzlich zu Ihrem Gesamteinsatzbetrag verfügbar haben, der den Betrag einschließt, den Sie in einem Pool gebunden haben."
+					"Ihr Guthaben stellt die Gesamtmenge {NETWORK_UNIT} dar, die du zusätzlich zu deinem Gesamteinsatzbetrag verfügbar haben, der den Betrag einschließt, den du in einem Pool gebunden haben."
 				]
 			]
 		}
