@@ -16,7 +16,7 @@ import { pluginEnabled } from 'global-bus'
 import { useFetchMethods } from 'hooks/useFetchMethods'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyFunction, AnyJson, Validator } from 'types'
 import { Confirm } from '../Prompt/Confirm'
@@ -67,6 +67,16 @@ export const GenerateNominations = ({
 	} = useManageNominations()
 
 	const defaultNominationsCount = defaultNominations.length
+
+	// Memoize stringified nominations for comparison
+	const nominationsString = useMemo(
+		() => JSON.stringify(nominations),
+		[nominations],
+	)
+	const defaultNominationsString = useMemo(
+		() => JSON.stringify(defaultNominations),
+		[defaultNominations],
+	)
 
 	const resizeCallback = () => {
 		setHeight(null)
@@ -201,7 +211,7 @@ export const GenerateNominations = ({
 	// Update nominations on account switch, or if `defaultNominations` change
 	useEffect(() => {
 		if (
-			JSON.stringify(nominations) !== JSON.stringify(defaultNominations) &&
+			nominationsString !== defaultNominationsString &&
 			defaultNominationsCount > 0
 		) {
 			setNominations([...(defaultNominations || [])])
@@ -209,7 +219,12 @@ export const GenerateNominations = ({
 				setMethod('manual')
 			}
 		}
-	}, [activeAddress, defaultNominations])
+	}, [
+		activeAddress,
+		nominationsString,
+		defaultNominationsString,
+		defaultNominationsCount,
+	])
 
 	// Refetch if fetching is triggered
 	useEffect(() => {

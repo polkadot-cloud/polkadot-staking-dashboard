@@ -21,7 +21,10 @@ import { Pagination } from 'library/List/Pagination'
 import { SearchInput } from 'library/List/SearchInput'
 import { motion } from 'motion/react'
 import { fetchValidatorEraPointsBatch } from 'plugin-staking-api'
-import type { ValidatorEraPointsBatch } from 'plugin-staking-api/types'
+import type {
+	ValidatorEraPoints,
+	ValidatorEraPointsBatch,
+} from 'plugin-staking-api/types'
 import type { FormEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,6 +35,9 @@ import { FilterBadges } from './Filters/FilterBadges'
 import { FilterHeaders } from './Filters/FilterHeaders'
 import { Item } from './Item'
 import type { ValidatorListProps } from './types'
+
+// Constant empty array to ensure stable reference for React.memo optimization
+const EMPTY_ERA_POINTS: ValidatorEraPoints[] = []
 
 export const ValidatorListInner = ({
 	// Default list values.
@@ -130,6 +136,15 @@ export const ValidatorListInner = ({
 		[],
 	)
 
+	// Create a memoized map of validator addresses to era points for stable references
+	const performanceMap = useMemo(
+		() =>
+			Object.fromEntries(
+				performances.map((entry) => [entry.validator, entry.points]),
+			),
+		[performances],
+	)
+
 	// Pagination
 	const pageLength: number = itemsPerPage || validators.length
 	const totalPages = Math.ceil(validators.length / pageLength)
@@ -176,11 +191,14 @@ export const ValidatorListInner = ({
 		}
 	}
 
-	// Get validator reward rates
-	const { rates } = useValidatorRewardRateBatch(
-		listItems.map(({ address }) => address),
-		pageKey,
+	// Memoize address array to prevent unnecessary hook calls
+	const validatorAddresses = useMemo(
+		() => listItems.map(({ address }) => address),
+		[listItems],
 	)
+
+	// Get validator reward rates
+	const { rates } = useValidatorRewardRateBatch(validatorAddresses, pageKey)
 
 	const handleSearchChange = (e: FormEvent<HTMLInputElement>) => {
 		const newValue = e.currentTarget.value
@@ -375,9 +393,7 @@ export const ValidatorListInner = ({
 									bondFor={bondFor}
 									displayFor={displayFor}
 									eraPoints={
-										performances.find(
-											(entry) => entry.validator === validator.address,
-										)?.points || []
+										performanceMap[validator.address] ?? EMPTY_ERA_POINTS
 									}
 									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
