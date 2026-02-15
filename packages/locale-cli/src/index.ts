@@ -288,9 +288,7 @@ export async function removeLocaleKey(
 	}
 
 	console.log('\n✓ Key removed from locales!')
-	console.log(
-		'\nNote: Running pnpm order and pnpm validate in locales package...',
-	)
+	console.log('\nNote: Running pnpm order in locales package...')
 }
 
 /**
@@ -375,7 +373,5 @@ export async function addLocaleKey(
 	}
 
 	console.log('\n✓ Translations added successfully!')
-	console.log(
-		'\nNote: Running pnpm order and pnpm validate in locales package...',
-	)
+	console.log('\nNote: Running pnpm order in locales package...')
 }
