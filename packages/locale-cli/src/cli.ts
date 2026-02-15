@@ -6,7 +6,9 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Command } from 'commander'
 import dotenv from 'dotenv'
-import { addLocaleKey, NAMESPACE_FILES, type NamespaceFile } from './index.js'
+import { NAMESPACE_FILES } from './constants'
+import { addLocaleKey } from './index.js'
+import type { NamespaceFile } from './types'
 
 // Get the workspace root by tracing up from the current file location
 const __filename = fileURLToPath(import.meta.url)

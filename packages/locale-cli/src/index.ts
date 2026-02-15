@@ -5,41 +5,13 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import OpenAI from 'openai'
+import { LOCALE_NAMES, type Locale, SUPPORTED_LOCALES } from './constants'
+import type { NamespaceFile } from './types'
 
 // Get the workspace root by tracing up from the current file location
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const WORKSPACE_ROOT = join(__dirname, '../../..')
-
-// Define supported locales directly. NOTE: Not importing `locales` package to avoid browser deps in
-// CLI
-const LOCALE_DEFINITIONS = {
-	en: { label: 'English' },
-	zh: { label: '中文' },
-	es: { label: 'Español' },
-} as const
-
-// Supported locales
-export const SUPPORTED_LOCALES = Object.keys(
-	LOCALE_DEFINITIONS,
-) as (keyof typeof LOCALE_DEFINITIONS)[]
-export type Locale = (typeof SUPPORTED_LOCALES)[number]
-
-// Locale names for LLM context
-export const LOCALE_NAMES: Record<Locale, string> = Object.fromEntries(
-	Object.entries(LOCALE_DEFINITIONS).map(([key, value]) => [key, value.label]),
-) as Record<Locale, string>
-
-// Available namespace files
-export const NAMESPACE_FILES = [
-	'app',
-	'help',
-	'modals',
-	'pages',
-	'tips',
-] as const
-
-export type NamespaceFile = (typeof NAMESPACE_FILES)[number]
 
 // Context about Polkadot and the staking dashboard
 const POLKADOT_CONTEXT = `
