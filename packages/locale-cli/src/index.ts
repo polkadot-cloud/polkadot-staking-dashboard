@@ -184,6 +184,7 @@ export function keyExists(
 
 /**
  * Recursively deletes a nested key from an object
+ * If a parent object becomes empty after deletion, it is also deleted recursively
  */
 export function deleteNestedKey(
 	obj: Record<string, unknown>,
@@ -201,31 +202,45 @@ export function deleteNestedKey(
 		}
 	}
 
-	let current: unknown = obj
+	// Navigate to the target and record the path
+	const path: Array<Record<string, unknown>> = [obj]
+	let current: Record<string, unknown> = obj
 
-	// Navigate to the parent of the target key
 	for (let i = 0; i < keys.length - 1; i++) {
 		const key = keys[i]
 
-		if (
-			typeof current !== 'object' ||
-			current === null ||
-			!(key in (current as Record<string, unknown>))
-		) {
-			return false // Key path doesn't exist
+		if (typeof current[key] !== 'object' || current[key] === null) {
+			return false // Path doesn't exist
 		}
 
-		current = (current as Record<string, unknown>)[key]
+		current = current[key] as Record<string, unknown>
+		path.push(current)
 	}
 
 	// Delete the final key
-	if (typeof current === 'object' && current !== null) {
-		const finalKey = keys[keys.length - 1]
-		delete (current as Record<string, unknown>)[finalKey]
-		return true
+	const finalKey = keys[keys.length - 1]
+	if (!(finalKey in current)) {
+		return false
 	}
 
-	return false
+	delete current[finalKey]
+
+	// Clean up empty parent objects from the deepest level upwards
+	for (let i = keys.length - 2; i >= 0; i--) {
+		const parentObj = path[i]
+		const childKey = keys[i]
+		const childObj = parentObj[childKey] as Record<string, unknown>
+
+		// If child is now empty, delete it from parent and continue
+		if (Object.keys(childObj).length === 0) {
+			delete parentObj[childKey]
+		} else {
+			// Stop if we find a non-empty parent
+			break
+		}
+	}
+
+	return true
 }
 
 /**
