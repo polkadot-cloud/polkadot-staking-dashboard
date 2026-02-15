@@ -15,24 +15,24 @@ console.log('Aliases: pnpm --filter locale-cli add-locale\n')
 
 console.log('Examples:')
 console.log('  1. Basic usage:')
-console.log('     pnpm add-locale --key myKey --text "My Text"\n')
+console.log("     pnpm add-locale --key myKey --text 'My Text'\n")
 
 console.log('  2. With nested key:')
 console.log(
-	'     pnpm add-locale --key "validators.commission" --text "Commission"\n',
+	"     pnpm add-locale --key 'validators.commission' --text 'Commission'\n",
 )
 
 console.log('  3. With custom file:')
-console.log('     pnpm add-locale --key myKey --text "My Text" --file help\n')
+console.log("     pnpm add-locale --key myKey --text 'My Text' --file help\n")
 
 console.log('  4. With description for better context:')
 console.log(
-	'     pnpm add-locale --key bondMore --text "Bond More" --description "Button to bond additional funds"\n',
+	"     pnpm add-locale --key bondMore --text 'Bond More' --description 'Button to bond additional funds'\n",
 )
 
 console.log('  5. With API key option:')
 console.log(
-	'     pnpm add-locale --key myKey --text "My Text" --api-key sk-...\n',
+	"     pnpm add-locale --key myKey --text 'My Text' --api-key sk-...\n",
 )
 
 console.log('\n---\n')
@@ -46,7 +46,7 @@ console.log('  1. Remove a key from default app.json:')
 console.log('     pnpm remove-locale --key myKey\n')
 
 console.log('  2. Remove a nested key:')
-console.log('     pnpm remove-locale --key "validators.commission"\n')
+console.log("     pnpm remove-locale --key 'validators.commission'\n")
 
 console.log('  3. Remove from a specific file:')
 console.log('     pnpm remove-locale --key myKey --file help\n')
