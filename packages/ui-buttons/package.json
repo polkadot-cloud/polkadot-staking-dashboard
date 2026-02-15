@@ -25,7 +25,7 @@
 		"ui-core": "workspace:*"
 	},
 	"devDependencies": {
-		"@w3ux/types": "^2.4.1",
+		"@w3ux/types": "^2.4.2",
 		"dedot": "^1",
 		"types": "workspace:*"
 	}

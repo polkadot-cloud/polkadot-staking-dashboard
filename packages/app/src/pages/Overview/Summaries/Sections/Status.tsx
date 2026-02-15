@@ -50,27 +50,31 @@ export const Status = () => {
 		[warningMessages.length, poolWarningTips, items],
 	)
 
-	const Status = isBonding ? (
-		<Stat
-			label={t('status', { ns: 'pages' })}
-			stat={
-				inPool ? t('alreadyInPool', { ns: 'pages' }) : nominationStatus.message
-			}
-		/>
-	) : activePool ? (
-		<Stat
-			label={label}
-			type="address"
-			stat={{
-				address: activePool?.addresses?.stash ?? '',
-				display: membershipDisplay,
-			}}
-		/>
-	) : !activeAddress ? (
-		<Stat label={''} stat={t('noAccountSelected', { ns: 'app' })} />
-	) : (
-		<Stat label={''} stat={t('notStaking', { ns: 'pages' })} />
-	)
+	const Status =
+		isBonding && inPool ? (
+			<Stat
+				label={t('status', { ns: 'pages' })}
+				stat={t('nominatingAndInPool', { ns: 'modals' })}
+			/>
+		) : isBonding ? (
+			<Stat
+				label={t('status', { ns: 'pages' })}
+				stat={nominationStatus.message}
+			/>
+		) : activePool ? (
+			<Stat
+				label={label}
+				type="address"
+				stat={{
+					address: activePool?.addresses?.stash ?? '',
+					display: membershipDisplay,
+				}}
+			/>
+		) : !activeAddress ? (
+			<Stat label={''} stat={t('noAccountSelected', { ns: 'app' })} />
+		) : (
+			<Stat label={''} stat={t('notStaking', { ns: 'pages' })} />
+		)
 
 	return (
 		<SectionWrapper>
@@ -101,7 +105,7 @@ export const Status = () => {
 										<SimpleBar autoHide={false} className="thin-scrollbar">
 											<ButtonRow
 												style={{
-													padding: isBonding ? undefined : '0 0.5rem',
+													padding: isBonding || inPool ? undefined : '0 0.5rem',
 													flexWrap: 'nowrap',
 												}}
 											>
