@@ -12,7 +12,7 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^7.1.0",
+		"@fortawesome/fontawesome-svg-core": "^7.2.0",
 		"dedot": "^1.0.4"
 	},
 	"devDependencies": {
