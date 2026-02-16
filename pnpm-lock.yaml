@@ -194,7 +194,7 @@ importers:
         version: 2.0.5(react@19.2.4)
       react-i18next:
         specifier: ^16.5.3
-        version: 16.5.4(i18next@25.8.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 16.5.4(i18next@25.8.10(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react-router-dom:
         specifier: ^7.13.0
         version: 7.13.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -418,11 +418,11 @@ importers:
         specifier: workspace:*
         version: link:../event-tracking
       i18next:
-        specifier: ^25.8.4
-        version: 25.8.4(typescript@5.9.3)
+        specifier: ^25.8.10
+        version: 25.8.10(typescript@5.9.3)
       react-i18next:
         specifier: ^16.5.3
-        version: 16.5.4(i18next@25.8.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 16.5.4(i18next@25.8.10(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -708,7 +708,7 @@ importers:
         version: 19.2.4
       react-i18next:
         specifier: ^16.5.3
-        version: 16.5.4(i18next@25.8.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
+        version: 16.5.4(i18next@25.8.10(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       styles:
         specifier: workspace:*
         version: link:../styles
@@ -738,8 +738,8 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4(typescript@5.9.3)
       i18next:
-        specifier: ^25.8.4
-        version: 25.8.4(typescript@5.9.3)
+        specifier: ^25.8.10
+        version: 25.8.10(typescript@5.9.3)
     devDependencies:
       types:
         specifier: workspace:*
@@ -3243,8 +3243,8 @@ packages:
   i18next-browser-languagedetector@8.2.0:
     resolution: {integrity: sha512-P+3zEKLnOF0qmiesW383vsLdtQVyKtCNA9cjSoKCppTKPQVfKd2W8hbVo5ZhNJKDqeM7BOcvNoKJOjpHh4Js9g==}
 
-  i18next@25.8.4:
-    resolution: {integrity: sha512-a9A0MnUjKvzjEN/26ZY1okpra9kA8MEwzYEz1BNm+IyxUKPRH6ihf0p7vj8YvULwZHKHl3zkJ6KOt4hewxBecQ==}
+  i18next@25.8.10:
+    resolution: {integrity: sha512-CtPJLMAz1G8sxo+mIzfBjGgLxWs7d6WqIjlmmv9BTsOat4pJIfwZ8cm07n3kFS6bP9c6YwsYutYrwsEeJVBo2g==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -6903,7 +6903,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.6
 
-  i18next@25.8.4(typescript@5.9.3):
+  i18next@25.8.10(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.28.6
     optionalDependencies:
@@ -7396,11 +7396,11 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
-  react-i18next@16.5.4(i18next@25.8.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3):
+  react-i18next@16.5.4(i18next@25.8.10(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.28.6
       html-parse-stringify: 3.0.1
-      i18next: 25.8.4(typescript@5.9.3)
+      i18next: 25.8.10(typescript@5.9.3)
       react: 19.2.4
       use-sync-external-store: 1.6.0(react@19.2.4)
     optionalDependencies:
