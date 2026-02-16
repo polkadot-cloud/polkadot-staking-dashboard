@@ -78,6 +78,6 @@
 		"vite-bundle-visualizer": "^1.2.1",
 		"vite-plugin-checker": "^0.12.0",
 		"vite-plugin-svgr": "^4.3.0",
-		"vite-tsconfig-paths": "^6.1.0"
+		"vite-tsconfig-paths": "^6.1.1"
 	}
 }
