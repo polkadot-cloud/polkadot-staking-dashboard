@@ -33,7 +33,7 @@ export const NominationStatus = ({
 		stakedAmount =
 			status === 'active'
 				? new BigNumber(
-						activeAccountOwnStake?.find((own) => own.address)?.value ?? 0,
+						activeAccountOwnStake?.find((own) => own.address === address)?.value ?? 0,
 					)
 				: new BigNumber(0)
 	} else {
