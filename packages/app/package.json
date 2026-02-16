@@ -44,7 +44,7 @@
 		"event-tracking": "workspace:*",
 		"global-bus": "workspace:*",
 		"html5-qrcode": "^2.3.8",
-		"i18next-browser-languagedetector": "^8.1.0",
+		"i18next-browser-languagedetector": "^8.2.1",
 		"locales": "workspace:*",
 		"motion": "12.23.24",
 		"plugin-staking-api": "workspace:*",
