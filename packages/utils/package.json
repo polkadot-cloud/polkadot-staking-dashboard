@@ -10,12 +10,12 @@
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"@w3ux/hooks": "^2.4.3",
-		"@w3ux/utils": "3.1.0",
+		"@w3ux/hooks": "^2.4.4",
+		"@w3ux/utils": "3.1.1",
 		"bignumber.js": "^9.3.1",
 		"date-fns": "^4.1.0",
 		"dedot": "^1.0.4",
-		"i18next": "^25.8.4"
+		"i18next": "^25.8.10"
 	},
 	"devDependencies": {
 		"types": "workspace:*"
