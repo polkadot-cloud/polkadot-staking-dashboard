@@ -148,7 +148,7 @@
 		"ledgerAccountRemoved": "Ledger-Konto entfernt",
 		"ledgerAccounts_one": "Zeige {{count}} Ledger-Konto an",
 		"ledgerAccounts_other": "Zeige {{count}} Ledger-Konten an",
-		"ledgerDevice": "Ledger-Gerät",
+		"ledgerDevice": "Ledger-Gerät {{group}}",
 		"ledgerDeviceBusy": "Das Ledger-Gerät wird derzeit für etwas anderes verwendet.",
 		"ledgerFetchedAccount": "Ledger-Konto {{account}} abgerufen",
 		"ledgerImportedAccount": "Ledger-Konto {{account}} importiert",
