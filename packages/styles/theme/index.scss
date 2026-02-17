@@ -2,6 +2,7 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'variables' as *;
+@use 'fonts';
 
 html {
   font-size: 10.5px;
@@ -16,7 +17,8 @@ html {
 }
 
 body {
-  font-family: var(--font-family-default);
+  @include fonts.font-default;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -25,7 +27,8 @@ body {
 }
 
 h1 {
-  font-family: var(--font-family-semibold);
+  @include fonts.font-semibold;
+
   color: var(--text-primary);
   font-size: 1.6rem;
   line-height: 1.6rem;
@@ -33,7 +36,8 @@ h1 {
 }
 
 h2 {
-  font-family: var(--font-family-semibold);
+  @include fonts.font-semibold;
+  
   color: var(--text-primary);
   font-size: 1.4rem;
   line-height: 1.6rem;
@@ -42,7 +46,8 @@ h2 {
 }
 
 h3 {
-  font-family: var(--font-family-semibold);
+  @include fonts.font-semibold;
+
   color: var(--text-primary);
   font-size: 1.25rem;
   line-height: 1.55rem;
@@ -51,7 +56,8 @@ h3 {
 }
 
 h4 {
-  font-family: var(--font-family-semibold);
+  @include fonts.font-semibold;
+
   color: var(--text-secondary);
   font-size: 1.08rem;
   line-height: 1.65rem;
@@ -81,7 +87,8 @@ a {
 }
 
 button {
-  font-family: var(--font-family-default);
+  @include fonts.font-default;
+
   color: var(--text-secondary);
   -webkit-tap-highlight-color: transparent;
   background: none;
@@ -92,7 +99,8 @@ button {
 }
 
 input {
-  font-family: var(--font-family-default);
+  @include fonts.font-default;
+
   color: var(--text-primary);
   font-size: 1.1rem;
   padding: 0.7rem 0;
