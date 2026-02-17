@@ -16,7 +16,7 @@
     > h1 {
       color: var(--text-primary);
       font-size: 1.4rem;
-      font-family: Inter, sans-serif;
+      font-family: var(--font-family-default);
       padding: 0 0.5rem;
       display: flex;
       align-items: center;
