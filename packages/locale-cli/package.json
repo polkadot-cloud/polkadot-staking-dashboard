@@ -19,7 +19,7 @@
 		"openai": "^4.79.0"
 	},
 	"devDependencies": {
-		"@types/node": "^22.15.2",
+		"@types/node": "^25.2.3",
 		"tsx": "^4.19.3",
 		"typescript": "^5.7.2",
 		"vite": "^7.3.1"
