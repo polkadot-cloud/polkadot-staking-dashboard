@@ -31,7 +31,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
 
   h4 {
     color: var(--text-secondary);
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
   }
 
   > div {
@@ -152,7 +152,7 @@ export const SearchInputWrapper = styled.div`
   > input {
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    font-family: InterBold, sans-serif;
+    font-family: var(--font-family-bold);
     border-radius: 1.75rem;
     padding: 0.9rem 1.25rem;
     font-size: 1.15rem;

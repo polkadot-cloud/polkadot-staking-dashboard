@@ -12,10 +12,10 @@
 		"license:headers": "npx @kt3k/license-checker -q"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.13",
+		"@biomejs/biome": "^2.4.1",
 		"@kt3k/license-checker": "3.2.2",
 		"@types/chroma-js": "^3.1.2",
-		"@types/react": "^19.2.13",
+		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@types/react-helmet": "^6.1.11",
 		"@vitejs/plugin-react-swc": "^4.2.3",
@@ -26,7 +26,7 @@
 		"prettier": "^3.8.1",
 		"prettier-plugin-organize-imports": "^4.1.0",
 		"sass": "^1.97.3",
-		"stylelint": "^17.1.0",
+		"stylelint": "^17.3.0",
 		"stylelint-config-standard-scss": "^17.0.0",
 		"stylelint-order": "^7.0.1",
 		"typescript": "^5.7.2"

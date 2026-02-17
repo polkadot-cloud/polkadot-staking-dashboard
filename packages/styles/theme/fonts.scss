@@ -1,0 +1,70 @@
+/* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+SPDX-License-Identifier: GPL-3.0-only */
+
+@use 'sass:string';
+
+/**
+ * Font Utility Classes and Variables
+ * 
+ * Language-aware font family declarations. These classes and CSS variables apply 
+ * different font families based on the active language class on the root element.
+ */
+
+:root {
+  --font-family-default: 'Inter', sans-serif;
+  --font-family-semibold: 'InterSemiBold', sans-serif;
+  --font-family-bold: 'InterBold', sans-serif;
+}
+
+/**
+ * Language-specific font overrides
+ * Chinese (zh): Uses regular Inter for semibold and bold weights
+ * Korean (ko): Uses regular Inter for semibold and bold weights
+ */
+$language-font-overrides: (
+  'zh': (
+    'semibold': 'Inter',
+    'bold': 'Inter',
+  ),
+   'ko': (
+    'bold': 'InterSemiBold',
+  ),
+);
+
+@each $lang, $overrides in $language-font-overrides {
+  $class-name: string.to-lower-case($lang) + 'Lang';
+
+  .#{$class-name} {
+    @each $weight, $font in $overrides {
+      --font-family-#{$weight}: '#{$font}', sans-serif;
+    }
+  }
+}
+
+.fontDefault {
+  font-family: var(--font-family-default);
+}
+
+.fontSemibold {
+  font-family: var(--font-family-semibold);
+}
+
+.fontBold {
+  font-family: var(--font-family-bold);
+}
+
+/**
+ * SCSS Mixins for use in component stylesheets
+ * These make it easy to apply font families while remaining language-aware
+ */
+@mixin font-default {
+  font-family: var(--font-family-default);
+}
+
+@mixin font-semibold {
+  font-family: var(--font-family-semibold);
+}
+
+@mixin font-bold {
+  font-family: var(--font-family-bold);
+}
