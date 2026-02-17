@@ -7,7 +7,6 @@ export const Wrapper = styled.h3`
   border-bottom: 1px solid var(--border);
   color: var(--text-primary);
   font-family: var(--font-family-semibold);
-  font-weight: 600;
   display: flex;
   align-items: center;
   margin: 1.25rem 0 0;
