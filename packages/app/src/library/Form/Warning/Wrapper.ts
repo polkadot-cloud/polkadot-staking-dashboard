@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
 
   > h4 {
     color: var(--status-warning);
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-default);
 
     .icon {
       color: var(--status-warning);

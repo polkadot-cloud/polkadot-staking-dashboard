@@ -39,7 +39,7 @@ export const JoinFormWrapper = styled.div`
     align-items: center;
     &.note {
       color: var(--text-secondary);
-      font-family: Inter, sans-serif;
+      font-family: var(--font-family-default);
     }
   }
 
@@ -114,7 +114,7 @@ export const InviteHeader = styled.div`
   h2 {
     font-size: 1.8rem;
     margin-bottom: 0.75rem;
-    font-family: InterBold, sans-serif;
+    font-family: var(--font-family-bold);
     color: var(--text-primary);
   }
 
