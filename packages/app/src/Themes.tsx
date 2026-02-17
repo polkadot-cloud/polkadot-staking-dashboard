@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { ThemeProvider } from 'styled-components'
 import { Page } from 'ui-core/base'
 
-// light / dark `mode` and language class added to styled-components provider
 export const ThemedRouter = () => {
 	const { i18n } = useTranslation()
 	const { network } = useNetwork()
