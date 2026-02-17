@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
       flex-flow: column wrap;
 
       > input {
-        font-family: InterSemiBold, sans-serif;
+        font-family: var(--font-family-semibold);
         width: 100%;
         border: none;
         padding-right: 1rem;

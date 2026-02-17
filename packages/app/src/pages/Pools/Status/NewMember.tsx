@@ -3,7 +3,6 @@
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import {
 	onCreatePoolButtonPressedEvent,
@@ -22,16 +21,15 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const navigate = useNavigate()
 	const { network } = useNetwork()
 	const { advancedMode } = useUi()
-	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
 	const { getJoinDisabled, getCreateDisabled } = useActiveAccountPool()
 
 	// Alias for create button disabled state
-	const createDisabled = getCreateDisabled() || isBonding
+	const createDisabled = getCreateDisabled()
 
 	// Disable opening the canvas if data is not ready.
-	const joinButtonDisabled = getJoinDisabled() || isBonding
+	const joinButtonDisabled = getJoinDisabled()
 
 	// Handle join pool button press
 	const handleOnJoinPool = () => {

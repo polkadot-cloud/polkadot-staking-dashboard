@@ -114,9 +114,9 @@ export const TitleWrapper = styled.div`
       flex-grow: 1;
 
       > h2 {
+        font-family: var(--font-family-default);
         display: flex;
         align-items: center;
-        font-family: Inter, sans-serif;
         font-size: 1.5rem;
 
         > button {

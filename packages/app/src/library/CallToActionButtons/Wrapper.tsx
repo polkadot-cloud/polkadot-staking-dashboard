@@ -173,7 +173,7 @@ export const CallToActionWrapper = styled.div`
           width: 100%;
 
           .counter {
-            font-family: InterBold, sans-serif;
+            font-family: var(--font-family-bold);
             font-size: 1.1rem;
             margin-left: 0.75rem;
           }
