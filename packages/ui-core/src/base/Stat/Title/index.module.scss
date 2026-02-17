@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .title {
-  font-family: InterBold, sans-serif;
+  font-family: var(--font-family-bold);
   font-size: 1.2rem;
   display: flex;
   flex-flow: row wrap;
@@ -15,7 +15,7 @@
   }
 
   &.semibold {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
   }
 
   &.primary {
@@ -33,7 +33,7 @@
   }
 
   > label {
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-default);
     margin-left: 0.5rem;
     font-size: 1rem;
 

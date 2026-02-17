@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family-default);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -25,16 +25,16 @@ body {
 }
 
 h1 {
+  font-family: var(--font-family-semibold);
   color: var(--text-primary);
-  font-family: InterSemiBold, sans-serif;
   font-size: 1.6rem;
   line-height: 1.6rem;
   margin: 0;
 }
 
 h2 {
+  font-family: var(--font-family-semibold);
   color: var(--text-primary);
-  font-family: InterSemiBold, sans-serif;
   font-size: 1.4rem;
   line-height: 1.6rem;
   font-weight: 600;
@@ -42,8 +42,8 @@ h2 {
 }
 
 h3 {
+  font-family: var(--font-family-semibold);
   color: var(--text-primary);
-  font-family: InterSemiBold, sans-serif;
   font-size: 1.25rem;
   line-height: 1.55rem;
   font-weight: 500;
@@ -51,8 +51,8 @@ h3 {
 }
 
 h4 {
+  font-family: var(--font-family-semibold);
   color: var(--text-secondary);
-  font-family: InterSemiBold, sans-serif;
   font-size: 1.08rem;
   line-height: 1.65rem;
   font-weight: 500;
@@ -81,9 +81,9 @@ a {
 }
 
 button {
+  font-family: var(--font-family-default);
   color: var(--text-secondary);
   -webkit-tap-highlight-color: transparent;
-  font-family: Inter, sans-serif;
   background: none;
   border: none;
   cursor: pointer;
@@ -92,8 +92,8 @@ button {
 }
 
 input {
+  font-family: var(--font-family-default);
   color: var(--text-primary);
-  font-family: Inter, sans-serif;
   font-size: 1.1rem;
   padding: 0.7rem 0;
   background: none;

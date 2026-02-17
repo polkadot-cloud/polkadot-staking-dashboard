@@ -98,7 +98,7 @@
           background: var(--btn-popover-tab-bg);
           border: 1px solid var(--border);
           color: var(--text-primary);
-          font-family: Inter, sans-serif;
+          font-family: var(--font-family-default);
           padding: 1rem 0.85rem;
           border-radius: 0.65rem;
           letter-spacing: 0.02rem;
@@ -118,7 +118,7 @@
         }
 
         .full {
-          font-family: Inter, sans-serif;
+          font-family: var(--font-family-default);
           position: relative;
           width: 100%;
           line-height: 2rem;

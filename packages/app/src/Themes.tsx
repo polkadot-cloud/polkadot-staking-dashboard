@@ -5,11 +5,13 @@ import { Router } from 'Router'
 import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ThemeProvider } from 'styled-components'
 import { Page } from 'ui-core/base'
 
-// light / dark `mode` added to styled-components provider
+// light / dark `mode` and language class added to styled-components provider
 export const ThemedRouter = () => {
+	const { i18n } = useTranslation()
 	const { network } = useNetwork()
 	const { mode, themeElementRef } = useTheme()
 
@@ -24,7 +26,12 @@ export const ThemedRouter = () => {
 
 	return (
 		<ThemeProvider theme={{ mode }}>
-			<Page.Entry mode={mode} theme={`${network}`} ref={themeElementRef}>
+			<Page.Entry
+				mode={mode}
+				theme={`${network}`}
+				language={i18n.resolvedLanguage || 'en'}
+				ref={themeElementRef}
+			>
 				<Router />
 			</Page.Entry>
 		</ThemeProvider>

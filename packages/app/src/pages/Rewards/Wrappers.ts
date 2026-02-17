@@ -51,7 +51,7 @@ export const ItemWrapper = styled.div`
 
         h4 {
           color: var(--text-secondary);
-          font-family: InterSemiBold, sans-serif;
+          font-family: var(--font-family-semibold);
           &.claim {
             color: var(--accent-primary);
           }
