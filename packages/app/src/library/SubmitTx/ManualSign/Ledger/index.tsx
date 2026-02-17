@@ -8,6 +8,10 @@ import { appendOrEmpty } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
+import {
+	getLedgerDeviceName,
+	isTouchscreenDevice,
+} from 'contexts/LedgerHardware/deviceModel'
 import type { LedgerResponse } from 'contexts/LedgerHardware/types'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
@@ -35,6 +39,7 @@ export const Ledger = ({
 }) => {
 	const { t } = useTranslation('app')
 	const {
+		deviceModel,
 		statusCode,
 		setFeedback,
 		getFeedback,
@@ -135,8 +140,18 @@ export const Ledger = ({
 							{feedback?.message
 								? feedback.message
 								: !integrityChecked
-									? t('ledgerConnectAndConfirm')
-									: `${t('deviceVerified')}. ${t('submitTransaction')}`}
+									? deviceModel !== 'unknown'
+										? t('ledgerConnectAndConfirmDevice', {
+												device: getLedgerDeviceName(deviceModel),
+											})
+										: t('ledgerConnectAndConfirm')
+									: `${t('deviceVerified')}. ${
+											isTouchscreenDevice(deviceModel)
+												? t('ledgerApproveTouchscreen')
+												: deviceModel !== 'unknown'
+													? t('ledgerApproveNano')
+													: t('submitTransaction')
+										}`}
 							{feedback?.helpKey && (
 								<ButtonHelpTooltip
 									marginLeft

@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ellipsisFn } from '@w3ux/utils'
 import classNames from 'classnames'
@@ -89,6 +89,9 @@ export const Item = ({
 									}
 								}}
 							/>
+							{!editing && (
+								<FontAwesomeIcon icon={faPen} className={classes.editHint} />
+							)}
 						</section>
 					</div>
 				</div>

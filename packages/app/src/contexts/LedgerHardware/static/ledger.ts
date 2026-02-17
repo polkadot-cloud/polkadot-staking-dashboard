@@ -6,6 +6,7 @@ import { withTimeout } from '@w3ux/utils'
 import { PolkadotGenericApp } from '@zondax/ledger-substrate'
 import { Buffer } from 'buffer'
 import type { AnyJson } from 'types'
+import { getLedgerDeviceModel } from '../deviceModel'
 
 export class Ledger {
 	// The ledger device transport. `null` when not actively in use
@@ -19,7 +20,8 @@ export class Ledger {
 		this.transport = await TransportWebHID.create()
 		const app = new PolkadotGenericApp(Ledger.transport)
 		const { productName } = this.transport.device
-		return { app, productName }
+		const deviceModel = getLedgerDeviceModel(productName || '')
+		return { app, productName, deviceModel }
 	}
 
 	// Ensure transport is closed

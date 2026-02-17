@@ -13,6 +13,7 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyJson } from 'types'
 import { defaultFeedback } from './defaults'
+import type { LedgerDeviceModel } from './deviceModel'
 import { Ledger } from './static/ledger'
 import type {
 	FeedbackMessage,
@@ -35,6 +36,9 @@ export const LedgerHardwareProvider = ({
 	const { network } = useNetwork()
 	const { getChainSpec } = useApi()
 	const { transactionVersion } = getChainSpec(getStakingChain(network)).version
+
+	// Store the detected Ledger device model
+	const [deviceModel, setDeviceModel] = useState<LedgerDeviceModel>('unknown')
 
 	// Store whether a Ledger device task is in progress
 	const [isExecuting, setIsExecutingState] = useState<boolean>(false)
@@ -83,7 +87,8 @@ export const LedgerHardwareProvider = ({
 	const checkRuntimeVersion = async () => {
 		try {
 			setIsExecuting(true)
-			const { app } = await Ledger.initialise()
+			const { app, deviceModel: model } = await Ledger.initialise()
+			setDeviceModel(model)
 			const result = (await Ledger.getVersion(app)) as {
 				major?: number
 				minor?: number
@@ -120,7 +125,8 @@ export const LedgerHardwareProvider = ({
 	const handleGetAddress = async (accountIndex: number, ss58Prefix: number) => {
 		try {
 			setIsExecuting(true)
-			const { app, productName } = await Ledger.initialise()
+			const { app, productName, deviceModel: model } = await Ledger.initialise()
+			setDeviceModel(model)
 			const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
 			setIsExecuting(false)
@@ -257,6 +263,7 @@ export const LedgerHardwareProvider = ({
 		resetStatusCode()
 		resetFeedback()
 		setIntegrityChecked(false)
+		setDeviceModel('unknown')
 		runtimesInconsistent.current = false
 	}
 
@@ -269,6 +276,7 @@ export const LedgerHardwareProvider = ({
 	return (
 		<LedgerHardwareContext.Provider
 			value={{
+				deviceModel,
 				integrityChecked,
 				setIntegrityChecked,
 				checkRuntimeVersion,
