@@ -288,7 +288,7 @@
 		"txVersionNotSupported": "Transaction version not supported. Please update Ledger app.",
 		"unbond": "Unbond",
 		"unbondAll": "Unbond All",
-		"unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minumum of {{bond}} {{unit}}.",
+		"unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minimum of {{bond}} {{unit}}. Use Unstake to chill and withdraw all bonded funds.",
 		"unbondErrorNoFunds": "You have no {{unit}} to unbond.",
 		"unbondFundsLeavePool": "Unbond your funds and leave the nomination pool.",
 		"unbondPoolMember": "Unbond For Pool Member",
