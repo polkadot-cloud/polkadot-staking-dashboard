@@ -17,13 +17,13 @@ export const ActionWithButton = styled.div`
       display: flex;
       align-items: center;
       flex-grow: 1;
-      font-family: InterSemiBold, sans-serif;
+      font-family: var(--font-family-semibold);
       > svg {
         margin-right: 0.5rem;
       }
     }
     &:last-child {
-      font-family: InterSemiBold, sans-serif;
+      font-family: var(--font-family-semibold);
     }
   }
 `
@@ -88,7 +88,7 @@ export const ManualAccount = styled.div`
         h4 {
           margin: 0;
           &.title {
-            font-family: InterSemiBold, sans-serif;
+            font-family: var(--font-family-semibold);
             > svg {
               margin: 0 0.6rem;
             }

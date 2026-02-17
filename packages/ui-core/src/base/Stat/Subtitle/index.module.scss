@@ -3,7 +3,7 @@
 
 .subtitle {
   color: var(--text-secondary);
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   flex: 1;
   display: flex;
   flex-flow: row nowrap;

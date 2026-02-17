@@ -4,6 +4,7 @@
 // Define supported locales directly. NOTE: Not importing `locales` package to avoid browser deps in CLI
 const LOCALE_DEFINITIONS = {
 	en: { label: 'English' },
+	ko: { label: '한국어' },
 	zh: { label: '中文' },
 	es: { label: 'Español' },
 	de: { label: 'Deutsch' },

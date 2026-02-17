@@ -14,12 +14,12 @@
 		"remove-locale": "tsx ./src/cli.ts remove-locale"
 	},
 	"dependencies": {
-		"commander": "^13.0.0",
-		"dotenv": "^16.4.7",
-		"openai": "^4.79.0"
+		"commander": "^14.0.3",
+		"dotenv": "^17.3.1",
+		"openai": "^6.22.0"
 	},
 	"devDependencies": {
-		"@types/node": "^22.15.2",
+		"@types/node": "^25.2.3",
 		"tsx": "^4.19.3",
 		"typescript": "^5.7.2",
 		"vite": "^7.3.1"
