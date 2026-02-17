@@ -43,13 +43,13 @@
 				"Im Pool gebunden",
 				[
 					"Der Betrag an {NETWORK_UNIT}, der derzeit im Pool gebunden ist.",
-					"Im Gegensatz zur direkten Nominierung, bei der Ihre gebundenen Gelder in Ihrem Konto verbleiben, aber gesperrt werden, werden die {NETWORK_UNIT}, die du an einen Pool binden, auf das Stash-Konto des Pools übertragen. Dennoch haben Pool-Mitglieder jederzeit Zugriff, um ihre Gelder freizugeben."
+					"Im Gegensatz zur direkten Nominierung, bei der deine gebundenen Gelder in deinem Konto verbleiben, aber gesperrt werden, werden die {NETWORK_UNIT}, die du an einen Pool bindest, auf das Stash-Konto des Pools übertragen. Dennoch haben Pool-Mitglieder jederzeit Zugriff, um ihre Gelder freizugeben."
 				]
 			],
 			"bonding": [
 				"Bindung",
 				[
-					"Das Binden von Mitteln ist der Prozess des 'Sperrens' (oder Staking) von {NETWORK_UNIT}. Gebundene {NETWORK_UNIT} werden dann automatisch einem oder mehreren Ihrer nominierten Validatoren zugeordnet."
+					"Das Binden von Mitteln ist der Prozess des 'Sperrens' (oder Staking) von {NETWORK_UNIT}. Gebundene {NETWORK_UNIT} werden dann automatisch einem oder mehreren deiner nominierten Validatoren zugeordnet."
 				]
 			],
 			"decentralizationAnalyticsPeriod": [
@@ -123,9 +123,9 @@
 			"ledgerHardwareWallets": [
 				"Ledger Hardware-Wallets",
 				[
-					"Kompatible Ledger-Geräte werden vollständig auf dem Staking-Dashboard unterstützt. Verwende dein Ledger, um Ihre Staking-Aktivitäten auf {NETWORK_NAME} zu verwalten.",
-					"Die Verwendung eines Hardware-Wallets gewährleistet ein sicheres Erlebnis, bei dem Ihre Schlüssel jederzeit auf dem Hardware-Gerät verbleiben. Dies wird auch als Cold Storage bezeichnet, da keine aktive Internetverbindung zu Ihrem Wallet besteht.",
-					"Um Transaktionen mit Ihrem Ledger-Gerät zu importieren und zu signieren, muss auf Ihrem Gerät die {NETWORK_NAME} Ledger-App installiert sein. Die {NETWORK_NAME}-App kann über Ledgers eigene Ledger Live-Anwendung installiert werden.",
+					"Kompatible Ledger-Geräte werden vollständig auf dem Staking-Dashboard unterstützt. Verwende dein Ledger, um deine Staking-Aktivitäten auf {NETWORK_NAME} zu verwalten.",
+					"Die Verwendung eines Hardware-Wallets gewährleistet ein sicheres Erlebnis, bei dem deine Schlüssel jederzeit auf dem Hardware-Gerät verbleiben. Dies wird auch als Cold Storage bezeichnet, da keine aktive Internetverbindung zu deinem Wallet besteht.",
+					"Um Transaktionen mit deinem Ledger-Gerät zu importieren und zu signieren, muss auf deinem Gerät die {NETWORK_NAME} Ledger-App installiert sein. Die {NETWORK_NAME}-App kann über Ledgers eigene Ledger Live-Anwendung installiert werden.",
 					"Weitere Informationen zu Ledger findest du auf der offiziellen Website ledger.com."
 				]
 			],
@@ -146,7 +146,7 @@
 			"lockedBalance": [
 				"Gesperrter Saldo",
 				[
-					"Der auf dem Staking-Dashboard angezeigte Betrag des gesperrten Guthabens stellt alle deine Sperren dar, mit Ausnahme der Staking-Sperre – und zeigt somit das gesamte gesperrte Guthaben an, das dir zur Verfügung steht und das du zum Nominieren verwenden können."
+					"Der auf dem Staking-Dashboard angezeigte Betrag des gesperrten Guthabens stellt alle deine Sperren dar, mit Ausnahme der Staking-Sperre – und zeigt somit das gesamte gesperrte Guthaben an, das dir zur Verfügung steht und das du zum Nominieren verwenden kannst."
 				]
 			],
 			"minimumToCreatePool": [
@@ -166,14 +166,14 @@
 			"nominating": [
 				"Nominieren",
 				[
-					"Nominieren ist der Prozess, Validatoren auszuwählen, an die du deine {NETWORK_UNIT} einsetzen möchten. du kannst bis zu 16 Validatoren für jedes deiner Konten nominieren.",
-					"Sobald du deine ausgewählten Validatoren nominiert haben, werden sie zu Ihren Nominierungen."
+					"Nominieren ist der Prozess, Validatoren auszuwählen, an die du deine {NETWORK_UNIT} einsetzen möchtest. Du kannst bis zu 16 Validatoren für jedes deiner Konten nominieren.",
+					"Sobald du deine ausgewählten Validatoren nominiert hast, werden sie zu deinen Nominierungen."
 				]
 			],
 			"nominationPayoutDistribution": [
 				"Auszahlungsverteilung von Nominierungen",
 				[
-					"Die Dezentralisierung Ihrer Nominierung.",
+					"Die Dezentralisierung deiner Nominierung.",
 					"Die folgenden Diagramme zeigen die Verteilung der Belohnungen, aggregiert nach Region, Land und IP-Netzwerk des Validatoren, der die Belohnung ausgezahlt hat."
 				]
 			],
@@ -181,7 +181,7 @@
 				"Nominierungspools",
 				[
 					"Nominierungspools ermöglichen es Benutzern, {NETWORK_UNIT} beizutragen und Staking-Belohnungen zu verdienen.",
-					"Im Gegensatz zum Nominieren erfordert das Staking mit Pools nur einen kleinen Betrag an {NETWORK_UNIT}, und der Pool verwaltet die Nominierten in Ihrem Namen."
+					"Im Gegensatz zum Nominieren erfordert das Staking mit Pools nur einen kleinen Betrag an {NETWORK_UNIT}, und der Pool verwaltet die Nominierten in deinem Namen."
 				]
 			],
 			"nominationStatus": [
@@ -216,7 +216,7 @@
 			"payoutDestination": [
 				"Auszahlungsziel",
 				[
-					"Ihr Auszahlungsziel bestimmt, an welches Konto Ihre Auszahlungen gesendet werden."
+					"Dein Auszahlungsziel bestimmt, an welches Konto deine Auszahlungen gesendet werden."
 				]
 			],
 			"payoutHistory": [
@@ -228,7 +228,7 @@
 			"polkadotVault": [
 				"Polkadot Vault",
 				[
-					"Polkadot Vault (ehemals Parity Signer) ist eine Cold-Storage-Lösung, mit der du ein Telefon im Flugzeugmodus als luftgetrenntes Wallet nutzen können."
+					"Polkadot Vault (ehemals Parity Signer) ist eine Cold-Storage-Lösung, mit der du ein Telefon im Flugzeugmodus als luftgetrenntes Wallet nutzen kannst."
 				]
 			],
 			"poolCommissionChangeRate": [
@@ -252,7 +252,7 @@
 			"poolMembership": [
 				"Pool-Mitgliedschaft",
 				[
-					"Ihr Pool-Mitgliedschaftsstatus zeigt, ob du Mitglied eines Pools sind."
+					"Dein Pool-Mitgliedschaftsstatus zeigt, ob du Mitglied eines Pools bist."
 				]
 			],
 			"poolRewardHistory": [
@@ -280,7 +280,7 @@
 			"readOnlyAccounts": [
 				"Schreibgeschützte Konten",
 				[
-					"Schreibgeschützte Konten sind Konten, die importiert werden können, aber keine Transaktionen signieren können. Das bedeutet, dass du den Kontostand und die Staking-Informationen ansehen kannst, aber keine Staking-Aktionen damit ausführen können."
+					"Schreibgeschützte Konten sind Konten, die importiert werden können, aber keine Transaktionen signieren können. Das bedeutet, dass du den Kontostand und die Staking-Informationen ansehen kannst, aber keine Staking-Aktionen damit ausführen kannst."
 				]
 			],
 			"reserveBalance": [
@@ -293,7 +293,7 @@
 			"reserveBalanceForExistentialDeposit": [
 				"Reserveguthaben für das Existenzialdeposit",
 				[
-					"Falls Ihr Konto bereits ein gesperrtes Guthaben hat, das das Existenzialdeposit abdeckt, wie z. B. für das Nominieren gesperrtes Guthaben, wird das Staking-Dashboard kein zusätzliches freies Guthaben sperren."
+					"Falls dein Konto bereits ein gesperrtes Guthaben hat, das das Existenzialdeposit abdeckt, wie z. B. für das Nominieren gesperrtes Guthaben, wird das Staking-Dashboard kein zusätzliches freies Guthaben sperren."
 				]
 			],
 			"rewardsByCountryAndNetwork": [
@@ -326,7 +326,7 @@
 				"Analysierte Gesamtauszahlungen",
 				[
 					"Die aggregierten {NETWORK_UNIT}-Belohnungen, die von nominierten Validatoren in den letzten 30 Tagen ausgezahlt wurden.",
-					"Diese Auszahlungen wurden verwendet, um die Dezentralisierung Ihrer Nominierung zu berechnen."
+					"Diese Auszahlungen wurden verwendet, um die Dezentralisierung deiner Nominierung zu berechnen."
 				]
 			],
 			"validator": [
@@ -349,9 +349,9 @@
 				]
 			],
 			"yourBalance": [
-				"Ihr Guthaben",
+				"Dein Guthaben",
 				[
-					"Ihr Guthaben stellt die Gesamtmenge {NETWORK_UNIT} dar, die du zusätzlich zu deinem Gesamteinsatzbetrag verfügbar haben, der den Betrag einschließt, den du in einem Pool gebunden haben."
+					"Dein Guthaben stellt die Gesamtmenge {NETWORK_UNIT} dar, die du zusätzlich zu deinem Gesamteinsatzbetrag verfügbar hast, einschließlich des Betrags, den du in einem Pool gebunden hast."
 				]
 			]
 		}

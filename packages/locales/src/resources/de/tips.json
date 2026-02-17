@@ -29,12 +29,12 @@
 			]
 		],
 		"keepPoolNominating": [
-			"Verwaltung Ihres Pools",
-			"Es ist wichtig, dass Ihr Pool aktiv nominiert.",
+			"Verwaltung deines Pools",
+			"Es ist wichtig, dass dein Pool aktiv nominiert.",
 			[
-				"Es ist wichtig, dass Ihr Pool aktiv nominiert.",
-				"Wenn Ihr Pool keine Belohnungen verdient, werden Mitglieder versucht sein, den Pool zu verlassen und einem anderen beizutreten.",
-				"Deine Root- und Nominator-Rollen sind wichtig für die Verwaltung deiner Nominierungen. Wenn deine Nominierungen nicht gut abschneiden, wähle andere, um die Chancen Ihres Pools auf Belohnungen zu erhöhen."
+				"Es ist wichtig, dass dein Pool aktiv nominiert.",
+				"Wenn dein Pool keine Belohnungen verdient, werden Mitglieder versucht sein, den Pool zu verlassen und einem anderen beizutreten.",
+				"Deine Root- und Nominator-Rollen sind wichtig für die Verwaltung deiner Nominierungen. Wenn deine Nominierungen nicht gut abschneiden, wähle andere, um die Chancen deines Pools auf Belohnungen zu erhöhen."
 			]
 		],
 		"managingNominations": [
@@ -55,15 +55,15 @@
 		},
 		"monitoringPool": [
 			"Pool-Mitgliedschaft verwalten",
-			"Es ist eine gute Idee, regelmäßig zu überprüfen, ob Ihr Pool aktiv Belohnungen verdient.",
+			"Es ist eine gute Idee, regelmäßig zu überprüfen, ob dein Pool aktiv Belohnungen verdient.",
 			[
-				"Pools verwalten Nominierungen in Ihrem Namen, aber es ist dennoch eine gute Idee, regelmäßig zu überprüfen, ob Ihr Pool aktiv Belohnungen verdient.",
+				"Pools verwalten Nominierungen in deinem Namen, aber es ist dennoch eine gute Idee, regelmäßig zu überprüfen, ob dein Pool aktiv Belohnungen verdient.",
 				"Überwache den Status deines Pools regelmäßig, um sicherzustellen, dass er gut läuft, und erwäge, einen anderen Pool beizutreten, wenn du keine Belohnungen erhalten."
 			]
 		],
 		"recommendedJoinPool": [
 			"Empfohlen: Tritt einem Pool bei",
-			"Ihr Konto ist am besten geeignet, einem Pool beizutreten.",
+			"Dein Konto ist am besten geeignet, einem Pool beizutreten.",
 			[
 				"Basierend auf der Menge von {NETWORK_UNIT}, die dein Konto derzeit hält, ist ein Pool-Beitritt der beste Weg für dich, um mit Staking zu beginnen.",
 				"Der Beitritt zu einem Pool erfordert eine Mindesteinzahlung von {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
@@ -79,9 +79,9 @@
 		],
 		"reviewingPayouts": [
 			"Auszahlungen überprüfen",
-			"Regelmäßige Überprüfung Ihrer Auszahlungen ist eine gute Möglichkeit, um zu beurteilen, wie gut Ihre Nominierungen funktionieren.",
+			"Regelmäßige Überprüfung deiner Auszahlungen ist eine gute Möglichkeit, um zu beurteilen, wie gut deine Nominierungen funktionieren.",
 			[
-				"Regelmäßige Überprüfung Ihrer Auszahlungen ist eine gute Möglichkeit, um zu beurteilen, wie gut Ihre Nominierungen funktionieren.",
+				"Regelmäßige Überprüfung deiner Auszahlungen ist eine gute Möglichkeit, um zu beurteilen, wie gut deine Nominierungen funktionieren.",
 				"Gehe zur Seite Auszahlungen, um eine detaillierte Aufschlüsselung jeder Auszahlung zu erhalten, die du erhältst, und von welchem Validator (oder Pool) die Auszahlung stammt."
 			]
 		],
@@ -89,7 +89,7 @@
 			"Pool wechseln",
 			"Wechsle zu einem neuen Pool, um Pool-Warnungen zu vermeiden.",
 			[
-				"Ihr aktueller Pool hat Probleme, die Ihre Belohnungen beeinträchtigen können.",
+				"Dein aktueller Pool hat Probleme, die deine Belohnungen beeinträchtigen können.",
 				"Erwäge, deinen aktuellen Pool zu verlassen und einem anderen beizutreten, um deine Staking-Belohnungen zu maximieren."
 			]
 		],
@@ -99,7 +99,7 @@
 			[
 				"Verschiedene Faktoren beeinflussen, wie viel Validatoren belohnt werden, z. B. die Anzahl der Era-Punkte, die sie generieren, und wie viele Nominatoren sie unterstützen.",
 				"Alle diese Metriken ändern sich im Laufe der Zeit, manchmal auf unvorhersehbare Weise. Es ist daher wichtig, dass Nominatoren Validatoren und deren Leistung aktiv überwachen.",
-				"Cloud Staking bietet eine Reihe von Metriken, um Ihnen zu helfen, zu verstehen, wie gut ein Validator abschneidet."
+				"Cloud Staking bietet eine Reihe von Metriken, um dir zu helfen, zu verstehen, wie gut ein Validator abschneidet."
 			]
 		]
 	}
