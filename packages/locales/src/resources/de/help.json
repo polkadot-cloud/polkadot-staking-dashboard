@@ -210,7 +210,7 @@
 			"payout": [
 				"Gewinnausschüttung",
 				[
-					"Auszahlungen sind Staking-Belohnungen auf {NETWORK_NAME}. sie hängen davon ab, wie viele 'Era Points' deine nominierten Validatoren im Laufe der Zeit sammeln. Belohnungen werden am Ende jeder Ära bestimmt."
+					"Auszahlungen sind Staking-Belohnungen auf {NETWORK_NAME}. Sie hängen davon ab, wie viele 'Era Points' deine nominierten Validatoren im Laufe der Zeit sammeln. Belohnungen werden am Ende jeder Ära bestimmt."
 				]
 			],
 			"payoutDestination": [
