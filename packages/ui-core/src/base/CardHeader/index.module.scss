@@ -21,7 +21,7 @@
   }
 
   > h2 {
-    font-family: InterBold, sans-serif;
+    font-family: var(--font-family-bold);
     margin-bottom: 1rem;
 
     > svg {
@@ -46,7 +46,7 @@
 
   > h3,
   > h4 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
   }
 
   > h4 {

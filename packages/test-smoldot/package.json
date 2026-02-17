@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"@dedot/chain-specs": "^0.9.0",
-		"@dedot/chaintypes": "^0.222.0",
+		"@dedot/chaintypes": "^0.233.0",
 		"@polkadot/keyring": "^14.0.1",
 		"@polkadot/util-crypto": "^14.0.1",
 		"dedot": "^1.0.4",

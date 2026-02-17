@@ -66,7 +66,7 @@ export const Wrapper = styled.span`
   }
   
   .name {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     margin: 0;
     padding: 0;
     line-height: 1.35rem;

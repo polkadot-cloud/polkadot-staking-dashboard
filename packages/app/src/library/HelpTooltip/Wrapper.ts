@@ -51,7 +51,6 @@ export const PopoverContent = styled(Popover.Content)`
 		margin: 0 0 0.75rem 0;
 		color: var(--text-primary);
 		font-size: 1.2rem;
-		font-weight: 600;
 	}
 
 	p {
