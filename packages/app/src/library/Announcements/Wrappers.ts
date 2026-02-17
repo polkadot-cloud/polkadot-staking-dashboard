@@ -69,7 +69,7 @@ export const HeaderWrapper = styled.div`
 
       h4 {
         color: var(--text-secondary);
-        font-family: Inter, sans-serif;
+        font-family: var(--font-family-default);
         display: flex;
         flex-flow: row wrap;
         align-items: center;
@@ -100,7 +100,7 @@ export const Item = styled(motion.div)`
   }
 
   h4 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
