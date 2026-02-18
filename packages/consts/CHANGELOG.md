@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.4.0...consts-v1.5.0) (2026-02-18)
+
+
+### Features
+
+* Add Paseo testnet support ([#3237](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3237)) ([6f8254b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f8254b514fba0cd582c33bb33615640b4407170))
+* **refactor:** Deprecate direct wallet connect support ([#3211](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3211)) ([071cd78](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/071cd78c41d19fd5a2a57123b45837400e9eccfc))
+* **refactor:** Platform URLs to consts ([#3196](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3196)) ([29e3a17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/29e3a179ca3a7d86006598d9f57251b8fa7b49b8))
+* **refactor:** Stop connecting to relay api on app bootstrap ([#3198](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3198)) ([3d6a52b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3d6a52b5108242d3dda788fd7f483f1e05daff8b))
+* **ux:** Halving step graph adjustments ([#3254](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3254)) ([ece5018](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ece5018fa2c825e10b6255e767dbe2a62be7cd3e))
+* **ux:** Implement `NominateBuffer` for nominator recommendation ([#3197](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3197)) ([77b57d0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/77b57d0c9c17216f3ad3f37dc918f9ea55d52c18))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.3.0...consts-v1.4.0) (2026-01-12)
 
 

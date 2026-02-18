@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/assets-v1.4.0...assets-v1.5.0) (2026-02-18)
+
+
+### Features
+
+* Add Paseo testnet support ([#3237](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3237)) ([6f8254b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f8254b514fba0cd582c33bb33615640b4407170))
+* **refactor:** Theme variable naming revision ([#3214](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3214)) ([7e673f8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e673f8ae3313884347316ac1617b8b6b5ea6bda))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/assets-v1.3.0...assets-v1.4.0) (2026-01-12)
 
 

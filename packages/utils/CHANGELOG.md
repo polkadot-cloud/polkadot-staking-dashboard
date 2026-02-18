@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.3.0...utils-v1.4.0) (2026-02-18)
+
+
+### Features
+
+* Fetch validator identities from Staking API identity cache ([#3210](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3210)) ([77c9f87](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/77c9f87f050caac5ccc4c35e1ea31a4bfd4355c3))
+* **refactor:** Bump deps, dedot as peer, refresh pnpm.lock ([#3261](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3261)) ([75d783e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75d783ee6a9d0e971aa2b88154d31d8476a89f6e))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.2.1...utils-v1.3.0) (2026-01-12)
 
 

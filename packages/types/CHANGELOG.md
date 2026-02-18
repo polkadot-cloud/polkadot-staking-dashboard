@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.4.0...types-v1.5.0) (2026-02-18)
+
+
+### Features
+
+* Add Paseo testnet support ([#3237](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3237)) ([6f8254b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f8254b514fba0cd582c33bb33615640b4407170))
+* **refactor:** Async pool role identity fetch ([#3199](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3199)) ([a892941](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a892941c665943846a55dad0c405beeb445d4554))
+* **refactor:** Stop connecting to relay api on app bootstrap ([#3198](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3198)) ([3d6a52b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3d6a52b5108242d3dda788fd7f483f1e05daff8b))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.3.0...types-v1.4.0) (2026-01-12)
 
 

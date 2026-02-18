@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-graphs-v1.3.0...ui-graphs-v1.4.0) (2026-02-18)
+
+
+### Features
+
+* **refactor:** Add latest stylelint setup ([#3215](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3215)) ([a6a33b0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a6a33b0296ef9892b9e44a7fd95199ba07a35ad9))
+* **refactor:** Bump deps, dedot as peer, refresh pnpm.lock ([#3261](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3261)) ([75d783e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75d783ee6a9d0e971aa2b88154d31d8476a89f6e))
+* **refactor:** Deprecate direct wallet connect support ([#3211](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3211)) ([071cd78](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/071cd78c41d19fd5a2a57123b45837400e9eccfc))
+* **refactor:** Theme variable naming revision ([#3214](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3214)) ([7e673f8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e673f8ae3313884347316ac1617b8b6b5ea6bda))
+* **ux:** Halving step graph adjustments ([#3254](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3254)) ([ece5018](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ece5018fa2c825e10b6255e767dbe2a62be7cd3e))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+
 ## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-graphs-v1.2.0...ui-graphs-v1.3.0) (2026-01-12)
 
 

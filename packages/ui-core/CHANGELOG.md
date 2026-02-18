@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.5.0...ui-core-v1.6.0) (2026-02-18)
+
+
+### Features
+
+* Allow groups of Ledger addresses, multi-device support ([#3268](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3268)) ([8ef6ff3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8ef6ff3935a6aafe42069c4192de7d9bffd94cd2))
+* **locale:** Add German (Deutsch) language support ([#3262](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3262)) ([8b751b8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8b751b8df0a10413f352fcadd50d4308a9bbcbc8))
+* **refactor:** Add latest stylelint setup ([#3215](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3215)) ([a6a33b0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a6a33b0296ef9892b9e44a7fd95199ba07a35ad9))
+* **refactor:** Bump deps, dedot as peer, refresh pnpm.lock ([#3261](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3261)) ([75d783e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75d783ee6a9d0e971aa2b88154d31d8476a89f6e))
+* **refactor:** Theme variable naming revision ([#3214](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3214)) ([7e673f8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e673f8ae3313884347316ac1617b8b6b5ea6bda))
+* **ux:** Draw down secondary theme color ([#3236](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3236)) ([42fa381](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/42fa381ef56d9cd1d16efe1da851691a3b8ad09c))
+* **ux:** Font overrides on per-language basis ([#3288](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3288)) ([0ceb786](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0ceb78605d524ebc6c0d667c238797ef21735123))
+* **ux:** Header menu adjustments ([#3253](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3253)) ([4074928](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/407492824389de4718870e580a2a72ad3125c5ca))
+* **ux:** Manage nominations styling improvements ([#3233](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3233)) ([8c72d47](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8c72d47ae57c0ceea6257147131208c1c3933f03))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+* **ux:** Remove pink tint from dark theme, replace with neutral grays ([#3235](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3235)) ([a0e6658](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a0e6658aa22d773de6b43fc10e3a6e76de399645))
+
 ## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.4.0...ui-core-v1.5.0) (2026-01-12)
 
 
