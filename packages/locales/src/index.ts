@@ -1,7 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { de, enGB, es, ko, ptBR, zhCN } from 'date-fns/locale'
+import { localeDefinitions } from 'consts/locales'
+import { de, enGB, es, ko, type Locale, ptBR, zhCN } from 'date-fns/locale'
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import appEn from './resources/en/app.json'
@@ -12,20 +13,35 @@ import tipsEn from './resources/en/tips.json'
 import type { LocaleEntry } from './types'
 import { doDynamicImport, getInitialLanguage, getResources } from './util'
 
-// The default locale.
+// The default locale
 export const DefaultLocale = 'en'
 
-// Available locales as key value pairs.
-export const locales: Record<string, LocaleEntry> = {
-	en: { dateFormat: enGB, label: 'English' },
-	de: { dateFormat: de, label: 'Deutsch' },
-	ko: { dateFormat: ko, label: '한국어' },
-	pt: { dateFormat: ptBR, label: 'Português' },
-	zh: { dateFormat: zhCN, label: '中文' },
-	es: { dateFormat: es, label: 'Español' },
+// Date formats for each locale
+const dateFormats: Record<string, Locale> = {
+	en: enGB,
+	de: de,
+	ko: ko,
+	pt: ptBR,
+	zh: zhCN,
+	es: es,
 }
 
-// Supported namespaces.
+// Available locales as key value pairs
+export const locales: Record<string, LocaleEntry> = Object.entries(
+	localeDefinitions,
+).reduce(
+	(acc, [key, value]) => {
+		const dateFormat = dateFormats[key]
+		if (!dateFormat) {
+			throw new Error(`Missing date format for locale: ${key}`)
+		}
+		acc[key] = { ...value, dateFormat }
+		return acc
+	},
+	{} as Record<string, LocaleEntry>,
+)
+
+// Supported namespaces
 export const lngNamespaces: string[] = [
 	'app',
 	'help',
@@ -34,7 +50,7 @@ export const lngNamespaces: string[] = [
 	'tips',
 ]
 
-// Default structure of language resources.
+// Default structure of language resources
 export const fallbackResources = {
 	...appEn,
 	...helpEn,
@@ -46,14 +62,13 @@ export const fallbackResources = {
 // Get initial language.
 const lng: string = getInitialLanguage()
 
-// Get default resources and whether a dynamic load is required for
-// the active language.
+// Get default resources and whether a dynamic load is required for the active language
 const { resources, dynamicLoad } = getResources(lng)
 
 // Default language to show before any dynamic load
 const defaultLng = dynamicLoad ? DefaultLocale : lng
 
-// Configure i18n object.
+// Configure i18n object
 i18next
 	// .use(LanguageDetector)
 	.use(initReactI18next)
@@ -64,7 +79,7 @@ i18next
 		resources,
 	})
 
-// Dynamically load default language resources if needed.
+// Dynamically load default language resources if needed
 if (dynamicLoad) {
 	doDynamicImport(lng, i18next)
 }
