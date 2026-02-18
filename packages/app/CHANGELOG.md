@@ -1,5 +1,45 @@
 # Changelog
 
+## [2.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.2.0...app-v2.3.0) (2026-02-18)
+
+
+### Features
+
+* Add Paseo testnet support ([#3237](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3237)) ([6f8254b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f8254b514fba0cd582c33bb33615640b4407170))
+* Allow groups of Ledger addresses, multi-device support ([#3268](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3268)) ([8ef6ff3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8ef6ff3935a6aafe42069c4192de7d9bffd94cd2))
+* **dual-staking:** Re-enable dual staking (nominator + pool member) ([#3265](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3265)) ([3b42de5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3b42de5714aa6d684ac77e1a8fdada7147da3578))
+* Fetch validator identities from Staking API identity cache ([#3210](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3210)) ([77c9f87](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/77c9f87f050caac5ccc4c35e1ea31a4bfd4355c3))
+* **fix:** Fix reward trend API ([#3250](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3250)) ([2540c35](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2540c35fb74851e6c70bd4cf6714e0be84fec70d))
+* **locale:** Add German (Deutsch) language support ([#3262](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3262)) ([8b751b8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8b751b8df0a10413f352fcadd50d4308a9bbcbc8))
+* **nominations:** Add Favorite Validators button to Manage Nominations ([#3264](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3264)) ([0d458be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0d458bed3d0cc7640b5f81738141c016dd202f0c))
+* **refactor:** Add latest stylelint setup ([#3215](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3215)) ([a6a33b0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a6a33b0296ef9892b9e44a7fd95199ba07a35ad9))
+* **refactor:** Async pool role identity fetch ([#3199](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3199)) ([a892941](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/a892941c665943846a55dad0c405beeb445d4554))
+* **refactor:** Bump deps, dedot as peer, refresh pnpm.lock ([#3261](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3261)) ([75d783e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75d783ee6a9d0e971aa2b88154d31d8476a89f6e))
+* **refactor:** Deprecate direct wallet connect support ([#3211](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3211)) ([071cd78](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/071cd78c41d19fd5a2a57123b45837400e9eccfc))
+* **refactor:** Ensure pool title with missing metadata ([#3213](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3213)) ([79eb6bc](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/79eb6bc0cb2512ca94d3cb4be17d41368e1e0c25))
+* **refactor:** Modularise page sections into reusable components ([#3246](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3246)) ([01a9628](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/01a9628aa42a6f033d1dce97c0a89bd3ea58f422))
+* **refactor:** Platform URLs to consts ([#3196](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3196)) ([29e3a17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/29e3a179ca3a7d86006598d9f57251b8fa7b49b8))
+* **refactor:** Stop connecting to relay api on app bootstrap ([#3198](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3198)) ([3d6a52b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3d6a52b5108242d3dda788fd7f483f1e05daff8b))
+* **refactor:** Theme variable naming revision ([#3214](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3214)) ([7e673f8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7e673f8ae3313884347316ac1617b8b6b5ea6bda))
+* **refactor:** Unify pool warning queries ([#3232](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3232)) ([42c521d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/42c521d8591974fd29a456baf12a47044dd73dce))
+* Track provider change events between RPC and Light Client ([#3231](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3231)) ([ca4fbbf](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ca4fbbfe56b5c9f2d481b4db7d47d2b4f02cf7e2))
+* **ux:** Add pool commission change rate warning ([#3230](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3230)) ([554d676](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/554d676099e74d1010c9ecd46ef230317cdcd052))
+* **ux:** Draw down secondary theme color ([#3236](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3236)) ([42fa381](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/42fa381ef56d9cd1d16efe1da851691a3b8ad09c))
+* **ux:** Font overrides on per-language basis ([#3288](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3288)) ([0ceb786](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/0ceb78605d524ebc6c0d667c238797ef21735123))
+* **ux:** Header menu adjustments ([#3253](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3253)) ([4074928](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/407492824389de4718870e580a2a72ad3125c5ca))
+* **ux:** Implement `NominateBuffer` for nominator recommendation ([#3197](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3197)) ([77b57d0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/77b57d0c9c17216f3ad3f37dc918f9ea55d52c18))
+* **ux:** Manage nominations styling improvements ([#3233](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3233)) ([8c72d47](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8c72d47ae57c0ceea6257147131208c1c3933f03))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+* **ux:** Quick action revisions, always show staking CTAs ([#3194](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3194)) ([3cc473b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3cc473b218e0305ffd286fb540059e7fe0d4d24b))
+
+
+### Bug Fixes
+
+* correct Ledger hardware handling bugs ([#3249](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3249)) ([36e6d4b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/36e6d4b1a060a2cabac043c98780858f60d61e73))
+* enable Ledger device confirmation and add debug logging for Nano X address issue ([#3216](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3216)) ([7553146](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7553146e5e7b634970ded42f9798c44a8dec1c2f))
+* resolve proxy account source mismatch preventing delegate signing ([#3287](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3287)) ([02f0a4e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/02f0a4e5f4b3c61eefdf7365a97c3ffd44ee3bb2))
+* Show correct stake amount per validator in nomination status ([#3273](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3273)) ([18cba17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/18cba1736f02b1f8fe8b95ba5551df4d5422bc51))
+
 ## [2.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.1.2...app-v2.2.0) (2026-01-12)
 
 

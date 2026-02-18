@@ -1,14 +1,14 @@
 {
-	"packages/app": "2.2.0",
-	"packages/assets": "1.4.0",
-	"packages/consts": "1.4.0",
-	"packages/locales": "1.5.0",
-	"packages/plugin-staking-api": "1.5.0",
-	"packages/styles": "1.4.0",
-	"packages/types": "1.4.0",
-	"packages/ui-buttons": "1.4.0",
-	"packages/ui-core": "1.5.0",
-	"packages/ui-graphs": "1.3.0",
-	"packages/ui-overlay": "1.4.0",
-	"packages/utils": "1.3.0"
+	"packages/app": "2.3.0",
+	"packages/assets": "1.5.0",
+	"packages/consts": "1.5.0",
+	"packages/locales": "1.6.0",
+	"packages/plugin-staking-api": "1.6.0",
+	"packages/styles": "1.5.0",
+	"packages/types": "1.5.0",
+	"packages/ui-buttons": "1.5.0",
+	"packages/ui-core": "1.6.0",
+	"packages/ui-graphs": "1.4.0",
+	"packages/ui-overlay": "1.5.0",
+	"packages/utils": "1.4.0"
 }
