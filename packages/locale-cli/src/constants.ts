@@ -7,6 +7,7 @@ const LOCALE_DEFINITIONS = {
 	ko: { label: '한국어' },
 	zh: { label: '中文' },
 	es: { label: 'Español' },
+	de: { label: 'Deutsch' },
 } as const
 
 // Supported locales
