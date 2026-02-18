@@ -16,12 +16,12 @@ export const Default = ({
 	submitted,
 	valid,
 	submitText,
-	buttons,
 	submitAccount,
 	displayFor,
 	notEnoughFunds,
+	children,
 }: SubmitProps & {
-	buttons?: ReactNode[]
+	children?: ReactNode
 	notEnoughFunds: boolean
 	submitted: boolean
 }) => {
@@ -37,7 +37,7 @@ export const Default = ({
 					<EstimatedTxFee uid={uid} />
 				</div>
 				<div>
-					{buttons}
+					{children}
 					{displayFor !== 'card' && (
 						<ButtonSubmit
 							lg={displayFor === 'canvas'}

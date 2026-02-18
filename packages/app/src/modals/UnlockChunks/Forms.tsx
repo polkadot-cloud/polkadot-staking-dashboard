@@ -149,18 +149,17 @@ export const Forms = forwardRef(
 					<SubmitTx
 						requiresMigratedController={isStaking}
 						valid={valid}
-						buttons={[
-							<ButtonSubmitInvert
-								key="button_back"
-								text={t('back')}
-								iconLeft={faChevronLeft}
-								iconTransform="shrink-1"
-								onClick={() => setSection(0)}
-							/>,
-						]}
 						{...submitExtrinsic}
 						onResize={onResize}
-					/>
+					>
+						<ButtonSubmitInvert
+							key="button_back"
+							text={t('back')}
+							iconLeft={faChevronLeft}
+							iconTransform="shrink-1"
+							onClick={() => setSection(0)}
+						/>
+					</SubmitTx>
 				</div>
 			</ContentWrapper>
 		)

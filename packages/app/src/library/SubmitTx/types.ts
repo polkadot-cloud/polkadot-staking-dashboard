@@ -19,7 +19,7 @@ export interface ProxySwitcherProps {
 
 export type SubmitTxProps = SubmitProps &
 	ProxySwitcherProps & {
-		buttons?: ReactNode[]
+		children?: ReactNode
 		requiresMigratedController?: boolean
 		proxySupported: boolean
 		noMargin?: boolean

@@ -92,20 +92,15 @@ export const ClaimCommission = ({
 					<p>{t('sentToCommissionPayee')}</p>
 				</Notes>
 			</Padding>
-			<SubmitTx
-				valid={valid}
-				buttons={[
-					<ButtonSubmitInvert
-						key="button_back"
-						text={t('back')}
-						iconLeft={faChevronLeft}
-						iconTransform="shrink-1"
-						onClick={() => setSection(0)}
-					/>,
-				]}
-				onResize={onResize}
-				{...submitExtrinsic}
-			/>
+			<SubmitTx valid={valid} onResize={onResize} {...submitExtrinsic}>
+				<ButtonSubmitInvert
+					key="button_back"
+					text={t('back')}
+					iconLeft={faChevronLeft}
+					iconTransform="shrink-1"
+					onClick={() => setSection(0)}
+				/>
+			</SubmitTx>
 		</>
 	)
 }

@@ -18,12 +18,12 @@ export const Vault = ({
 	submitted,
 	valid,
 	submitText,
-	buttons,
 	submitAccount,
 	displayFor,
 	notEnoughFunds,
+	children,
 }: SubmitProps & {
-	buttons?: ReactNode[]
+	children?: ReactNode
 	notEnoughFunds: boolean
 	submitted: boolean
 }) => {
@@ -57,7 +57,7 @@ export const Vault = ({
 				{valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
 			</div>
 			<div>
-				{buttons}
+				{children}
 				{displayFor !== 'card' ? (
 					<ButtonSubmit
 						disabled={buttonDisabled}

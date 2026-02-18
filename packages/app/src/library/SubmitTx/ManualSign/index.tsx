@@ -9,12 +9,13 @@ import { Vault } from './Vault'
 
 export const ManualSign = (
 	props: SubmitProps & {
-		buttons?: ReactNode[]
+		children?: ReactNode
 		submitted: boolean
 		notEnoughFunds: boolean
 	},
 ) => {
 	const { getAccount } = useImportedAccounts()
+	const { children } = props
 	const accountMeta = getAccount(props.submitAccount)
 	const source = accountMeta?.source
 
@@ -22,8 +23,8 @@ export const ManualSign = (
 	// ensure submit button is displayed.
 	switch (source) {
 		case 'vault':
-			return <Vault {...props} />
+			return <Vault {...props}>{children}</Vault>
 		default:
-			return <Ledger {...props} />
+			return <Ledger {...props}>{children}</Ledger>
 	}
 }

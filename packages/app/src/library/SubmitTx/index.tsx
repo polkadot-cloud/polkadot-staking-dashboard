@@ -19,7 +19,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		uid,
 		onSubmit,
 		submitText,
-		buttons = [],
+		children,
 		submitAccount,
 		valid = false,
 		noMargin = false,
@@ -76,11 +76,12 @@ export const SubmitTx = (props: SubmitTxProps) => {
 						submitted={submitted}
 						valid={valid}
 						submitText={activeSubmitText}
-						buttons={buttons}
 						submitAccount={submitAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
-					/>
+					>
+						{children}
+					</ManualSign>
 				) : (
 					<Default
 						uid={uid}
@@ -88,11 +89,12 @@ export const SubmitTx = (props: SubmitTxProps) => {
 						submitted={submitted}
 						valid={valid}
 						submitText={activeSubmitText}
-						buttons={buttons}
 						submitAccount={submitAccount}
 						displayFor={displayFor}
 						notEnoughFunds={notEnoughFunds}
-					/>
+					>
+						{children}
+					</Default>
 				)
 			}
 			displayFor={displayFor}

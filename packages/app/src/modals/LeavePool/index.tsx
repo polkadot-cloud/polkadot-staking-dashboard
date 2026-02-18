@@ -113,24 +113,17 @@ export const LeavePool = ({
 					deps={[bondDuration]}
 				/>
 			</Padding>
-			<SubmitTx
-				valid={paramsValid}
-				buttons={
-					onClick
-						? [
-								<ButtonSubmitInvert
-									key="button_back"
-									text={t('back')}
-									iconLeft={faChevronLeft}
-									iconTransform="shrink-1"
-									onClick={onClick}
-								/>,
-							]
-						: undefined
-				}
-				onResize={onResize}
-				{...submitExtrinsic}
-			/>
+			<SubmitTx valid={paramsValid} onResize={onResize} {...submitExtrinsic}>
+				{onClick ? (
+					<ButtonSubmitInvert
+						key="button_back"
+						text={t('back')}
+						iconLeft={faChevronLeft}
+						iconTransform="shrink-1"
+						onClick={onClick}
+					/>
+				) : null}
+			</SubmitTx>
 		</>
 	)
 }

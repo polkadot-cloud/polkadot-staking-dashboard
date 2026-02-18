@@ -24,12 +24,12 @@ export const Ledger = ({
 	submitted,
 	valid,
 	submitText,
-	buttons,
 	submitAccount,
 	displayFor,
 	notEnoughFunds,
+	children,
 }: SubmitProps & {
-	buttons?: ReactNode[]
+	children?: ReactNode
 	notEnoughFunds: boolean
 	submitted: boolean
 }) => {
@@ -150,7 +150,7 @@ export const Ledger = ({
 					)}
 				</div>
 				<div>
-					{buttons}
+					{children}
 					<Submit
 						displayFor={displayFor}
 						submitted={submitted}

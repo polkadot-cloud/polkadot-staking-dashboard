@@ -102,18 +102,17 @@ export const SetClaimPermission = ({
 			</Padding>
 			<SubmitTx
 				valid={valid && claimPermission !== membership?.claimPermission}
-				buttons={[
-					<ButtonSubmitInvert
-						key="button_back"
-						text={t('back')}
-						iconLeft={faChevronLeft}
-						iconTransform="shrink-1"
-						onClick={() => setSection(0)}
-					/>,
-				]}
 				onResize={onResize}
 				{...submitExtrinsic}
-			/>
+			>
+				<ButtonSubmitInvert
+					key="button_back"
+					text={t('back')}
+					iconLeft={faChevronLeft}
+					iconTransform="shrink-1"
+					onClick={() => setSection(0)}
+				/>
+			</SubmitTx>
 		</>
 	)
 }

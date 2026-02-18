@@ -152,20 +152,15 @@ export const Forms = forwardRef(
 							<p>{t('afterClaiming')}</p>
 						</div>
 					</Padding>
-					<SubmitTx
-						onResize={onResize}
-						valid={valid}
-						buttons={[
-							<ButtonSubmitInvert
-								key="button_back"
-								text={t('back')}
-								iconLeft={faChevronLeft}
-								iconTransform="shrink-1"
-								onClick={() => setSection(0)}
-							/>,
-						]}
-						{...submitExtrinsic}
-					/>
+					<SubmitTx onResize={onResize} valid={valid} {...submitExtrinsic}>
+						<ButtonSubmitInvert
+							key="button_back"
+							text={t('back')}
+							iconLeft={faChevronLeft}
+							iconTransform="shrink-1"
+							onClick={() => setSection(0)}
+						/>
+					</SubmitTx>
 				</div>
 			</ContentWrapper>
 		)
