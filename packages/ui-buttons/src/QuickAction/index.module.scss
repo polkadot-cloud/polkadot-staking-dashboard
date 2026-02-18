@@ -68,6 +68,11 @@
       font-family: var(--font-family-default);
       color: var(--text-secondary);
       margin-top: 0.5rem;
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 0 0.5rem;
     }
 
     &.active {
