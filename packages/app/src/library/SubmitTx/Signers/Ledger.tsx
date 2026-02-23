@@ -13,7 +13,7 @@ import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
-import type { SubmitProps } from '../../types'
+import type { SubmitProps } from '../types'
 
 export const Ledger = ({
 	uid,
@@ -37,10 +37,10 @@ export const Ledger = ({
 		disabled,
 		feedback,
 		runtimesInconsistent,
-		integrityChecked,
 		text,
 		icon,
 		handleOnClick,
+		message,
 	} = useLedgerTxSubmit({
 		uid,
 		submitted,
@@ -72,11 +72,7 @@ export const Ledger = ({
 					{valid ? (
 						<p className="prompt">
 							<FontAwesomeIcon icon={faCircleExclamation} className="icon" />
-							{feedback?.message
-								? feedback.message
-								: !integrityChecked
-									? t('ledgerConnectAndConfirm')
-									: `${t('deviceVerified')}. ${t('submitTransaction')}`}
+							{message}
 							{feedback?.helpKey && (
 								<ButtonHelpTooltip
 									marginLeft

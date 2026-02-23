@@ -10,8 +10,8 @@ import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
-import { Default } from './Default'
-import { ManualSign } from './ManualSign'
+import { ManualSign } from './Signers'
+import { Extension } from './Signers/Exension'
 import type { SubmitTxProps } from './types'
 
 export const SubmitTx = (props: SubmitTxProps) => {
@@ -85,7 +85,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 				requiresManualSign(submitAccount) ? (
 					<ManualSign {...commonProps}>{children}</ManualSign>
 				) : (
-					<Default {...commonProps}>{children}</Default>
+					<Extension {...commonProps}>{children}</Extension>
 				)
 			}
 			displayFor={displayFor}

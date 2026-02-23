@@ -119,13 +119,20 @@ export const useLedgerTxSubmit = ({
 	// Button icon
 	const icon = !integrityChecked ? faUsb : faSquarePen
 
+	// Determine message text
+	const message = feedback?.message
+		? feedback.message
+		: !integrityChecked
+			? t('ledgerConnectAndConfirm')
+			: `${t('deviceVerified')}. ${t('submitTransaction')}`
+
 	return {
 		text,
 		icon,
 		handleOnClick,
 		disabled,
 		feedback,
+		message,
 		runtimesInconsistent,
-		integrityChecked,
 	}
 }

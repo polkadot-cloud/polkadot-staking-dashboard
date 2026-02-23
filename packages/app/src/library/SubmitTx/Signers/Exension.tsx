@@ -7,10 +7,10 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import type { ReactNode } from 'react'
 import { ButtonSubmit } from 'ui-buttons'
-import { ButtonSubmitLarge } from './ButtonSubmitLarge'
-import type { SubmitProps } from './types'
+import { ButtonSubmitLarge } from '../ButtonSubmitLarge'
+import type { SubmitProps } from '../types'
 
-export const Default = ({
+export const Extension = ({
 	uid,
 	onSubmit,
 	submitted,

@@ -21,6 +21,6 @@ export interface UseLedgerTxSubmitReturn {
 	handleOnClick: () => void | Promise<void>
 	disabled: boolean
 	feedback: FeedbackMessage
+	message: string
 	runtimesInconsistent: boolean
-	integrityChecked: boolean
 }

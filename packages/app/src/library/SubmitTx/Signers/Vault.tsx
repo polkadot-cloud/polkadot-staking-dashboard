@@ -12,7 +12,7 @@ import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
-import type { SubmitProps } from '../../types'
+import type { SubmitProps } from '../types'
 
 export const Vault = ({
 	uid,
