@@ -301,8 +301,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.233.0
-        version: 0.233.0(dedot@1.0.4(typescript@5.9.3))
+        specifier: ^0.239.0
+        version: 0.239.0(dedot@1.0.4(typescript@5.9.3))
       '@w3ux/observables-connect':
         specifier: ^1.0.6
         version: 1.0.6(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
@@ -454,8 +454,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       '@dedot/chaintypes':
-        specifier: ^0.233.0
-        version: 0.233.0(dedot@1.0.4(typescript@5.9.3))
+        specifier: ^0.239.0
+        version: 0.239.0(dedot@1.0.4(typescript@5.9.3))
       '@polkadot/keyring':
         specifier: ^14.0.1
         version: 14.0.1(@polkadot/util-crypto@14.0.1(@polkadot/util@14.0.1))(@polkadot/util@14.0.1)
@@ -505,8 +505,8 @@ importers:
         version: 1.0.4(typescript@5.9.3)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.233.0
-        version: 0.233.0(dedot@1.0.4(typescript@5.9.3))
+        specifier: ^0.239.0
+        version: 0.239.0(dedot@1.0.4(typescript@5.9.3))
       bignumber.js:
         specifier: ^9.3.1
         version: 9.3.1
@@ -958,8 +958,8 @@ packages:
   '@dedot/chain-specs@0.9.0':
     resolution: {integrity: sha512-e2embSQdu8lcMmsBsu2vp/LG3TzfV0BrqfoRzKCms/hXtokej1WJKXPNnYgr4Vwiwjwubms59alUNje73lzaYg==}
 
-  '@dedot/chaintypes@0.233.0':
-    resolution: {integrity: sha512-pVqz52E1cI2b1wg8eR/NhZ2xXYIr3F2PKmsbEiFpyXvC35WL25ibdd/Y7DO5flaRUSNqM4sFxSHHdHBwRfGk2w==}
+  '@dedot/chaintypes@0.239.0':
+    resolution: {integrity: sha512-xf+i0rz31fCNoP5vJmmpz2qs87Ua23S+jFN/8Y9hkdlOjCxkj9uj7AT83gZRLbp1n5va3F74KiU2skOr7xJ4vw==}
     peerDependencies:
       dedot: '>=1.0.1'
 
@@ -3616,6 +3616,7 @@ packages:
   prebuild-install@7.1.3:
     resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
     engines: {node: '>=10'}
+    deprecated: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
     hasBin: true
 
   prettier-plugin-organize-imports@4.3.0:
@@ -4569,7 +4570,7 @@ snapshots:
 
   '@dedot/chain-specs@0.9.0': {}
 
-  '@dedot/chaintypes@0.233.0(dedot@1.0.4(typescript@5.9.3))':
+  '@dedot/chaintypes@0.239.0(dedot@1.0.4(typescript@5.9.3))':
     dependencies:
       dedot: 1.0.4(typescript@5.9.3)
 
