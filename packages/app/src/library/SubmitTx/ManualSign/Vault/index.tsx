@@ -7,6 +7,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { usePrompt } from 'contexts/Prompt'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
+import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
@@ -52,10 +53,10 @@ export const Vault = ({
 
 	return (
 		<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
-			<div>
-				<EstimatedTxFee uid={uid} />
+			<EstimatedTxFee uid={uid} />
+			<SignerFeedback>
 				{valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
-			</div>
+			</SignerFeedback>
 			<div>
 				{children}
 				{displayFor !== 'card' ? (

@@ -11,6 +11,7 @@ import { useLedgerHardware } from 'contexts/LedgerHardware'
 import type { LedgerResponse } from 'contexts/LedgerHardware/types'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -109,21 +110,17 @@ export const Ledger = ({
 
 	return (
 		<>
-			<div>
-				<EstimatedTxFee uid={uid} />
-			</div>
+			<EstimatedTxFee uid={uid} />
 			{runtimesInconsistent && (
-				<div className="inner warning">
-					<div>
-						<p className="prompt">
-							{t('ledgerAppOutOfDate')}
-							<ButtonHelpTooltip
-								definition="Ledger App Not on Latest Runtime Version"
-								openHelp={openHelpTooltip}
-							/>
-						</p>
-					</div>
-				</div>
+				<SignerFeedback>
+					<p className="prompt">
+						{t('ledgerAppOutOfDate')}
+						<ButtonHelpTooltip
+							definition="Ledger App Not on Latest Runtime Version"
+							openHelp={openHelpTooltip}
+						/>
+					</p>
+				</SignerFeedback>
 			)}
 			<div
 				className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}

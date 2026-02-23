@@ -33,9 +33,7 @@ export const Default = ({
 	return (
 		<>
 			<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
-				<div>
-					<EstimatedTxFee uid={uid} />
-				</div>
+				<EstimatedTxFee uid={uid} />
 				<div>
 					{children}
 					{displayFor !== 'card' && (
