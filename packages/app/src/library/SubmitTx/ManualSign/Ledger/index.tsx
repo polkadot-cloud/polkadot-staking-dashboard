@@ -3,21 +3,17 @@
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { appendOrEmpty } from '@w3ux/utils'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
-import type { LedgerResponse } from 'contexts/LedgerHardware/types'
+import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useOverlay } from 'ui-overlay'
+import { ButtonSubmit } from 'ui-buttons'
 import type { SubmitProps } from '../../types'
-import { Submit } from './Submit'
 
 export const Ledger = ({
 	uid,
@@ -35,78 +31,25 @@ export const Ledger = ({
 	submitted: boolean
 }) => {
 	const { t } = useTranslation('app')
-	const {
-		statusCode,
-		setFeedback,
-		getFeedback,
-		isExecuting,
-		setStatusCode,
-		handleUnmount,
-		resetStatusCode,
-		integrityChecked,
-		transportResponse,
-		runtimesInconsistent,
-	} = useLedgerHardware()
 	const { openHelpTooltip } = useHelp()
-	const { setModalResize } = useOverlay().modal
-	const { accountHasSigner } = useImportedAccounts()
 
-	// Handle new Ledger status report.
-	const handleLedgerStatusResponse = (response: LedgerResponse) => {
-		if (!response) {
-			return
-		}
-		const { ack, statusCode: newStatusCode, body } = response
-
-		if (newStatusCode === 'SignedPayload') {
-			if (uid !== body.uid) {
-				// UIDs do not match, so this is not the transaction we are waiting for.
-				setFeedback(t('wrongTransaction'), 'Wrong Transaction')
-			} else {
-				setStatusCode({ ack, statusCode: newStatusCode })
-			}
-			// Reset state pertaining to this transaction.
-			resetStatusCode()
-		} else {
-			setStatusCode({ ack, statusCode: newStatusCode })
-		}
-	}
-
-	// Get the latest Ledger loop feedback.
-	const feedback = getFeedback()
-
-	// The state under which submission is disabled.
-	const disabled =
-		!accountHasSigner(submitAccount) ||
-		!valid ||
-		submitted ||
-		notEnoughFunds ||
-		isExecuting
-
-	// Resize modal on content change.
-	useEffect(() => {
-		setModalResize()
-	}, [
+	const {
+		disabled,
+		feedback,
+		runtimesInconsistent,
 		integrityChecked,
-		valid,
+		text,
+		icon,
+		handleOnClick,
+	} = useLedgerTxSubmit({
+		uid,
 		submitted,
+		valid,
+		submitText,
+		submitAccount,
+		onSubmit,
 		notEnoughFunds,
-		statusCode,
-		isExecuting,
-	])
-
-	// Listen for new Ledger status reports.
-	useEffectIgnoreInitial(() => {
-		handleLedgerStatusResponse(transportResponse)
-	}, [transportResponse])
-
-	// Tidy up context state when this component is no longer mounted.
-	useEffect(
-		() => () => {
-			handleUnmount()
-		},
-		[],
-	)
+	})
 
 	return (
 		<>
@@ -148,13 +91,25 @@ export const Ledger = ({
 				</div>
 				<div>
 					{children}
-					<Submit
-						displayFor={displayFor}
-						submitted={submitted}
-						submitText={submitText}
-						onSubmit={onSubmit}
-						disabled={disabled}
-					/>
+					{displayFor !== 'card' ? (
+						<ButtonSubmit
+							lg={displayFor === 'canvas'}
+							iconLeft={icon}
+							iconTransform="grow-2"
+							text={text}
+							onClick={handleOnClick}
+							disabled={disabled}
+							pulse={!disabled}
+						/>
+					) : (
+						<ButtonSubmitLarge
+							disabled={disabled}
+							onSubmit={handleOnClick}
+							submitText={text}
+							icon={icon}
+							pulse={!disabled}
+						/>
+					)}
 				</div>
 			</div>
 		</>

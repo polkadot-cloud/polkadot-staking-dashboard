@@ -1,39 +1,40 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
-import type { LedgerSubmitProps } from 'library/SubmitTx/types'
+import type { DisplayFor } from 'types'
 import { ButtonSubmit } from 'ui-buttons'
+
+interface LedgerSubmitProps {
+	displayFor?: DisplayFor
+	icon: IconDefinition
+	text: string
+	onSubmit: () => void | Promise<void>
+	disabled: boolean
+}
 
 export const Submit = ({
 	displayFor,
-	submitted,
-	submitText,
+	icon,
+	text,
 	onSubmit,
 	disabled,
 }: LedgerSubmitProps) => {
-	const { text, icon, handleOnClick } = useLedgerTxSubmit({
-		submitted,
-		submitText,
-		onSubmit,
-		disabled,
-	})
-
 	return displayFor !== 'card' ? (
 		<ButtonSubmit
 			lg={displayFor === 'canvas'}
 			iconLeft={icon}
 			iconTransform="grow-2"
 			text={text}
-			onClick={handleOnClick}
+			onClick={onSubmit}
 			disabled={disabled}
 			pulse={!disabled}
 		/>
 	) : (
 		<ButtonSubmitLarge
 			disabled={disabled}
-			onSubmit={handleOnClick}
+			onSubmit={onSubmit}
 			submitText={text}
 			icon={icon}
 			pulse={!disabled}
