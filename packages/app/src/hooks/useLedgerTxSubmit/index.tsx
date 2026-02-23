@@ -12,6 +12,9 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import type { UseLedgerTxSubmitProps, UseLedgerTxSubmitReturn } from './types'
 
+// No-op handler used when the hook is disabled
+const noop = () => {}
+
 export const useLedgerTxSubmit = ({
 	uid,
 	submitted,
@@ -20,6 +23,7 @@ export const useLedgerTxSubmit = ({
 	submitAccount,
 	onSubmit,
 	notEnoughFunds,
+	enabled = true,
 }: UseLedgerTxSubmitProps): UseLedgerTxSubmitReturn => {
 	const { t } = useTranslation('app')
 	const {
@@ -70,10 +74,14 @@ export const useLedgerTxSubmit = ({
 		notEnoughFunds ||
 		isExecuting
 
-	// Resize modal on content change
+	// Resize modal on content change (guarded by enabled)
 	useEffect(() => {
+		if (!enabled) {
+			return
+		}
 		setModalResize()
 	}, [
+		enabled,
 		integrityChecked,
 		valid,
 		submitted,
@@ -83,18 +91,38 @@ export const useLedgerTxSubmit = ({
 		setModalResize,
 	])
 
-	// Listen for new Ledger status reports
+	// Listen for new Ledger status reports (guarded by enabled)
 	useEffectIgnoreInitial(() => {
+		if (!enabled) {
+			return
+		}
 		handleLedgerStatusResponse(transportResponse)
-	}, [transportResponse])
+	}, [enabled, transportResponse])
 
-	// Tidy up context state when this component is no longer mounted
+	// Tidy up context state when this component is no longer mounted (guarded by enabled)
 	useEffect(
 		() => () => {
-			handleUnmount()
+			if (enabled) {
+				handleUnmount()
+			}
 		},
-		[handleUnmount],
+		[enabled, handleUnmount],
 	)
+
+	// When disabled, return idle state
+	if (!enabled) {
+		return {
+			signerType: 'ledger',
+			buttonText: '',
+			buttonIcon: faUsb,
+			buttonOnClick: noop,
+			buttonDisabled: true,
+			buttonPulse: false,
+			feedback: { message: '', helpKey: undefined },
+			message: '',
+			runtimesInconsistent: false,
+		}
+	}
 
 	// Check device runtime version
 	const handleCheckRuntimeVersion = async () => {
@@ -130,6 +158,7 @@ export const useLedgerTxSubmit = ({
 			: `${t('deviceVerified')}. ${t('submitTransaction')}`
 
 	return {
+		signerType: 'ledger',
 		buttonText,
 		buttonIcon,
 		buttonOnClick,

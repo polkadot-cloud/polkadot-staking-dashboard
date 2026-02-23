@@ -4,12 +4,16 @@
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import type { FeedbackMessage } from 'contexts/LedgerHardware/types'
 
+export type SignerType = 'extension' | 'ledger' | 'vault'
+
 /**
  * Common state shape returned by all signer submit hooks. Every signer hook
  * (Extension, Ledger, Vault) and the unified `useSignerSubmit` facade must
  * conform to at least the required fields of this interface.
  */
 export interface SignerSubmitState {
+	/** Which signer type produced this state */
+	signerType: SignerType
 	/** Text displayed on the submit button */
 	buttonText: string
 	/** Icon displayed on the submit button */

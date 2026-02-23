@@ -13,6 +13,8 @@ export interface UseLedgerTxSubmitProps {
 	submitAccount: ActiveAccount
 	onSubmit: () => void
 	notEnoughFunds: boolean
+	/** When false, all side effects are skipped and idle state is returned */
+	enabled?: boolean
 }
 
 export interface UseLedgerTxSubmitReturn extends SignerSubmitState {
