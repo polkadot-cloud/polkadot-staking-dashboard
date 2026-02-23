@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types'
 import type { ReactNode } from 'react'
 import type {
@@ -53,13 +52,4 @@ export interface LedgerSubmitProps {
 	displayFor?: DisplayFor
 	disabled: boolean
 	submitText?: string
-}
-
-export interface ButtonSubmitLargeProps {
-	disabled: boolean
-	onSubmit: () => void
-	submitText: string
-	icon?: IconProp
-	iconTransform?: string
-	pulse: boolean
 }

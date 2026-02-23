@@ -8,11 +8,10 @@ import { useHelp } from 'contexts/Help'
 import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmit } from 'ui-buttons'
+import { ButtonSubmit, ButtonSubmitLarge } from 'ui-buttons'
 import type { SubmitProps } from '../types'
 
 export const Ledger = ({

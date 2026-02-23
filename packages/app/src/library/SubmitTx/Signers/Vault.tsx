@@ -7,11 +7,10 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { usePrompt } from 'contexts/Prompt'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmit } from 'ui-buttons'
+import { ButtonSubmit, ButtonSubmitLarge } from 'ui-buttons'
 import type { SubmitProps } from '../types'
 
 export const Vault = ({

@@ -6,8 +6,7 @@ import { appendOrEmpty } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import type { ReactNode } from 'react'
-import { ButtonSubmit } from 'ui-buttons'
-import { ButtonSubmitLarge } from '../ButtonSubmitLarge'
+import { ButtonSubmit, ButtonSubmitLarge } from 'ui-buttons'
 import type { SubmitProps } from '../types'
 
 export const Extension = ({
