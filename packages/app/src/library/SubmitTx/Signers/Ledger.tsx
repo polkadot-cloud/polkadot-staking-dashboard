@@ -8,10 +8,10 @@ import { useHelp } from 'contexts/Help'
 import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmit, ButtonSubmitLarge } from 'ui-buttons'
 import type { SubmitProps } from '../types'
 
 export const Ledger = ({
@@ -86,25 +86,14 @@ export const Ledger = ({
 				</div>
 				<div>
 					{children}
-					{displayFor !== 'card' ? (
-						<ButtonSubmit
-							lg={displayFor === 'canvas'}
-							iconLeft={icon}
-							iconTransform="grow-2"
-							text={text}
-							onClick={handleOnClick}
-							disabled={disabled}
-							pulse={!disabled}
-						/>
-					) : (
-						<ButtonSubmitLarge
-							disabled={disabled}
-							onSubmit={handleOnClick}
-							submitText={text}
-							icon={icon}
-							pulse={!disabled}
-						/>
-					)}
+					<SubmitButton
+						displayFor={displayFor}
+						text={text}
+						icon={icon}
+						onSubmit={handleOnClick}
+						disabled={disabled}
+						pulse={!disabled}
+					/>
 				</div>
 			</div>
 		</>

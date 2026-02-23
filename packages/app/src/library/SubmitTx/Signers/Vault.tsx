@@ -7,10 +7,10 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { usePrompt } from 'contexts/Prompt'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SignerFeedback } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmit, ButtonSubmitLarge } from 'ui-buttons'
 import type { SubmitProps } from '../types'
 
 export const Vault = ({
@@ -53,25 +53,14 @@ export const Vault = ({
 			</SignerFeedback>
 			<div>
 				{children}
-				{displayFor !== 'card' ? (
-					<ButtonSubmit
-						disabled={buttonDisabled}
-						lg={displayFor === 'canvas'}
-						text={buttonText}
-						iconLeft={faSquarePen}
-						iconTransform="grow-2"
-						onClick={() => onSubmit()}
-						pulse={buttonPulse}
-					/>
-				) : (
-					<ButtonSubmitLarge
-						disabled={disabled}
-						submitText={buttonText}
-						onSubmit={onSubmit}
-						icon={faSquarePen}
-						pulse={!disabled}
-					/>
-				)}
+				<SubmitButton
+					displayFor={displayFor}
+					text={buttonText}
+					icon={faSquarePen}
+					onSubmit={onSubmit}
+					disabled={displayFor === 'card' ? disabled : buttonDisabled}
+					pulse={displayFor === 'card' ? !disabled : buttonPulse}
+				/>
 			</div>
 		</div>
 	)

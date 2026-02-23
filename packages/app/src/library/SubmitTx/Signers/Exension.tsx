@@ -5,8 +5,8 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons'
 import { appendOrEmpty } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
+import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import type { ReactNode } from 'react'
-import { ButtonSubmit, ButtonSubmitLarge } from 'ui-buttons'
 import type { SubmitProps } from '../types'
 
 export const Extension = ({
@@ -29,34 +29,27 @@ export const Extension = ({
 	const disabled =
 		submitted || !valid || !accountHasSigner(submitAccount) || notEnoughFunds
 
+	const submitButton = (
+		<SubmitButton
+			displayFor={displayFor}
+			text={submitText || ''}
+			icon={faArrowAltCircleUp}
+			onSubmit={onSubmit}
+			disabled={disabled}
+			pulse={!disabled}
+		/>
+	)
+
 	return (
 		<>
 			<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
 				<EstimatedTxFee uid={uid} />
 				<div>
 					{children}
-					{displayFor !== 'card' && (
-						<ButtonSubmit
-							lg={displayFor === 'canvas'}
-							text={submitText || ''}
-							iconLeft={faArrowAltCircleUp}
-							iconTransform="grow-2"
-							onClick={() => onSubmit()}
-							disabled={disabled}
-							pulse={!disabled}
-						/>
-					)}
+					{displayFor !== 'card' && submitButton}
 				</div>
 			</div>
-			{displayFor === 'card' && (
-				<ButtonSubmitLarge
-					disabled={disabled}
-					onSubmit={() => onSubmit()}
-					submitText={submitText || ''}
-					icon={faArrowAltCircleUp}
-					pulse={!disabled}
-				/>
-			)}
+			{displayFor === 'card' && submitButton}
 		</>
 	)
 }
