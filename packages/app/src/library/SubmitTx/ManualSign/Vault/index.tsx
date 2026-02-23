@@ -5,6 +5,7 @@ import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
 import { appendOrEmpty } from '@w3ux/utils'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { usePrompt } from 'contexts/Prompt'
+import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import { SignerFeedback } from 'library/Tx/Wrapper'
@@ -36,20 +37,14 @@ export const Vault = ({
 	const disabled =
 		submitted || !valid || !accountHasSigner(submitAccount) || notEnoughFunds
 
-	// Format submit button based on whether signature currently exists or submission is ongoing.
-	let buttonText: string
-	let buttonDisabled: boolean
-	let buttonPulse: boolean
-
-	if (submitted) {
-		buttonText = submitText || ''
-		buttonDisabled = disabled
-		buttonPulse = !(!valid || promptStatus !== 0)
-	} else {
-		buttonText = t('sign')
-		buttonDisabled = disabled || promptStatus !== 0
-		buttonPulse = !disabled || promptStatus === 0
-	}
+	// Get button state from hook
+	const { buttonText, buttonDisabled, buttonPulse } = useVaultTxSubmit({
+		submitted,
+		valid,
+		submitText,
+		promptStatus,
+		disabled,
+	})
 
 	return (
 		<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
