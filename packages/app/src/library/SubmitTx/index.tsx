@@ -62,6 +62,20 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		}
 	}, [notEnoughFunds, requiresMigratedController])
 
+	// Common props to pass through all sign components
+	const commonProps = {
+		uid,
+		onSubmit,
+		submitted,
+		valid,
+		submitText: activeSubmitText,
+		activeSubmitText,
+		submitAccount,
+		displayFor,
+		notEnoughFunds,
+	}
+
+	console.log(submitText)
 	return (
 		<Tx
 			{...props}
@@ -70,31 +84,9 @@ export const SubmitTx = (props: SubmitTxProps) => {
 			margin={!noMargin}
 			SignerComponent={
 				requiresManualSign(submitAccount) ? (
-					<ManualSign
-						uid={uid}
-						onSubmit={onSubmit}
-						submitted={submitted}
-						valid={valid}
-						submitText={activeSubmitText}
-						submitAccount={submitAccount}
-						displayFor={displayFor}
-						notEnoughFunds={notEnoughFunds}
-					>
-						{children}
-					</ManualSign>
+					<ManualSign {...commonProps}>{children}</ManualSign>
 				) : (
-					<Default
-						uid={uid}
-						onSubmit={onSubmit}
-						submitted={submitted}
-						valid={valid}
-						submitText={activeSubmitText}
-						submitAccount={submitAccount}
-						displayFor={displayFor}
-						notEnoughFunds={notEnoughFunds}
-					>
-						{children}
-					</Default>
+					<Default {...commonProps}>{children}</Default>
 				)
 			}
 			displayFor={displayFor}
