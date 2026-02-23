@@ -104,9 +104,7 @@ export const SignerContent = ({
 
 		case 'vault':
 			return (
-				<div
-					className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}
-				>
+				<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
 					<EstimatedTxFee uid={uid} />
 					<SignerFeedback>
 						{valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}

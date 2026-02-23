@@ -7,7 +7,10 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { usePrompt } from 'contexts/Prompt'
 import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
-import type { SignerSubmitState, SignerType } from 'library/SubmitTx/SignerSubmitState'
+import type {
+	SignerSubmitState,
+	SignerType,
+} from 'library/SubmitTx/SignerSubmitState'
 import type { UseSignerSubmitProps } from './types'
 
 export const useSignerSubmit = ({
