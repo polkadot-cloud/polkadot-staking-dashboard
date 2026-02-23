@@ -75,7 +75,6 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		notEnoughFunds,
 	}
 
-	console.log(submitText)
 	return (
 		<Tx
 			{...props}
