@@ -297,6 +297,8 @@
 		"unbondToMinimum": "Desvincular al mínimo",
 		"unbondToMinimumCreate": "Desvincular hasta el mínimo de {{minCreateBondUnit}} {{unit}} de vinculación para depositantes del Pool.",
 		"unbonding": "Desvinculando",
+		"unbondingComplete": "Completo",
+		"unbondingProgress": "Progreso de desvinculación: {{percent}}%",
 		"unbondingWithdraw": "La desvinculación también retirará tus recompensas pendientes de",
 		"undergoingMaintenance": "En Mantenimiento",
 		"unlockChunk": "Los fragmentos de desvinculación no se pueden revincular actualmente en un Pool. Si deseas revincular, retira el fragmento de desvinculación primero y vuelve a vincular los fondos.",

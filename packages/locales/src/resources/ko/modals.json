@@ -297,6 +297,8 @@
 		"unbondToMinimum": "최소값까지 언본드",
 		"unbondToMinimumCreate": "풀 예금자를 위한 {{minCreateBondUnit}} {{unit}} 최소 본드까지 언본드합니다.",
 		"unbonding": "언본딩 중",
+		"unbondingComplete": "완료",
+		"unbondingProgress": "언본딩 진행률: {{percent}}%",
 		"unbondingWithdraw": "언본딩하면 미지급 보상도 인출됩니다",
 		"undergoingMaintenance": "유지보수 중",
 		"unlockChunk": "현재 풀에서 언록 청크를 재본딩할 수 없습니다. 재본딩하려면 먼저 언록 청크를 출금한 후 자금을 다시 본딩하십시오.",

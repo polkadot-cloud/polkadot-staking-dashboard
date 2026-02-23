@@ -287,6 +287,8 @@
 		"unbondToMinimum": "解除至最少质押",
 		"unbondToMinimumCreate": "存款人解除质押到{{minCreateBondUnit}} {{unit}}的最低保证金",
 		"unbonding": "解除质押中",
+		"unbondingComplete": "完成",
+		"unbondingProgress": "解除质押进度：{{percent}}%",
 		"unbondingWithdraw": "解除质押还将提取您的未申领收益",
 		"undergoingMaintenance": "正在进行维护",
 		"unlockChunk": "己解锁的金额当前无法在池中重新质押。如果您希望重新质押，请先取出解锁金额并添加到您的质押中",

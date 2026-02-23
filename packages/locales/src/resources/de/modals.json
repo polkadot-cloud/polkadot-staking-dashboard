@@ -297,6 +297,8 @@
 		"unbondToMinimum": "Zum Minimum entbinden",
 		"unbondToMinimumCreate": "Entbinde bis zum {{minCreateBondUnit}} {{unit}} Mindestbetrag für Pool-Einzahler.",
 		"unbonding": "Entbindung",
+		"unbondingComplete": "Abgeschlossen",
+		"unbondingProgress": "Entbindungsfortschritt: {{percent}}%",
 		"unbondingWithdraw": "Die Entbindung hebt auch deine ausstehenden Belohnungen von",
 		"undergoingMaintenance": "In Wartung",
 		"unlockChunk": "Entsperrte Beträge können derzeit nicht in einem Pool erneut gebunden werden. Wenn du erneut binden möchtest, hebe zunächst den entsperrten Betrag ab und binde die Mittel erneut.",
