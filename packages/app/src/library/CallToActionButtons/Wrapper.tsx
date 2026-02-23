@@ -70,9 +70,10 @@ export const CallToActionWrapper = styled.div`
         justify-content: center;
         overflow: hidden;
         white-space: nowrap;
-        overflow: hidden;
+        text-overflow: ellipsis;
         transition: filter 0.15s;
         flex-shrink: 1;
+        min-width: 0;
 
         &.primary {
           background-color: var(--accent-primary);
@@ -163,7 +164,7 @@ export const CallToActionWrapper = styled.div`
           color: inherit;
           height: inherit;
           transition: transform 0.25s;
-          padding: 0 2rem;
+          padding: 0 1.25rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -171,6 +172,10 @@ export const CallToActionWrapper = styled.div`
           font-size: 1.3rem;
           line-height: 1.3rem;
           width: 100%;
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
 
           .counter {
             font-family: var(--font-family-bold);
