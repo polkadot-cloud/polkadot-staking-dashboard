@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       border-radius: 0.5rem;
     }
 
-    > section {
+    > .submit {
       width: 100%;
 
       > .inner {

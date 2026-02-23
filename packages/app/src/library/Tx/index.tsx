@@ -33,7 +33,7 @@ export const Tx = (props: TxProps) => {
 					dangerMessage={dangerMessage}
 					notEnoughFunds={notEnoughFunds}
 				/>
-				<section>{SignerComponent}</section>
+				<div className="submit">{SignerComponent}</div>
 			</div>
 		</Wrapper>
 	)
