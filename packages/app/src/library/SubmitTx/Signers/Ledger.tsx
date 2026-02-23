@@ -33,12 +33,13 @@ export const Ledger = ({
 	const { openHelpTooltip } = useHelp()
 
 	const {
-		disabled,
+		buttonDisabled,
+		buttonPulse,
 		feedback,
 		runtimesInconsistent,
-		text,
-		icon,
-		handleOnClick,
+		buttonText,
+		buttonIcon,
+		buttonOnClick,
 		message,
 	} = useLedgerTxSubmit({
 		uid,
@@ -88,11 +89,11 @@ export const Ledger = ({
 					{children}
 					<SubmitButton
 						displayFor={displayFor}
-						text={text}
-						icon={icon}
-						onSubmit={handleOnClick}
-						disabled={disabled}
-						pulse={!disabled}
+						text={buttonText}
+						icon={buttonIcon}
+						onSubmit={buttonOnClick}
+						disabled={buttonDisabled}
+						pulse={buttonPulse}
 					/>
 				</div>
 			</div>

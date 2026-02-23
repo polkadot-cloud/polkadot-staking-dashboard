@@ -63,7 +63,7 @@ export const useLedgerTxSubmit = ({
 	const feedback = getFeedback()
 
 	// The state under which submission is disabled
-	const disabled =
+	const buttonDisabled =
 		!accountHasSigner(submitAccount) ||
 		!valid ||
 		submitted ||
@@ -105,10 +105,10 @@ export const useLedgerTxSubmit = ({
 	const txReady = integrityChecked || submitted
 
 	// Button `onClick` handler depends whether integrityChecked and whether tx has been submitted
-	const handleOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
+	const buttonOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
 
 	// Determine button text
-	const text = !integrityChecked
+	const buttonText = !integrityChecked
 		? t('confirm')
 		: txReady
 			? submitText || ''
@@ -117,7 +117,10 @@ export const useLedgerTxSubmit = ({
 				: t('sign')
 
 	// Button icon
-	const icon = !integrityChecked ? faUsb : faSquarePen
+	const buttonIcon = !integrityChecked ? faUsb : faSquarePen
+
+	// Button pulse state
+	const buttonPulse = !buttonDisabled
 
 	// Determine message text
 	const message = feedback?.message
@@ -127,10 +130,11 @@ export const useLedgerTxSubmit = ({
 			: `${t('deviceVerified')}. ${t('submitTransaction')}`
 
 	return {
-		text,
-		icon,
-		handleOnClick,
-		disabled,
+		buttonText,
+		buttonIcon,
+		buttonOnClick,
+		buttonDisabled,
+		buttonPulse,
 		feedback,
 		message,
 		runtimesInconsistent,
