@@ -25,10 +25,7 @@ export const ProgressFill = styled.div<{
 }>`
 	height: 100%;
 	width: ${({ $progress }) => $progress}%;
-	background: ${({ $status }) =>
-		$status === 'unlocked'
-			? 'var(--status-success)'
-			: 'var(--accent-primary)'};
+	background: ${({ $status }) => ($status === 'unlocked' ? 'var(--status-success)' : 'var(--accent-primary)')};
 	border-radius: 0.5rem;
 	transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 `
