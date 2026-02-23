@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
 
-export const SignPrompt = ({
+export const QRSignPrompt = ({
 	submitAddress,
 	toSign,
 	onComplete,
