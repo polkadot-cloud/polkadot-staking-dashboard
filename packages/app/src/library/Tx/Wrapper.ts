@@ -59,6 +59,12 @@ export const Wrapper = styled.div`
           }
         }
 
+        &.msg {
+          border-top: 1px solid var(--border);
+          padding: 0.5rem 0;
+          margin-top: 0.25rem;
+        }
+
         > div {
           display: flex;
 
@@ -93,12 +99,6 @@ export const Wrapper = styled.div`
               margin-left: 0.75rem;
             }
           }
-        }
-
-        &.msg {
-          border-top: 1px solid var(--border);
-          padding: 0.5rem 0;
-          margin-top: 0.25rem;
         }
       }
     }
@@ -144,28 +144,28 @@ export const SignerWrapper = styled.p`
       margin-right: 0.3rem;
     }
   }
+`
 
-  .proxy-switcher {
-    display: flex;
-    align-items: center;
-    margin-left: 0.75rem;
-    gap: 0.4rem;
+export const ProxySwitcher = styled.span`
+  display: flex;
+  align-items: center;
+  margin-left: 0.75rem;
+  gap: 0.4rem;
 
-    button {
-      background: var(--bg-primary);
-      border-radius: 0.5rem;
-      color: var(--text-secondary);
-      padding: 0.1rem 0.4rem;
-      font-size: 0.85rem;
-      transition: all 0.15s;
+  button {
+    background: var(--bg-primary);
+    border-radius: 0.5rem;
+    color: var(--text-secondary);
+    padding: 0.1rem 0.4rem;
+    font-size: 0.85rem;
+    transition: all 0.15s;
 
-      &:hover {
-        color: var(--accent-primary);
-      }
+    &:hover {
+      color: var(--accent-primary);
+    }
 
-      &:disabled {
-        opacity: 0.4;
-      }
+    &:disabled {
+      opacity: 0.4;
     }
   }
 `

@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTranslation } from 'react-i18next'
 import type { SignerProps } from './types'
-import { SignerWrapper } from './Wrapper'
+import { ProxySwitcher, SignerWrapper } from './Wrapper'
 
 export const Signer = (props: SignerProps) => {
 	const {
@@ -58,14 +58,14 @@ export const Signer = (props: SignerProps) => {
 			</span>
 			{signingOpts.who?.name || ''}
 			{hasMultipleSigners && (
-				<span className="proxy-switcher">
+				<ProxySwitcher>
 					<button type="button" onClick={onPreviousSigner} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronLeft} transform="shrink-2" />
 					</button>
 					<button type="button" onClick={onNextSigner} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
 					</button>
-				</span>
+				</ProxySwitcher>
 			)}
 			{notEnoughFunds && (
 				<span className="not-enough">
