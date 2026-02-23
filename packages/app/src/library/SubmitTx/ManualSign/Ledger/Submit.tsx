@@ -1,12 +1,9 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faUsb } from '@fortawesome/free-brands-svg-icons'
-import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import type { LedgerSubmitProps } from 'library/SubmitTx/types'
-import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
 
 export const Submit = ({
@@ -16,32 +13,12 @@ export const Submit = ({
 	onSubmit,
 	disabled,
 }: LedgerSubmitProps) => {
-	const { t } = useTranslation('app')
-	const { isExecuting, integrityChecked, checkRuntimeVersion } =
-		useLedgerHardware()
-
-	// Check device runtime version.
-	const handleCheckRuntimeVersion = async () => {
-		await checkRuntimeVersion()
-	}
-
-	// Is the transaction ready to be submitted?
-	const txReady = integrityChecked || submitted
-
-	// Button `onClick` handler depends whether integrityChecked and whether tx has been submitted.
-	const handleOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
-
-	// Determine button text.
-	const text = !integrityChecked
-		? t('confirm')
-		: txReady
-			? submitText || ''
-			: isExecuting
-				? t('signing')
-				: t('sign')
-
-	// Button icon.
-	const icon = !integrityChecked ? faUsb : faSquarePen
+	const { text, icon, handleOnClick } = useLedgerTxSubmit({
+		submitted,
+		submitText,
+		onSubmit,
+		disabled,
+	})
 
 	return displayFor !== 'card' ? (
 		<ButtonSubmit

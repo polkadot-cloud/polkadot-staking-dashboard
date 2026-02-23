@@ -23,12 +23,12 @@ export const SignPrompt = ({
 	toSign,
 	onComplete,
 }: SignerPromptProps) => {
+	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { getChainSpec } = useApi()
-	const { t } = useTranslation('app')
 	const { genesisHash } = getChainSpec(getStakingChain(network))
 
-	// Whether user is on sign or submit stage.
+	// Whether user is on sign or submit stage
 	const [stage, setStage] = useState<number>(1)
 
 	return (
