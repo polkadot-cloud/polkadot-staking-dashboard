@@ -7,6 +7,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 1.25rem;
+  padding-bottom: 2rem;
 
   &.margin {
     margin-top: 1rem;
@@ -14,10 +16,12 @@ export const Wrapper = styled.div`
 
   > .inner {
     background: var(--bg-modal-footer);
+    box-shadow: 0px 6px 9px var(--shadow-secondary);
+    border-radius: 1.5rem;
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1.25rem;
 
     &.canvas {
       background: var(--bg-card-canvas);
