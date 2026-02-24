@@ -12,6 +12,9 @@ import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import type { UseLedgerTxSubmitProps, UseLedgerTxSubmitReturn } from './types'
 
+// No-op handler used when the hook is disabled
+const noop = () => {}
+
 export const useLedgerTxSubmit = ({
 	uid,
 	submitted,
@@ -20,6 +23,7 @@ export const useLedgerTxSubmit = ({
 	submitAccount,
 	onSubmit,
 	notEnoughFunds,
+	enabled = true,
 }: UseLedgerTxSubmitProps): UseLedgerTxSubmitReturn => {
 	const { t } = useTranslation('app')
 	const {
@@ -63,30 +67,53 @@ export const useLedgerTxSubmit = ({
 	const feedback = getFeedback()
 
 	// The state under which submission is disabled
-	const disabled =
+	const buttonDisabled =
 		!accountHasSigner(submitAccount) ||
 		!valid ||
 		submitted ||
 		notEnoughFunds ||
 		isExecuting
 
-	// Resize modal on content change
+	// Resize modal on content change (guarded by enabled)
 	useEffect(() => {
+		if (!enabled) {
+			return
+		}
 		setModalResize()
 	}, [integrityChecked, valid, submitted, notEnoughFunds, isExecuting])
 
-	// Listen for new Ledger status reports
+	// Listen for new Ledger status reports (guarded by enabled)
 	useEffectIgnoreInitial(() => {
+		if (!enabled) {
+			return
+		}
 		handleLedgerStatusResponse(transportResponse)
-	}, [transportResponse])
+	}, [enabled, transportResponse])
 
-	// Tidy up context state when this component is no longer mounted
+	// Tidy up context state when this component is no longer mounted (guarded by enabled)
 	useEffect(
 		() => () => {
-			handleUnmount()
+			if (enabled) {
+				handleUnmount()
+			}
 		},
-		[handleUnmount],
+		[enabled, handleUnmount],
 	)
+
+	// When disabled, return idle state
+	if (!enabled) {
+		return {
+			signerType: 'ledger',
+			buttonText: '',
+			buttonIcon: faUsb,
+			buttonOnClick: noop,
+			buttonDisabled: true,
+			buttonPulse: false,
+			feedback: { message: '', helpKey: undefined },
+			message: '',
+			runtimesInconsistent: false,
+		}
+	}
 
 	// Check device runtime version
 	const handleCheckRuntimeVersion = async () => {
@@ -97,10 +124,10 @@ export const useLedgerTxSubmit = ({
 	const txReady = integrityChecked || submitted
 
 	// Button `onClick` handler depends whether integrityChecked and whether tx has been submitted
-	const handleOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
+	const buttonOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
 
 	// Determine button text
-	const text = !integrityChecked
+	const buttonText = !integrityChecked
 		? t('confirm')
 		: txReady
 			? submitText || ''
@@ -109,7 +136,10 @@ export const useLedgerTxSubmit = ({
 				: t('sign')
 
 	// Button icon
-	const icon = !integrityChecked ? faUsb : faSquarePen
+	const buttonIcon = !integrityChecked ? faUsb : faSquarePen
+
+	// Button pulse state
+	const buttonPulse = !buttonDisabled
 
 	// Determine message text
 	const message = feedback?.message
@@ -119,10 +149,12 @@ export const useLedgerTxSubmit = ({
 			: `${t('deviceVerified')}. ${t('submitTransaction')}`
 
 	return {
-		text,
-		icon,
-		handleOnClick,
-		disabled,
+		signerType: 'ledger',
+		buttonText,
+		buttonIcon,
+		buttonOnClick,
+		buttonDisabled,
+		buttonPulse,
 		feedback,
 		message,
 		runtimesInconsistent,

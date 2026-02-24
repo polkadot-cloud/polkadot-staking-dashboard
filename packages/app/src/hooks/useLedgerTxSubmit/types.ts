@@ -1,8 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import type { FeedbackMessage } from 'contexts/LedgerHardware/types'
+import type { SignerSubmitState } from 'library/SubmitTx/SignerSubmitState'
 import type { ActiveAccount } from 'types'
 
 export interface UseLedgerTxSubmitProps {
@@ -13,13 +13,12 @@ export interface UseLedgerTxSubmitProps {
 	submitAccount: ActiveAccount
 	onSubmit: () => void
 	notEnoughFunds: boolean
+	/** When false, all side effects are skipped and idle state is returned */
+	enabled?: boolean
 }
 
-export interface UseLedgerTxSubmitReturn {
-	text: string
-	icon: IconDefinition
-	handleOnClick: () => void | Promise<void>
-	disabled: boolean
+export interface UseLedgerTxSubmitReturn extends SignerSubmitState {
+	// Ledger always provides these, so override them to be non-optional
 	feedback: FeedbackMessage
 	message: string
 	runtimesInconsistent: boolean

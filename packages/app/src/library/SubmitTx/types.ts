@@ -47,14 +47,6 @@ export interface SignerPromptProps {
 	) => void
 }
 
-export interface LedgerSubmitProps {
-	onSubmit: () => void
-	submitted: boolean
-	displayFor?: DisplayFor
-	disabled: boolean
-	submitText?: string
-}
-
 export interface SubmitButtonProps {
 	displayFor?: DisplayFor
 	text: string
