@@ -67,87 +67,33 @@
 		"continue": "Continuar",
 		"controllerNotMigrated": "A conta controladora não foi migrada.",
 		"currencies": {
-			"ARS": {
-				"name": "Peso Argentino"
-			},
-			"AUD": {
-				"name": "Dólar Australiano"
-			},
-			"BGN": {
-				"name": "Lev Búlgaro"
-			},
-			"BRL": {
-				"name": "Real Brasileiro"
-			},
-			"CAD": {
-				"name": "Dólar Canadense"
-			},
-			"CHF": {
-				"name": "Franco Suíço"
-			},
-			"CNY": {
-				"name": "Yuan Chinês"
-			},
-			"COP": {
-				"name": "Peso Colombiano"
-			},
-			"CZK": {
-				"name": "Coroa Tcheca"
-			},
-			"EUR": {
-				"name": "Euro"
-			},
-			"GBP": {
-				"name": "Libra Esterlina"
-			},
-			"IDR": {
-				"name": "Rupia Indonésia"
-			},
-			"INR": {
-				"name": "Rupia Indiana"
-			},
-			"JPY": {
-				"name": "Iene Japonês"
-			},
-			"KRW": {
-				"name": "Won Sul-Coreano"
-			},
-			"MXN": {
-				"name": "Peso Mexicano"
-			},
-			"MYR": {
-				"name": "Ringgit Malaio"
-			},
-			"NZD": {
-				"name": "Dólar Neozelandês"
-			},
-			"PHP": {
-				"name": "Peso Filipino"
-			},
-			"PLN": {
-				"name": "Zloty Polonês"
-			},
-			"RON": {
-				"name": "Leu Romeno"
-			},
-			"SGD": {
-				"name": "Dólar de Singapura"
-			},
-			"THB": {
-				"name": "Baht Tailandês"
-			},
-			"TRY": {
-				"name": "Lira Turca"
-			},
-			"UAH": {
-				"name": "Hrívnia Ucraniana"
-			},
-			"USD": {
-				"name": "Dólar Americano"
-			},
-			"ZAR": {
-				"name": "Rand Sul-Africano"
-			}
+			"ARS": { "name": "Peso Argentino" },
+			"AUD": { "name": "Dólar Australiano" },
+			"BGN": { "name": "Lev Búlgaro" },
+			"BRL": { "name": "Real Brasileiro" },
+			"CAD": { "name": "Dólar Canadense" },
+			"CHF": { "name": "Franco Suíço" },
+			"CNY": { "name": "Yuan Chinês" },
+			"COP": { "name": "Peso Colombiano" },
+			"CZK": { "name": "Coroa Tcheca" },
+			"EUR": { "name": "Euro" },
+			"GBP": { "name": "Libra Esterlina" },
+			"IDR": { "name": "Rupia Indonésia" },
+			"INR": { "name": "Rupia Indiana" },
+			"JPY": { "name": "Iene Japonês" },
+			"KRW": { "name": "Won Sul-Coreano" },
+			"MXN": { "name": "Peso Mexicano" },
+			"MYR": { "name": "Ringgit Malaio" },
+			"NZD": { "name": "Dólar Neozelandês" },
+			"PHP": { "name": "Peso Filipino" },
+			"PLN": { "name": "Zloty Polonês" },
+			"RON": { "name": "Leu Romeno" },
+			"SGD": { "name": "Dólar de Singapura" },
+			"THB": { "name": "Baht Tailandês" },
+			"TRY": { "name": "Lira Turca" },
+			"UAH": { "name": "Hrívnia Ucraniana" },
+			"USD": { "name": "Dólar Americano" },
+			"ZAR": { "name": "Rand Sul-Africano" }
 		},
 		"days": "Dias",
 		"decentralizationAnalyticsNotAvailable": "Análise de descentralização não disponível",
@@ -280,6 +226,7 @@
 		"readOnly": "Somente Leitura",
 		"readOnlyAccounts": "Contas Somente Leitura",
 		"readOnlyCannotSign": "Sua conta é somente leitura e não pode assinar transações.",
+		"readyToWithdraw": "Pronto para retirar",
 		"rebond": "Revincular",
 		"rebondSubtitle": "Os fundos revinculados apoiarão as nomeações ativas desde o início da próxima era.",
 		"rebondUnlock": "Você pode reverter os desbloqueios a qualquer momento neste período ou sacá-los para seu saldo livre depois.",
@@ -353,7 +300,6 @@
 		"unbonding": "Desvinculando",
 		"unbondingComplete": "Concluído",
 		"unbondingProgress": "Progresso da desvinculação: {{percent}}%",
-		"readyToWithdraw": "Pronto para retirar",
 		"unbondingWithdraw": "Desvincular também sacará suas recompensas pendentes de",
 		"undergoingMaintenance": "Em Manutenção",
 		"unlockChunk": "Pedaços de desbloqueio não podem ser revinculados em um pool no momento. Se desejar revincular, retire o pedaço de desbloqueio primeiro e revincule os fundos.",

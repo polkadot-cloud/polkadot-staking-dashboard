@@ -274,10 +274,7 @@
 		"permissionlessClaimingTurnedOff": "A reivindicação sem permissão está desativada.",
 		"permissionlessCompound": "Capitalização Aberta: Qualquer um pode capitalizar recompensas para este membro",
 		"permissionlessWithdraw": "Saque Aberto: Qualquer um pode sacar recompensas para este membro",
-		"plugin": {
-			"polkawatch": "Polkawatch",
-			"staking_api": "Staking API"
-		},
+		"plugin": { "polkawatch": "Polkawatch", "staking_api": "Staking API" },
 		"points": "Pontos",
 		"pool": "Pool",
 		"poolClaim": "Reivindicação de Pool",
