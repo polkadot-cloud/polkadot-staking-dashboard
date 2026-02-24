@@ -25,6 +25,10 @@ export const ProgressBar = ({
 	const rounded = Math.round(clamped)
 	const isComplete = status === 'unlocked'
 
+	// Visual minimum: always show at least 1% fill width when actively unbonding
+	// so the bar is visible from the start. Display label still shows the real value.
+	const visualProgress = status === 'unbonding' ? Math.max(1, clamped) : clamped
+
 	const label = isComplete ? t('unbondingComplete') : `${rounded}%`
 
 	return (
@@ -36,7 +40,7 @@ export const ProgressBar = ({
 			aria-label={t('unbondingProgress', { percent: rounded })}
 		>
 			<ProgressTrack>
-				<ProgressFill $progress={clamped} $status={status} />
+				<ProgressFill $progress={visualProgress} $status={status} />
 				{showLabel && <ProgressLabel>{label}</ProgressLabel>}
 			</ProgressTrack>
 		</ProgressBarWrapper>

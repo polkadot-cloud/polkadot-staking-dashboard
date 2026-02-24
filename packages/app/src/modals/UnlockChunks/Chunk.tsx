@@ -1,6 +1,8 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faClock } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTimeLeft } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
@@ -84,16 +86,21 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 					progress={progress}
 					status={isUnlocked ? 'unlocked' : 'unbonding'}
 				/>
-				<h4>
+				<div className="chunk-footer">
 					{isUnlocked ? (
-						t('unlocked')
+						<span className="unlocked-label">{t('unlocked')}</span>
 					) : (
 						<>
-							{t('unlocksInEra')} {era} /&nbsp;
-							<Countdown timeleft={formatted} markup={false} />
+							<span className="era-label">
+								{t('unlocksInEra')} {era}
+							</span>
+							<span className="time-badge">
+								<FontAwesomeIcon icon={faClock} />
+								<Countdown timeleft={formatted} markup={false} />
+							</span>
 						</>
 					)}
-				</h4>
+				</div>
 			</div>
 		</ChunkWrapper>
 	)

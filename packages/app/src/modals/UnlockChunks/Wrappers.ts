@@ -35,14 +35,40 @@ export const ChunkWrapper = styled.div`
       justify-content: space-between;
       width: 100%;
     }
+
+    > .chunk-footer {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.6rem;
+
+      > .era-label {
+        color: var(--text-secondary);
+        font-size: 0.88rem;
+      }
+
+      > .time-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+      }
+
+      > .unlocked-label {
+        color: var(--status-success);
+        font-family: var(--font-family-semibold);
+        font-size: 0.88rem;
+      }
+    }
   }
 
   h2 {
     margin: 0;
-  }
-
-  h4 {
-    color: var(--text-secondary);
-    margin: 0.5rem 0 0 0;
   }
 `
