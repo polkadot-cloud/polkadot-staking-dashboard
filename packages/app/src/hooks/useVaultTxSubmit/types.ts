@@ -1,8 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { SignerSubmitState } from 'library/SubmitTx/SignerSubmitState'
-
 export interface UseVaultTxSubmitProps {
 	submitted: boolean
 	valid: boolean
@@ -11,7 +9,11 @@ export interface UseVaultTxSubmitProps {
 	disabled: boolean
 }
 
-export type UseVaultTxSubmitReturn = Pick<
-	SignerSubmitState,
-	'buttonText' | 'buttonDisabled' | 'buttonPulse'
->
+export interface UseVaultTxSubmitReturn {
+	/** Text displayed on the submit button */
+	buttonText: string
+	/** Whether the submit button is disabled */
+	buttonDisabled: boolean
+	/** Whether the submit button should pulse */
+	buttonPulse: boolean
+}

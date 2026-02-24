@@ -19,7 +19,6 @@ export interface LedgerHardwareContextInterface {
 	resetFeedback: () => void
 	handleUnmount: () => void
 	handleErrors: (err: unknown) => void
-	runtimesInconsistent: boolean
 	handleGetAddress: (accountIndex: number, ss58Prefix: number) => Promise<void>
 	handleResetLedgerTask: () => void
 	fetchLedgerAddress: (

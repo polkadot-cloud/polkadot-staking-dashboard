@@ -35,7 +35,6 @@ export const useLedgerTxSubmit = ({
 		resetStatusCode,
 		integrityChecked,
 		transportResponse,
-		runtimesInconsistent,
 		checkRuntimeVersion,
 	} = useLedgerHardware()
 	const { setModalResize } = useOverlay().modal
@@ -96,13 +95,12 @@ export const useLedgerTxSubmit = ({
 				handleUnmount()
 			}
 		},
-		[enabled, handleUnmount],
+		[enabled],
 	)
 
 	// When disabled, return idle state
 	if (!enabled) {
 		return {
-			signerType: 'ledger',
 			buttonText: '',
 			buttonIcon: faUsb,
 			buttonOnClick: noop,
@@ -110,7 +108,6 @@ export const useLedgerTxSubmit = ({
 			buttonPulse: false,
 			feedback: { message: '', helpKey: undefined },
 			message: '',
-			runtimesInconsistent: false,
 		}
 	}
 
@@ -148,7 +145,6 @@ export const useLedgerTxSubmit = ({
 			: `${t('deviceVerified')}. ${t('submitTransaction')}`
 
 	return {
-		signerType: 'ledger',
 		buttonText,
 		buttonIcon,
 		buttonOnClick,
@@ -156,6 +152,5 @@ export const useLedgerTxSubmit = ({
 		buttonPulse,
 		feedback,
 		message,
-		runtimesInconsistent,
 	}
 }

@@ -105,16 +105,6 @@ export const Wrapper = styled.div`
   }
 `
 
-export const SignerFeedback = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 1rem;
-  margin-bottom: 0.25rem;
-  padding: 0.5rem 0;
-
-`
-
 export const SignerWrapper = styled.p`
   display: flex;
   align-items: center;
