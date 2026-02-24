@@ -61,6 +61,9 @@ export const ChunkWrapper = styled.div`
       }
 
       > .unlocked-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
         color: var(--status-success);
         font-family: var(--font-family-semibold);
         font-size: 0.88rem;

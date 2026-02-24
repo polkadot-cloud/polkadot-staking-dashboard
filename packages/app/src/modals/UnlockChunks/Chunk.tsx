@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faClock } from '@fortawesome/free-regular-svg-icons'
+import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useTimeLeft } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
@@ -88,7 +88,10 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 				/>
 				<div className="chunk-footer">
 					{isUnlocked ? (
-						<span className="unlocked-label">{t('unlocked')}</span>
+						<span className="unlocked-label">
+							<FontAwesomeIcon icon={faCheckCircle} />
+							{t('unlocked')}
+						</span>
 					) : (
 						<>
 							<span className="era-label">

@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import {
 	ProgressBarWrapper,
 	ProgressFill,
-	ProgressLabel,
+	ProgressLabelFill,
+	ProgressLabelTrack,
 	ProgressTrack,
 } from './Wrappers'
 
@@ -41,7 +42,16 @@ export const ProgressBar = ({
 		>
 			<ProgressTrack>
 				<ProgressFill $progress={visualProgress} $status={status} />
-				{showLabel && <ProgressLabel>{label}</ProgressLabel>}
+				{showLabel && (
+					<>
+						<ProgressLabelTrack $progress={clamped} $status={status}>
+							{label}
+						</ProgressLabelTrack>
+						<ProgressLabelFill $progress={visualProgress} $status={status}>
+							{label}
+						</ProgressLabelFill>
+					</>
+				)}
 			</ProgressTrack>
 		</ProgressBarWrapper>
 	)
