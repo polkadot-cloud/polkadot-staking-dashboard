@@ -27,7 +27,6 @@ export const useLedgerTxSubmit = ({
 }: UseLedgerTxSubmitProps): UseLedgerTxSubmitReturn => {
 	const { t } = useTranslation('app')
 	const {
-		statusCode,
 		setFeedback,
 		getFeedback,
 		isExecuting,
