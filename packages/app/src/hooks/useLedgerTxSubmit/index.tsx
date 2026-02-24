@@ -73,15 +73,7 @@ export const useLedgerTxSubmit = ({
 	// Resize modal on content change
 	useEffect(() => {
 		setModalResize()
-	}, [
-		integrityChecked,
-		valid,
-		submitted,
-		notEnoughFunds,
-		statusCode,
-		isExecuting,
-		setModalResize,
-	])
+	}, [integrityChecked, valid, submitted, notEnoughFunds, isExecuting])
 
 	// Listen for new Ledger status reports
 	useEffectIgnoreInitial(() => {
