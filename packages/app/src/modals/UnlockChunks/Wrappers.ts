@@ -23,23 +23,17 @@ export const ChunkWrapper = styled.div`
   > div {
     background: var(--btn-bg);
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column nowrap;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     border-radius: 1rem;
 
-    > section {
+    > .chunk-header {
       display: flex;
-      flex-flow: column wrap;
-      justify-content: flex-end;
-      padding: 0.75rem 0;
-
-      &:first-child {
-        flex-grow: 1;
-      }
-      &:last-child {
-        justify-content: center;
-      }
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
     }
   }
 

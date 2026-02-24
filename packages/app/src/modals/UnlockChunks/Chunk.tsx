@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { fromUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
+import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
 import { Countdown } from 'library/Countdown'
 import { ProgressBar } from 'library/ProgressBar'
 import { useEffect } from 'react'
@@ -25,6 +26,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 	const { network } = useNetwork()
 	const { activeAddress } = useActiveAccounts()
 	const { erasToSeconds } = useErasToTimeLeft()
+	const { get: getEraTimeleft } = useEraTimeLeft()
 
 	const { timeleft, setFromNow } = useTimeLeft({
 		depsTimeleft: [network],
@@ -47,11 +49,17 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 	// duration from chain constants (works for both 28-day and 1-day unbonding).
 	const isUnlocked = left.isLessThanOrEqualTo(0)
 	const startEra = era - bondDuration
+	const erasCompleted = activeEra.index - startEra
+
+	// Add sub-era interpolation so the bar moves within the current era.
+	const { percentSurpassed } = getEraTimeleft()
+	const subEraFraction = percentSurpassed / 100
+
 	const progress = isUnlocked
 		? 100
 		: Math.min(
 				100,
-				Math.max(0, ((activeEra.index - startEra) / bondDuration) * 100),
+				Math.max(0, ((erasCompleted + subEraFraction) / bondDuration) * 100),
 			)
 
 	// reset timer on account or network change.
@@ -62,34 +70,30 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 	return (
 		<ChunkWrapper>
 			<div>
-				<section>
+				<div className="chunk-header">
 					<h2>{`${planckToUnitBn(new BigNumber(value), units)} ${unit}`}</h2>
-					<ProgressBar
-						progress={progress}
-						status={isUnlocked ? 'unlocked' : 'unbonding'}
-					/>
-					<h4>
-						{isUnlocked ? (
-							t('unlocked')
-						) : (
-							<>
-								{t('unlocksInEra')} {era} /&nbsp;
-								<Countdown timeleft={formatted} markup={false} />
-							</>
-						)}
-					</h4>
-				</section>
-				{isStaking ? (
-					<section>
-						<div>
-							<ButtonSubmit
-								text={t('rebond')}
-								disabled={false}
-								onClick={() => onRebond(chunk)}
-							/>
-						</div>
-					</section>
-				) : null}
+					{isStaking && (
+						<ButtonSubmit
+							text={t('rebond')}
+							disabled={false}
+							onClick={() => onRebond(chunk)}
+						/>
+					)}
+				</div>
+				<ProgressBar
+					progress={progress}
+					status={isUnlocked ? 'unlocked' : 'unbonding'}
+				/>
+				<h4>
+					{isUnlocked ? (
+						t('unlocked')
+					) : (
+						<>
+							{t('unlocksInEra')} {era} /&nbsp;
+							<Countdown timeleft={formatted} markup={false} />
+						</>
+					)}
+				</h4>
 			</div>
 		</ChunkWrapper>
 	)

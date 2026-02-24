@@ -37,8 +37,8 @@ export const ProgressBar = ({
 		>
 			<ProgressTrack>
 				<ProgressFill $progress={clamped} $status={status} />
+				{showLabel && <ProgressLabel>{label}</ProgressLabel>}
 			</ProgressTrack>
-			{showLabel && <ProgressLabel>{label}</ProgressLabel>}
 		</ProgressBarWrapper>
 	)
 }
