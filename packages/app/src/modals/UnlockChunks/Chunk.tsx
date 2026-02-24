@@ -82,28 +82,25 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 						/>
 					)}
 				</div>
+				<span className={isUnlocked ? 'status-line ready' : 'status-line'}>
+					<FontAwesomeIcon icon={isUnlocked ? faCheckCircle : faClock} />
+					{isUnlocked ? (
+						t('readyToWithdraw')
+					) : (
+						<Countdown timeleft={formatted} markup={false} />
+					)}
+				</span>
 				<ProgressBar
 					progress={progress}
 					status={isUnlocked ? 'unlocked' : 'unbonding'}
+					showLabel={false}
 				/>
-				<div className="chunk-footer">
-					{isUnlocked ? (
-						<span className="unlocked-label">
-							<FontAwesomeIcon icon={faCheckCircle} />
-							{t('unlocked')}
-						</span>
-					) : (
-						<>
-							<span className="era-label">
-								{t('unlocksInEra')} {era}
-							</span>
-							<span className="time-badge">
-								<FontAwesomeIcon icon={faClock} />
-								<Countdown timeleft={formatted} markup={false} />
-							</span>
-						</>
-					)}
-				</div>
+				{!isUnlocked && (
+					<div className="chunk-bar-labels">
+						<span>{`${t('unlocksInEra')} ${era}`}</span>
+						<span>{`${Math.round(progress)}%`}</span>
+					</div>
+				)}
 			</div>
 		</ChunkWrapper>
 	)

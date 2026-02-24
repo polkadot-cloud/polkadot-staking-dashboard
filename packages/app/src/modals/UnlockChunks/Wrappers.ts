@@ -12,6 +12,15 @@ export const ContentWrapper = styled.div`
   > div:last-child {
     margin-bottom: 0;
   }
+
+  .withdraw-action {
+    margin: 1rem 0 0.5rem 0;
+    width: 100%;
+
+    > button {
+      width: 100%;
+    }
+  }
 `
 
 export const ChunkWrapper = styled.div`
@@ -36,37 +45,30 @@ export const ChunkWrapper = styled.div`
       width: 100%;
     }
 
-    > .chunk-footer {
+    > .status-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 0.35rem;
+
+      &.ready {
+        color: var(--status-success);
+        font-family: var(--font-family-semibold);
+      }
+    }
+
+    > .chunk-bar-labels {
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      gap: 0.75rem;
-      margin-top: 0.6rem;
+      justify-content: space-between;
+      margin-top: 0.4rem;
 
-      > .era-label {
+      > span {
+        font-size: 0.85rem;
         color: var(--text-secondary);
-        font-size: 0.88rem;
-      }
-
-      > .time-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        background: var(--bg-primary);
-        border: 1px solid var(--border);
-        border-radius: 0.5rem;
-        padding: 0.25rem 0.6rem;
-        font-size: 0.82rem;
-        color: var(--text-secondary);
-      }
-
-      > .unlocked-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        color: var(--status-success);
-        font-family: var(--font-family-semibold);
-        font-size: 0.88rem;
       }
     }
   }

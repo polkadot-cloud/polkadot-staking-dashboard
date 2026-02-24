@@ -16,10 +16,10 @@ export const ProgressBarWrapper = styled.div`
 export const ProgressTrack = styled.div`
 	position: relative;
 	background: var(--btn-bg-secondary);
-	border-radius: 0.65rem;
+	border-radius: 0.35rem;
 	display: flex;
 	overflow: hidden;
-	height: 2.5rem;
+	height: 0.7rem;
 	width: 100%;
 `
 
