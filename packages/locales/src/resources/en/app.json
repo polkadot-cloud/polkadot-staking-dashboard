@@ -140,7 +140,6 @@
 			"validationErrorMetadataTooLong": "Metadata exceeds maximum length",
 			"validationErrorParameterRange": "Parameter value out of valid range"
 		},
-		"estimatedFee": "Estimated Fee",
 		"exclude": "Exclude",
 		"exitAdvancedMode": "Exit Advanced Mode",
 		"failed": "Failed",
@@ -149,6 +148,7 @@
 		"favoritePoolRemoved": "Favorite Pool Removed",
 		"favoriteValidatorAdded": "Favorite Validator Added",
 		"favoriteValidatorRemoved": "Favorite Validator Removed",
+		"fee": "Fee",
 		"filter": "Filter",
 		"filterValidators": "Filter Validators",
 		"finalized": "Finalized",

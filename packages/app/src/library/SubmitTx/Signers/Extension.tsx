@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons'
-import { appendOrEmpty } from '@w3ux/utils'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
@@ -20,7 +19,6 @@ interface ExtensionProps {
 
 export const Extension = ({
 	uid,
-	displayFor,
 	submitText,
 	onSubmit,
 	valid,
@@ -28,29 +26,17 @@ export const Extension = ({
 }: ExtensionProps) => {
 	const buttonDisabled = !valid
 
-	const submitButton = (
-		<SubmitButton
-			displayFor={displayFor}
-			text={submitText}
-			icon={faArrowAltCircleUp}
-			onSubmit={onSubmit}
-			disabled={buttonDisabled}
-			pulse={!buttonDisabled}
-		/>
-	)
-
 	return (
-		<>
-			<SubmitButtonWrapper
-				className={`${appendOrEmpty(displayFor === 'card', 'col')}`}
-			>
-				<EstimatedTxFee uid={uid} />
-				<div>
-					{children}
-					{displayFor !== 'card' && submitButton}
-				</div>
-			</SubmitButtonWrapper>
-			{displayFor === 'card' && submitButton}
-		</>
+		<SubmitButtonWrapper>
+			<SubmitButton
+				text={submitText}
+				icon={faArrowAltCircleUp}
+				onSubmit={onSubmit}
+				disabled={buttonDisabled}
+				pulse={!buttonDisabled}
+				fee={<EstimatedTxFee uid={uid} />}
+			/>
+			{children}
+		</SubmitButtonWrapper>
 	)
 }

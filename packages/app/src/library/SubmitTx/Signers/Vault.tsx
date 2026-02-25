@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
-import { appendOrEmpty } from '@w3ux/utils'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
@@ -50,24 +49,17 @@ export const VaultSubmit = ({
 	const finalPulse = isCard ? !finalDisabled : buttonPulse
 
 	return (
-		<>
-			<EstimatedTxFee uid={uid} />
-			<SubmitButtonWrapper
-				className={`${appendOrEmpty(displayFor === 'card', 'col')}`}
-			>
-				<div>
-					{children}
-					<SubmitButton
-						displayFor={displayFor}
-						text={buttonText}
-						icon={faSquarePen}
-						onSubmit={onSubmit}
-						disabled={finalDisabled}
-						pulse={finalPulse}
-					/>
-				</div>
-			</SubmitButtonWrapper>
-		</>
+		<SubmitButtonWrapper>
+			<SubmitButton
+				text={buttonText}
+				icon={faSquarePen}
+				onSubmit={onSubmit}
+				disabled={finalDisabled}
+				pulse={finalPulse}
+				fee={<EstimatedTxFee uid={uid} />}
+			/>
+			{children}
+		</SubmitButtonWrapper>
 	)
 }
 

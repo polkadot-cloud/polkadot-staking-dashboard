@@ -7,8 +7,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 1.25rem;
-  padding-bottom: 2rem;
+  padding: 1rem;
+  padding-bottom: 1.5rem;
 
   &.margin {
     margin-top: 1rem;

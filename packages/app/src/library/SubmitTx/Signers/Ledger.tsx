@@ -3,7 +3,6 @@
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { appendOrEmpty } from '@w3ux/utils'
 import { useHelp } from 'contexts/Help'
 import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
@@ -27,7 +26,6 @@ interface LedgerProps {
 
 export const LedgerSubmit = ({
 	uid,
-	displayFor,
 	valid,
 	submitted,
 	submitText,
@@ -48,24 +46,17 @@ export const LedgerSubmit = ({
 		})
 
 	return (
-		<>
-			<EstimatedTxFee uid={uid} />
-			<SubmitButtonWrapper
-				className={`${appendOrEmpty(displayFor === 'card', 'col')}`}
-			>
-				<div>
-					{children}
-					<SubmitButton
-						displayFor={displayFor}
-						text={buttonText}
-						icon={buttonIcon}
-						onSubmit={buttonOnClick}
-						disabled={buttonDisabled}
-						pulse={buttonPulse}
-					/>
-				</div>
-			</SubmitButtonWrapper>
-		</>
+		<SubmitButtonWrapper>
+			<SubmitButton
+				text={buttonText}
+				icon={buttonIcon}
+				onSubmit={buttonOnClick}
+				disabled={buttonDisabled}
+				pulse={buttonPulse}
+				fee={<EstimatedTxFee uid={uid} />}
+			/>
+			{children}
+		</SubmitButtonWrapper>
 	)
 }
 

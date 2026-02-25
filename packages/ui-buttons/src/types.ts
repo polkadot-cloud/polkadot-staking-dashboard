@@ -145,6 +145,16 @@ export type ButtonSubmitLargeProps = ComponentBaseWithClassName & {
 	pulse?: boolean
 }
 
+export type ButtonSubmitWithFeeProps = ComponentBaseWithClassName & {
+	submitText: string
+	onSubmit: () => void
+	icon?: IconProp | IconDefinition
+	iconTransform?: string
+	disabled?: boolean
+	pulse?: boolean
+	fee?: React.ReactNode
+}
+
 export type ButtonSubmitInvertProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {

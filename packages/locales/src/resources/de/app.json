@@ -140,7 +140,6 @@
 			"validationErrorMetadataTooLong": "Metadaten überschreiten maximale Länge",
 			"validationErrorParameterRange": "Parameterwert außerhalb des gültigen Bereichs"
 		},
-		"estimatedFee": "Geschätzte Gebühr",
 		"exclude": "Ausschließen",
 		"exitAdvancedMode": "Erweiterter Modus beenden",
 		"failed": "Fehlgeschlagen",
@@ -149,6 +148,7 @@
 		"favoritePoolRemoved": "Favorit-Pool entfernt",
 		"favoriteValidatorAdded": "Favorit-Validator hinzugefügt",
 		"favoriteValidatorRemoved": "Favorit-Validator entfernt",
+		"fee": "Gebühr",
 		"filter": "Filter",
 		"filterValidators": "Validatoren filtern",
 		"finalized": "Abgeschlossen",

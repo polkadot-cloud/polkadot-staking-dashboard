@@ -55,4 +55,5 @@ export interface SubmitButtonProps {
 	disabled: boolean
 	pulse?: boolean
 	iconTransform?: string
+	fee?: React.ReactNode
 }

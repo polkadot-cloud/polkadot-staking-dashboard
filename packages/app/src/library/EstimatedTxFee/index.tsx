@@ -8,9 +8,8 @@ import { useTxMeta } from 'contexts/TxMeta'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 import type { EstimatedTxFeeProps } from './types'
-import { Wrapper } from './Wrapper'
 
-export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
+export const EstimatedTxFee = ({ uid }: EstimatedTxFeeProps) => {
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
@@ -21,17 +20,9 @@ export const EstimatedTxFee = ({ uid, format }: EstimatedTxFeeProps) => {
 
 	const txFeesUnit = planckToUnitBn(new BigNumber(fee), units).toFormat()
 
-	return format === 'table' ? (
+	return (
 		<>
-			<div>{t('estimatedFee')}:</div>
-			<div>{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}</div>
+			{t('fee')}:{fee === 0n ? `...` : ` ~${txFeesUnit} ${unit}`}
 		</>
-	) : (
-		<Wrapper>
-			<p>
-				<span>{t('estimatedFee')}:</span>
-				{fee === 0n ? `...` : `${txFeesUnit} ${unit}`}
-			</p>
-		</Wrapper>
 	)
 }

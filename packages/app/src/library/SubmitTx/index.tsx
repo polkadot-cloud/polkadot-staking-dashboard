@@ -53,7 +53,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		submitText ||
 		`${
 			submitted
-				? t('submitting', { ns: 'modals' })
+				? `${t('submitting', { ns: 'modals' })}...`
 				: t('submit', { ns: 'modals' })
 		}`
 
