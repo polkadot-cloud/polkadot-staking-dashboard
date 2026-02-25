@@ -17,11 +17,11 @@ export const Wrapper = styled.div`
   > .inner {
     background: var(--bg-modal-footer);
     box-shadow: 0px 6px 9px var(--shadow-secondary);
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     width: 100%;
     display: flex;
     flex-direction: row;
-    padding: 1.25rem;
+    padding: 0.7rem;
 
     &.canvas {
       background: var(--bg-card-canvas);
@@ -43,16 +43,22 @@ export const Wrapper = styled.div`
     }
 
     > .submit {
+      border-radius: inherit;
+      height: inherit;
       display: flex;
-      flex-grow: 0;
+      flex-grow:1;
+      max-width: 18rem;
     }
   }
 `
 
 export const SubmitButtonWrapper = styled.div`
   display: flex;
+  border-radius: inherit;
   flex-direction: column;
   align-items: flex-end;
+  width: 100%;
+  height: 100%;
 
   &.col {
     flex-direction: column;
@@ -81,7 +87,7 @@ export const SubmitButtonWrapper = styled.div`
       margin-left: 0.75rem;
     }
   } 
-`;
+`
 
 export const PromptWrapper = styled.div`
  p {
