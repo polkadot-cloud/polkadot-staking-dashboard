@@ -1,7 +1,11 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faPenAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+	faCircleExclamation,
+	faPenAlt,
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
@@ -69,7 +73,10 @@ export const VaultPrompt = ({ valid }: { valid: boolean }) => {
 	return (
 		<>
 			{valid ? (
-				<p className="prompt">{t('submitTransaction')}</p>
+				<p className="prompt">
+					<FontAwesomeIcon icon={faCircleExclamation} className="icon" />
+					{t('submitTransaction')}
+				</p>
 			) : (
 				<p className="prompt">...</p>
 			)}

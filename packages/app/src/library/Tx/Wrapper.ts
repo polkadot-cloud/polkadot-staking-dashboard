@@ -41,9 +41,12 @@ export const Wrapper = styled.div`
 
     > .signer {
       display: flex;
+      height: inherit;
       flex-direction: column;
       justify-content: center;
       flex-grow: 1;
+      padding-top: 0.25rem;
+      padding-left: 0.5rem;
     }
 
     > .submit {
@@ -110,11 +113,13 @@ export const SubmitButtonWrapper = styled.div`
 `
 
 export const PromptWrapper = styled.div`
+ margin-top: 0.5rem;
+
  p {
   color: var(--text-secondary);
   display: flex;
   align-items: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin: 0.1rem 0;
   padding-left: 0.5rem;
 
@@ -134,9 +139,12 @@ export const PromptWrapper = styled.div`
 export const SignerWrapper = styled.p`
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
-  padding-bottom: 0.5rem;
+  font-size: 1.1rem;
   margin: 0;
+
+  &.badge-row {
+    padding-bottom: 0.75rem;
+  }
 
   .badge {
     border: 1px solid var(--border-alt);

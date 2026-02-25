@@ -36,6 +36,7 @@ export const Tx = (props: TxProps) => {
 						{...props}
 						dangerMessage={dangerMessage}
 						notEnoughFunds={notEnoughFunds}
+						PromptComponent={PromptComponent}
 					/>
 					<PromptWrapper>{PromptComponent}</PromptWrapper>
 				</div>

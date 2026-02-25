@@ -25,6 +25,7 @@ export const Signer = (props: SignerProps) => {
 		onNextSigner,
 		hasMultipleSigners,
 		valid,
+		PromptComponent,
 	} = props
 	const { t } = useTranslation()
 	const { getAccount } = useImportedAccounts()
@@ -50,12 +51,17 @@ export const Signer = (props: SignerProps) => {
 		}
 	}
 
-	return (
-		<SignerWrapper>
-			<span className="badge">
-				<FontAwesomeIcon icon={faPenToSquare} className="icon" />
-				{signingOpts.label}
-			</span>
+	const showBadgeAbove = !PromptComponent
+
+	const badge = (
+		<span className="badge">
+			<FontAwesomeIcon icon={faPenToSquare} className="icon" />
+			{signingOpts.label}
+		</span>
+	)
+
+	const details = (
+		<>
 			{signingOpts.who?.name || ''}
 			{hasMultipleSigners && (
 				<ProxySwitcher>
@@ -78,6 +84,22 @@ export const Signer = (props: SignerProps) => {
 					<span className="danger">{dangerMessage}</span>
 				</span>
 			)}
+		</>
+	)
+
+	if (showBadgeAbove) {
+		return (
+			<>
+				<SignerWrapper className="badge-row">{badge}</SignerWrapper>
+				<SignerWrapper>{details}</SignerWrapper>
+			</>
+		)
+	}
+
+	return (
+		<SignerWrapper>
+			{badge}
+			{details}
 		</SignerWrapper>
 	)
 }
