@@ -54,7 +54,8 @@ export const Wrapper = styled.div`
       height: inherit;
       display: flex;
       flex-grow: 1;
-      width: 18rem;
+      max-width: 18rem;
+      min-width: 18rem;
 
       @media (width < 600px) {
         max-width: 100%;
