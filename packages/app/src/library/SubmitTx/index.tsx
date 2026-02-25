@@ -8,8 +8,8 @@ import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Extension } from 'library/SubmitTx/Signers/Extension'
-import { Ledger } from 'library/SubmitTx/Signers/Ledger'
-import { Vault } from 'library/SubmitTx/Signers/Vault'
+import { LedgerPrompt, LedgerSubmit } from 'library/SubmitTx/Signers/Ledger'
+import { VaultPrompt, VaultSubmit } from 'library/SubmitTx/Signers/Vault'
 import { Tx } from 'library/Tx'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -65,13 +65,17 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		}
 	}, [notEnoughFunds, requiresMigratedController])
 
-	// Determine signer type
-	let SignerComponent: React.ReactNode
+	// Determine submission component
+	let SubmitComponent: React.ReactNode
+
+	// Determine optional prompt component
+	let PromptComponent: React.ReactNode | undefined
+
 	if (requiresManualSign(submitAccount)) {
 		const accountMeta = getAccount(submitAccount)
 		if (accountMeta?.source === 'vault') {
-			SignerComponent = (
-				<Vault
+			SubmitComponent = (
+				<VaultSubmit
 					uid={uid}
 					displayFor={displayFor}
 					valid={valid}
@@ -82,12 +86,13 @@ export const SubmitTx = (props: SubmitTxProps) => {
 					promptStatus={promptStatus}
 				>
 					{children}
-				</Vault>
+				</VaultSubmit>
 			)
+			PromptComponent = <VaultPrompt valid={valid} />
 		} else {
 			// Ledger
-			SignerComponent = (
-				<Ledger
+			SubmitComponent = (
+				<LedgerSubmit
 					uid={uid}
 					displayFor={displayFor}
 					valid={valid}
@@ -98,12 +103,24 @@ export const SubmitTx = (props: SubmitTxProps) => {
 					notEnoughFunds={notEnoughFunds}
 				>
 					{children}
-				</Ledger>
+				</LedgerSubmit>
+			)
+			PromptComponent = (
+				<LedgerPrompt
+					uid={uid}
+					displayFor={displayFor}
+					valid={valid}
+					submitted={submitted}
+					submitText={activeSubmitText}
+					submitAccount={submitAccount}
+					onSubmit={onSubmit}
+					notEnoughFunds={notEnoughFunds}
+				/>
 			)
 		}
 	} else {
 		// Extension
-		SignerComponent = (
+		SubmitComponent = (
 			<Extension
 				uid={uid}
 				displayFor={displayFor}
@@ -114,6 +131,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 				{children}
 			</Extension>
 		)
+		PromptComponent = undefined
 	}
 
 	return (
@@ -122,7 +140,8 @@ export const SubmitTx = (props: SubmitTxProps) => {
 			notEnoughFunds={notEnoughFunds}
 			dangerMessage={`${t('notEnough', { ns: 'app' })} ${unit}`}
 			margin={!noMargin}
-			SignerComponent={SignerComponent}
+			SubmitComponent={SubmitComponent}
+			PromptComponent={PromptComponent}
 			displayFor={displayFor}
 			transparent={transparent}
 		/>

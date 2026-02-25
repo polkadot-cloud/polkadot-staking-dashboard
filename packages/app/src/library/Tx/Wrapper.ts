@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
     border-radius: 1.5rem;
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 1.25rem;
 
     &.canvas {
@@ -35,13 +35,21 @@ export const Wrapper = styled.div`
       border-radius: 0.5rem;
     }
 
+    > .signer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
     > .submit {
-      width: 100%;
+      display: flex;
+      flex-grow: 0;
 
       > .inner {
         display: flex;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-end;
 
         &.col {
           flex-direction: column;
@@ -64,7 +72,6 @@ export const Wrapper = styled.div`
         }
 
         &.msg {
-          border-top: 1px solid var(--border);
           padding: 0.5rem 0;
           margin-top: 0.25rem;
         }
@@ -72,41 +79,35 @@ export const Wrapper = styled.div`
         > div {
           display: flex;
 
-          &:first-child {
-            flex-direction: column;
-            justify-content: center;
-            flex-grow: 1;
-
-            p {
-              color: var(--text-secondary);
-              display: flex;
-              align-items: center;
-              font-size: 1rem;
-              margin: 0.1rem 0;
-              padding-left: 0.5rem;
-
-              &.prompt {
-                color: var(--accent-primary);
-                font-size: 1.05rem;
-                align-items: flex-start;
-
-                .icon {
-                  margin-top: 0.16rem;
-                  margin-right: 0.5rem;
-                }
-              }
-            }
-          }
-
-          &:last-child {
-            button {
-              margin-left: 0.75rem;
-            }
+          button {
+            margin-left: 0.75rem;
           }
         }
       }
     }
   }
+`
+
+export const PromptWrapper = styled.div`
+ p {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin: 0.1rem 0;
+  padding-left: 0.5rem;
+
+  &.prompt {
+    color: var(--accent-primary);
+    font-size: 1.05rem;
+    align-items: flex-start;
+
+    .icon {
+      margin-top: 0.16rem;
+      margin-right: 0.5rem;
+    }
+  }
+}
 `
 
 export const SignerWrapper = styled.p`

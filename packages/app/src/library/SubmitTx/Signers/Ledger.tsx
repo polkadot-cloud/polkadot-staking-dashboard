@@ -24,7 +24,7 @@ interface LedgerProps {
 	children?: ReactNode
 }
 
-export const Ledger = ({
+export const LedgerSubmit = ({
 	uid,
 	displayFor,
 	valid,
@@ -35,25 +35,16 @@ export const Ledger = ({
 	notEnoughFunds,
 	children,
 }: LedgerProps) => {
-	const { openHelpTooltip } = useHelp()
-
-	const {
-		buttonText,
-		buttonIcon,
-		buttonOnClick,
-		buttonDisabled,
-		buttonPulse,
-		feedback,
-		message,
-	} = useLedgerTxSubmit({
-		uid,
-		submitted,
-		valid,
-		submitText,
-		submitAccount,
-		onSubmit,
-		notEnoughFunds,
-	})
+	const { buttonText, buttonIcon, buttonOnClick, buttonDisabled, buttonPulse } =
+		useLedgerTxSubmit({
+			uid,
+			submitted,
+			valid,
+			submitText,
+			submitAccount,
+			onSubmit,
+			notEnoughFunds,
+		})
 
 	return (
 		<>
@@ -61,23 +52,6 @@ export const Ledger = ({
 			<div
 				className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
 			>
-				<div>
-					{valid ? (
-						<p className="prompt">
-							<FontAwesomeIcon icon={faCircleExclamation} className="icon" />
-							{message}
-							{feedback?.helpKey && (
-								<ButtonHelpTooltip
-									marginLeft
-									definition={feedback?.helpKey}
-									openHelp={openHelpTooltip}
-								/>
-							)}
-						</p>
-					) : (
-						<p className="prompt">...</p>
-					)}
-				</div>
 				<div>
 					{children}
 					<SubmitButton
@@ -91,5 +65,44 @@ export const Ledger = ({
 				</div>
 			</div>
 		</>
+	)
+}
+
+export const LedgerPrompt = ({
+	uid,
+	valid,
+	submitted,
+	submitText,
+	submitAccount,
+	onSubmit,
+	notEnoughFunds,
+}: LedgerProps) => {
+	const { openHelpTooltip } = useHelp()
+	const { feedback, message } = useLedgerTxSubmit({
+		uid,
+		submitted,
+		valid,
+		submitText,
+		submitAccount,
+		onSubmit,
+		notEnoughFunds,
+	})
+
+	if (!valid) {
+		return <p className="prompt">...</p>
+	}
+
+	return (
+		<p className="prompt">
+			<FontAwesomeIcon icon={faCircleExclamation} className="icon" />
+			{message}
+			{feedback?.helpKey && (
+				<ButtonHelpTooltip
+					marginLeft
+					definition={feedback?.helpKey}
+					openHelp={openHelpTooltip}
+				/>
+			)}
+		</p>
 	)
 }

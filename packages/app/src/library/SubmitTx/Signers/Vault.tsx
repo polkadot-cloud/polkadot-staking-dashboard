@@ -22,7 +22,7 @@ interface VaultProps {
 	children?: ReactNode
 }
 
-export const Vault = ({
+export const VaultSubmit = ({
 	uid,
 	displayFor,
 	valid,
@@ -33,8 +33,6 @@ export const Vault = ({
 	promptStatus,
 	children,
 }: VaultProps) => {
-	const { t } = useTranslation('app')
-
 	const { buttonText, buttonDisabled, buttonPulse } = useVaultTxSubmit({
 		submitted,
 		valid,
@@ -57,13 +55,6 @@ export const Vault = ({
 				className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
 			>
 				<div>
-					{valid ? (
-						<p className="prompt">{t('submitTransaction')}</p>
-					) : (
-						<p className="prompt">...</p>
-					)}
-				</div>
-				<div>
 					{children}
 					<SubmitButton
 						displayFor={displayFor}
@@ -75,6 +66,19 @@ export const Vault = ({
 					/>
 				</div>
 			</div>
+		</>
+	)
+}
+
+export const VaultPrompt = ({ valid }: { valid: boolean }) => {
+	const { t } = useTranslation('app')
+	return (
+		<>
+			{valid ? (
+				<p className="prompt">{t('submitTransaction')}</p>
+			) : (
+				<p className="prompt">...</p>
+			)}
 		</>
 	)
 }
