@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "O valor do vínculo pode ter no máximo {{units}} casas decimais.",
 		"bondDecimalsError": "O valor do vínculo pode ter no máximo {{units}} casas decimais.",
 		"bonded": "Vinculado",
-		"browseValidators": "Procurar Validadores",
 		"cancel": "Cancelar",
 		"cancelled": "Cancelado",
 		"chooseAnotherPool": "Escolher Outro Pool",

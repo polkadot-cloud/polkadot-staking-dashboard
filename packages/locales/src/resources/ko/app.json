@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "본드 금액은 최대 {{units}}개의 소수점 자리만 가질 수 있습니다.",
 		"bondDecimalsError": "본드 금액은 최대 {{units}}개의 소수점 자리를 가질 수 있습니다.",
 		"bonded": "본드됨",
-		"browseValidators": "검증인 탐색",
 		"cancel": "취소",
 		"cancelled": "취소됨",
 		"chooseAnotherPool": "다른 풀 선택",

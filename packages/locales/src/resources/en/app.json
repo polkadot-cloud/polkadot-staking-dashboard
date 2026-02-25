@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "Bond amount can only have at most {{units}} decimals.",
 		"bondDecimalsError": "Bond amount can have at most {{units}} decimals.",
 		"bonded": "Bonded",
-		"browseValidators": "Browse Validators",
 		"cancel": "Cancel",
 		"cancelled": "Cancelled",
 		"chooseAnotherPool": "Choose Another Pool",

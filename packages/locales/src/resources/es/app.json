@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "El monto vinculado solo puede tener como máximo {{units}} decimales.",
 		"bondDecimalsError": "El monto vinculado puede tener como máximo {{units}} decimales.",
 		"bonded": "Vinculado",
-		"browseValidators": "Explorar validadores",
 		"cancel": "Cancelar",
 		"cancelled": "Cancelado",
 		"chooseAnotherPool": "Elegir otro pool",

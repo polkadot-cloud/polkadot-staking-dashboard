@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "Der Bond-Betrag kann maximal {{units}} Dezimalstellen haben.",
 		"bondDecimalsError": "Der Bondbetrag kann maximal {{units}} Dezimalstellen haben.",
 		"bonded": "Gebunden",
-		"browseValidators": "Validatoren durchsuchen",
 		"cancel": "Abbrechen",
 		"cancelled": "Abgebrochen",
 		"chooseAnotherPool": "Wähle einen anderen Pool",
