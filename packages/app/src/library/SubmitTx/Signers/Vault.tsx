@@ -1,7 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
+import { faPenAlt } from '@fortawesome/free-solid-svg-icons'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
@@ -52,7 +52,8 @@ export const VaultSubmit = ({
 		<SubmitButtonWrapper>
 			<SubmitButton
 				text={buttonText}
-				icon={faSquarePen}
+				icon={faPenAlt}
+				iconTransform="shrink-4"
 				onSubmit={onSubmit}
 				disabled={finalDisabled}
 				pulse={finalPulse}

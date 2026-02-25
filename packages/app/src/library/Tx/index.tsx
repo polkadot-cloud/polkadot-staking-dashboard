@@ -19,11 +19,13 @@ export const Tx = (props: TxProps) => {
 		SubmitComponent,
 		displayFor = 'default',
 		transparent,
+		stacked = false,
 	} = props
 
 	const innerClasses = classNames('inner', {
 		[displayFor]: ['canvas', 'card'].includes(displayFor),
 		transparent: !!transparent,
+		stacked: !!stacked,
 	})
 
 	return (

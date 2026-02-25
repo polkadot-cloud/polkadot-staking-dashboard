@@ -29,6 +29,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		requiresMigratedController = false,
 		onResize,
 		transparent,
+		stacked,
 	} = props
 
 	const { t } = useTranslation()
@@ -144,6 +145,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 			PromptComponent={PromptComponent}
 			displayFor={displayFor}
 			transparent={transparent}
+			stacked={stacked}
 		/>
 	)
 }

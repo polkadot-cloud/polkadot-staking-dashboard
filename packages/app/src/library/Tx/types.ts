@@ -16,4 +16,5 @@ export interface TxProps extends SignerProps {
 	PromptComponent?: ReactElement
 	displayFor?: DisplayFor
 	transparent?: boolean
+	stacked?: boolean
 }

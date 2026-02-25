@@ -50,6 +50,7 @@ export const LedgerSubmit = ({
 			<SubmitButton
 				text={buttonText}
 				icon={buttonIcon}
+				iconTransform="shrink-3"
 				onSubmit={buttonOnClick}
 				disabled={buttonDisabled}
 				pulse={buttonPulse}

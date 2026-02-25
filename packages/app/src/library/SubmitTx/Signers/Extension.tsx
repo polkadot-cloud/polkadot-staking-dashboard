@@ -1,7 +1,6 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
@@ -30,7 +29,6 @@ export const Extension = ({
 		<SubmitButtonWrapper>
 			<SubmitButton
 				text={submitText}
-				icon={faArrowAltCircleUp}
 				onSubmit={onSubmit}
 				disabled={buttonDisabled}
 				pulse={!buttonDisabled}

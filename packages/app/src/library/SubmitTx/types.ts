@@ -27,6 +27,7 @@ export type SubmitTxProps = SubmitProps &
 		transparent?: boolean
 		txInitiated: boolean
 		proxyAccount: ActiveProxy | null
+		stacked?: boolean
 	}
 
 export interface SubmitProps {
@@ -50,7 +51,7 @@ export interface SignerPromptProps {
 export interface SubmitButtonProps {
 	displayFor?: DisplayFor
 	text: string
-	icon: IconProp
+	icon?: IconProp
 	onSubmit: () => void | Promise<void>
 	disabled: boolean
 	pulse?: boolean

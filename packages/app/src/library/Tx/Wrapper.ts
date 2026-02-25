@@ -23,6 +23,10 @@ export const Wrapper = styled.div`
     flex-direction: row;
     padding: 0.7rem;
 
+    @media (width < 600px) {
+      flex-direction: column;
+    }
+
     &.canvas {
       background: var(--bg-card-canvas);
     }
@@ -46,8 +50,28 @@ export const Wrapper = styled.div`
       border-radius: inherit;
       height: inherit;
       display: flex;
-      flex-grow:1;
+      flex-grow: 1;
       max-width: 18rem;
+
+      @media (width < 600px) {
+        max-width: 100%;
+        margin-top: 0.7rem;
+      }
+    }
+
+
+    &.stacked {
+      flex-direction: column;
+      padding: 0 0.5rem;
+
+      > .signer {
+        padding: 1rem 0 0.25rem 0;
+      }
+
+      > .submit {
+        max-width: 100%;
+        margin-top: 0.7rem;
+      }
     }
   }
 `
@@ -82,10 +106,6 @@ export const SubmitButtonWrapper = styled.div`
   
   > div {
     display: flex;
-
-    button {
-      margin-left: 0.75rem;
-    }
   } 
 `
 

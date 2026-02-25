@@ -6,6 +6,7 @@ import type { SubmitButtonProps } from '../types'
 
 export const SubmitButton = ({
 	text,
+	icon,
 	onSubmit,
 	disabled,
 	pulse,
@@ -17,6 +18,7 @@ export const SubmitButton = ({
 			disabled={disabled}
 			onSubmit={() => onSubmit()}
 			submitText={text}
+			icon={icon}
 			iconTransform={iconTransform}
 			pulse={pulse}
 			fee={fee}
