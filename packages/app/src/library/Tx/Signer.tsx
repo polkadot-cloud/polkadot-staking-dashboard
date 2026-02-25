@@ -26,6 +26,7 @@ export const Signer = (props: SignerProps) => {
 		hasMultipleSigners,
 		valid,
 		PromptComponent,
+		stacked,
 	} = props
 	const { t } = useTranslation()
 	const { getAccount } = useImportedAccounts()
@@ -51,7 +52,7 @@ export const Signer = (props: SignerProps) => {
 		}
 	}
 
-	const showBadgeAbove = !PromptComponent
+	const showBadgeAbove = !PromptComponent && !stacked
 
 	const badge = (
 		<span className="badge">

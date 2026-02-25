@@ -126,7 +126,6 @@ export const PromptWrapper = styled.div`
 
   &.prompt {
     color: var(--accent-primary);
-    font-size: 1.05rem;
     align-items: flex-start;
 
     .icon {
@@ -138,10 +137,12 @@ export const PromptWrapper = styled.div`
 `
 
 export const SignerWrapper = styled.p`
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   font-size: 1.1rem;
   margin: 0;
+  margin-bottom: 0;
 
   &.badge-row {
     padding-bottom: 0.75rem;
