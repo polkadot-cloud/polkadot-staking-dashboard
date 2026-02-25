@@ -9,6 +9,7 @@ import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
+import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import type { ActiveAccount, DisplayFor } from 'types'
 
@@ -49,8 +50,8 @@ export const LedgerSubmit = ({
 	return (
 		<>
 			<EstimatedTxFee uid={uid} />
-			<div
-				className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
+			<SubmitButtonWrapper
+				className={`${appendOrEmpty(displayFor === 'card', 'col')}`}
 			>
 				<div>
 					{children}
@@ -63,7 +64,7 @@ export const LedgerSubmit = ({
 						pulse={buttonPulse}
 					/>
 				</div>
-			</div>
+			</SubmitButtonWrapper>
 		</>
 	)
 }

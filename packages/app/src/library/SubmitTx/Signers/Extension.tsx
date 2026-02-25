@@ -5,6 +5,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons'
 import { appendOrEmpty } from '@w3ux/utils'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
+import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import type { DisplayFor } from 'types'
 
@@ -40,13 +41,15 @@ export const Extension = ({
 
 	return (
 		<>
-			<div className={`inner${appendOrEmpty(displayFor === 'card', 'col')}`}>
+			<SubmitButtonWrapper
+				className={`${appendOrEmpty(displayFor === 'card', 'col')}`}
+			>
 				<EstimatedTxFee uid={uid} />
 				<div>
 					{children}
 					{displayFor !== 'card' && submitButton}
 				</div>
-			</div>
+			</SubmitButtonWrapper>
 			{displayFor === 'card' && submitButton}
 		</>
 	)

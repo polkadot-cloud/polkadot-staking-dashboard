@@ -6,6 +6,7 @@ import { appendOrEmpty } from '@w3ux/utils'
 import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
+import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor } from 'types'
@@ -51,8 +52,8 @@ export const VaultSubmit = ({
 	return (
 		<>
 			<EstimatedTxFee uid={uid} />
-			<div
-				className={`inner msg${appendOrEmpty(displayFor === 'card', 'col')}`}
+			<SubmitButtonWrapper
+				className={`${appendOrEmpty(displayFor === 'card', 'col')}`}
 			>
 				<div>
 					{children}
@@ -65,7 +66,7 @@ export const VaultSubmit = ({
 						pulse={finalPulse}
 					/>
 				</div>
-			</div>
+			</SubmitButtonWrapper>
 		</>
 	)
 }

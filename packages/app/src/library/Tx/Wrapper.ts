@@ -45,48 +45,43 @@ export const Wrapper = styled.div`
     > .submit {
       display: flex;
       flex-grow: 0;
-
-      > .inner {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-
-        &.col {
-          flex-direction: column;
-          margin-top: 0.5rem;
-
-          > div {
-            width: 100%;
-            margin-bottom: 0.4rem;
-
-            > div,
-            > p {
-              width: 100%;
-              margin-bottom: 0.4rem;
-            }
-
-            > div:last-child {
-              margin-bottom: 0;
-            }
-          }
-        }
-
-        &.msg {
-          padding: 0.5rem 0;
-          margin-top: 0.25rem;
-        }
-
-        > div {
-          display: flex;
-
-          button {
-            margin-left: 0.75rem;
-          }
-        }
-      }
     }
   }
 `
+
+export const SubmitButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  &.col {
+    flex-direction: column;
+    margin-top: 0.5rem;
+
+    > div {
+      width: 100%;
+      margin-bottom: 0.4rem;
+
+      > div,
+      > p {
+        width: 100%;
+        margin-bottom: 0.4rem;
+      }
+
+      > div:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  > div {
+    display: flex;
+
+    button {
+      margin-left: 0.75rem;
+    }
+  } 
+`;
 
 export const PromptWrapper = styled.div`
  p {
