@@ -8,11 +8,14 @@ import type { DisplayFor } from 'types'
 export interface SignerProps extends SubmitTxProps {
 	notEnoughFunds: boolean
 	dangerMessage: string
+	PromptComponent?: ReactElement
 }
 
 export interface TxProps extends SignerProps {
 	margin?: boolean
-	SignerComponent: ReactElement
+	SubmitComponent: ReactElement
+	PromptComponent?: ReactElement
 	displayFor?: DisplayFor
 	transparent?: boolean
+	stacked?: boolean
 }

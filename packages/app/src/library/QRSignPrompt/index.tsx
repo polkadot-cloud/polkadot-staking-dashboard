@@ -18,17 +18,17 @@ import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
 import { Wrapper } from './Wrapper'
 
-export const SignPrompt = ({
+export const QRSignPrompt = ({
 	submitAddress,
 	toSign,
 	onComplete,
 }: SignerPromptProps) => {
+	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { getChainSpec } = useApi()
-	const { t } = useTranslation('app')
 	const { genesisHash } = getChainSpec(getStakingChain(network))
 
-	// Whether user is on sign or submit stage.
+	// Whether user is on sign or submit stage
 	const [stage, setStage] = useState<number>(1)
 
 	return (
