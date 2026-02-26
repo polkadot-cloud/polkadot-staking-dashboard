@@ -152,7 +152,12 @@ export const Forms = forwardRef(
 							<p>{t('afterClaiming')}</p>
 						</div>
 					</Padding>
-					<SubmitTx onResize={onResize} valid={valid} {...submitExtrinsic}>
+					<SubmitTx
+						onResize={onResize}
+						submitText={t('claim', { ns: 'modals' })}
+						valid={valid}
+						{...submitExtrinsic}
+					>
 						<ButtonSubmitInvert
 							key="button_back"
 							text={t('back')}

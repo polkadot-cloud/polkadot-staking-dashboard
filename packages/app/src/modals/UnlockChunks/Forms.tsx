@@ -147,6 +147,9 @@ export const Forms = forwardRef(
 						</div>
 					</Padding>
 					<SubmitTx
+						submitText={t(task === 'rebond' ? 'rebond' : 'withdraw', {
+							ns: 'modals',
+						})}
 						requiresMigratedController={isStaking}
 						valid={valid}
 						{...submitExtrinsic}

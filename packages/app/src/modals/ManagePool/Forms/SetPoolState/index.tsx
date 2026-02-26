@@ -146,7 +146,19 @@ export const SetPoolState = ({
 				{content.title}
 				{content.message}
 			</Padding>
-			<SubmitTx valid={valid} onResize={onResize} {...submitExtrinsic}>
+			<SubmitTx
+				submitText={t(
+					task === 'destroy_pool'
+						? 'destroyPool'
+						: task === 'lock_pool'
+							? 'lockPool'
+							: 'unlockPool',
+					{ ns: 'modals' },
+				)}
+				valid={valid}
+				onResize={onResize}
+				{...submitExtrinsic}
+			>
 				<ButtonSubmitInvert
 					key="button_back"
 					text={t('back')}

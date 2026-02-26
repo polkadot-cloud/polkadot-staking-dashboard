@@ -113,7 +113,12 @@ export const LeavePool = ({
 					deps={[bondDuration]}
 				/>
 			</Padding>
-			<SubmitTx valid={paramsValid} onResize={onResize} {...submitExtrinsic}>
+			<SubmitTx
+				submitText={t('leavePool', { ns: 'modals' })}
+				valid={paramsValid}
+				onResize={onResize}
+				{...submitExtrinsic}
+			>
 				{onClick ? (
 					<ButtonSubmitInvert
 						key="button_back"

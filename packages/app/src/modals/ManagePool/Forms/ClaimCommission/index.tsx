@@ -92,7 +92,12 @@ export const ClaimCommission = ({
 					<p>{t('sentToCommissionPayee')}</p>
 				</Notes>
 			</Padding>
-			<SubmitTx valid={valid} onResize={onResize} {...submitExtrinsic}>
+			<SubmitTx
+				submitText={t('claim', { ns: 'modals' })}
+				valid={valid}
+				onResize={onResize}
+				{...submitExtrinsic}
+			>
 				<ButtonSubmitInvert
 					key="button_back"
 					text={t('back')}

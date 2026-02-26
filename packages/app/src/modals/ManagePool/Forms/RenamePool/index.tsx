@@ -105,7 +105,12 @@ export const RenamePool = ({
 				/>
 				<p>{t('storedOnChain')}</p>
 			</Padding>
-			<SubmitTx valid={valid} onResize={onResize} {...submitExtrinsic}>
+			<SubmitTx
+				submitText={t('renamePool', { ns: 'modals' })}
+				valid={valid}
+				onResize={onResize}
+				{...submitExtrinsic}
+			>
 				<ButtonSubmitInvert
 					key="button_back"
 					text={t('back')}
