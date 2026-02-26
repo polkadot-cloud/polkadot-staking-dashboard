@@ -22,7 +22,7 @@ export const EstimatedTxFee = ({ uid }: EstimatedTxFeeProps) => {
 
 	return (
 		<>
-			{t('fee')}:{fee === 0n ? `...` : ` ~${txFeesUnit} ${unit}`}
+			{t('fee')}: {fee === 0n ? '...' : `~${txFeesUnit} ${unit}`}
 		</>
 	)
 }
