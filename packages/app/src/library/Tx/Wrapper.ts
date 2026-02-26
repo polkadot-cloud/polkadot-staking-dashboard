@@ -46,7 +46,6 @@ export const Wrapper = styled.div`
       justify-content: center;
       flex-grow: 1;
       padding-top: 0.25rem;
-      padding-left: 0.5rem;
     }
 
     > .submit {
@@ -115,9 +114,9 @@ export const SubmitButtonWrapper = styled.div`
 `
 
 export const PromptWrapper = styled.div`
- margin-top: 0.5rem;
+  margin-top: 0.5rem;
 
- p {
+  p {
   color: var(--text-secondary);
   display: flex;
   align-items: center;

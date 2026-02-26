@@ -101,18 +101,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 					notEnoughFunds={notEnoughFunds}
 				/>
 			)
-			PromptComponent = (
-				<LedgerPrompt
-					uid={uid}
-					displayFor={displayFor}
-					valid={valid}
-					submitted={submitted}
-					submitText={activeSubmitText}
-					submitAccount={submitAccount}
-					onSubmit={onSubmit}
-					notEnoughFunds={notEnoughFunds}
-				/>
-			)
+			PromptComponent = <LedgerPrompt valid={valid} />
 		}
 	} else {
 		// Extension

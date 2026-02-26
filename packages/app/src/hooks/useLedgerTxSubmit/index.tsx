@@ -28,7 +28,6 @@ export const useLedgerTxSubmit = ({
 	const { t } = useTranslation('app')
 	const {
 		setFeedback,
-		getFeedback,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -60,9 +59,6 @@ export const useLedgerTxSubmit = ({
 			setStatusCode({ ack, statusCode: newStatusCode })
 		}
 	}
-
-	// Get the latest Ledger loop feedback
-	const feedback = getFeedback()
 
 	// The state under which submission is disabled
 	const buttonDisabled =
@@ -106,8 +102,6 @@ export const useLedgerTxSubmit = ({
 			buttonOnClick: noop,
 			buttonDisabled: true,
 			buttonPulse: false,
-			feedback: { message: '', helpKey: undefined },
-			message: '',
 		}
 	}
 
@@ -137,20 +131,11 @@ export const useLedgerTxSubmit = ({
 	// Button pulse state
 	const buttonPulse = !buttonDisabled
 
-	// Determine message text
-	const message = feedback?.message
-		? feedback.message
-		: !integrityChecked
-			? t('ledgerConnectAndConfirm')
-			: `${t('deviceVerified')}. ${t('submitTransaction')}`
-
 	return {
 		buttonText,
 		buttonIcon,
 		buttonOnClick,
 		buttonDisabled,
 		buttonPulse,
-		feedback,
-		message,
 	}
 }

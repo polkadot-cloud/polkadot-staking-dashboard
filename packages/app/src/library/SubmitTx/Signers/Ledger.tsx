@@ -4,6 +4,7 @@
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
+import { useLedgerTxPrompt } from 'hooks/useLedgerTxPrompt'
 import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
@@ -20,6 +21,10 @@ interface LedgerProps {
 	submitAccount: ActiveAccount
 	onSubmit: () => void
 	notEnoughFunds: boolean
+}
+
+interface LedgerPromptProps {
+	valid: boolean
 }
 
 export const LedgerSubmit = ({
@@ -57,25 +62,9 @@ export const LedgerSubmit = ({
 	)
 }
 
-export const LedgerPrompt = ({
-	uid,
-	valid,
-	submitted,
-	submitText,
-	submitAccount,
-	onSubmit,
-	notEnoughFunds,
-}: LedgerProps) => {
+export const LedgerPrompt = ({ valid }: LedgerPromptProps) => {
 	const { openHelpTooltip } = useHelp()
-	const { feedback, message } = useLedgerTxSubmit({
-		uid,
-		submitted,
-		valid,
-		submitText,
-		submitAccount,
-		onSubmit,
-		notEnoughFunds,
-	})
+	const { feedback, message } = useLedgerTxPrompt()
 
 	if (!valid) {
 		return <p className="prompt">...</p>
