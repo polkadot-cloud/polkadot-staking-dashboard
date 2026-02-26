@@ -9,7 +9,6 @@ import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
-import type { ReactNode } from 'react'
 import type { ActiveAccount, DisplayFor } from 'types'
 
 interface LedgerProps {
@@ -21,7 +20,6 @@ interface LedgerProps {
 	submitAccount: ActiveAccount
 	onSubmit: () => void
 	notEnoughFunds: boolean
-	children?: ReactNode
 }
 
 export const LedgerSubmit = ({
@@ -32,7 +30,6 @@ export const LedgerSubmit = ({
 	submitAccount,
 	onSubmit,
 	notEnoughFunds,
-	children,
 }: LedgerProps) => {
 	const { buttonText, buttonIcon, buttonOnClick, buttonDisabled, buttonPulse } =
 		useLedgerTxSubmit({
@@ -56,7 +53,6 @@ export const LedgerSubmit = ({
 				pulse={buttonPulse}
 				fee={<EstimatedTxFee uid={uid} />}
 			/>
-			{children}
 		</SubmitButtonWrapper>
 	)
 }

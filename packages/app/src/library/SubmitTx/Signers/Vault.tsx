@@ -10,7 +10,6 @@ import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
-import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor } from 'types'
 
@@ -23,7 +22,6 @@ interface VaultProps {
 	onSubmit: () => void
 	notEnoughFunds: boolean
 	promptStatus: number
-	children?: ReactNode
 }
 
 export const VaultSubmit = ({
@@ -35,7 +33,6 @@ export const VaultSubmit = ({
 	onSubmit,
 	notEnoughFunds,
 	promptStatus,
-	children,
 }: VaultProps) => {
 	const { buttonText, buttonDisabled, buttonPulse } = useVaultTxSubmit({
 		submitted,
@@ -63,7 +60,6 @@ export const VaultSubmit = ({
 				pulse={finalPulse}
 				fee={<EstimatedTxFee uid={uid} />}
 			/>
-			{children}
 		</SubmitButtonWrapper>
 	)
 }

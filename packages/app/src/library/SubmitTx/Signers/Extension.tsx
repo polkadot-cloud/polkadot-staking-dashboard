@@ -4,7 +4,6 @@
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
-import type { ReactNode } from 'react'
 import type { DisplayFor } from 'types'
 
 interface ExtensionProps {
@@ -13,7 +12,6 @@ interface ExtensionProps {
 	submitText: string
 	onSubmit: () => void
 	valid: boolean
-	children?: ReactNode
 }
 
 export const Extension = ({
@@ -21,7 +19,6 @@ export const Extension = ({
 	submitText,
 	onSubmit,
 	valid,
-	children,
 }: ExtensionProps) => {
 	const buttonDisabled = !valid
 
@@ -34,7 +31,6 @@ export const Extension = ({
 				pulse={!buttonDisabled}
 				fee={<EstimatedTxFee uid={uid} />}
 			/>
-			{children}
 		</SubmitButtonWrapper>
 	)
 }

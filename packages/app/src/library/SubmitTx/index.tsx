@@ -21,7 +21,6 @@ export const SubmitTx = (props: SubmitTxProps) => {
 		uid,
 		onSubmit,
 		submitText,
-		children,
 		submitAccount,
 		valid = false,
 		noMargin = false,
@@ -85,9 +84,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 					onSubmit={onSubmit}
 					notEnoughFunds={notEnoughFunds}
 					promptStatus={promptStatus}
-				>
-					{children}
-				</VaultSubmit>
+				/>
 			)
 			PromptComponent = <VaultPrompt valid={valid} />
 		} else {
@@ -102,9 +99,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 					submitAccount={submitAccount}
 					onSubmit={onSubmit}
 					notEnoughFunds={notEnoughFunds}
-				>
-					{children}
-				</LedgerSubmit>
+				/>
 			)
 			PromptComponent = (
 				<LedgerPrompt
@@ -128,9 +123,7 @@ export const SubmitTx = (props: SubmitTxProps) => {
 				submitText={activeSubmitText}
 				onSubmit={onSubmit}
 				valid={valid}
-			>
-				{children}
-			</Extension>
+			/>
 		)
 		PromptComponent = undefined
 	}

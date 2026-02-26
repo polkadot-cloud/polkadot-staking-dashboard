@@ -3,7 +3,6 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types'
-import type { ReactNode } from 'react'
 import type {
 	ActiveAccount,
 	ActiveProxy,
@@ -19,7 +18,6 @@ export interface ProxySwitcherProps {
 
 export type SubmitTxProps = SubmitProps &
 	ProxySwitcherProps & {
-		children?: ReactNode
 		requiresMigratedController?: boolean
 		proxySupported: boolean
 		noMargin?: boolean
