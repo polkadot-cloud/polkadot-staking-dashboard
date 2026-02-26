@@ -10,14 +10,12 @@ import { onNewNominatorButtonPressedEvent } from 'event-tracking'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
 import type { NewNominatorProps } from '../types'
 
 export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { t } = useTranslation()
 	const { isReady } = useApi()
-	const navigate = useNavigate()
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { activeAddress } = useActiveAccounts()
@@ -48,15 +46,6 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 					disabled: nominateButtonDisabled,
 					kind: 'primary',
 					pulse: !nominateButtonDisabled,
-				},
-			],
-		},
-		{
-			buttons: [
-				{
-					label: t('browseValidators', { ns: 'app' }),
-					onClick: () => navigate('/validators'),
-					kind: 'secondary',
 				},
 			],
 		},

@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "Der Bond-Betrag kann maximal {{units}} Dezimalstellen haben.",
 		"bondDecimalsError": "Der Bondbetrag kann maximal {{units}} Dezimalstellen haben.",
 		"bonded": "Gebunden",
-		"browseValidators": "Validatoren durchsuchen",
 		"cancel": "Abbrechen",
 		"cancelled": "Abgebrochen",
 		"chooseAnotherPool": "Wähle einen anderen Pool",
@@ -140,7 +139,6 @@
 			"validationErrorMetadataTooLong": "Metadaten überschreiten maximale Länge",
 			"validationErrorParameterRange": "Parameterwert außerhalb des gültigen Bereichs"
 		},
-		"estimatedFee": "Geschätzte Gebühr",
 		"exclude": "Ausschließen",
 		"exitAdvancedMode": "Erweiterter Modus beenden",
 		"failed": "Fehlgeschlagen",
@@ -149,6 +147,7 @@
 		"favoritePoolRemoved": "Favorit-Pool entfernt",
 		"favoriteValidatorAdded": "Favorit-Validator hinzugefügt",
 		"favoriteValidatorRemoved": "Favorit-Validator entfernt",
+		"fee": "Gebühr",
 		"filter": "Filter",
 		"filterValidators": "Validatoren filtern",
 		"finalized": "Abgeschlossen",

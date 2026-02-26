@@ -67,87 +67,33 @@
 		"continue": "Continuar",
 		"controllerNotMigrated": "A conta controladora não foi migrada.",
 		"currencies": {
-			"ARS": {
-				"name": "Peso Argentino"
-			},
-			"AUD": {
-				"name": "Dólar Australiano"
-			},
-			"BGN": {
-				"name": "Lev Búlgaro"
-			},
-			"BRL": {
-				"name": "Real Brasileiro"
-			},
-			"CAD": {
-				"name": "Dólar Canadense"
-			},
-			"CHF": {
-				"name": "Franco Suíço"
-			},
-			"CNY": {
-				"name": "Yuan Chinês"
-			},
-			"COP": {
-				"name": "Peso Colombiano"
-			},
-			"CZK": {
-				"name": "Coroa Tcheca"
-			},
-			"EUR": {
-				"name": "Euro"
-			},
-			"GBP": {
-				"name": "Libra Esterlina"
-			},
-			"IDR": {
-				"name": "Rupia Indonésia"
-			},
-			"INR": {
-				"name": "Rupia Indiana"
-			},
-			"JPY": {
-				"name": "Iene Japonês"
-			},
-			"KRW": {
-				"name": "Won Sul-Coreano"
-			},
-			"MXN": {
-				"name": "Peso Mexicano"
-			},
-			"MYR": {
-				"name": "Ringgit Malaio"
-			},
-			"NZD": {
-				"name": "Dólar Neozelandês"
-			},
-			"PHP": {
-				"name": "Peso Filipino"
-			},
-			"PLN": {
-				"name": "Zloty Polonês"
-			},
-			"RON": {
-				"name": "Leu Romeno"
-			},
-			"SGD": {
-				"name": "Dólar de Singapura"
-			},
-			"THB": {
-				"name": "Baht Tailandês"
-			},
-			"TRY": {
-				"name": "Lira Turca"
-			},
-			"UAH": {
-				"name": "Hrívnia Ucraniana"
-			},
-			"USD": {
-				"name": "Dólar Americano"
-			},
-			"ZAR": {
-				"name": "Rand Sul-Africano"
-			}
+			"ARS": { "name": "Peso Argentino" },
+			"AUD": { "name": "Dólar Australiano" },
+			"BGN": { "name": "Lev Búlgaro" },
+			"BRL": { "name": "Real Brasileiro" },
+			"CAD": { "name": "Dólar Canadense" },
+			"CHF": { "name": "Franco Suíço" },
+			"CNY": { "name": "Yuan Chinês" },
+			"COP": { "name": "Peso Colombiano" },
+			"CZK": { "name": "Coroa Tcheca" },
+			"EUR": { "name": "Euro" },
+			"GBP": { "name": "Libra Esterlina" },
+			"IDR": { "name": "Rupia Indonésia" },
+			"INR": { "name": "Rupia Indiana" },
+			"JPY": { "name": "Iene Japonês" },
+			"KRW": { "name": "Won Sul-Coreano" },
+			"MXN": { "name": "Peso Mexicano" },
+			"MYR": { "name": "Ringgit Malaio" },
+			"NZD": { "name": "Dólar Neozelandês" },
+			"PHP": { "name": "Peso Filipino" },
+			"PLN": { "name": "Zloty Polonês" },
+			"RON": { "name": "Leu Romeno" },
+			"SGD": { "name": "Dólar de Singapura" },
+			"THB": { "name": "Baht Tailandês" },
+			"TRY": { "name": "Lira Turca" },
+			"UAH": { "name": "Hrívnia Ucraniana" },
+			"USD": { "name": "Dólar Americano" },
+			"ZAR": { "name": "Rand Sul-Africano" }
 		},
 		"days": "Dias",
 		"decentralizationAnalyticsNotAvailable": "Análise de descentralização não disponível",

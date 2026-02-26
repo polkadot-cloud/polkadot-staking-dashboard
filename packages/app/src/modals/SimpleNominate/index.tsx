@@ -125,6 +125,7 @@ export const SimpleNominate = () => {
 					submitText={t('startNominating')}
 					valid={bondValid}
 					{...submitExtrinsic}
+					stacked
 				/>
 			</div>
 		</>

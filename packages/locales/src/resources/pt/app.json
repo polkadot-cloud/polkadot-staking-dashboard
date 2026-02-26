@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "O valor do vínculo pode ter no máximo {{units}} casas decimais.",
 		"bondDecimalsError": "O valor do vínculo pode ter no máximo {{units}} casas decimais.",
 		"bonded": "Vinculado",
-		"browseValidators": "Procurar Validadores",
 		"cancel": "Cancelar",
 		"cancelled": "Cancelado",
 		"chooseAnotherPool": "Escolher Outro Pool",
@@ -140,7 +139,6 @@
 			"validationErrorMetadataTooLong": "Metadados excedem o comprimento máximo",
 			"validationErrorParameterRange": "Valor do parâmetro fora do intervalo válido"
 		},
-		"estimatedFee": "Taxa Estimada",
 		"exclude": "Excluir",
 		"exitAdvancedMode": "Sair do Modo Avançado",
 		"failed": "Falhou",
@@ -149,6 +147,7 @@
 		"favoritePoolRemoved": "Pool Favorito Removido",
 		"favoriteValidatorAdded": "Validador Favorito Adicionado",
 		"favoriteValidatorRemoved": "Validador Favorito Removido",
+		"fee": "Taxa",
 		"filter": "Filtrar",
 		"filterValidators": "Filtrar Validadores",
 		"finalized": "Finalizado",
@@ -274,10 +273,7 @@
 		"permissionlessClaimingTurnedOff": "A reivindicação sem permissão está desativada.",
 		"permissionlessCompound": "Capitalização Aberta: Qualquer um pode capitalizar recompensas para este membro",
 		"permissionlessWithdraw": "Saque Aberto: Qualquer um pode sacar recompensas para este membro",
-		"plugin": {
-			"polkawatch": "Polkawatch",
-			"staking_api": "Staking API"
-		},
+		"plugin": { "polkawatch": "Polkawatch", "staking_api": "Staking API" },
 		"points": "Pontos",
 		"pool": "Pool",
 		"poolClaim": "Reivindicação de Pool",
