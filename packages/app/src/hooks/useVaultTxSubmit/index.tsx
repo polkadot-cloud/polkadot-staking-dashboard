@@ -18,7 +18,7 @@ export const useVaultTxSubmit = ({
 		submitted,
 		valid,
 		submitText: submitText || '',
-		signText: t('sign'),
+		signText: submitText || t('sign'),
 		promptStatus,
 		disabled,
 	})
