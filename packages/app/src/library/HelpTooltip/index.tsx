@@ -104,7 +104,7 @@ export const HelpTooltip = () => {
 							iconTransform="shrink-2"
 							onClick={() => {
 								window.open(
-									`${PlatformDocsURL}/#/${i18n.language}/glossary?a=${docsKey}`,
+									`${PlatformDocsURL}/${i18n.language}/glossary?a=${docsKey}`,
 									'_blank',
 								)
 								closeHelpTooltip()

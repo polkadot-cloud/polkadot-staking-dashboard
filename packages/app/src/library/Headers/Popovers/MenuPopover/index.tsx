@@ -242,7 +242,7 @@ export const MenuPopover = ({
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(`${PlatformDocsURL}/#/${i18n.language}`, '_blank')
+					window.open(`${PlatformDocsURL}/${i18n.language}`, '_blank')
 				}}
 			/>
 			<DefaultButton
