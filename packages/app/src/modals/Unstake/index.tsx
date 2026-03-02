@@ -137,6 +137,7 @@ export const Unstake = () => {
 			</Padding>
 			<SubmitTx
 				requiresMigratedController
+				submitText={t('unstake', { ns: 'modals' })}
 				valid={bondValid}
 				{...submitExtrinsic}
 			/>

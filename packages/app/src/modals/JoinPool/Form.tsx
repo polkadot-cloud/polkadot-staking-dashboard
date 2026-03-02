@@ -216,6 +216,7 @@ export const Form = ({
 					valid={formValid}
 					{...submitExtrinsic}
 					noMargin
+					stacked
 				/>
 			</div>
 		</>

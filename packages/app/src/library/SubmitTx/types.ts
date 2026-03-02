@@ -3,7 +3,6 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types'
-import type { ReactNode } from 'react'
 import type {
 	ActiveAccount,
 	ActiveProxy,
@@ -19,7 +18,6 @@ export interface ProxySwitcherProps {
 
 export type SubmitTxProps = SubmitProps &
 	ProxySwitcherProps & {
-		buttons?: ReactNode[]
 		requiresMigratedController?: boolean
 		proxySupported: boolean
 		noMargin?: boolean
@@ -27,6 +25,7 @@ export type SubmitTxProps = SubmitProps &
 		transparent?: boolean
 		txInitiated: boolean
 		proxyAccount: ActiveProxy | null
+		stacked?: boolean
 	}
 
 export interface SubmitProps {
@@ -47,19 +46,13 @@ export interface SignerPromptProps {
 	) => void
 }
 
-export interface LedgerSubmitProps {
-	onSubmit: () => void
-	submitted: boolean
+export interface SubmitButtonProps {
 	displayFor?: DisplayFor
-	disabled: boolean
-	submitText?: string
-}
-
-export interface ButtonSubmitLargeProps {
-	disabled: boolean
-	onSubmit: () => void
-	submitText: string
+	text: string
 	icon?: IconProp
+	onSubmit: () => void | Promise<void>
+	disabled: boolean
+	pulse?: boolean
 	iconTransform?: string
-	pulse: boolean
+	fee?: React.ReactNode
 }

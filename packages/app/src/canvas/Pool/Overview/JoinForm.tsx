@@ -186,6 +186,7 @@ export const JoinForm = ({
 					valid={formValid}
 					{...submitExtrinsic}
 					noMargin
+					stacked
 				/>
 			</div>
 		</JoinFormWrapper>

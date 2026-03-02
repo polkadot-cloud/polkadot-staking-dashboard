@@ -24,3 +24,4 @@ bin
 *.sw?
 *.tsbuildinfo
 .env
+.claude/launch.json

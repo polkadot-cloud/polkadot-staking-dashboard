@@ -107,7 +107,13 @@ export const ClaimReward = () => {
 					<p>{t('claimReward2')}</p>
 				)}
 			</Padding>
-			<SubmitTx valid={valid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t(claimType === 'bond' ? 'compound' : 'claim', {
+					ns: 'modals',
+				})}
+				valid={valid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }
