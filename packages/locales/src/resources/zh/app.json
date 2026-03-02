@@ -90,7 +90,6 @@
 		"docs": "文档",
 		"done": "完成",
 		"email": "电子邮件",
-		"emethods": "方案选择",
 		"enablePermissionlessClaiming": "启用己许可申领",
 		"era": "Era",
 		"eraPoints": "Era 点数",
@@ -193,6 +192,7 @@
 		"manual_selection": "手动选择",
 		"max": "最高",
 		"member": "成员",
+		"methods": "方案选择",
 		"metrics": "指标",
 		"migrateController": "迁移控制器",
 		"migrateControllerDescription": "控制器账户即将被弃用。请将您的控制器迁移至 stash 账户，以便继续使用 Staking Dashboard.",
@@ -372,17 +372,17 @@
 		"waiting": "等待中",
 		"walletNotFound": "未找到钱包",
 		"wallets": "钱包",
+		"warnings": {
+			"destroyingDescription": "您的奖池将被销毁，您将无法获得奖池奖励。",
+			"destroyingTitle": "奖池正在销毁",
+			"highCommissionDescription": "您的奖池佣金较高。考虑加入其他奖池以增加奖励。",
+			"highCommissionTitle": "高佣金",
+			"noChangeRateDescription": "您的奖池未设置佣金变动率。它可以随时将佣金提高到任何值。",
+			"noChangeRateTitle": "无佣金变更率"
+		},
 		"webExtensions": "浏览器扩展",
 		"whenActivelyNominating": "当活跃提名时",
 		"wrongTransaction": "错误交易，请重新签名",
 		"year": "年"
-	},
-	"warnings": {
-		"destroyingDescription": "您的奖池将被销毁，您将无法获得奖池奖励。",
-		"destroyingtitle": "奖池正在销毁",
-		"highCommissionDescription": "您的奖池佣金较高。考虑加入其他奖池以增加奖励。",
-		"highCommissionTitle": "高佣金",
-		"noChangeRateDescription": "您的奖池未设置佣金变动率。它可以随时将佣金提高到任何值。",
-		"noChangeRateTitle": "无佣金变更率"
 	}
 }
