@@ -10,6 +10,14 @@ const client = new ApolloClient({
 	link: new HttpLink({
 		uri: STAKING_API_ENDPOINT,
 	}),
+	defaultOptions: {
+		query: {
+			fetchPolicy: 'network-only',
+		},
+		watchQuery: {
+			fetchPolicy: 'network-only',
+		},
+	},
 })
 
 export { client }
