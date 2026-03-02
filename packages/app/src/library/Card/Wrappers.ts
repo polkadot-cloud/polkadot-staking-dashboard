@@ -60,13 +60,17 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     padding: 1.25rem 1rem;
   }
 
-  @media (min-width: ${PageWidthMediumThreshold + 1}px) {
-    max-height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
-  }
+  ${(props) =>
+		props.height &&
+		`
+    @media (min-width: ${PageWidthMediumThreshold + 1}px) {
+      max-height: ${props.height}px;
+    }
 
-  @media (min-width: ${PageWidthLargeThreshold + 1}px) {
-    min-height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
-  }
+    @media (min-width: ${PageWidthLargeThreshold + 1}px) {
+      min-height: ${props.height}px;
+    }
+  `}
 
   .inner {
     padding: 1rem;

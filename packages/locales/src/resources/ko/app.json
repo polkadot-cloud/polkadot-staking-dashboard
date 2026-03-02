@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "본드 금액은 최대 {{units}}개의 소수점 자리만 가질 수 있습니다.",
 		"bondDecimalsError": "본드 금액은 최대 {{units}}개의 소수점 자리를 가질 수 있습니다.",
 		"bonded": "본드됨",
-		"browseValidators": "검증인 탐색",
 		"cancel": "취소",
 		"cancelled": "취소됨",
 		"chooseAnotherPool": "다른 풀 선택",
@@ -142,7 +141,6 @@
 			"validationErrorMetadataTooLong": "메타데이터가 최대 길이를 초과합니다",
 			"validationErrorParameterRange": "파라미터 값이 유효한 범위를 벗어났습니다"
 		},
-		"estimatedFee": "예상 수수료",
 		"exclude": "제외",
 		"exitAdvancedMode": "고급 모드 종료",
 		"failed": "실패",
@@ -151,6 +149,7 @@
 		"favoritePoolRemoved": "즐겨찾기 풀 제거됨",
 		"favoriteValidatorAdded": "즐겨찾기 검증자 추가됨",
 		"favoriteValidatorRemoved": "즐겨찾기 검증자 제거됨",
+		"fee": "수수료",
 		"filter": "필터",
 		"filterValidators": "검증자 필터링",
 		"finalized": "최종 확정됨",

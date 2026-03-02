@@ -103,6 +103,7 @@ export const StopNominations = () => {
 			</Padding>
 			<SubmitTx
 				requiresMigratedController={isStaking}
+				submitText={t('stopNominating', { ns: 'modals' })}
 				valid={valid}
 				{...submitExtrinsic}
 			/>
