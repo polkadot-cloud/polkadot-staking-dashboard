@@ -39,7 +39,7 @@ export const Wrapper = styled.div`
 
 export const ItemWrapper = styled.div`
   border: 1px solid var(--border);
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   border-radius: 1.5rem;
   display: flex;
   position: relative;
@@ -123,7 +123,7 @@ export const TabsWrapper = styled.div`
 `
 
 export const TabWrapper = styled.button<{ $active?: boolean }>`
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   border: 1px solid
     ${(props) => (props.$active ? 'var(--accent-primary)' : 'var(--border)')};
   color: ${(props) =>

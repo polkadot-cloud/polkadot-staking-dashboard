@@ -10,7 +10,7 @@
   margin-bottom: 1rem;
 
   > h1 {
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-default);
     line-height: 2.2rem;
     text-overflow: ellipsis;
     overflow: hidden;

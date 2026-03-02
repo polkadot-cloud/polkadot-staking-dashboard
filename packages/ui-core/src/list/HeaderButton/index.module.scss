@@ -57,7 +57,7 @@
 
   &.text > button,
   &.outline > span {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     font-size: 0.95rem;
     display: flex;
     flex-flow: row wrap;

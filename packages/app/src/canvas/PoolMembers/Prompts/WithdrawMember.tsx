@@ -108,7 +108,11 @@ export const WithdrawMember = ({
 					<p>{t('withdrawRemoveNote')}</p>
 				</Notes>
 			</Padding>
-			<SubmitTx valid={valid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t('withdraw', { ns: 'modals' })}
+				valid={valid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

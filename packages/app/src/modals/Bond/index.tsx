@@ -174,7 +174,11 @@ export const Bond = () => {
 				/>
 				<p>{t('newlyBondedFunds')}</p>
 			</Padding>
-			<SubmitTx valid={bondValid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t('bond', { ns: 'modals' })}
+				valid={bondValid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

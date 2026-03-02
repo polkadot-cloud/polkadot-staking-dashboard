@@ -12,7 +12,7 @@
 
   > label {
     color: var(--text-secondary);
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
 
     &:focus {
       color: var(--accent-primary);

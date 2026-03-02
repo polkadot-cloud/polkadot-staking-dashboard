@@ -39,6 +39,7 @@ export const QrReader = ({ network, ss58, onSuccess }: QrReaderProps) => {
 			const account = addHardwareAccount(
 				source,
 				network,
+				1,
 				qrData,
 				vaultAccounts.length,
 			)

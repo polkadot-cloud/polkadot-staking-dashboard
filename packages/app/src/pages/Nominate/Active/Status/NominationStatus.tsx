@@ -5,11 +5,9 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
-import { useActivePool } from '../../../../contexts/Pools/ActivePool'
 
 export const NominationStatus = () => {
 	const { t } = useTranslation('pages')
-	const { inPool } = useActivePool()
 	const { activeAddress } = useActiveAccounts()
 	const { getNominationStatus } = useNominationStatus()
 
@@ -19,7 +17,7 @@ export const NominationStatus = () => {
 		<Stat
 			label={t('status')}
 			helpKey="Nomination Status"
-			stat={inPool ? t('alreadyInPool') : nominationStatus.message}
+			stat={nominationStatus.message}
 		/>
 	)
 }

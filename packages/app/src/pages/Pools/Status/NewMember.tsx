@@ -3,7 +3,6 @@
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import {
 	onCreatePoolButtonPressedEvent,
@@ -13,25 +12,22 @@ import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
 import type { NewMemberProps } from './types'
 
 export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
 	const { network } = useNetwork()
 	const { advancedMode } = useUi()
-	const { isBonding } = useStaking()
 	const { openModal } = useOverlay().modal
 	const { openCanvas } = useOverlay().canvas
 	const { getJoinDisabled, getCreateDisabled } = useActiveAccountPool()
 
 	// Alias for create button disabled state
-	const createDisabled = getCreateDisabled() || isBonding
+	const createDisabled = getCreateDisabled()
 
 	// Disable opening the canvas if data is not ready.
-	const joinButtonDisabled = getJoinDisabled() || isBonding
+	const joinButtonDisabled = getJoinDisabled()
 
 	// Handle join pool button press
 	const handleOnJoinPool = () => {
@@ -79,11 +75,6 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 						})
 					},
 					disabled: createDisabled,
-					kind: 'secondary',
-				},
-				{
-					label: t('browsePools', { ns: 'pages' }),
-					onClick: () => navigate('/pools'),
 					kind: 'secondary',
 				},
 			],

@@ -62,8 +62,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 		return newDelegates
 	}
 
-	const delegates = formatProxiesToDelegates()
-
 	// Gets the delegates of the given account
 	const getDelegates = (address: MaybeAddress): Proxy | undefined => {
 		const results = Object.entries(proxies).find(
@@ -97,10 +95,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
 		let addDelegatorAsExternal = false
 		for (const delegate of results) {
-			if (
-				accounts.find(({ address }) => address === delegate) &&
-				!delegates[delegate]
-			) {
+			if (accounts.find(({ address }) => address === delegate)) {
 				addDelegatorAsExternal = true
 			}
 		}

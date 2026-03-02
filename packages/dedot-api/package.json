@@ -12,10 +12,10 @@
 		".": "./src/index.ts"
 	},
 	"dependencies": {
-		"@dedot/chaintypes": "^0.222.0",
-		"@w3ux/observables-connect": "^1.0.3",
+		"@dedot/chaintypes": "^0.239.0",
+		"@w3ux/observables-connect": "^1.0.6",
 		"@w3ux/util-dedot": "^1.0.0",
-		"@w3ux/utils": "^3.1.0",
+		"@w3ux/utils": "^3.1.1",
 		"consts": "workspace:*",
 		"dedot": "^1.0.4",
 		"global-bus": "workspace:*",
@@ -24,7 +24,7 @@
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"@w3ux/types": "^2.4.1",
+		"@w3ux/types": "^2.4.2",
 		"types": "workspace:*"
 	}
 }

@@ -4,7 +4,7 @@
 .subHeading {
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family-default);
   padding: 0.6rem 0.75rem;
   padding-top: 0;
 }

@@ -18,6 +18,7 @@ export interface MenuItem {
 	icon: ReactNode
 	title: string
 	cb: () => void
+	disabled?: boolean
 }
 
 export type MenuMouseEvent =

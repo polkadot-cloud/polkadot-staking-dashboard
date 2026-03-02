@@ -4,7 +4,7 @@
 .container {
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
-  font-family: Inter, sans-serif;
+  font-family: var(--font-family-default);
   display: flex;
 
   &.warning {
@@ -72,7 +72,7 @@
 
 
 .badge {
-  font-family: InterBold, sans-serif;
+  font-family: var(--font-family-bold);
   display: flex;
   align-items: center;
   font-size: 1.2rem;
@@ -91,7 +91,7 @@
 
   > span {
     color: var(--text-primary);
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     font-size: 0.95rem;
     margin-left: 0.3rem;
     margin-top: 0;
@@ -120,7 +120,7 @@
 
   &.warning {
     color: var(--status-warning);
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-default);
 
     > span {
       color: var(--status-warning);
@@ -129,7 +129,7 @@
 
   &.danger {
     color: var(--status-danger);
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-default);
 
     > span {
       color: var(--status-danger);

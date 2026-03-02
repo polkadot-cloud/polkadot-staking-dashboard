@@ -35,7 +35,7 @@ $container-border-radius: 1.25rem;
 
 .input {
   color: var(--text-primary);
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   font-size: 1.2rem;
   flex: 1;
   width: 100%;
@@ -131,7 +131,7 @@ $container-border-radius: 1.25rem;
 
 .listName {
   color: var(--text-primary);
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   font-size: 1.1rem;
 }
 

@@ -6,8 +6,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.h3`
   border-bottom: 1px solid var(--border);
   color: var(--text-primary);
-  font-family: InterSemiBold, sans-serif;
-  font-weight: 600;
+  font-family: var(--font-family-semibold);
   display: flex;
   align-items: center;
   margin: 1.25rem 0 0;

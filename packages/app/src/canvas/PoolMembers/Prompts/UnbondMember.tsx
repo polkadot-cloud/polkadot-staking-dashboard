@@ -105,7 +105,12 @@ export const UnbondMember = ({
 					/>
 				</Notes>
 			</Padding>
-			<SubmitTx noMargin valid={paramsValid} {...submitExtrinsic} />
+			<SubmitTx
+				noMargin
+				submitText={t('unbond', { ns: 'modals' })}
+				valid={paramsValid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

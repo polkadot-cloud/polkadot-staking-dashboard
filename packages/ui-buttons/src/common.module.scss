@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnCore {
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   box-sizing: border-box;
-  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,6 +20,9 @@
 
 .btnGrow {
   flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btnSpacingLeft {

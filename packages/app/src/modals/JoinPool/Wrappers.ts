@@ -53,7 +53,7 @@ export const JoinFormWrapper = styled.div`
     align-items: center;
     &.note {
       color: var(--text-secondary);
-      font-family: Inter, sans-serif;
+      font-family: var(--font-family-default);
     }
   }
 

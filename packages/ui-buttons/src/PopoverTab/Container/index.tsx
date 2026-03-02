@@ -11,7 +11,7 @@ export const Container = ({
 	style,
 	children,
 }: ComponentBaseWithClassName & {
-	position: 'top' | 'bottom'
+	position?: 'top' | 'bottom'
 	yMargin?: boolean
 }) => {
 	const allClasses = classNames(classes.container, {

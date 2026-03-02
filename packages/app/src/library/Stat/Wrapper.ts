@@ -7,7 +7,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
   width: 100%;
   padding: 0.15rem 0.25rem;
   h4 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -43,7 +43,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.$isAddress ? '3rem' : 0)};
-      font-family: InterBold, sans-serif;
+      font-family: var(--font-family-bold);
       color: var(--text-primary);
       position: absolute;
       left: 0;
@@ -60,7 +60,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       overflow: hidden;
 
       h2 {
-        font-family: InterBold, sans-serif;
+        font-family: var(--font-family-bold);
         display: flex;
         align-items: center;
         text-overflow: ellipsis;

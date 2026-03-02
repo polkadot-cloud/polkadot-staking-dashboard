@@ -1,13 +1,13 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { AccountButton } from '../AccountButton'
 
 export const DelegateItem = ({
 	delegator,
 	proxyType,
-	source,
 	delegate,
 }: {
 	delegator: string
@@ -15,15 +15,22 @@ export const DelegateItem = ({
 	source: string
 	delegate: string
 }) => {
+	const { accounts } = useImportedAccounts()
 	const {
 		balances: { transferableBalance },
 	} = useAccountBalances(delegate)
+
+	// Use the delegate's actual source rather than the delegator's source. The delegator may be an
+	// external/read-only account, but the delegate (proxy) needs its real source to be recognized
+	// as an imported account that can sign transactions.
+	const delegateAccount = accounts.find(({ address }) => address === delegate)
+	const delegateSource = delegateAccount?.source || 'external'
 
 	return (
 		<AccountButton
 			transferableBalance={transferableBalance}
 			address={delegate}
-			source={source}
+			source={delegateSource}
 			delegator={delegator}
 			proxyType={proxyType}
 		/>

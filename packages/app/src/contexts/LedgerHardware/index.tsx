@@ -4,10 +4,6 @@
 import { createSafeContext } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
-import { compare } from 'compare-versions'
-import { getStakingChain } from 'consts/util'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,6 +13,7 @@ import { Ledger } from './static/ledger'
 import type {
 	FeedbackMessage,
 	HandleErrorFeedback,
+	LedgerDeviceAddress,
 	LedgerHardwareContextInterface,
 	LedgerResponse,
 } from './types'
@@ -31,9 +28,6 @@ export const LedgerHardwareProvider = ({
 	children: ReactNode
 }) => {
 	const { t } = useTranslation('modals')
-	const { network } = useNetwork()
-	const { getChainSpec } = useApi()
-	const { transactionVersion } = getChainSpec(getStakingChain(network)).version
 
 	// Store whether a Ledger device task is in progress
 	const [isExecuting, setIsExecutingState] = useState<boolean>(false)
@@ -75,40 +69,16 @@ export const LedgerHardwareProvider = ({
 	// Store the latest successful device response
 	const [transportResponse, setTransportResponse] = useState<AnyJson>(null)
 
-	// Whether the Ledger device metadata is for a different runtime
-	const runtimesInconsistent = useRef<boolean>(false)
-
-	// Checks whether runtime version is inconsistent with device metadata
+	// Checks if the Ledger device is connected
 	const checkRuntimeVersion = async () => {
 		try {
 			setIsExecuting(true)
 			const { app } = await Ledger.initialise()
-			const result = (await Ledger.getVersion(app)) as {
-				major?: number
-				minor?: number
-				patch?: number
-			}
-			const major = result?.major || 0
-			const minor = result?.minor || 0
-			const patch = result?.patch || 0
-
-			// The current version of the Polkadot Ledger app
-			const currentSemVer = `${major}.${minor}.${patch}`
-
-			// The version the Generic Polkadot Ledger app was introduced
-			const genericLaunchSemVer = '100.0.5'
-
-			// Check if the current version is upgraded for the Generic Polkadot Ledger app
-			const isLegacy = compare(currentSemVer, genericLaunchSemVer, '<')
+			// Device is connected, verify it's responding
+			await Ledger.getVersion(app)
 
 			setIsExecuting(false)
 			resetFeedback()
-
-			// If the current version is less than the transaction version, or the app is not the generic
-			// app, set the runtimesInconsistent flag
-			if (major < transactionVersion || isLegacy) {
-				runtimesInconsistent.current = true
-			}
 			setIntegrityChecked(true)
 		} catch (err) {
 			handleErrors(err)
@@ -135,6 +105,28 @@ export const LedgerHardwareProvider = ({
 			})
 		} catch (err) {
 			handleErrors(err)
+		}
+	}
+
+	// Gets an address from Ledger device without updating transport response
+	const fetchLedgerAddress = async (
+		accountIndex: number,
+		ss58Prefix: number,
+	): Promise<LedgerDeviceAddress | null> => {
+		try {
+			setIsExecuting(true)
+			const { app } = await Ledger.initialise()
+			const result = (await Ledger.getAddress(
+				app,
+				accountIndex,
+				ss58Prefix,
+			)) as LedgerDeviceAddress
+			return result
+		} catch (err) {
+			handleErrors(err)
+			return null
+		} finally {
+			setIsExecuting(false)
 		}
 	}
 
@@ -223,7 +215,6 @@ export const LedgerHardwareProvider = ({
 		}
 
 		// Reset refs
-		runtimesInconsistent.current = false
 		// Reset state
 		setIsExecuting(false)
 	}
@@ -234,7 +225,6 @@ export const LedgerHardwareProvider = ({
 		resetStatusCode()
 		resetFeedback()
 		setIntegrityChecked(false)
-		runtimesInconsistent.current = false
 	}
 
 	// Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts
@@ -259,10 +249,10 @@ export const LedgerHardwareProvider = ({
 				setFeedback,
 				resetFeedback,
 				handleGetAddress,
+				fetchLedgerAddress,
 				handleResetLedgerTask,
 				handleErrors,
 				handleUnmount,
-				runtimesInconsistent: runtimesInconsistent.current,
 			}}
 		>
 			{children}

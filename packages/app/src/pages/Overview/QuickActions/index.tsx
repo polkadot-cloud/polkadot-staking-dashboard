@@ -51,7 +51,12 @@ export const QuickActions = ({ height }: { height: number }) => {
 					{actionGroup === 'disconnected' && <Disconnected />}
 					{actionGroup === 'notStaking' && <NotStaking />}
 					{actionGroup === 'staking' && (
-						<Staking bondFor={inPool ? 'pool' : 'nominator'} />
+						<Staking
+							bondFor={[
+								...(inPool ? (['pool'] as const) : []),
+								...(isBonding ? (['nominator'] as const) : []),
+							]}
+						/>
 					)}
 				</>
 			)}

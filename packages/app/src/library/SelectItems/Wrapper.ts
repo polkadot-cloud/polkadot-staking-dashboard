@@ -132,7 +132,7 @@ export const Wrapper = styled.div<{
         overflow: hidden;
 
         h3 {
-          font-family: InterSemiBold, sans-serif;
+          font-family: var(--font-family-semibold);
           padding: 0;
           margin: 0;
         }

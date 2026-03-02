@@ -19,9 +19,12 @@ export interface LedgerHardwareContextInterface {
 	resetFeedback: () => void
 	handleUnmount: () => void
 	handleErrors: (err: unknown) => void
-	runtimesInconsistent: boolean
 	handleGetAddress: (accountIndex: number, ss58Prefix: number) => Promise<void>
 	handleResetLedgerTask: () => void
+	fetchLedgerAddress: (
+		accountIndex: number,
+		ss58Prefix: number,
+	) => Promise<LedgerDeviceAddress | null>
 }
 
 export interface FeedbackMessage {
@@ -62,6 +65,11 @@ export interface LedgerAddress {
 	index: number
 	name: string
 	network: NetworkId
+	pubKey: string
+}
+
+export interface LedgerDeviceAddress {
+	address: string
 	pubKey: string
 }
 

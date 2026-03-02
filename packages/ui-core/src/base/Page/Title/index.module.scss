@@ -65,7 +65,7 @@
     > div {
       > .text {
         transition: all var(--transition-duration);
-        font-family: Inter, sans-serif;
+        font-family: var(--font-family-default);
         font-size: 2rem;
         position: relative;
         margin: 0;

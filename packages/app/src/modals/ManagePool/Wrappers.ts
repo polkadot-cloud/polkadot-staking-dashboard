@@ -34,7 +34,7 @@ export const SliderWrapper = styled.div`
   padding: 0 0.5rem 0 0.5rem;
 
   h5 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     margin: 0;
     margin-left: 0.75rem;
 
@@ -63,7 +63,7 @@ export const SliderWrapper = styled.div`
 
     h2 {
       margin: 0;
-      font-family: InterBold, sans-serif;
+      font-family: var(--font-family-bold);
     }
   }
 
@@ -97,7 +97,7 @@ export const SliderWrapper = styled.div`
     margin-top: 1rem;
     h2 {
       border-bottom: 1px solid var(--border);
-      font-family: InterBold, sans-serif;
+      font-family: var(--font-family-bold);
       margin-top: 0rem;
       padding-bottom: 1rem;
     }
@@ -129,7 +129,7 @@ export const TaskInnerWrapper = styled.div`
   }
 
   h3 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     margin-bottom: 0.5rem;
   }
 

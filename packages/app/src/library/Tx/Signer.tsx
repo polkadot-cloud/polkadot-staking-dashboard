@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useTranslation } from 'react-i18next'
 import type { SignerProps } from './types'
-import { SignerWrapper } from './Wrapper'
+import { ProxySwitcher, SignerWrapper } from './Wrapper'
 
 export const Signer = (props: SignerProps) => {
 	const {
@@ -25,6 +25,8 @@ export const Signer = (props: SignerProps) => {
 		onNextSigner,
 		hasMultipleSigners,
 		valid,
+		PromptComponent,
+		stacked,
 	} = props
 	const { t } = useTranslation()
 	const { getAccount } = useImportedAccounts()
@@ -50,22 +52,27 @@ export const Signer = (props: SignerProps) => {
 		}
 	}
 
-	return (
-		<SignerWrapper>
-			<span className="badge">
-				<FontAwesomeIcon icon={faPenToSquare} className="icon" />
-				{signingOpts.label}
-			</span>
+	const showBadgeAbove = !PromptComponent && !stacked
+
+	const badge = (
+		<span className="badge">
+			<FontAwesomeIcon icon={faPenToSquare} className="icon" />
+			{signingOpts.label}
+		</span>
+	)
+
+	const details = (
+		<>
 			{signingOpts.who?.name || ''}
 			{hasMultipleSigners && (
-				<span className="proxy-switcher">
+				<ProxySwitcher>
 					<button type="button" onClick={onPreviousSigner} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronLeft} transform="shrink-2" />
 					</button>
 					<button type="button" onClick={onNextSigner} disabled={!valid}>
 						<FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
 					</button>
-				</span>
+				</ProxySwitcher>
 			)}
 			{notEnoughFunds && (
 				<span className="not-enough">
@@ -78,6 +85,22 @@ export const Signer = (props: SignerProps) => {
 					<span className="danger">{dangerMessage}</span>
 				</span>
 			)}
+		</>
+	)
+
+	if (showBadgeAbove) {
+		return (
+			<>
+				<SignerWrapper className="badge-row">{badge}</SignerWrapper>
+				<SignerWrapper>{details}</SignerWrapper>
+			</>
+		)
+	}
+
+	return (
+		<SignerWrapper>
+			{badge}
+			{details}
 		</SignerWrapper>
 	)
 }

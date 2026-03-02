@@ -66,7 +66,7 @@ export const Wrapper = styled.div<MinimisedProps>`
 export const CategoryHeader = styled.h3`
   color: var(--accent-primary);
   border-bottom: 1px solid var(--accent-primary);
-  font-family: InterSemiBold, sans-serif;
+  font-family: var(--font-family-semibold);
   margin: 1.12rem 0.75rem 0.75rem 0.25rem;
   padding-bottom: 0.78rem;
   padding-left: 0.55rem;

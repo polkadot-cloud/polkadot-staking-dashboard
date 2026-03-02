@@ -28,7 +28,7 @@ export const Wrapper = styled.ul`
 
     h3 {
       color: var(--accent-primary);
-      font-family: InterSemiBold, sans-serif;
+      font-family: var(--font-family-semibold);
       font-size: 1.2rem;
       margin: 0.15rem 0 0.4rem;
       flex: 1;

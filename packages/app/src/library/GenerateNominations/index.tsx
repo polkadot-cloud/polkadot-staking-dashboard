@@ -137,7 +137,7 @@ export const GenerateNominations = ({
 
 	let filterHandlers: FilterHandlers = {}
 
-	if (!advancedMode) {
+	if (advancedMode) {
 		filterHandlers.addFromFavorites = {
 			title: t('addFromFavorites', { ns: 'app' }),
 			onClick: () => {
