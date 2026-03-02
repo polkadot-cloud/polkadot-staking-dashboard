@@ -1,6 +1,7 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
@@ -23,6 +24,7 @@ import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ButtonPrimary } from 'ui-buttons'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { timeleftAsString } from 'utils'
@@ -43,6 +45,7 @@ export const Unbond = () => {
 	} = useApi()
 	const {
 		closeModal,
+		replaceModal,
 		setModalResize,
 		config: { options },
 	} = useOverlay().modal
@@ -190,6 +193,15 @@ export const Unbond = () => {
 						))}
 					</Warnings>
 				) : null}
+				{nominatorActiveBelowMin && (
+					<div style={{ marginBottom: '1rem' }}>
+						<ButtonPrimary
+							text={t('unstake')}
+							iconLeft={faSignOutAlt}
+							onClick={() => replaceModal({ key: 'Unstake', size: 'sm' })}
+						/>
+					</div>
+				)}
 				<UnbondFeedback
 					bondFor={bondFor}
 					listenIsValid={(valid, errors) => {
