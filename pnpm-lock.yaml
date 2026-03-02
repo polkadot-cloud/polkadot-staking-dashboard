@@ -127,8 +127,8 @@ importers:
         specifier: workspace:*
         version: link:../assets
       bignumber.js:
-        specifier: ^9.3.1
-        version: 9.3.1
+        specifier: ^10.0.2
+        version: 10.0.2
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -508,8 +508,8 @@ importers:
         specifier: ^0.242.0
         version: 0.242.0(dedot@1.0.4(typescript@5.9.3))
       bignumber.js:
-        specifier: ^9.3.1
-        version: 9.3.1
+        specifier: ^10.0.2
+        version: 10.0.2
 
   packages/ui-buttons:
     dependencies:
@@ -612,8 +612,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1
       bignumber.js:
-        specifier: ^9.3.1
-        version: 9.3.1
+        specifier: ^10.0.2
+        version: 10.0.2
       chart.js:
         specifier: ^4.4.9
         version: 4.5.1
@@ -738,8 +738,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1
       bignumber.js:
-        specifier: ^9.3.1
-        version: 9.3.1
+        specifier: ^10.0.2
+        version: 10.0.2
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -2741,8 +2741,8 @@ packages:
     resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
 
-  bignumber.js@9.3.1:
-    resolution: {integrity: sha512-Ko0uX15oIUS7wJ3Rb30Fs6SkVbLmPBAKdlm7q9+ak9bbIeFf0MwuBsQV6z7+X768/cHsfg+WlysDWJcmthjsjQ==}
+  bignumber.js@10.0.2:
+    resolution: {integrity: sha512-E8Wp9O06QA6lneJ4aRUXKYf/1GIomqUEmUMwtIOMtDxf1U52ffJY+y7JBk/8wRafA8qOIqLnXQGqonYXZdBnFQ==}
 
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
@@ -6345,7 +6345,7 @@ snapshots:
 
   baseline-browser-mapping@2.9.19: {}
 
-  bignumber.js@9.3.1: {}
+  bignumber.js@10.0.2: {}
 
   bindings@1.5.0:
     dependencies:
