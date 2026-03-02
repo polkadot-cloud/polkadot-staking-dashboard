@@ -241,6 +241,7 @@ export const Unbond = () => {
 			</Padding>
 			<SubmitTx
 				noMargin
+				submitText={t('unbond', { ns: 'modals' })}
 				requiresMigratedController={isStaking}
 				valid={bondValid}
 				{...submitExtrinsic}

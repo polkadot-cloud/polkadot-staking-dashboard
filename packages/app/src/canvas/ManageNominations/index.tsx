@@ -151,10 +151,9 @@ export const Inner = () => {
 				<Footer size={canvasSize}>
 					<SubmitTx
 						noMargin
-						transparent
 						requiresMigratedController={!isPool}
 						valid={valid}
-						displayFor="modal"
+						displayFor="canvas"
 						{...submitExtrinsic}
 					/>
 				</Footer>

@@ -3,5 +3,4 @@
 
 export interface EstimatedTxFeeProps {
 	uid?: number
-	format?: string
 }

@@ -4,7 +4,7 @@
 import classNames from 'classnames'
 import { Signer } from './Signer'
 import type { TxProps } from './types'
-import { Wrapper } from './Wrapper'
+import { PromptWrapper, Wrapper } from './Wrapper'
 
 /**
  * @name Tx
@@ -15,25 +15,32 @@ export const Tx = (props: TxProps) => {
 		margin,
 		notEnoughFunds,
 		dangerMessage,
-		SignerComponent,
+		PromptComponent,
+		SubmitComponent,
 		displayFor = 'default',
 		transparent,
+		stacked = false,
 	} = props
 
 	const innerClasses = classNames('inner', {
 		[displayFor]: ['canvas', 'card'].includes(displayFor),
 		transparent: !!transparent,
+		stacked: !!stacked,
 	})
 
 	return (
 		<Wrapper className={margin ? 'margin' : undefined}>
 			<div className={innerClasses}>
-				<Signer
-					{...props}
-					dangerMessage={dangerMessage}
-					notEnoughFunds={notEnoughFunds}
-				/>
-				<section>{SignerComponent}</section>
+				<div className="signer">
+					<Signer
+						{...props}
+						dangerMessage={dangerMessage}
+						notEnoughFunds={notEnoughFunds}
+						PromptComponent={PromptComponent}
+					/>
+					<PromptWrapper>{PromptComponent}</PromptWrapper>
+				</div>
+				<div className="submit">{SubmitComponent}</div>
 			</div>
 		</Wrapper>
 	)

@@ -19,11 +19,15 @@ SPDX-License-Identifier: GPL-3.0-only */
 /**
  * Language-specific font overrides
  * Chinese (zh): Uses regular Inter for semibold and bold weights
+ * Korean (ko): Uses regular Inter for semibold and bold weights
  */
 $language-font-overrides: (
   'zh': (
     'semibold': 'Inter',
     'bold': 'Inter',
+  ),
+   'ko': (
+    'bold': 'InterSemiBold',
   ),
 );
 
