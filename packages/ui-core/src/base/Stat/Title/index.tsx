@@ -30,7 +30,7 @@ export const Title = ({
 
 	const { containerRef, fontSize } = useAutoFitText({
 		minFontSize: 0.85,
-		maxFontSize: 1.25,
+		maxFontSize: 1.35,
 		unit: 'rem',
 	})
 
