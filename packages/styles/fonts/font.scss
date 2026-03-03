@@ -9,6 +9,14 @@
 }
 
 @font-face {
+  font-family: 'DM Serif Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./DMSerifDisplay.woff2') format('woff2');
+}
+
+@font-face {
   font-family: InterSemiBold;
   font-style: normal;
   font-weight: 600;
