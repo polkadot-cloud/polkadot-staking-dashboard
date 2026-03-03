@@ -177,3 +177,11 @@ label {
 [data-simplebar]::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+.light ::selection {
+  background-color: #f8e4e8;
+}
+
+.dark ::selection {
+  background-color: #2a151a;
+}
