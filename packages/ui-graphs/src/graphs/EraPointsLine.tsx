@@ -48,7 +48,7 @@ export const EraPointsLine = ({
 	const color = getThemeValue('--accent-primary')
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
-		family: "'Inter', 'sans-serif'",
+		family: "'DM Sans', 'sans-serif'",
 		weight: 'lighter',
 		size: 11,
 	}
