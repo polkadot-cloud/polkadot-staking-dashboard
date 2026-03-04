@@ -21,4 +21,12 @@
       margin-right: 0.6rem;
     }
   }
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    > h3 {
+      font-family: var(--font-family-mono);
+      color: var(--text-tertiary);
+    }
+  }
 }

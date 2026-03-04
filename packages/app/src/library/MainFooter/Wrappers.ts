@@ -80,6 +80,7 @@ export const Summary = styled.div`
     margin: 0 0.25rem;
     display: flex;
     align-items: center;
+    font-family: var(--font-family-mono);
 
     &.last {
       margin-left: 1rem;

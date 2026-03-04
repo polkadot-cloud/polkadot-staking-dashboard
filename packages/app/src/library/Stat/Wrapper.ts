@@ -60,7 +60,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       overflow: hidden;
 
       h2 {
-        font-family: var(--font-family-bold);
+        font-family: var(--font-family-mono);
         display: flex;
         align-items: center;
         text-overflow: ellipsis;

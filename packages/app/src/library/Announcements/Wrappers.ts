@@ -58,6 +58,7 @@ export const HeaderWrapper = styled.div`
 
       h2 {
         color: var(--accent-primary);
+        font-family: var(--font-family-mono);
         display: flex;
         align-items: center;
 
