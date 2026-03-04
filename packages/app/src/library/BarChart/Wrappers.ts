@@ -30,7 +30,7 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     color: rgba(255, 255, 255, 0.95);
   }
   .d2 {
-    background: var(--accent-secondary);
+    background: var(--accent-primary);
     color: rgba(255, 255, 255, 0.95);
   }
   .d3 {
