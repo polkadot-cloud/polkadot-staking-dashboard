@@ -30,7 +30,7 @@
   }
 
   :global(.dark) & {
-    background: linear-gradient(to bottom, var(--bg-menu), var(--bg-list));
+    background: linear-gradient(to bottom, var(--gray-400), var(--bg-list));
     border-right: 1px solid var(--border);
   }
 }
@@ -95,7 +95,7 @@
   align-items: center;
 
   h5 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin: 1.1rem 0 0.75rem;
     padding: 0 0.5rem;
     opacity: 0.7;

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.h3`
   border-bottom: 1px solid var(--border);
-  color: var(--text-primary);
+  color: var(--gray-1000);
   font-family: var(--font-family-semibold);
   display: flex;
   align-items: center;

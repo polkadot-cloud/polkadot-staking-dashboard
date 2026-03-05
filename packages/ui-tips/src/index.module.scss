@@ -8,7 +8,7 @@
   position: relative;
 
   .inner {
-    border: 1px solid var(--btn-bg-hover);
+    border: 1px solid var(--gray-500);
     display: flex;
     flex-flow: row wrap;
     border-radius: 1rem;
@@ -139,7 +139,7 @@
         }
 
         h4 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           transition: color var(--transition-duration);
           font-family: var(--font-family-default);
           text-align: left;
@@ -150,7 +150,7 @@
           padding-right: 1.75rem;
 
           > svg {
-            color: var(--text-secondary);
+            color: var(--gray-900);
             transition: all var(--transition-duration);
             position: absolute;
             right: 0.2rem;
@@ -175,7 +175,7 @@
 }
 
 .pageToggle {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   display: flex;
   align-items: center;
   margin-left: 0.5rem;
@@ -193,7 +193,7 @@
       padding: 0 0.75rem;
 
       > svg {
-        color: var(--text-secondary);
+        color: var(--gray-900);
       }
 
       &:hover {
@@ -203,7 +203,7 @@
       }
 
       &:disabled {
-        color: var(--text-secondary);
+        color: var(--gray-900);
         opacity: var(--opacity-disabled);
 
         &:hover {

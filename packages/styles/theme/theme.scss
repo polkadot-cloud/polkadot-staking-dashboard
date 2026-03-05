@@ -38,10 +38,8 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
   /* Backgrounds */
   --bg-body: var(--gray-400);
   --bg-primary: var(--gray-200);
-  --bg-invert: var(--gray-1000);
   --bg-modal: var(--gray-200);
   --bg-modal-footer: var(--gray-400);
-  --bg-menu: var(--gray-400);
   --bg-list: var(--gray-400);
   --bg-input: var(--gray-100);
   --bg-overlay: rgb(234 234 234 / 80%);
@@ -53,13 +51,9 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
 
   /* Borders */
   --border: var(--gray-500);
-  --border-alt: var(--gray-600);
 
   /* Buttons */
-  --btn-bg: var(--gray-400);
   --btn-bg-secondary: var(--gray-300);
-  --btn-bg-tertiary: var(--gray-400);
-  --btn-bg-hover: var(--gray-500);
   --btn-tab: var(--gray-500);
   --btn-canvas-tab: var(--gray-600);
   --btn-popover-tab-bg: var(--gray-300);
@@ -76,14 +70,9 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
   /* Grid */
   --grid-primary: var(--gray-500);
   --grid-secondary: var(--gray-400);
-  --grid-canvas-axis: var(--gray-1000);
-  --grid-canvas: var(--gray-600);
 
   /* Text */
-  --text-primary: var(--gray-1000);
-  --text-secondary: var(--gray-900);
   --text-tertiary: var(--gray-800);
-  --text-invert: var(--gray-100);
 
   /* Accent colors (kept as-is per requirement) */
   --accent-primary: var(--accent-primary-light);
@@ -141,10 +130,8 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
   /* Backgrounds */
   --bg-body: var(--gray-200);
   --bg-primary: var(--gray-300);
-  --bg-invert: var(--gray-1000);
   --bg-modal: var(--gray-300);
   --bg-modal-footer: var(--gray-200);
-  --bg-menu: var(--gray-400);
   --bg-list: var(--gray-200);
   --bg-input: var(--gray-500);
   --bg-overlay: rgb(16 16 16 / 80%);
@@ -156,13 +143,9 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
 
   /* Borders */
   --border: var(--gray-400);
-  --border-alt: var(--gray-600);
 
   /* Buttons */
-  --btn-bg: var(--gray-400);
   --btn-bg-secondary: var(--gray-400);
-  --btn-bg-tertiary: var(--gray-400);
-  --btn-bg-hover: var(--gray-500);
   --btn-tab: var(--gray-400);
   --btn-canvas-tab: var(--gray-500);
   --btn-popover-tab-bg: var(--gray-400);
@@ -179,14 +162,9 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
   /* Grid */
   --grid-primary: var(--gray-400);
   --grid-secondary: var(--gray-500);
-  --grid-canvas-axis: var(--gray-1000);
-  --grid-canvas: var(--gray-600);
 
   /* Text */
-  --text-primary: var(--gray-1000);
-  --text-secondary: var(--gray-900);
   --text-tertiary: var(--gray-700);
-  --text-invert: var(--gray-100);
 
   /* Accent colors (kept as-is per requirement) */
   --accent-primary: var(--accent-primary-dark);

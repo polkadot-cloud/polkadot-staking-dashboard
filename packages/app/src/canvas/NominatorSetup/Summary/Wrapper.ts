@@ -42,7 +42,7 @@ export const SummaryWrapper = styled.div`
         padding-left: 0.25rem;
 
         > h4 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           margin-bottom: 0.3rem;
         }
       }

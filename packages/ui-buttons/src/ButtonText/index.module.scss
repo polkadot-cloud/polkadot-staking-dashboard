@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnText {
-  color: var(--text-primary);
+  color: var(--gray-1000);
   border-radius: var(--btn-lg-radius);
   transition: color var(--transition-duration);
 
   &:hover {
-    color: var(--text-secondary);
+    color: var(--gray-900);
   }
 
   &.danger {

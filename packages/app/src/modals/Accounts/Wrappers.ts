@@ -19,8 +19,8 @@ export const AccountWrapper = styled.div`
   }
 
   > div {
-    background: var(--btn-bg-tertiary);
-    color: var(--text-primary);
+    background: var(--gray-400);
+    color: var(--gray-1000);
     font-family: var(--font-family-semibold);
     border: 1px solid transparent;
     display: flex;
@@ -43,7 +43,7 @@ export const AccountWrapper = styled.div`
       /* Top half of the button, account information */
       &.head {
         > button {
-          color: var(--text-primary);
+          color: var(--gray-1000);
           display: flex;
           align-items: center;
           justify-content: flex-start;
@@ -86,7 +86,7 @@ export const AccountWrapper = styled.div`
 
           .badge {
             background-color: var(--bg-card-floating);
-            color: var(--text-secondary);
+            color: var(--gray-900);
             margin-left: 1rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.45rem;
@@ -109,10 +109,10 @@ export const AccountWrapper = styled.div`
           /* svg theming */
           svg {
             .light {
-              fill: var(--text-invert);
+              fill: var(--gray-100);
             }
             .dark {
-              fill: var(--text-secondary);
+              fill: var(--gray-900);
             }
           }
 
@@ -123,7 +123,7 @@ export const AccountWrapper = styled.div`
 
             &.neutral {
               h5 {
-                color: var(--text-secondary);
+                color: var(--gray-900);
                 opacity: 0.75;
               }
             }
@@ -152,7 +152,7 @@ export const AccountWrapper = styled.div`
         padding: 0.7rem 1rem;
 
         > .balance {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           font-size: 0.9rem;
           opacity: 0.6;
         }

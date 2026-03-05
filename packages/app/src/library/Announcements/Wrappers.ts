@@ -69,7 +69,7 @@ export const HeaderWrapper = styled.div`
       }
 
       h4 {
-        color: var(--text-secondary);
+        color: var(--gray-900);
         font-family: var(--font-family-default);
         display: flex;
         flex-flow: row wrap;
@@ -101,7 +101,7 @@ export const AnnouncementsContainer = styled(motion.div)`
 
   .category-header {
     font-family: var(--font-family-semibold);
-    color: var(--text-primary);
+    color: var(--gray-1000);
     font-size: 1.35rem;
     margin: 0.25rem 0 0;
     padding: 0 0.25rem;
@@ -138,7 +138,7 @@ export const Item = styled(motion.div)`
     display: flex;
     align-items: center;
     margin: 0 0 0.75rem;
-    color: var(--text-primary);
+    color: var(--gray-1000);
 
     > svg {
       margin-right: 0.6rem;
@@ -152,7 +152,7 @@ export const Item = styled(motion.div)`
 
   h4 {
     font-family: var(--font-family-default);
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin: 0;
     font-weight: normal;
     display: flex;

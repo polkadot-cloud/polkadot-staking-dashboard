@@ -145,7 +145,7 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-					props.$selected ? 'var(--accent-primary)' : 'var(--text-secondary)'};
+					props.$selected ? 'var(--accent-primary)' : 'var(--gray-900)'};
         opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

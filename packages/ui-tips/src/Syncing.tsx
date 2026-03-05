@@ -38,7 +38,7 @@ export const Syncing = () => {
 						<FontAwesomeIcon
 							icon={faRefresh}
 							spin
-							color="var(--text-secondary)"
+							color="var(--gray-900)"
 						/>
 					</section>
 					<section>

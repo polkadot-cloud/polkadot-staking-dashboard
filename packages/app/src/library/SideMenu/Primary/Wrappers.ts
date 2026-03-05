@@ -20,7 +20,7 @@ export const Wrapper = styled.span`
   }
   
   .icon {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin-left: 0.25rem;
     margin-right: 0.65rem;
     transition: transform 0.2s ease;

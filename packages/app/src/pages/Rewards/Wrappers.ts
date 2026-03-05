@@ -50,7 +50,7 @@ export const ItemWrapper = styled.div`
         max-width: 100%;
 
         h4 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           font-family: var(--font-family-semibold);
           &.claim {
             color: var(--accent-primary);
@@ -61,7 +61,7 @@ export const ItemWrapper = styled.div`
         }
 
         h5 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           &.claim {
             color: var(--accent-primary);
             border: 1px solid var(--accent-primary);
@@ -89,7 +89,7 @@ export const ItemWrapper = styled.div`
           justify-content: flex-end;
 
           > h4 {
-            color: var(--text-secondary);
+            color: var(--gray-900);
             opacity: 0.8;
           }
         }

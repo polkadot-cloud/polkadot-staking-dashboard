@@ -5,7 +5,7 @@
   overflow: hidden;
 
   .label {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin: 0.25rem 0 0.75rem;
   }
 
@@ -16,7 +16,7 @@
     margin-bottom: 1rem;
 
     > .arrow {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin: 0 0.75rem;
       opacity: 0.5;
     }

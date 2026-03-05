@@ -49,13 +49,13 @@ export const PopoverContent = styled(Popover.Content)`
 
 	h4 {
 		margin: 0 0 0.75rem 0;
-		color: var(--text-primary);
+		color: var(--gray-1000);
 		font-size: 1.2rem;
 	}
 
 	p {
 		margin: 0;
-		color: var(--text-secondary);
+		color: var(--gray-900);
 		font-size: 1.1rem;
 		line-height: 1.5;
 
@@ -82,7 +82,7 @@ export const CloseButton = styled.button`
 	font-size: 1rem;
 
 	&:hover {
-		color: var(--text-primary);
+		color: var(--gray-1000);
 	}
 
 	&:active {

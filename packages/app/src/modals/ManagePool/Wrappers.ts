@@ -23,7 +23,7 @@ export const ContentWrapper = styled.div`
     }
 
     .arrow {
-      color: var(--text-primary);
+      color: var(--gray-1000);
     }
   }
 `
@@ -134,7 +134,7 @@ export const TaskInnerWrapper = styled.div`
   }
 
   p {
-    color: var(--text-primary);
+    color: var(--gray-1000);
     font-size: 1rem;
   }
 `

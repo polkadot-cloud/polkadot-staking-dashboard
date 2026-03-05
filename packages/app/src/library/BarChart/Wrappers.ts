@@ -34,12 +34,12 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     color: rgba(255, 255, 255, 0.95);
   }
   .d3 {
-    background: var(--text-secondary);
+    background: var(--gray-900);
     color: rgba(255, 255, 255, 0.95);
   }
   .d4 {
-    background: var(--btn-bg-tertiary);
-    color: var(--text-secondary);
+    background: var(--gray-400);
+    color: var(--gray-900);
   }
 `
 

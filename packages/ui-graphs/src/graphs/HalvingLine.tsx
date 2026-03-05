@@ -137,9 +137,9 @@ export const HalvingLine = ({
 			tooltip: {
 				mode: 'nearest',
 				displayColors: false,
-				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-invert'),
-				bodyColor: getThemeValue('--text-invert'),
+				backgroundColor: getThemeValue('--gray-1000'),
+				titleColor: getThemeValue('--gray-100'),
+				bodyColor: getThemeValue('--gray-100'),
 				bodyFont: {
 					weight: 600,
 				},

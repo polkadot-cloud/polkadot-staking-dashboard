@@ -34,7 +34,7 @@ $container-border-radius: 1.25rem;
 }
 
 .input {
-  color: var(--text-primary);
+  color: var(--gray-1000);
   font-family: var(--font-family-semibold);
   font-size: 1.2rem;
   flex: 1;
@@ -88,7 +88,7 @@ $container-border-radius: 1.25rem;
   padding-left: 0.5rem;
 
   h4 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     font-size: 0.95rem;
   }
 
@@ -99,7 +99,7 @@ $container-border-radius: 1.25rem;
 }
 
 .balance {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   font-size: 0.95rem;
 }
 
@@ -130,7 +130,7 @@ $container-border-radius: 1.25rem;
 }
 
 .listName {
-  color: var(--text-primary);
+  color: var(--gray-1000);
   font-family: var(--font-family-semibold);
   font-size: 1.1rem;
 }
@@ -151,7 +151,7 @@ $container-border-radius: 1.25rem;
 }
 
 .label {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   font-size: 1.1rem;
   padding-bottom: 0.4rem;
 }

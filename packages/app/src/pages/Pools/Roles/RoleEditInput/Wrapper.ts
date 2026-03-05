@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
   h5 {
     margin: 0.75rem 0.25rem;
     &.neutral {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       opacity: 0.8;
     }
     &.danger {

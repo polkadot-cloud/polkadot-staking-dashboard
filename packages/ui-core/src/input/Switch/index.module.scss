@@ -9,7 +9,7 @@
   border-radius: 9999px;
   position: relative;
   -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
-  background-color: var(--border-alt);
+  background-color: var(--gray-600);
 
   &[data-state='checked'] {
     background-color: var(--accent-primary);

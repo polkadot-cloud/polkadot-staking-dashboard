@@ -19,7 +19,7 @@ export const JoinFormWrapper = styled.div`
     width: 100%;
 
     > h2 {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin: 0.25rem 0;
       width: auto;
     }
@@ -38,7 +38,7 @@ export const JoinFormWrapper = styled.div`
     display: flex;
     align-items: center;
     &.note {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       font-family: var(--font-family-default);
     }
   }
@@ -115,11 +115,11 @@ export const InviteHeader = styled.div`
     font-size: 1.8rem;
     margin-bottom: 0.75rem;
     font-family: var(--font-family-bold);
-    color: var(--text-primary);
+    color: var(--gray-1000);
   }
 
   h4 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     max-width: 40rem;
     margin: 0 auto;
   }

@@ -21,7 +21,7 @@ export const ItemWrapper = styled.div`
   margin-top: 1.25rem;
 
   > div {
-    background: var(--btn-bg);
+    background: var(--gray-400);
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -48,7 +48,7 @@ export const ItemWrapper = styled.div`
   }
 
   h4 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin: 0;
   }
 `

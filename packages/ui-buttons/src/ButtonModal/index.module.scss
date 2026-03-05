@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnModal {
-  color: var(--text-primary);
-  background: var(--btn-bg);
+  color: var(--gray-1000);
+  background: var(--gray-400);
   transition: background-color var(--transition-duration);
   box-sizing: border-box;
   padding: 0.9rem 1rem;
@@ -26,7 +26,7 @@
   }
 
   &:hover {
-    background: var(--btn-bg-hover);
+    background: var(--gray-500);
   }
 
   > h3 {

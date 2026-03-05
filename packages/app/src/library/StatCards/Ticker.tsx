@@ -26,7 +26,7 @@ export const Ticker = ({
 			? 'var(--status-success)'
 			: direction === 'down'
 				? 'var(--status-danger)'
-				: 'var(--text-secondary)'
+				: 'var(--gray-900)'
 
 	return (
 		<Wrapper isPreloading={isPreloading}>

@@ -30,7 +30,7 @@ export const SectionsArea = styled.div<{
 `
 
 export const Subheading = styled.h4`
-  color: var(--text-secondary);
+  color: var(--gray-900);
   padding: 0.45rem 0.4rem 0 0.4rem;
 `
 
@@ -46,7 +46,7 @@ export const SectionWrapper = styled.div`
     }
     
     .simplebar-scrollbar:before {
-      background: var(--border-alt);
+      background: var(--gray-600);
       height: 5px;
       border-radius: 2px;
     }

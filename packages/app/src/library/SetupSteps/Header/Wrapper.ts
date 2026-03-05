@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   align-items: center;
 
   > section {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
     justify-content: flex-end;
 
     .progress {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       opacity: 0.5;
     }
 

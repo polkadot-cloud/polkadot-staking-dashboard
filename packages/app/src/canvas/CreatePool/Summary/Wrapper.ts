@@ -19,7 +19,7 @@ export const SummaryWrapper = styled.div`
     padding: 0.5rem 0 0.75rem 0;
 
     > div:first-child {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       width: 200px;
       display: flex;
       flex-flow: row wrap;
@@ -31,7 +31,7 @@ export const SummaryWrapper = styled.div`
     }
 
     > div:last-child {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;

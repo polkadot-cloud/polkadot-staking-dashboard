@@ -107,7 +107,7 @@ export const TitleWrapper = styled.div`
     padding: 0 0.5rem;
 
     path {
-      fill: var(--text-primary);
+      fill: var(--gray-1000);
     }
 
     &:first-child {
@@ -142,8 +142,8 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
-    ${(props) => (props.$active ? 'var(--accent-stroke)' : 'var(--btn-bg)')};
-  background: var(--btn-bg);
+    ${(props) => (props.$active ? 'var(--accent-stroke)' : 'var(--gray-400)')};
+  background: var(--gray-400);
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -155,13 +155,13 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
 
   h4 {
     color: ${(props) =>
-			props.$active ? 'var(--accent-stroke)' : 'var(--text-secondary)'};
+			props.$active ? 'var(--accent-stroke)' : 'var(--gray-900)'};
     transition: color var(--transition-duration);
   }
 
   svg {
     color: ${(props) =>
-			props.$active ? 'var(--accent-stroke)' : 'var(--text-secondary)'};
+			props.$active ? 'var(--accent-stroke)' : 'var(--gray-900)'};
     opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
@@ -196,7 +196,7 @@ export const PromptSelectItem = styled.button`
     margin-top: 0.3rem;
   }
   &:hover {
-    background: var(--btn-bg-hover);
+    background: var(--gray-500);
   }
   &.inactive {
     h3,

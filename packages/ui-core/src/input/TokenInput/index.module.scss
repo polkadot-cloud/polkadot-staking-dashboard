@@ -11,7 +11,7 @@
   }
 
   > label {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     font-family: var(--font-family-semibold);
 
     &:focus {
@@ -22,7 +22,7 @@
   > input {
     border: 1px solid var(--border);
     background: var(--bg-body);
-    color: var(--text-primary);
+    color: var(--gray-1000);
     border-radius: 1.5rem;
     padding: 1rem 1.25rem;
     width: 100%;

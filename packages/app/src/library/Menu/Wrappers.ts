@@ -24,7 +24,7 @@ export const ItemWrapper = styled.button<{ $secondaryBg?: boolean }>`
   border-bottom: 1px solid var(--border);
   background-color: ${({ $secondaryBg }) =>
 		$secondaryBg ? 'var(--bg-primary)' : 'var(--bg-body)'};
-  color: var(--text-secondary);
+  color: var(--gray-900);
   display: flex;
   width: 100%;
   padding: 0.75rem 0.5rem;
@@ -46,7 +46,7 @@ export const ItemWrapper = styled.button<{ $secondaryBg?: boolean }>`
   }
 
   .title {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     padding: 0 0 0 0.75rem;
     font-size: 1rem;
   }

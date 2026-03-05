@@ -119,10 +119,10 @@ export const CallToActionWrapper = styled.div`
         }
 
         &.secondary {
-          background-color: var(--btn-bg);
+          background-color: var(--gray-400);
           border-top-right-radius: var(--button-border-radius);
           border-bottom-right-radius: var(--button-border-radius);
-          color: var(--text-primary);
+          color: var(--gray-1000);
 
           &:hover {
             filter: brightness(95%);

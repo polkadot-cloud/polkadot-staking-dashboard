@@ -52,7 +52,7 @@ export const ItemWrapper = styled.div`
     margin-right: 0;
   }
   .icon {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -60,7 +60,7 @@ export const ItemWrapper = styled.div`
     margin-right: 0.55rem;
   }
   p {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     font-size: 0.9rem;
     margin: 0;
     text-align: left;
@@ -98,7 +98,7 @@ export const LargeItemWrapper = styled.div`
       margin-right: 0.75rem;
     }
     p {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin: 0;
       text-align: left;
       padding: 0.5rem 0 0 0;
@@ -127,7 +127,7 @@ export const TabWrapper = styled.button<{ $active?: boolean }>`
   border: 1px solid
     ${(props) => (props.$active ? 'var(--accent-primary)' : 'var(--border)')};
   color: ${(props) =>
-		props.$active ? 'var(--accent-primary)' : 'var(--text-secondary)'};
+		props.$active ? 'var(--accent-primary)' : 'var(--gray-900)'};
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;
 `

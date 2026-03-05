@@ -58,14 +58,14 @@
   
     > .icon {
       svg {
-        filter: drop-shadow(3px 3px 2px var(--border-alt));
+        filter: drop-shadow(3px 3px 2px var(--gray-600));
         transition: all 0.3s;
       }
     }
 
     > h4 {
       font-family: var(--font-family-default);
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin-top: 0.5rem;
       max-width: 100%;
       overflow: hidden;
@@ -76,7 +76,7 @@
 
     &.active {
       &:hover {
-        background: var(--btn-bg-hover);
+        background: var(--gray-500);
 
         > .icon > svg {
           transform: scale(1.1);
@@ -96,7 +96,7 @@
   }
 
   > .inner {
-    border: 1px solid var(--btn-bg-hover);
+    border: 1px solid var(--gray-500);
     border-radius: 1rem;
     height: $summary-footer-height;
     padding: 0 1.25rem;
@@ -109,7 +109,7 @@
 
     > h4 {
       margin: 0;
-      color: var(--text-secondary);
+      color: var(--gray-900);
       font-family: var(--font-family-default);
       font-size: 1.05rem;
     }
@@ -126,7 +126,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--text-secondary);
+  color: var(--gray-900);
   font-size: inherit;
   transition: color var(--transition-duration);
 
