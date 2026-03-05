@@ -111,9 +111,7 @@ export const ValidatorStatusWrapper = styled.div<{
 
   h5 {
     color: ${(props) =>
-			props.$status === 'active'
-				? 'var(--status-success)'
-				: 'var(--gray-900)'};
+			props.$status === 'active' ? 'var(--status-success)' : 'var(--gray-900)'};
     opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;

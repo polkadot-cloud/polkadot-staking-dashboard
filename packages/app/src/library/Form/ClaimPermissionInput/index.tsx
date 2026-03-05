@@ -74,9 +74,7 @@ export const ClaimPermissionInput = ({
 				}}
 			>
 				{activeTab ? (
-					<h4 style={{ color: 'var(--gray-900)' }}>
-						{activeTab.description}
-					</h4>
+					<h4 style={{ color: 'var(--gray-900)' }}>{activeTab.description}</h4>
 				) : (
 					<h4 style={{ color: 'var(--gray-900)' }}>
 						{t('permissionlessClaimingTurnedOff')}
