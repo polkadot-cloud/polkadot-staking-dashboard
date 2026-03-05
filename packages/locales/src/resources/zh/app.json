@@ -357,7 +357,8 @@
 			"clearAllSelected": "清除所有选定项",
 			"searchResults": "搜索结果",
 			"searchValidators": "搜索验证人",
-			"searching": "搜索中..."
+			"searching": "搜索中...",
+			"selectedValidators": "已选验证人 ({{count}})"
 		},
 		"validators": "验证人",
 		"valueTooSmall": "值太小",
