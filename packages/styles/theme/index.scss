@@ -108,11 +108,11 @@ input {
   border: none;
 
   &::placeholder {
-    color: #aaa;
+    color: var(--gray-700);
   }
 
   &.underline {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border);
   }
 }
 

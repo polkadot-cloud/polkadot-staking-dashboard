@@ -1,6 +1,17 @@
 /* Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
+@use 'sass:list';
+
+/* Gray scale lightness values (percentage) */
+
+/* Light: 100=lightest → 1000=darkest */
+$gray-lightness-light: (100, 97, 95, 92, 88, 80, 63, 50, 33, 17);
+
+/* Dark: 100=darkest → 1000=lightest */
+$gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
+
+
 /* general styles */
 :root {
   --btn-sm-radius: 0.75rem;
@@ -19,40 +30,70 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 /* light theme colors */
 .light {
-  --bg-body: #efeeee;
-  --bg-primary: #f8f7f7;
-  --bg-invert: #333;
-  --bg-list: rgb(238 238 238 / 100%);
-  --bg-card-modal: rgb(237 237 237 / 75%);
-  --bg-card-canvas: rgb(245 245 245 / 90%);
-  --bg-card-canvas-alt: rgb(255 255 255 / 35%);
-  --bg-card-floating: rgb(255 255 255 / 90%);
-  --bg-modal: #f9f7f7;
-  --bg-modal-footer: #efefef;
-  --bg-menu: #eaeaea;
-  --bg-overlay: rgb(228 226 228 / 80%);
+  /* Generate gray scale: 100 = lightest, 1000 = darkest */
+  @for $i from 1 through 10 {
+    --gray-#{$i * 100}: hsl(0deg 0% #{list.nth($gray-lightness-light, $i)}%);
+  }
+
+  /* Backgrounds */
+  --bg-body: var(--gray-400);
+  --bg-primary: var(--gray-200);
+  --bg-invert: var(--gray-1000);
+  --bg-modal: var(--gray-200);
+  --bg-modal-footer: var(--gray-400);
+  --bg-menu: var(--gray-400);
+  --bg-list: var(--gray-400);
+  --bg-input: var(--gray-100);
+  --bg-overlay: rgb(234 234 234 / 80%);
   --bg-prompt: rgb(200 200 200 / 65%);
-  --bg-input: #fdfdfd;
-  --border: #e2e2e2;
-  --border-alt: #cfcccc;
-  --btn-bg: #efeeee;
-  --btn-bg-secondary: #f1f1f1;
-  --btn-bg-tertiary: #ececec;
-  --btn-tab: #e4e2e2;
-  --btn-canvas-tab: #d9d9d9;
-  --btn-bg-hover: #e9e9e9;
-  --btn-popover-tab-bg: #f3f3f3;
-  --shadow-primary: rgb(27 19 19 / 20%);
-  --shadow-secondary: #e7e7e7;
-  --shadow-tertiary: rgb(158 158 158 / 50%);
+  --bg-card-modal: rgb(242 242 242 / 75%);
+  --bg-card-canvas: rgb(248 248 248 / 90%);
+  --bg-card-canvas-alt: rgb(254 254 254 / 35%);
+  --bg-card-floating: rgb(254 254 254 / 90%);
+
+  /* Borders */
+  --border: var(--gray-500);
+  --border-alt: var(--gray-600);
+
+  /* Buttons */
+  --btn-bg: var(--gray-400);
+  --btn-bg-secondary: var(--gray-300);
+  --btn-bg-tertiary: var(--gray-400);
+  --btn-bg-hover: var(--gray-500);
+  --btn-tab: var(--gray-500);
+  --btn-canvas-tab: var(--gray-600);
+  --btn-popover-tab-bg: var(--gray-300);
+
+  /* Shadows */
+  --shadow-primary: rgb(42 42 42 / 20%);
+  --shadow-secondary: var(--gray-500);
+  --shadow-tertiary: rgb(128 128 128 / 50%);
+
+  /* Shimmer */
+  --shimmer-fg: var(--gray-500);
+  --shimmer-bg: var(--gray-600);
+
+  /* Grid */
+  --grid-primary: var(--gray-500);
+  --grid-secondary: var(--gray-400);
+  --grid-canvas-axis: var(--gray-1000);
+  --grid-canvas: var(--gray-600);
+
+  /* Text */
+  --text-primary: var(--gray-1000);
+  --text-secondary: var(--gray-900);
+  --text-tertiary: var(--gray-800);
+  --text-invert: var(--gray-100);
+
+  /* Accent colors (kept as-is per requirement) */
   --accent-primary: var(--accent-primary-light);
   --accent-secondary: var(--accent-secondary-light);
   --accent-tertiary: var(--accent-tertiary-light);
   --accent-stroke: var(--accent-stroke-light);
   --accent-transparent: var(--accent-transparent-light);
   --accent-pending: var(--accent-pending-light);
-  --shimmer-fg: #e0e0e0;
-  --shimmer-bg: #c4c4c4;
+
+  /* Status colors */
   --status-success: green;
   --status-success-transparent: rgb(0 128 0 / 25%);
   --status-warning: #b0850d;
@@ -61,14 +102,12 @@ SPDX-License-Identifier: GPL-3.0-only */
   --status-danger: #ae2324;
   --status-danger-transparent: rgb(255 0 0 / 25%);
   --status-danger-bg: rgb(255 0 0 / 5%);
-  --text-primary: #2f2f2f;
-  --text-secondary: #585858;
-  --text-tertiary: #888;
-  --text-invert: #fafafa;
+
+  /* Gradients */
   --gradient-menu: linear-gradient(
     180deg,
-    rgb(244 242 242 / 93%) 0%,
-    rgb(228 225 225 / 93%) 100%
+    rgb(242 242 242 / 93%) 0%,
+    rgb(234 234 234 / 93%) 100%
   );
   --highlight: rgb(0 0 0 / 4%) 0%;
   --highlight-alt: linear-gradient(
@@ -77,10 +116,8 @@ SPDX-License-Identifier: GPL-3.0-only */
     rgb(0 0 0 / 1%) 95%,
     rgb(0 0 0 / 0%) 100%
   );
-  --grid-primary: #e3e3e3;
-  --grid-secondary: #e8e8e8;
-  --grid-canvas-axis: #222;
-  --grid-canvas: #ccc;
+
+  /* Shadow composites */
   --shadow:
     -1px -2px 12px 1px var(--shadow-secondary),
     0px 0.5px 1px 0px var(--shadow-tertiary),
@@ -96,40 +133,70 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 /* dark theme colors */
 .dark {
-  --bg-body: rgb(21 21 21);
-  --bg-primary: rgb(30 30 30);
-  --bg-invert: #ddd;
-  --bg-list: rgb(24 24 24 / 100%);
-  --bg-card-modal: rgb(20 20 20 / 50%);
-  --bg-card-canvas: rgb(28 28 28 / 90%);
-  --bg-card-canvas-alt: rgb(28 28 28 / 35%);
-  --bg-card-floating: rgb(27 27 27 / 95%);
-  --bg-modal: rgb(27 27 27);
-  --bg-modal-footer: rgb(22 22 22);
-  --bg-menu: rgb(36 36 36);
-  --bg-input: rgb(45 45 45);
-  --border: rgb(38 38 38);
-  --border-alt: rgb(60 60 60);
-  --btn-bg: rgb(38 38 38);
-  --btn-bg-secondary: rgb(35 35 35);
-  --btn-bg-tertiary: rgb(34 34 34);
-  --btn-tab: rgb(36 36 36);
-  --btn-canvas-tab: rgb(40 40 40);
-  --btn-bg-hover: rgb(44 44 44);
-  --btn-popover-tab-bg: rgb(32 32 32);
+  /* Generate gray scale: 100 = darkest, 1000 = lightest */
+  @for $i from 1 through 10 {
+    --gray-#{$i * 100}: hsl(0deg 0% #{list.nth($gray-lightness-dark, $i)}%);
+  }
+
+  /* Backgrounds */
+  --bg-body: var(--gray-200);
+  --bg-primary: var(--gray-300);
+  --bg-invert: var(--gray-1000);
+  --bg-modal: var(--gray-300);
+  --bg-modal-footer: var(--gray-200);
+  --bg-menu: var(--gray-400);
+  --bg-list: var(--gray-200);
+  --bg-input: var(--gray-500);
+  --bg-overlay: rgb(16 16 16 / 80%);
+  --bg-prompt: rgb(10 10 10 / 70%);
+  --bg-card-modal: rgb(30 30 30 / 50%);
+  --bg-card-canvas: rgb(30 30 30 / 90%);
+  --bg-card-canvas-alt: rgb(38 38 38 / 35%);
+  --bg-card-floating: rgb(30 30 30 / 95%);
+
+  /* Borders */
+  --border: var(--gray-400);
+  --border-alt: var(--gray-600);
+
+  /* Buttons */
+  --btn-bg: var(--gray-400);
+  --btn-bg-secondary: var(--gray-400);
+  --btn-bg-tertiary: var(--gray-400);
+  --btn-bg-hover: var(--gray-500);
+  --btn-tab: var(--gray-400);
+  --btn-canvas-tab: var(--gray-500);
+  --btn-popover-tab-bg: var(--gray-400);
+
+  /* Shadows */
   --shadow-primary: rgb(0 0 0 / 25%);
   --shadow-secondary: rgb(0 0 0 / 25%);
   --shadow-tertiary: rgb(0 0 0 / 50%);
+
+  /* Shimmer */
+  --shimmer-bg: var(--gray-400);
+  --shimmer-fg: var(--gray-200);
+
+  /* Grid */
+  --grid-primary: var(--gray-400);
+  --grid-secondary: var(--gray-500);
+  --grid-canvas-axis: var(--gray-1000);
+  --grid-canvas: var(--gray-600);
+
+  /* Text */
+  --text-primary: var(--gray-1000);
+  --text-secondary: var(--gray-900);
+  --text-tertiary: var(--gray-700);
+  --text-invert: var(--gray-100);
+
+  /* Accent colors (kept as-is per requirement) */
   --accent-primary: var(--accent-primary-dark);
   --accent-secondary: var(--accent-secondary-dark);
   --accent-tertiary: var(--accent-tertiary-dark);
   --accent-stroke: var(--accent-stroke-dark);
   --accent-transparent: var(--accent-transparent-dark);
   --accent-pending: var(--accent-pending-dark);
-  --bg-overlay: rgb(16 16 16 / 80%);
-  --bg-prompt: rgb(10 10 10 / 70%);
-  --shimmer-bg: rgb(36 36 36);
-  --shimmer-fg: rgb(20 20 20);
+
+  /* Status colors */
   --status-success: #74da77;
   --status-success-transparent: rgb(0 128 0 / 25%);
   --status-warning: rgb(219 161 0 / 100%);
@@ -138,14 +205,12 @@ SPDX-License-Identifier: GPL-3.0-only */
   --status-danger: #d14445;
   --status-danger-transparent: rgb(255 0 0 / 25%);
   --status-danger-bg: rgb(255 0 0 / 5%);
-  --text-primary: #e7e9ea;
-  --text-secondary: #9ca3af;
-  --text-tertiary: #6b7280;
-  --text-invert: #0f0f0f;
+
+  /* Gradients */
   --gradient-menu: linear-gradient(
     180deg,
-    rgb(32 32 32) 0%,
-    rgb(20 20 20) 100%
+    rgb(38 38 38) 0%,
+    rgb(23 23 23) 100%
   );
   --highlight: rgb(255 255 255 / 3%);
   --highlight-alt: linear-gradient(
@@ -153,10 +218,8 @@ SPDX-License-Identifier: GPL-3.0-only */
     rgb(255 255 255 / 3%) 0%,
     rgb(255 255 255 / 1%) 100%
   );
-  --grid-primary: rgb(34 34 34);
-  --grid-secondary: rgb(36 36 36);
-  --grid-canvas-axis: #eee;
-  --grid-canvas: #444;
+
+  /* Shadow composites */
   --shadow:
     -1px -2px 12px 1px var(--shadow-secondary),
     0px 0.75px 1px 0px var(--shadow-tertiary),
