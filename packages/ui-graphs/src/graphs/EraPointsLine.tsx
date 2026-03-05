@@ -45,7 +45,7 @@ export const EraPointsLine = ({
 		: entries.map((entry) => new BigNumber(entry.points).toString())
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-primary')
+	const color = getThemeValue('--gray-1000')
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
 		family: "'DM Sans', 'sans-serif'",

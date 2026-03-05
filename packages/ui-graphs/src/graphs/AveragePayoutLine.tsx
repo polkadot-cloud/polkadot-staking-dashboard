@@ -38,16 +38,11 @@ export const AveragePayoutLine = ({
 	height,
 	background,
 	data: { payouts, poolClaims },
-	nominating,
-	inPool,
 	getThemeValue,
 	unit,
 	units,
 	labels,
 }: AveragePayoutLineProps) => {
-	const staking = nominating || inPool
-	const inPoolOnly = !nominating && inPool
-
 	// Memoize current date for the component's lifetime
 	const fromDate = useMemo(() => new Date(), [])
 
@@ -80,11 +75,7 @@ export const AveragePayoutLine = ({
 	)
 
 	// Determine color for payouts
-	const color = !staking
-		? getThemeValue('--accent-primary')
-		: !inPoolOnly
-			? getThemeValue('--accent-primary')
-			: getThemeValue('--accent-secondary')
+	const color = getThemeValue('--gray-1000')
 
 	const options = {
 		responsive: true,
@@ -109,7 +100,7 @@ export const AveragePayoutLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-secondary'),
+					color: getThemeValue('--gray-500'),
 				},
 			},
 		},

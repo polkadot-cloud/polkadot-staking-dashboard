@@ -46,7 +46,7 @@ export const PayoutLine = ({
 		: entries.map((entry) => new BigNumber(entry.reward).toString())
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-primary')
+	const color = getThemeValue('--gray-1000')
 
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
@@ -89,7 +89,7 @@ export const PayoutLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--gray-600'),
+					color: getThemeValue('--gray-500'),
 				},
 				title: {
 					...titleStyle,

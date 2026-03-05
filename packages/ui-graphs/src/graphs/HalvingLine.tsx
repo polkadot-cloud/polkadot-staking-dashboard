@@ -53,11 +53,8 @@ export const HalvingLine = ({
 			: undefined
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-primary')
-	const backgroundColor =
-		getThemeValue('--accent-primary')
-			.replace(')', ', 0.1)')
-			.replace('rgb', 'rgba') || 'rgba(56, 113, 220, 0.1)'
+	const color = getThemeValue('--gray-1000')
+	const backgroundColor = getThemeValue('--gray-400')
 
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
@@ -119,7 +116,7 @@ export const HalvingLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-secondary'),
+					color: getThemeValue('--gray-500'),
 				},
 				title: {
 					...titleStyle,
@@ -158,7 +155,7 @@ export const HalvingLine = ({
 						display: currentYearValue !== undefined,
 						xMin: currentYearValue ?? 0,
 						xMax: currentYearValue ?? 0,
-						borderColor: getThemeValue('--accent-primary'),
+						borderColor: getThemeValue('--gray-1000'),
 						borderWidth: 2,
 						borderDash: [5, 5],
 						label: {
