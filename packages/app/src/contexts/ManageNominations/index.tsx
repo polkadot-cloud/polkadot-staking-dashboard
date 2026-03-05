@@ -39,7 +39,7 @@ export const ManageNominationsProvider = ({
 	// Ref for the height of the validator list container
 	const heightRef = useRef<HTMLDivElement | null>(null)
 
-	// Utility to update povided setters with new nominations
+	// Utility to update provided setters with new nominations
 	const updateSetters = (
 		setters: AnyFunction[],
 		newNominations: Validator[],

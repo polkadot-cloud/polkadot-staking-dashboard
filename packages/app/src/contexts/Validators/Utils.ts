@@ -6,10 +6,8 @@ import type { NetworkId, Validator } from 'types'
 
 // Get favorite validators from local storage
 export const getLocalFavorites = (network: NetworkId) => {
-	const localFavourites = localStorage.getItem(`${network}_favorites`)
-	return localFavourites !== null
-		? (JSON.parse(localFavourites) as string[])
-		: []
+	const localFavorites = localStorage.getItem(`${network}_favorites`)
+	return localFavorites !== null ? (JSON.parse(localFavorites) as string[]) : []
 }
 
 // Get local validator entries data for an era
