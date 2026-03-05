@@ -11,7 +11,6 @@ import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers'
-import { StaticNote } from 'modals/Utils/StaticNote'
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -63,6 +62,8 @@ export const Overview = forwardRef(
 			}
 		}
 
+		const hasUnlocked = withdrawAvailable > 0n
+
 		const onRebondHandler = (chunk: UnlockChunk) => {
 			setTask('rebond')
 			setUnlock(chunk)
@@ -75,7 +76,11 @@ export const Overview = forwardRef(
 					<StatsWrapper>
 						<StatWrapper>
 							<div className="inner">
-								<h4>
+								<h4
+									style={
+										hasUnlocked ? { color: 'var(--status-success)' } : undefined
+									}
+								>
 									<FontAwesomeIcon icon={faCheckCircle} className="icon" />{' '}
 									{t('unlocked')}
 								</h4>
@@ -116,8 +121,8 @@ export const Overview = forwardRef(
 						</StatWrapper>
 					</StatsWrapper>
 
-					{withdrawAvailable > 0 && (
-						<div style={{ margin: '1rem 0 0.5rem 0' }}>
+					{hasUnlocked && (
+						<div className="withdraw-action">
 							<ButtonSubmit
 								disabled={false}
 								text={t('withdrawUnlocked')}
@@ -142,12 +147,9 @@ export const Overview = forwardRef(
 						/>
 					))}
 					<Notes withPadding>
-						<StaticNote
-							value={bondDurationFormatted}
-							tKey="unlockTake"
-							valueKey="bondDurationFormatted"
-							deps={[bondDuration]}
-						/>
+						<p>
+							{t('unlockTakePrefix')} <strong>{bondDurationFormatted}</strong>.
+						</p>
 						<p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
 						{!isStaking ? <p>{t('unlockChunk')}</p> : null}
 					</Notes>
