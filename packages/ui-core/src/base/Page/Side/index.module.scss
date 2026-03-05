@@ -31,7 +31,7 @@
 
   :global(.dark) & {
     background: linear-gradient(to bottom, var(--gray-400), var(--bg-list));
-    border-right: 1px solid var(--border);
+    border-right: 1px solid var(--gray-500);
   }
 }
 

@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const ActionWithButton = styled.div`
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--gray-500);
   width: 100%;
   color: var(--gray-1000);
   display: flex;

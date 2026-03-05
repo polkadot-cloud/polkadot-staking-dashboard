@@ -176,7 +176,7 @@ export const FooterWrapper = styled.div`
 export const PromptListItem = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--gray-500);
 
   &.inactive {
     opacity: var(--opacity-disabled);
@@ -184,7 +184,7 @@ export const PromptListItem = styled.div`
 `
 
 export const PromptSelectItem = styled.button`
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--gray-500);
   display: flex;
   flex-direction: column;
   align-items: flex-start;

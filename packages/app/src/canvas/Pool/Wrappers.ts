@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 export const JoinFormWrapper = styled.div`
   background: var(--bg-card-canvas);
-  border: 0.75px solid var(--border);
+  border: 0.75px solid var(--gray-500);
   box-shadow: var(--shadow);
   border-radius: 1.5rem;
   padding: 1.5rem;
@@ -48,14 +48,14 @@ export const JoinFormWrapper = styled.div`
     color: var(--text-tertiary);
 
     &.underline {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--gray-500);
       padding-bottom: 0.5rem;
       margin: 2rem 0 1rem 0;
     }
   }
 
   > .input {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gray-500);
     padding: 0 0.25rem;
     display: flex;
     align-items: flex-end;

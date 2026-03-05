@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
 `
 
 export const ItemWrapper = styled.div`
-  border: 1px solid var(--border);
+  border: 1px solid var(--gray-500);
   font-family: var(--font-family-semibold);
   border-radius: 1.5rem;
   display: flex;
@@ -74,7 +74,7 @@ export const LargeItemWrapper = styled.div`
   justify-content: center;
   padding: 0.5rem;
   > .inner {
-    border: 1.5px solid var(--border);
+    border: 1.5px solid var(--gray-500);
     background: var(--bg-list);
     border-radius: 1.25rem;
     display: flex;
@@ -125,7 +125,7 @@ export const TabsWrapper = styled.div`
 export const TabWrapper = styled.button<{ $active?: boolean }>`
   font-family: var(--font-family-semibold);
   border: 1px solid
-    ${(props) => (props.$active ? 'var(--accent-primary)' : 'var(--border)')};
+    ${(props) => (props.$active ? 'var(--accent-primary)' : 'var(--gray-500)')};
   color: ${(props) =>
 		props.$active ? 'var(--accent-primary)' : 'var(--gray-900)'};
   font-size: 0.9rem;

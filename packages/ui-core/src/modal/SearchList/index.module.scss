@@ -32,12 +32,12 @@
 .rightColumn {
   flex: 1;
   border-left: none;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--gray-500);
   padding-left: 0;
   padding-top: 1rem;
 
   @media (min-width: $page-width-small-threshold) {
-    border-left: 1px solid var(--border);
+    border-left: 1px solid var(--gray-500);
     padding-left: 1rem;
     flex: 1;
   }

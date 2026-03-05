@@ -85,7 +85,7 @@ export const Wrapper = styled.div<{
     background: var(--bg-primary);
     border: 1.75px solid
       ${(props) =>
-				props.$selected ? 'var(--accent-primary)' : 'var(--border)'};
+				props.$selected ? 'var(--accent-primary)' : 'var(--gray-500)'};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -97,7 +97,7 @@ export const Wrapper = styled.div<{
 					? 'var(--accent-primary)'
 					: props.$selected
 						? 'var(--accent-primary)'
-						: 'var(--border)'};
+						: 'var(--gray-500)'};
     }
 
     > button {

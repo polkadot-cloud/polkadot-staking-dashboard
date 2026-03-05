@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 export const MinDelayInputWrapper = styled.div`
   color: var(--gray-900);
-  border: 1px solid var(--border);
+  border: 1px solid var(--gray-500);
   flex: 0 1 auto;
   display: flex;
   height: 3rem;

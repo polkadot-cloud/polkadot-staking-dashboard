@@ -6,7 +6,7 @@
   align-items: center;
   padding: 1.5rem 1.6rem 1.5rem 1.35rem;
   position: relative;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--gray-500);
 
   &.last {
     padding-bottom: 2rem;
@@ -96,7 +96,7 @@
 
         input {
           background: var(--btn-popover-tab-bg);
-          border: 1px solid var(--border);
+          border: 1px solid var(--gray-500);
           color: var(--gray-1000);
           font-family: var(--font-family-default);
           padding: 1rem 0.85rem;

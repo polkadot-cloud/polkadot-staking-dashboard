@@ -96,7 +96,7 @@ export const SliderWrapper = styled.div`
     align-items: flex-start;
     margin-top: 1rem;
     h2 {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--gray-500);
       font-family: var(--font-family-bold);
       margin-top: 0rem;
       padding-bottom: 1rem;

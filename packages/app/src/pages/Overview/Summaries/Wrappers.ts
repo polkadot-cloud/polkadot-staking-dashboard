@@ -132,7 +132,7 @@ export const ProgressWrapper = styled.div`
   height: 3rem;
 
   &.border {
-    border: 1px solid var(--border);
+    border: 1px solid var(--gray-500);
     border-radius: 1rem;
     margin: 0 0.6rem;
   }

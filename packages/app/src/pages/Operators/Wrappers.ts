@@ -132,7 +132,7 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--gray-500);
         border-left: none;
         flex-flow: column wrap;
         justify-content: center;

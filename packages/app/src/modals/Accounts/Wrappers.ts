@@ -148,7 +148,7 @@ export const AccountWrapper = styled.div`
 
       /* Bottom half of the button, account metadata */
       &.foot {
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--gray-500);
         padding: 0.7rem 1rem;
 
         > .balance {

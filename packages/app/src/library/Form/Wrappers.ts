@@ -52,7 +52,7 @@ export const InputWrapper = styled.div`
       width: 100%;
 
       .input {
-        border: 1px solid var(--border);
+        border: 1px solid var(--gray-500);
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;

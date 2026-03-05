@@ -34,7 +34,7 @@ export const ItemWrapper = styled.div`
       }
 
       &:last-child {
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--gray-500);
         padding-top: 0rem;
 
         > div {

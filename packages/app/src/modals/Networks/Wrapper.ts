@@ -21,7 +21,7 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gray-500);
     color: var(--gray-900);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;

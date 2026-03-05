@@ -23,7 +23,7 @@ export const AccountInputWrapper = styled.div`
 
   &.border {
     > .input {
-      border: 1px solid var(--border);
+      border: 1px solid var(--gray-500);
     }
   }
 

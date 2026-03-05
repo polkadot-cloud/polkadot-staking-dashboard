@@ -26,7 +26,7 @@ export const StatWrapper = styled.div`
   }
 
   > .inner {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gray-500);
     padding-bottom: 0.5rem;
 
     > h2,

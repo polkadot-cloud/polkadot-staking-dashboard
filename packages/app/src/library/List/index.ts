@@ -16,7 +16,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   border-bottom: ${(props) =>
 		props.$displayFor === 'canvas'
 			? '1px solid var(--gray-600)'
-			: '1px solid var(--border)'};
+			: '1px solid var(--gray-500)'};
 
   display: flex;
   flex-flow: row wrap;
@@ -150,7 +150,7 @@ export const SearchInputWrapper = styled.div`
   width: 100%;
 
   > input {
-    border: 1px solid var(--border);
+    border: 1px solid var(--gray-500);
     color: var(--gray-900);
     font-family: var(--font-family-bold);
     border-radius: 1.75rem;

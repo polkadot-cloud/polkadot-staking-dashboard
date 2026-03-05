@@ -34,7 +34,7 @@ export const HeaderWrapper = styled.div`
     }
 
     @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
-      border-right: 1px solid var(--border);
+      border-right: 1px solid var(--gray-500);
       flex-basis: 20%;
       margin-bottom: 0;
       padding-left: 1rem;
@@ -47,7 +47,7 @@ export const HeaderWrapper = styled.div`
     }
 
     > .inner {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--gray-500);
       display: flex;
       flex-flow: column wrap;
       padding: 0.5rem 0.5rem 1rem 0.5rem;
@@ -119,7 +119,7 @@ export const AnnouncementsContainer = styled(motion.div)`
 `
 
 export const Item = styled(motion.div)`
-  border: 1px solid var(--border);
+  border: 1px solid var(--gray-500);
   border-radius: 0.75rem;
   list-style: none;
   padding: 1.25rem;
