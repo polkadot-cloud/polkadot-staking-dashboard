@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
 import { AccountInput } from 'ui-core/input'
-import { getTransferrableBalance } from 'utils'
+import { getTransferableBalance } from 'utils'
 import type { AccountDropdownProps } from './types'
 import { getAccountSourceIcon } from './util'
 
@@ -74,7 +74,7 @@ export const AccountDropdown = ({
 	const handleFetchBalance = async (address: string) => {
 		if (!address) return
 		const result = await serviceApi.query.accountBalance.hub(address)
-		const balance = getTransferrableBalance(result?.free || 0n, 0n)
+		const balance = getTransferableBalance(result?.free || 0n, 0n)
 		setTransferableBalance(balance)
 	}
 

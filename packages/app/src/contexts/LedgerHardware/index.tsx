@@ -156,7 +156,7 @@ export const LedgerHardwareProvider = ({
 					code: 'NestingNotSupported',
 				})
 				break
-			// Cccurs when the device is not connected
+			// Occurs when the device is not connected
 			case 'deviceNotConnected':
 				setStatusFeedback({
 					message: t('connectLedgerToContinue'),
