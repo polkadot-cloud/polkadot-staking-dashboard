@@ -8,7 +8,7 @@ import {
 	getFreeBalance,
 	getLockedBalance,
 	getTotalBalance,
-	getTransferrableBalance,
+	getTransferableBalance,
 	getUnlocking,
 	nominatorBalances,
 	poolBalances,
@@ -92,15 +92,15 @@ test('getFreeBalance handles insufficient balance', () => {
 	expect(result).toBe(0n) // max(5 - 10, 0) = 0
 })
 
-test('getTransferrableBalance subtracts all locked amounts', () => {
+test('getTransferableBalance subtracts all locked amounts', () => {
 	const freeBalance = 990000000000000n
 
-	const result = getTransferrableBalance(freeBalance, feeReserve)
+	const result = getTransferableBalance(freeBalance, feeReserve)
 	expect(result).toBe(985000000000000n) // 990 - 5
 })
 
-test('getTransferrableBalance handles insufficient balance', () => {
-	const result = getTransferrableBalance(
+test('getTransferableBalance handles insufficient balance', () => {
+	const result = getTransferableBalance(
 		10000000000000n, // 10 DOT
 		feeReserve,
 	)
