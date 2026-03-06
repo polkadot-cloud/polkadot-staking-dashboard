@@ -64,8 +64,8 @@ export const Wrapper = styled.div<MinimisedProps>`
 `
 
 export const CategoryHeader = styled.h3`
-  color: var(--accent-primary);
-  border-bottom: 1px solid var(--accent-primary);
+  color: var(--gray-1000);
+  border-bottom: 1px solid var(--gray-1000);
   font-family: var(--font-family-semibold);
   margin: 1.12rem 0.75rem 0.75rem 0.25rem;
   padding-bottom: 0.78rem;
@@ -111,7 +111,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   }
 
   > h3 {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
@@ -162,8 +162,8 @@ export const BulletWrapper = styled.div`
 
   > span {
     &.success {
-      color: var(--accent-primary);
-      border: 1px solid var(--accent-primary);
+      color: var(--gray-1000);
+      border: 1px solid var(--gray-1000);
     }
     &.warning {
       color: var(--status-warning);
@@ -175,7 +175,7 @@ export const BulletWrapper = styled.div`
 
   &.accent {
     svg {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
   }
   &.success {

@@ -23,7 +23,7 @@ export const SearchInput = styled.div`
       background-color 0.2s;
 
     &:focus {
-      border-color: var(--accent-primary);
+      border-color: var(--gray-1000);
     }
 
     &::placeholder {

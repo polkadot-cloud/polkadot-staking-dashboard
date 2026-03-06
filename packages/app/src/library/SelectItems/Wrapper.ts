@@ -84,8 +84,7 @@ export const Wrapper = styled.div<{
     transition: border var(--transition-duration);
     background: var(--bg-primary);
     border: 1.75px solid
-      ${(props) =>
-				props.$selected ? 'var(--accent-primary)' : 'var(--gray-500)'};
+      ${(props) => (props.$selected ? 'var(--gray-1000)' : 'var(--gray-500)')};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -94,9 +93,9 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
 				props.$hoverBorder
-					? 'var(--accent-primary)'
+					? 'var(--gray-1000)'
 					: props.$selected
-						? 'var(--accent-primary)'
+						? 'var(--gray-1000)'
 						: 'var(--gray-500)'};
     }
 
@@ -116,7 +115,7 @@ export const Wrapper = styled.div<{
 
       > .icon {
         background: var(--bg-list);
-        color: var(--accent-primary);
+        color: var(--gray-1000);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -145,7 +144,7 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-					props.$selected ? 'var(--accent-primary)' : 'var(--gray-900)'};
+					props.$selected ? 'var(--gray-1000)' : 'var(--gray-900)'};
         opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

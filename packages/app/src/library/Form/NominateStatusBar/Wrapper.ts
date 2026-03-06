@@ -66,14 +66,14 @@ export const Wrapper = styled.div`
 
       &.invert {
         h4 {
-          color: var(--accent-primary);
+          color: var(--gray-1000);
         }
         h5 {
           opacity: 1;
           color: var(--gray-100);
         }
         .bar {
-          background: var(--accent-primary);
+          background: var(--gray-1000);
         }
       }
     }

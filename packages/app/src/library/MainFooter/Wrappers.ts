@@ -34,7 +34,7 @@ export const Wrapper = styled.div`
 
   .cloud-label {
     font-family: var(--font-family-bold);
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     letter-spacing: 0.01em;
     font-size: 1.2rem;
   }

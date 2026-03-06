@@ -12,7 +12,7 @@
   background-color: var(--gray-600);
 
   &[data-state='checked'] {
-    background-color: var(--accent-primary);
+    background-color: var(--gray-1000);
   }
 }
 
@@ -20,7 +20,7 @@
   display: block;
   width: 2rem;
   height: 2rem;
-  background-color: white;
+  background-color: var(--gray-100);
   border-radius: 5rem;
   transition: transform 100ms;
   transform: translateX(0.15rem);

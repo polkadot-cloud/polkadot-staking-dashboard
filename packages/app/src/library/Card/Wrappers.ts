@@ -53,7 +53,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.prompt {
-    border: 1px solid var(--accent-pending);
+    border: 1px solid var(--gray-700);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {

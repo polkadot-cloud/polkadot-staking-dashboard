@@ -41,7 +41,7 @@ export const Wrapper = styled.span`
 
     &.success,
     &.accent {
-      border: 1.5px solid var(--accent-pending);
+      border: 1.5px solid var(--gray-700);
     }
     &.warning {
       border: 1px solid var(--status-warning);

@@ -125,7 +125,7 @@ export const PromptWrapper = styled.div`
   padding-left: 0.5rem;
 
   &.prompt {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     align-items: flex-start;
 
     .icon {
@@ -187,7 +187,7 @@ export const ProxySwitcher = styled.span`
     transition: all 0.15s;
 
     &:hover {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
 
     &:disabled {

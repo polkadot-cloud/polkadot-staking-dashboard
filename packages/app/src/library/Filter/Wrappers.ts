@@ -94,7 +94,7 @@ export const LargeItemWrapper = styled.div`
       align-items: center;
     }
     svg {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
       margin-right: 0.75rem;
     }
     p {
@@ -125,9 +125,8 @@ export const TabsWrapper = styled.div`
 export const TabWrapper = styled.button<{ $active?: boolean }>`
   font-family: var(--font-family-semibold);
   border: 1px solid
-    ${(props) => (props.$active ? 'var(--accent-primary)' : 'var(--gray-500)')};
-  color: ${(props) =>
-		props.$active ? 'var(--accent-primary)' : 'var(--gray-900)'};
+    ${(props) => (props.$active ? 'var(--gray-1000)' : 'var(--gray-500)')};
+  color: ${(props) => (props.$active ? 'var(--gray-1000)' : 'var(--gray-900)')};
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;
 `

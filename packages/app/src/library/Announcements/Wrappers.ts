@@ -57,13 +57,13 @@ export const HeaderWrapper = styled.div`
       }
 
       h2 {
-        color: var(--accent-primary);
+        color: var(--gray-1000);
         font-family: var(--font-family-mono);
         display: flex;
         align-items: center;
 
         > button {
-          color: var(--accent-primary);
+          color: var(--gray-1000);
           margin-left: 0.75rem;
         }
       }
@@ -146,7 +146,7 @@ export const Item = styled(motion.div)`
 
     > button {
       margin-left: 0.75rem;
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
   }
 

@@ -76,7 +76,7 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   a {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
   .header {
     width: 100%;
@@ -201,7 +201,7 @@ export const PromptSelectItem = styled.button`
   &.inactive {
     h3,
     h4 {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
   }
 `

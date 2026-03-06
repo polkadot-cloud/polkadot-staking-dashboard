@@ -24,7 +24,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       margin-left: 0.65rem;
       transition: color var(--transition-duration);
       &:hover {
-        color: var(--accent-primary);
+        color: var(--gray-1000);
       }
     }
   }

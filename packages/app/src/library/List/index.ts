@@ -78,13 +78,13 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-					props.$next ? 'var(--accent-primary)' : 'var(--gray-900)'};
+					props.$next ? 'var(--gray-1000)' : 'var(--gray-900)'};
         cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-					props.$prev ? 'var(--accent-primary)' : 'var(--gray-900)'};
+					props.$prev ? 'var(--gray-1000)' : 'var(--gray-900)'};
         cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$prev ? 1 : 0.4)};
       }

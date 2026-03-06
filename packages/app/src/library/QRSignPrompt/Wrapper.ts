@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   padding: 2rem 1rem;
 
   .title {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     font-family: var(--font-family-default);
     margin-bottom: 1rem;
   }
@@ -44,7 +44,7 @@ export const Wrapper = styled.div`
 
     &.withBorder {
       padding: 0.95rem;
-      border: 3.75px solid var(--accent-pending);
+      border: 3.75px solid var(--gray-700);
     }
   }
   .foot {

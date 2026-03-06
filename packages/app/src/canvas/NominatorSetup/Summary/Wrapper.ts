@@ -32,7 +32,7 @@ export const SummaryWrapper = styled.div`
         justify-content: center;
 
         > svg {
-          color: var(--accent-primary);
+          color: var(--gray-1000);
         }
       }
 

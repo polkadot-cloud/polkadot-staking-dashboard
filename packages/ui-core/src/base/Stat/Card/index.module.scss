@@ -83,11 +83,11 @@
   }
 
   > button {
-    border: 1px solid var(--accent-pending);
+    border: 1px solid var(--gray-700);
     transition: border 0.1s;
 
     &:hover {
-      border: 1px solid var(--accent-primary);
+      border: 1px solid var(--gray-1000);
     }
   }
 }

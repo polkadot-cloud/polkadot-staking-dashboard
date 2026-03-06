@@ -55,7 +55,7 @@ export const Wrapper = styled.div`
     transition: border var(--transition-duration) ease;
 
     &.selected {
-      border-color: var(--accent-primary);
+      border-color: var(--gray-1000);
     }
 
     .row {

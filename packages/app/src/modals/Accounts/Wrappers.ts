@@ -10,7 +10,7 @@ export const AccountWrapper = styled.div`
 
   &.active {
     > div {
-      border: 1px solid var(--accent-primary);
+      border: 1px solid var(--gray-1000);
     }
   }
 
@@ -55,7 +55,7 @@ export const AccountWrapper = styled.div`
 
           &:hover {
             .name {
-              color: var(--accent-primary);
+              color: var(--gray-1000);
             }
           }
 

@@ -16,7 +16,7 @@
   }
 
   &.button {
-    border-color: var(--accent-pending);
+    border-color: var(--gray-700);
   }
 
   &:last-child {
@@ -78,7 +78,7 @@
   font-size: 1.2rem;
 
   > button {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
 
     > svg {
       margin-left: 0.3rem;

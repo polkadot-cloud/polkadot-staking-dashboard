@@ -130,10 +130,10 @@
         position: relative;
 
         &.active > button > h4:hover {
-          color: var(--accent-primary);
+          color: var(--gray-1000);
 
           > svg {
-            color: var(--accent-primary);
+            color: var(--gray-1000);
             opacity: 1;
           }
         }
@@ -198,7 +198,7 @@
 
       &:hover {
         opacity: 1;
-        color: var(--accent-primary);
+        color: var(--gray-1000);
         background-color: var(--bg-body);
       }
 

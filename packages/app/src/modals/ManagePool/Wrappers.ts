@@ -43,7 +43,7 @@ export const SliderWrapper = styled.div`
     }
     &.neutral,
     .neutral {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
       opacity: 0.8;
     }
     &.danger,

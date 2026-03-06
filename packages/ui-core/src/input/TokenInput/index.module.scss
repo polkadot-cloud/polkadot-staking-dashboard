@@ -7,7 +7,7 @@
   }
 
   &:focus-within label {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
 
   > label {
@@ -15,7 +15,7 @@
     font-family: var(--font-family-semibold);
 
     &:focus {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
   }
 
@@ -30,7 +30,7 @@
     margin-top: 0.5rem;
 
     &:focus {
-      border-color: var(--accent-pending);
+      border-color: var(--gray-700);
     }
   }
 }

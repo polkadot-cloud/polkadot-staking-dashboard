@@ -18,7 +18,7 @@ SPDX-License-Identifier: GPL-3.0-only */
   transition: all 0.2s;
   
   &.active {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
 
   &:hover {
@@ -26,7 +26,7 @@ SPDX-License-Identifier: GPL-3.0-only */
     box-shadow: var(--shadow-alt);  
 
     &.active {
-      color: var(--accent-primary)
+      color: var(--gray-1000)
     }
   }
 }
