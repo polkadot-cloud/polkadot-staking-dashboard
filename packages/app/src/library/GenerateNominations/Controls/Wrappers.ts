@@ -7,7 +7,7 @@ export const MenuWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  background: rgb(from var(--bg-body) r g b / 75%);
+  background: rgb(from var(--gray-300) r g b / 75%);
 
   @media (max-width: 1200px) {
       padding: 0 1.5rem;
