@@ -87,9 +87,6 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   /* Text */
   --text-tertiary: var(--gray-800);
 
-  /* Accent colors (kept as-is per requirement) */
-  --accent-transparent: var(--accent-transparent-light);
-
   /* Status colors */
   --status-success: green;
   --status-success-transparent: rgb(0 128 0 / 25%);
@@ -175,9 +172,6 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
 
   /* Text */
   --text-tertiary: var(--gray-700);
-
-  /* Accent colors (kept as-is per requirement) */
-  --accent-transparent: var(--accent-transparent-dark);
 
   /* Status colors */
   --status-success: #74da77;

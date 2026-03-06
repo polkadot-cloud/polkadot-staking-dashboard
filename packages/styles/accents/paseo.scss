@@ -4,6 +4,5 @@ SPDX-License-Identifier: GPL-3.0-only */
 @use 'sass:color';
 
 .paseo {
-  --accent-transparent-light: rgb(60 170 110 / 5%);
-  --accent-transparent-dark: rgb(60 170 110 / 5%);
+  $base: rgb(23 137 73);
 }

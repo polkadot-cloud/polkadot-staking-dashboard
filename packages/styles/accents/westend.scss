@@ -4,6 +4,5 @@ SPDX-License-Identifier: GPL-3.0-only */
 @use 'sass:color';
 
 .westend {
-  --accent-transparent-light: rgb(218 78 113 / 5%);
-  --accent-transparent-dark: rgb(218 78 113 / 5%);
+  $base: rgb(218 78 113);
 }
