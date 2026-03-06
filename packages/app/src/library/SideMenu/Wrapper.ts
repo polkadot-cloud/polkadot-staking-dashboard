@@ -163,8 +163,8 @@ export const BulletWrapper = styled.div`
 
   > span {
     &.success {
-      color: var(--gray-1000);
-      border: 1px solid var(--gray-1000);
+      color: var(--status-success);
+      border: 1px solid var(--status-success);
     }
     &.warning {
       color: var(--status-warning);
@@ -176,7 +176,7 @@ export const BulletWrapper = styled.div`
 
   &.accent {
     svg {
-      color: var(--gray-1000);
+      color: var(--accent-700);
     }
   }
   &.success {
