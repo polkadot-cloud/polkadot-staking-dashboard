@@ -26,7 +26,7 @@ export const FavoritePoolsProvider = ({
 	// Stores the user's favorite pools
 	const [favorites, setFavorites] = useState<string[]>(getLocalFavorites())
 
-	// Adds a favorite validator
+	// Adds a favorite pool
 	const addFavorite = (address: string) => {
 		const newFavorites = [...favorites]
 		if (!newFavorites.includes(address)) {
