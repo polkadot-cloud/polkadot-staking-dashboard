@@ -109,7 +109,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 							{t('bondAmount')}:
 						</div>
 						<div>
-							{new BigNumber(bond).toFormat()} {unit}
+							{new BigNumber(bond || 0).toFormat()} {unit}
 						</div>
 					</section>
 					<section>
