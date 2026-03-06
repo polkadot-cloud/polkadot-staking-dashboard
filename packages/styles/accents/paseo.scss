@@ -4,18 +4,6 @@ SPDX-License-Identifier: GPL-3.0-only */
 @use 'sass:color';
 
 .paseo {
-  $base-primary: rgb(23 137 73);
-
-  @for $i from 0 through 19 {
-    --accent-primary-#{100 - ($i * 5)}: #{hsl(
-        color.channel($base-primary, 'hue', $space: hsl),
-        color.channel($base-primary, 'saturation', $space: hsl),
-        $i * 5%
-      )};
-  }
-
-  --accent-primary-light: var(--accent-primary-60);
-  --accent-primary-dark: var(--accent-primary-55);
   --accent-transparent-light: rgb(60 170 110 / 5%);
   --accent-transparent-dark: rgb(60 170 110 / 5%);
 }
