@@ -32,7 +32,7 @@
 
   .inner {
     background: var(--gray-300);
-    border: 1px solid var(--accent-300);
+    border: 1px solid var(--gray-400);
     border-radius: 0.7rem;
     display: flex;
     flex-direction: column;
@@ -77,9 +77,10 @@
 
     &.active {
       &:hover {
-        background: var(--accent-200);
+        background: var(--gray-400);
 
         > .icon > svg {
+          color: var(--accent-900);
           transform: scale(1.1);
         }
       }
