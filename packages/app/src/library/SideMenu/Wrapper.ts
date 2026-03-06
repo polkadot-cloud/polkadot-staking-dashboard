@@ -72,11 +72,12 @@ export const CategoryHeader = styled.h3`
   padding-left: 0.55rem;
   width: 100%;
   display: flex;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 
 
   &:hover {
-    transform: scale(1.02);
+    color: var(--accent-800);
+    border-color: var(--accent-800);
   }
   
   > span {
