@@ -176,7 +176,7 @@ export const BulletWrapper = styled.div`
 
   &.accent {
     svg {
-      color: var(--accent-700);
+      color: var(--gray-1000);
     }
   }
   &.success {
