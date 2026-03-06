@@ -63,6 +63,7 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (
 			pluginEnabled('staking_api') &&
+			activeEra.index !== 0 &&
 			activeAddress &&
 			nominations.length > 0
 		) {
@@ -70,12 +71,13 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 		} else {
 			setActiveNominatorData(undefined)
 		}
-	}, [activeAddress, nominations])
+	}, [activeAddress, nominations, activeEra.index])
 
 	// Fetch active pool nominating status when pool nominations update
 	useEffect(() => {
 		if (
 			pluginEnabled('staking_api') &&
+			activeEra.index !== 0 &&
 			activeAddress &&
 			poolNominations.length > 0 &&
 			activePool?.addresses.stash
@@ -84,7 +86,7 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 		} else {
 			setActivePoolData(undefined)
 		}
-	}, [poolNominations])
+	}, [poolNominations, activeEra.index])
 
 	return (
 		<ActiveStakerContext.Provider
