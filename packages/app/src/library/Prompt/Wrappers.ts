@@ -142,7 +142,7 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
-    ${(props) => (props.$active ? 'var(--accent-stroke)' : 'var(--gray-400)')};
+    ${(props) => (props.$active ? 'var(--accent-800)' : 'var(--gray-400)')};
   background: var(--gray-400);
   width: 100%;
   display: flex;
@@ -155,13 +155,13 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
 
   h4 {
     color: ${(props) =>
-			props.$active ? 'var(--accent-stroke)' : 'var(--gray-900)'};
+			props.$active ? 'var(--accent-800)' : 'var(--gray-900)'};
     transition: color var(--transition-duration);
   }
 
   svg {
     color: ${(props) =>
-			props.$active ? 'var(--accent-stroke)' : 'var(--gray-900)'};
+			props.$active ? 'var(--accent-800)' : 'var(--gray-900)'};
     opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
