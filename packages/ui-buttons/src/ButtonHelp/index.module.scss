@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnHelp {
-  background: var(--gray-400);
+  background: var(--gray-300);
   color: var(--gray-900);
-  fill: var(--gray-900);
+  fill: var(--accent-900);
   border-radius: 50%;
   padding: 0;
   width: 1.35rem;
@@ -23,15 +23,10 @@
   border: 1px solid var(--text-tertiary);
   color: var(--text-tertiary);
   fill: var(--text-tertiary);
-
-  &:hover {
-    border: 1px solid var(--accent-primary);
-    color: var(--accent-primary);
-  }
 }
 
 .btnHelpIcon {
   &:hover {
-    fill: var(--accent-primary);
+    fill: var(--accent-1000);
   }
 }

@@ -13,17 +13,10 @@ SPDX-License-Identifier: GPL-3.0-only */
         color.channel($base-primary, 'saturation', $space: hsl),
         $i * 5%
       )};
-    --accent-secondary-#{100 - ($i * 5)}: #{hsl(
-        color.channel($base-secondary, 'hue', $space: hsl),
-        color.channel($base-secondary, 'saturation', $space: hsl),
-        $i * 5%
-      )};
   }
 
   --accent-primary-light: var(--accent-primary-50);
   --accent-primary-dark: var(--accent-primary-50);
-  --accent-secondary-light: var(--accent-secondary-50);
-  --accent-secondary-dark: var(--accent-secondary-50);
   --accent-tertiary-light: rgb(232 213 208);
   --accent-tertiary-dark: rgb(70 48 47);
   --accent-stroke-light: rgb(218 78 113);

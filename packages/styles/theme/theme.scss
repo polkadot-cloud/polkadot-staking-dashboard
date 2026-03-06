@@ -11,6 +11,17 @@ $gray-lightness-light: (100, 97, 95, 92, 88, 80, 63, 50, 33, 17);
 /* Dark: 100=darkest → 1000=lightest */
 $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
 
+/* Accent scale parameters (hue ≈ 348° rose/pink) */
+$accent-hue: 348;
+$accent-saturation-light: 55;
+$accent-saturation-dark: 33;
+
+/* Light: 100=lightest → 1000=darkest (300 ≈ #f8e4e8) */
+$accent-lightness-light: (98, 96, 93, 90, 86, 78, 62, 48, 32, 16);
+
+/* Dark: 100=darkest → 1000=lightest (300 ≈ #2a151a) */
+$accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
+
 
 /* general styles */
 :root {
@@ -33,6 +44,11 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
   /* Generate gray scale: 100 = lightest, 1000 = darkest */
   @for $i from 1 through 10 {
     --gray-#{$i * 100}: hsl(0deg 0% #{list.nth($gray-lightness-light, $i)}%);
+  }
+
+  /* Generate accent scale: 100 = lightest, 1000 = darkest */
+  @for $i from 1 through 10 {
+    --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-light}% #{list.nth($accent-lightness-light, $i)}%);
   }
 
   /* Backgrounds */
@@ -73,7 +89,6 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
 
   /* Accent colors (kept as-is per requirement) */
   --accent-primary: var(--accent-primary-light);
-  --accent-secondary: var(--accent-secondary-light);
   --accent-tertiary: var(--accent-tertiary-light);
   --accent-stroke: var(--accent-stroke-light);
   --accent-transparent: var(--accent-transparent-light);
@@ -124,6 +139,11 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
     --gray-#{$i * 100}: hsl(0deg 0% #{list.nth($gray-lightness-dark, $i)}%);
   }
 
+  /* Generate accent scale: 100 = darkest, 1000 = lightest */
+  @for $i from 1 through 10 {
+    --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-dark}% #{list.nth($accent-lightness-dark, $i)}%);
+  }
+
   /* Backgrounds */
   --bg-body: var(--gray-200);
   --bg-primary: var(--gray-300);
@@ -162,7 +182,6 @@ $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
 
   /* Accent colors (kept as-is per requirement) */
   --accent-primary: var(--accent-primary-dark);
-  --accent-secondary: var(--accent-secondary-dark);
   --accent-tertiary: var(--accent-tertiary-dark);
   --accent-stroke: var(--accent-stroke-dark);
   --accent-transparent: var(--accent-transparent-dark);
