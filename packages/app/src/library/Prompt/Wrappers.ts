@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
-  background: var(--shade-700);
+  background: var(--overlay-backdrop);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -69,7 +69,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `
 
 export const ContentWrapper = styled.div`
-  background: var(--bg-body);
+  background: var(--gray-200);
   width: 100%;
   height: auto;
   overflow: hidden;

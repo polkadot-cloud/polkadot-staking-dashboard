@@ -32,7 +32,7 @@
 
   .inner {
     background: var(--gray-300);
-    border: 1px solid var(--gray-400);
+    border: 1px solid var(--accent-300);
     border-radius: 0.7rem;
     display: flex;
     flex-direction: column;
@@ -80,8 +80,8 @@
         background: var(--gray-400);
 
         > .icon > svg {
-          color: var(--accent-900);
-          transform: scale(1.1);
+          color: var(--accent-700);
+          transform: scale(1.05);
         }
       }
     }
@@ -133,7 +133,7 @@
   transition: color var(--transition-duration);
 
   &:hover {
-    color: var(--gray-1000);
+    color: var(--accent-700);
   }
 }
 

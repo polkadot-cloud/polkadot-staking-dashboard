@@ -14,11 +14,11 @@
   }
 
   &.active {
-    background: var(--btn-bg-secondary);
-    border-color: var(--text-tertiary);
+    background: transparent;
+    border-color: var(--accent-400);
 
     &.asTab {
-      color: var(--gray-900);
+      color: var(--accent-900);
     }
   }
 }
