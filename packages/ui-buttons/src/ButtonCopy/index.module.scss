@@ -31,7 +31,7 @@
     }
 
     > .icon {
-      color: var(--accent-800);
+      color: var(--gray-800);
       width: 100%;
       height: auto;
     }
@@ -69,7 +69,7 @@
   &:hover {
     > .copy {
       > .icon {
-        color: var(--accent-700);
+        color: var(--gray-700);
       }
     }
   }
