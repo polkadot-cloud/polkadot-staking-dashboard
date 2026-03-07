@@ -4,7 +4,7 @@
 $container-border-radius: 1.25rem;
 
 .container {
-  background: var(--bg-card-floating);
+  background: var(--gray-300);
   border: 1px solid var(--gray-500);
   position: relative;
   padding: 0 0.95rem;
@@ -113,7 +113,7 @@ $container-border-radius: 1.25rem;
 }
 
 .listItem {
-  background: var(--bg-card-floating);
+  background: var(--bg-primary);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -121,11 +121,11 @@ $container-border-radius: 1.25rem;
   cursor: pointer;
 
   &:hover {
-    background: var(--bg-primary);
+    background: var(--gray-300);
   }
 
   &.selected {
-    background: var(--bg-primary);
+    background: var(--gray-300);
   }
 }
 
