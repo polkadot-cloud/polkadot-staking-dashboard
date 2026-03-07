@@ -131,21 +131,21 @@ $shade-lightness-dark: 8;
   --bg-primary: var(--gray-300);
   --bg-modal: var(--gray-300);
   --bg-modal-footer: var(--gray-200);
-  --bg-list: var(--gray-200);
-  --bg-input: var(--gray-500);
+  --bg-list: var(--gray-300);
+  --bg-input: var(--gray-400);
   --overlay-backdrop: rgb(40 40 40 / 80%);
-  --bg-card-modal: var(--shade-500);
-  --bg-card-floating: var(--shade-1000);
+  --bg-card-modal: var(--shade-700);
+  --bg-card-floating: var(--shade-900);
 
   /* Buttons */
   --btn-bg-secondary: var(--gray-400);
-  --btn-tab: var(--gray-400);
+  --btn-tab: var(--gray-500);
   --btn-canvas-tab: var(--gray-500);
   --btn-popover-tab-bg: var(--gray-400);
 
   /* Shadows */
-  --shadow-primary: var(--shade-300);
-  --shadow-secondary: var(--shade-300);
+  --shadow-primary: var(--shade-200);
+  --shadow-secondary: var(--shade-400);
 
   /* Shimmer */
   --shimmer-bg: var(--gray-400);
@@ -171,8 +171,8 @@ $shade-lightness-dark: 8;
   /* Gradients */
   --gradient-menu: linear-gradient(
     180deg,
-    rgb(38 38 38) 0%,
-    rgb(23 23 23) 100%
+    rgb(38 38 38 / 93%) 0%,
+    rgb(23 23 23 / 93%) 100%
   );
   --highlight: rgb(255 255 255 / 3%);
   --highlight-alt: linear-gradient(
@@ -183,13 +183,14 @@ $shade-lightness-dark: 8;
 
   /* Shadow composites */
   --shadow:
-    -1px -2px 12px 1px var(--shadow-secondary),
-    0px 0.75px 1px 0px var(--shade-500),
+    -1px -2px 10px 0px var(--shadow-secondary),
+    0px 0.5px 1px 0px var(--shade-500),
     0 3.5px 6px -1px var(--shadow-primary),
     0.4px -0.4px 0px 0px var(--shadow-primary),
     -0.4px 0px 0px 0px var(--shadow-primary);
   --shadow-alt:
     0px 1px 1px 0px var(--shadow-secondary),
+    0 0.5px 1px -1px var(--shadow-secondary),
     0.4px -0.4px 0px 0px var(--shadow-secondary),
     -0.4px 0px 0px 0px var(--shadow-secondary);
 }
