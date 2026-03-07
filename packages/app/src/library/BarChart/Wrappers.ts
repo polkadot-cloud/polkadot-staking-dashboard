@@ -28,6 +28,10 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
   .d1 {
     background: var(--gray-1000);
     color: var(--gray-100);
+
+    ::selection {
+      background-color: var(--accent-900);
+    }
   }
   .d2 {
     background: var(--gray-900);
