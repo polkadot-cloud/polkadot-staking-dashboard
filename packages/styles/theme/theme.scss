@@ -11,17 +11,6 @@ $gray-lightness-light: (100, 97, 95, 92, 88, 80, 63, 50, 33, 17);
 /* Dark: 100=darkest → 1000=lightest */
 $gray-lightness-dark: (6, 9, 12, 15, 21, 27, 42, 53, 63, 89);
 
-/* Accent scale parameters (hue ≈ 348° rose/pink) */
-$accent-hue: 348;
-$accent-saturation-light: 55;
-$accent-saturation-dark: 33;
-
-/* Light: 100=lightest → 1000=darkest (300 ≈ #f8e4e8) */
-$accent-lightness-light: (98, 96, 93, 90, 86, 78, 62, 48, 32, 16);
-
-/* Dark: 100=darkest → 1000=lightest (300 ≈ #2a151a) */
-$accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
-
 /* Shade base lightness (semi-transparent overlays) */
 $shade-lightness-light: 92;
 $shade-lightness-dark: 8;
@@ -50,11 +39,6 @@ $shade-lightness-dark: 8;
     --gray-#{$i * 100}: hsl(0deg 0% #{list.nth($gray-lightness-light, $i)}%);
   }
 
-  /* Generate accent scale: 100 = lightest, 1000 = darkest */
-  @for $i from 1 through 10 {
-    --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-light}% #{list.nth($accent-lightness-light, $i)}%);
-  }
-
   /* Generate shade scale: 100 = 10% opacity, 1000 = 100% opacity */
   @for $i from 1 through 10 {
     --shade-#{$i * 100}: hsl(0deg 0% #{$shade-lightness-light}% / #{$i * 10}%);
@@ -67,7 +51,7 @@ $shade-lightness-dark: 8;
   --bg-modal-footer: var(--gray-400);
   --bg-list: var(--gray-400);
   --bg-input: var(--gray-100);
-  --overlay-backdrop: rgb(243 243 243 / 70%);
+  --overlay-backdrop: rgb(228 228 228 / 70%);
   --bg-card-modal: var(--shade-800);
   --bg-card-floating: var(--shade-900);
 
@@ -135,11 +119,6 @@ $shade-lightness-dark: 8;
   /* Generate gray scale: 100 = darkest, 1000 = lightest */
   @for $i from 1 through 10 {
     --gray-#{$i * 100}: hsl(0deg 0% #{list.nth($gray-lightness-dark, $i)}%);
-  }
-
-  /* Generate accent scale: 100 = darkest, 1000 = lightest */
-  @for $i from 1 through 10 {
-    --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-dark}% #{list.nth($accent-lightness-dark, $i)}%);
   }
 
   /* Generate shade scale: 100 = 10% opacity, 1000 = 100% opacity */
