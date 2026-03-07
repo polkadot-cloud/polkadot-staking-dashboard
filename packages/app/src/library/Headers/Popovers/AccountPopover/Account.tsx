@@ -16,7 +16,7 @@ export const Account = ({
 		<Polkicon address={address} fontSize="3.5rem" />
 		<Stat.Label>{label}</Stat.Label>
 		<Stat.Value>
-			{address} &nbsp;
+			{address} &nbsp;&nbsp;
 			<ButtonCopy value={address} size="0.95rem" />
 		</Stat.Value>
 	</Padding>
