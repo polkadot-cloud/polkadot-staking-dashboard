@@ -4,11 +4,11 @@
 import styled from 'styled-components'
 
 export const JoinFormWrapper = styled.div`
-  background: var(--shade-900);
+  background: var(--gray-300);
   border: 0.75px solid var(--gray-500);
   box-shadow: var(--shadow);
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 0;
   width: 100%;
 
   .head {
