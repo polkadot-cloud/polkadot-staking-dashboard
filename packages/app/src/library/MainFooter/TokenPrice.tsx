@@ -18,13 +18,12 @@ export const TokenPrice = () => {
 				style: 'currency',
 				currency,
 			}),
-		[currency]
+		[currency],
 	)
 	return (
 		<>
 			<div className="stat">
-				1 {unit} /{' '}
-				{priceFormatter.format(price)}
+				1 {unit} / {priceFormatter.format(price)}
 			</div>
 			<div className="stat">
 				<span
