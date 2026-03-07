@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
-  background: var(--bg-prompt);
+  background: var(--shade-700);
   position: fixed;
   width: 100%;
   height: 100%;

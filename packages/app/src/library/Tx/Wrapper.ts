@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
     }
 
     &.canvas {
-      background: var(--bg-card-canvas);
+      background: var(--shade-900);
     }
 
     &.transparent {

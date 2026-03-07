@@ -22,6 +22,10 @@ $accent-lightness-light: (98, 96, 93, 90, 86, 78, 62, 48, 32, 16);
 /* Dark: 100=darkest → 1000=lightest (300 ≈ #2a151a) */
 $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
 
+/* Shade base lightness (semi-transparent overlays) */
+$shade-lightness-light: 92;
+$shade-lightness-dark: 8;
+
 
 /* general styles */
 :root {
@@ -51,6 +55,11 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
     --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-light}% #{list.nth($accent-lightness-light, $i)}%);
   }
 
+  /* Generate shade scale: 100 = 10% opacity, 1000 = 100% opacity */
+  @for $i from 1 through 10 {
+    --shade-#{$i * 100}: hsl(0deg 0% #{$shade-lightness-light}% / #{$i * 10}%);
+  }
+
   /* Backgrounds */
   --bg-body: var(--gray-400);
   --bg-primary: var(--gray-200);
@@ -58,12 +67,9 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   --bg-modal-footer: var(--gray-400);
   --bg-list: var(--gray-400);
   --bg-input: var(--gray-100);
-  --bg-overlay: rgb(234 234 234 / 80%);
-  --bg-prompt: rgb(200 200 200 / 65%);
-  --bg-card-modal: rgb(242 242 242 / 75%);
-  --bg-card-canvas: rgb(248 248 248 / 90%);
-  --bg-card-canvas-alt: rgb(254 254 254 / 35%);
-  --bg-card-floating: rgb(254 254 254 / 90%);
+  --overlay-backdrop: rgb(243 243 243 / 70%);
+  --bg-card-modal: var(--shade-800);
+  --bg-card-floating: var(--shade-900);
 
   /* Buttons */
   --btn-bg-secondary: var(--gray-300);
@@ -72,9 +78,8 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   --btn-popover-tab-bg: var(--gray-300);
 
   /* Shadows */
-  --shadow-primary: rgb(42 42 42 / 20%);
+  --shadow-primary: var(--shade-200);
   --shadow-secondary: var(--gray-500);
-  --shadow-tertiary: rgb(128 128 128 / 50%);
 
   /* Shimmer */
   --shimmer-fg: var(--gray-500);
@@ -114,7 +119,7 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   /* Shadow composites */
   --shadow:
     -1px -2px 12px 1px var(--shadow-secondary),
-    0px 0.5px 1px 0px var(--shadow-tertiary),
+    0px 0.5px 1px 0px var(--shade-500),
     0 3.5px 6px -1px var(--shadow-primary),
     0.4px -0.4px 0px 0px var(--shadow-primary),
     -0.4px 0px 0px 0px var(--shadow-primary);
@@ -137,6 +142,11 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
     --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-dark}% #{list.nth($accent-lightness-dark, $i)}%);
   }
 
+  /* Generate shade scale: 100 = 10% opacity, 1000 = 100% opacity */
+  @for $i from 1 through 10 {
+    --shade-#{$i * 100}: hsl(0deg 0% #{$shade-lightness-dark}% / #{$i * 10}%);
+  }
+
   /* Backgrounds */
   --bg-body: var(--gray-200);
   --bg-primary: var(--gray-300);
@@ -144,12 +154,9 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   --bg-modal-footer: var(--gray-200);
   --bg-list: var(--gray-200);
   --bg-input: var(--gray-500);
-  --bg-overlay: rgb(16 16 16 / 80%);
-  --bg-prompt: rgb(10 10 10 / 70%);
-  --bg-card-modal: rgb(30 30 30 / 50%);
-  --bg-card-canvas: rgb(30 30 30 / 90%);
-  --bg-card-canvas-alt: rgb(38 38 38 / 35%);
-  --bg-card-floating: rgb(30 30 30 / 95%);
+  --overlay-backdrop: rgb(40 40 40 / 80%);
+  --bg-card-modal: var(--shade-500);
+  --bg-card-floating: var(--shade-1000);
 
   /* Buttons */
   --btn-bg-secondary: var(--gray-400);
@@ -158,9 +165,8 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   --btn-popover-tab-bg: var(--gray-400);
 
   /* Shadows */
-  --shadow-primary: rgb(0 0 0 / 25%);
-  --shadow-secondary: rgb(0 0 0 / 25%);
-  --shadow-tertiary: rgb(0 0 0 / 50%);
+  --shadow-primary: var(--shade-300);
+  --shadow-secondary: var(--shade-300);
 
   /* Shimmer */
   --shimmer-bg: var(--gray-400);
@@ -199,7 +205,7 @@ $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
   /* Shadow composites */
   --shadow:
     -1px -2px 12px 1px var(--shadow-secondary),
-    0px 0.75px 1px 0px var(--shadow-tertiary),
+    0px 0.75px 1px 0px var(--shade-500),
     0 3.5px 6px -1px var(--shadow-primary),
     0.4px -0.4px 0px 0px var(--shadow-primary),
     -0.4px 0px 0px 0px var(--shadow-primary);

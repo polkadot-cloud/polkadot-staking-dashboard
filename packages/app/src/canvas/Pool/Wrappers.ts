@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const JoinFormWrapper = styled.div`
-  background: var(--bg-card-canvas);
+  background: var(--shade-900);
   border: 0.75px solid var(--gray-500);
   box-shadow: var(--shadow);
   border-radius: 1.5rem;

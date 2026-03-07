@@ -23,18 +23,18 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   transition: border 0.2s;
 
   &.canvas {
-    background: var(--bg-card-canvas);
+    background: var(--shade-900);
     padding: 1.25rem;
 
     &.secondary {
       padding: 1rem;
 
       @media (max-width: 1000px) {
-        background: var(--bg-card-canvas);
+        background: var(--shade-900);
       }
 
       @media (min-width: 1001px) {
-        background: var(--bg-card-canvas-alt);
+        background: var(--shade-400);
       }
     }
   }

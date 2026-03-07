@@ -33,8 +33,8 @@ export const Wrapper = styled.div`
       border: var(--item-border-width) solid var(--bg-card-modal);
     }
     &.canvas {
-      background: var(--bg-card-canvas);
-      border: var(--item-border-width) solid var(--bg-card-canvas);
+      background: var(--shade-900);
+      border: var(--item-border-width) solid var(--shade-900);
     }
     &.modal,
     &.canvas {
