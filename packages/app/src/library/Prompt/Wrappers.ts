@@ -18,7 +18,7 @@ export const PromptWrapper = styled.div`
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    padding: 2rem 2rem;
+    padding: 2rem;
     animation: fadeScale 0.3s cubic-bezier(0, 1, 0, 1) forwards;
 
     .close {
@@ -86,7 +86,7 @@ export const ContentWrapper = styled.div`
     padding: 1rem 2rem 0 2rem;
   }
   .body {
-    padding: 0.5rem 1.5rem 1.25rem 1.5rem;
+    padding: 1rem 2rem 1.5rem 2rem;
     h4 {
       margin: 1rem 0;
     }
