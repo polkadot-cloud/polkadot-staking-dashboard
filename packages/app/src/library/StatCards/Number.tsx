@@ -29,7 +29,7 @@ export const Number = ({
 									.decimalPlaces(decimals || 0)
 									.toFormat()}
 							/>
-							{unit || null}
+							{unit}
 						</Stat.Title>
 						<Stat.Subtitle>
 							{label}
