@@ -35,11 +35,7 @@ export const Syncing = () => {
 							justifyContent: 'center',
 						}}
 					>
-						<FontAwesomeIcon
-							icon={faRefresh}
-							spin
-							color="var(--text-secondary)"
-						/>
+						<FontAwesomeIcon icon={faRefresh} spin color="var(--gray-900)" />
 					</section>
 					<section>
 						<div className={styles.desc}>

@@ -75,8 +75,6 @@ export interface AveragePayoutLineProps {
 	height: string
 	background?: string
 	data: GraphPayoutData
-	nominating: boolean
-	inPool: boolean
 	// Theme and translation props
 	getThemeValue: (key: string) => string
 	unit: string

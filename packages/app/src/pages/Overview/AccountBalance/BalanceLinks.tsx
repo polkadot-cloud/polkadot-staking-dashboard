@@ -29,7 +29,7 @@ export const BalanceLinks = () => {
 						)
 					}
 					iconRight={faExternalLinkAlt}
-					iconTransform="shrink-2"
+					iconTransform="shrink-3"
 					text="Subscan"
 					marginRight
 					disabled={!activeAddress}

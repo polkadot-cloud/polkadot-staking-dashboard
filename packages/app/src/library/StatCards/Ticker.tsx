@@ -26,7 +26,7 @@ export const Ticker = ({
 			? 'var(--status-success)'
 			: direction === 'down'
 				? 'var(--status-danger)'
-				: 'var(--text-secondary)'
+				: 'var(--gray-900)'
 
 	return (
 		<Wrapper isPreloading={isPreloading}>
@@ -36,7 +36,7 @@ export const Ticker = ({
 						<FontAwesomeIcon
 							icon={faArrowUpRightDots}
 							transform="grow-8"
-							color="var(--accent-primary)"
+							color="var(--gray-1000)"
 						/>
 					</Stat.Graphic>
 					<Stat.Content>

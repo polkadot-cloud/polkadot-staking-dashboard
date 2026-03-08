@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
     padding: 0;
 
     button {
-      color: var(--text-primary);
+      color: var(--gray-1000);
     }
 
     .icon {

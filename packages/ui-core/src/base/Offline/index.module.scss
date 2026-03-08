@@ -2,8 +2,8 @@
 SPDX-License-Identifier: GPL-3.0-only */
 
 .offlineLabel {
-  background: var(--accent-primary);
-  border: 0.5px solid var(--border);
+  background: var(--gray-1000);
+  border: 0.5px solid var(--gray-500);
   position: fixed;
   bottom: 1rem;
   right: 1rem;
@@ -14,11 +14,11 @@ SPDX-License-Identifier: GPL-3.0-only */
   align-items: center;
 
   > h3 {
-    color: var(--text-invert);
+    color: var(--gray-100);
   }
 
   > svg {
-    color: var(--text-invert);
+    color: var(--gray-100);
     margin-right: 0.75rem;
   }
 }

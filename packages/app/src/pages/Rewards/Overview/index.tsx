@@ -128,7 +128,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 										icon={showAdjusted ? faToggleOn : faToggleOff}
 										style={{
 											color: showAdjusted
-												? 'var(--accent-primary)'
+												? 'var(--gray-1000)'
 												: 'var(--text-tertiary)',
 											marginRight: '0.8rem',
 										}}

@@ -23,19 +23,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   transition: border 0.2s;
 
   &.canvas {
-    background: var(--bg-card-canvas);
+    background: var(--gray-300);
     padding: 1.25rem;
 
     &.secondary {
       padding: 1rem;
-
-      @media (max-width: 1000px) {
-        background: var(--bg-card-canvas);
-      }
-
-      @media (min-width: 1001px) {
-        background: var(--bg-card-canvas-alt);
-      }
     }
   }
 
@@ -53,7 +45,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.prompt {
-    border: 1px solid var(--accent-pending);
+    border: 1px solid var(--gray-700);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {

@@ -4,7 +4,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 @use 'styles/theme/variables' as *;
 
 .btnAccount {
-  color: var(--text-primary);
+  color: var(--gray-1000);
   transition: all var(--transition-duration);
   height: calc($header-height - 1px);
   display: flex;
@@ -67,8 +67,8 @@ SPDX-License-Identifier: GPL-3.0-only */
   }
 
   &:hover {
-    background: var(--btn-bg-hover);
-    color: var(--accent-primary);
+    background: var(--gray-500);
+    color: var(--gray-1000);
     
     > .arrow {
       svg {

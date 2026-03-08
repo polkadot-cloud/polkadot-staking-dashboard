@@ -185,7 +185,7 @@ export const PoolList = ({
 										icon={faBars}
 										color={
 											listFormat === 'row'
-												? getThemeValue('--accent-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
@@ -195,7 +195,7 @@ export const PoolList = ({
 										icon={faGripVertical}
 										color={
 											listFormat === 'col'
-												? getThemeValue('--accent-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>

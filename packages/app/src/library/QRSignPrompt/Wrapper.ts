@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   padding: 2rem 1rem;
 
   .title {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     font-family: var(--font-family-default);
     margin-bottom: 1rem;
   }
@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   .progress {
     margin-bottom: 1rem;
     border-radius: 1rem;
-    background: var(--bg-menu);
+    background: var(--gray-400);
     padding: 0.45rem 1.5rem 0.75rem 1.5rem;
 
     span {
@@ -44,7 +44,7 @@ export const Wrapper = styled.div`
 
     &.withBorder {
       padding: 0.95rem;
-      border: 3.75px solid var(--accent-pending);
+      border: 3.75px solid var(--gray-700);
     }
   }
   .foot {

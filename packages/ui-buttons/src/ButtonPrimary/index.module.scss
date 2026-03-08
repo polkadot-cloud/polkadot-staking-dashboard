@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnPrimary {
-  background: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
+  color: var(--accent-900);
+  background: var(--accent-200);
+  border: 1px solid var(--accent-200);
   border-radius: var(--btn-lg-radius);
-  color: white;
   transition: transform 0.15s;
 }

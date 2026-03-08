@@ -25,7 +25,7 @@ export const Wrapper = styled.div<WrapperProps>`
     justify-content: center;
 
     > svg {
-      color: var(--text-secondary);
+      color: var(--gray-900);
     }
     h2 {
       padding: 0;

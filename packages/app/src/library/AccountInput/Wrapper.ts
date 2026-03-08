@@ -23,7 +23,7 @@ export const AccountInputWrapper = styled.div`
 
   &.border {
     > .input {
-      border: 1px solid var(--border);
+      border: 1px solid var(--gray-500);
     }
   }
 
@@ -82,7 +82,7 @@ export const AccountInputWrapper = styled.div`
   h5 {
     margin: 0.75rem 0.25rem;
     &.neutral {
-      color: var(--text-primary);
+      color: var(--gray-1000);
       opacity: 0.8;
     }
     &.danger {

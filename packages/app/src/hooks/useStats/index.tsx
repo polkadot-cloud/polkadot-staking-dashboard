@@ -48,7 +48,7 @@ export const useRewardOverviewStats = (
 			Icon: (
 				<FontAwesomeIcon
 					icon={faCalculator}
-					color="var(--accent-primary)"
+					color="var(--gray-1000)"
 					style={{ marginLeft: '0.25rem', height: '2.1rem' }}
 				/>
 			),

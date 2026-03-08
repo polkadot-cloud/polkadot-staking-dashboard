@@ -21,7 +21,7 @@ export const TipWrapper = styled(motion.div)`
     flex-flow: row wrap;
     align-items: center;
     > span {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin-left: 0.75rem;
       opacity: 0.75;
       font-size: 1.1rem;
@@ -33,7 +33,7 @@ export const TipWrapper = styled(motion.div)`
   }
 
   p {
-    color: var(--text-primary);
+    color: var(--gray-1000);
     margin: 0.5rem 0 0 0;
     text-align: left;
   }

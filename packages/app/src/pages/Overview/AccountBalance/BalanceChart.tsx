@@ -105,6 +105,7 @@ export const BalanceChart = () => {
 
 	const isNominating = nominating.isGreaterThan(0)
 	const isInPool = inPool.isGreaterThan(0)
+	const dualStaking = isNominating && isInPool
 
 	return (
 		<>
@@ -122,7 +123,10 @@ export const BalanceChart = () => {
 						<LegendItem dataClass="d1" label={t('nominating')} />
 					) : null}
 					{inPool.isGreaterThan(0) ? (
-						<LegendItem dataClass="d2" label={t('inPool')} />
+						<LegendItem
+							dataClass={dualStaking ? 'd2' : 'd1'}
+							label={t('inPool')}
+						/>
 					) : null}
 					<LegendItem dataClass="d4" label={t('notStaking')} />
 				</Legend>
@@ -134,7 +138,7 @@ export const BalanceChart = () => {
 						label={`${nominating.decimalPlaces(3).toFormat()} ${unit}`}
 					/>
 					<BarSegment
-						dataClass="d2"
+						dataClass={dualStaking ? 'd2' : 'd1'}
 						widthPercent={Number(graphInPool.toFixed(2))}
 						flexGrow={!isNominating && !fundsTransferable && inPool ? 1 : 0}
 						label={`${inPool.decimalPlaces(3).toFormat()} ${unit}`}

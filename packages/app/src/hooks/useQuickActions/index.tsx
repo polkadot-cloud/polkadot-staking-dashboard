@@ -79,7 +79,7 @@ export const useQuickActions = () => {
 					style={{
 						width: '1.5rem',
 						height: '1.5rem',
-						fill: 'var(--text-primary)',
+						fill: 'var(--gray-1000)',
 					}}
 				/>
 			),
