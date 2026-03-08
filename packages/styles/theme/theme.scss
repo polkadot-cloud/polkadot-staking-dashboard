@@ -52,7 +52,6 @@ $shade-lightness-dark: 8;
   --bg-list: var(--gray-300);
   --bg-input: var(--gray-100);
   --overlay-backdrop: rgb(228 228 228 / 70%);
-  --bg-card-modal: var(--shade-800);
   --bg-card-floating: var(--shade-900);
 
   /* Buttons */
@@ -60,6 +59,7 @@ $shade-lightness-dark: 8;
   --btn-tab: var(--gray-500);
   --btn-canvas-tab: var(--gray-500);
   --btn-popover-tab-bg: var(--gray-300);
+  --btn-help-bg: var(--gray-400);
 
   /* Shadows */
   --shadow-primary: var(--shade-200);
@@ -131,10 +131,9 @@ $shade-lightness-dark: 8;
   --bg-primary: var(--gray-300);
   --bg-modal: var(--gray-300);
   --bg-modal-footer: var(--gray-200);
-  --bg-list: var(--gray-300);
+  --bg-list: var(--gray-400);
   --bg-input: var(--gray-400);
   --overlay-backdrop: rgb(40 40 40 / 80%);
-  --bg-card-modal: var(--shade-700);
   --bg-card-floating: var(--shade-900);
 
   /* Buttons */
@@ -142,6 +141,7 @@ $shade-lightness-dark: 8;
   --btn-tab: var(--gray-500);
   --btn-canvas-tab: var(--gray-500);
   --btn-popover-tab-bg: var(--gray-400);
+  --btn-help-bg: var(--accent-400);
 
   /* Shadows */
   --shadow-primary: var(--shade-200);
