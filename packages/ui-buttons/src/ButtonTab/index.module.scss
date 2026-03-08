@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnTab {
-  color: var(--gray-1000);
+  color: var(--gray-900);
   transition:
     opacity var(--transition-duration),
     font-size var(--transition-duration);
@@ -34,11 +34,12 @@
 
 .btnTabActive {
   background: var(--btn-tab);
+  color: var(--gray-1000);
 }
 
 .btnTabSecondaryColorActive {
   background: var(--btn-canvas-tab);
-  color: var(--gray-900);
+  color: var(--gray-1000);
 }
 
 
