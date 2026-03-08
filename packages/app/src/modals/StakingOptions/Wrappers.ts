@@ -23,7 +23,7 @@ export const ItemWrapper = styled.button`
   transition: background 0.1s ease-in-out;
 
   &:hover {
-    background: var(--btn-bg-secondary);
+    background: var(--gray-500);
   }
 
   > svg {
