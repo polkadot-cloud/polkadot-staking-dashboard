@@ -28,15 +28,11 @@ export const Wrapper = styled.div`
     background: var(--bg-list);
     border: var(--item-border-width) solid var(--bg-list);
 
-    &.modal {
-      background: var(--bg-card-modal);
-      border: var(--item-border-width) solid var(--bg-card-modal);
-    }
     &.canvas {
       background: var(--gray-300);
       border: var(--item-border-width) solid var(--gray-400)
     }
-    &.modal,
+
     &.canvas {
       box-shadow: none;
     }
