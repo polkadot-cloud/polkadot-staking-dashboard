@@ -45,7 +45,7 @@ export const timeleftAsString = (
 	full?: boolean,
 ) => {
 	const { days, hours, minutes, seconds } = getDurationFromNow(
-		fromUnixTime(start + duration) || null,
+		fromUnixTime(start + duration),
 	)
 
 	const tHour = `time.${full ? `hour` : `hr`}`
