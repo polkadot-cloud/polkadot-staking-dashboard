@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--shade-400)' : 'none')};
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--gray-300)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
