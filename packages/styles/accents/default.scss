@@ -3,14 +3,14 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'sass:list';
 
-/* Accent scale: green (hue ≈ 145°) */
-$accent-hue: 145;
-$accent-saturation-light: 45;
-$accent-saturation-dark: 30;
+/* Accent scale: rose/pink (hue ≈ 348°) */
+$accent-hue: 348;
+$accent-saturation-light: 55;
+$accent-saturation-dark: 33;
 $accent-lightness-light: (98, 96, 93, 90, 86, 78, 62, 48, 32, 16);
 $accent-lightness-dark: (5, 8, 12, 15, 20, 27, 41, 52, 63, 88);
 
-.paseo {
+.polkadot, .kusama {
   &.light {
     @for $i from 1 through 10 {
       --accent-#{$i * 100}: hsl(#{$accent-hue}deg #{$accent-saturation-light}% #{list.nth($accent-lightness-light, $i)}%);

@@ -15,13 +15,13 @@ $header-button-width: 3.5rem;
   position: relative;
 
   &:hover {
-    background: var(--btn-bg-hover);
-    color: var(--accent-primary);
+    background: var(--gray-500);
+    color: var(--gray-1000);
   }
   
   > .active {
-    background-color: var(--accent-primary);
-    box-shadow: 0 0 0 1px var(--accent-primary);
+    background-color: var(--gray-1000);
+    box-shadow: 0 0 0 1px var(--gray-1000);
     position: absolute;
     top: 0;
     right: 0;

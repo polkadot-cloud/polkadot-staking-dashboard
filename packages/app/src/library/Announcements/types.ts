@@ -1,17 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-export interface HeaderProps {
-	items: PoolStatLabel[]
-}
+import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 
-export interface PoolStatLabel {
+export interface AnnouncementItem {
 	label: string
 	value: string
-	button?: {
-		text: string
-		onClick: () => void
-		disabled: boolean
-	}
+	category?: string
+	button?: { text: string; onClick: () => void; disabled: boolean }
 	helpKey?: string
+	icon?: IconProp
 }

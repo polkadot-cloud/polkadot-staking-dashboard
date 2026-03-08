@@ -181,7 +181,6 @@ export const JoinForm = ({
 			/>
 			<div className="submit">
 				<SubmitTx
-					displayFor="card"
 					submitText={t('joinPool', { ns: 'pages' })}
 					valid={formValid}
 					{...submitExtrinsic}

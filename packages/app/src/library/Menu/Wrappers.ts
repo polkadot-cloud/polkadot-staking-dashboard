@@ -7,7 +7,7 @@ export const Wrapper = styled.div<{ $secondaryBg?: boolean }>`
   background: ${({ $secondaryBg }) =>
 		$secondaryBg ? 'var(--bg-primary)' : 'var(--bg-body)'};
   border: 1px solid
-    ${({ $secondaryBg }) => ($secondaryBg ? 'var(--border)' : 'var(--border)')};
+    ${({ $secondaryBg }) => ($secondaryBg ? 'var(--gray-500)' : 'var(--gray-500)')};
   width: 250px;
   padding: 0.25rem 0.75rem;
   display: flex;
@@ -21,10 +21,10 @@ export const Wrapper = styled.div<{ $secondaryBg?: boolean }>`
 `
 
 export const ItemWrapper = styled.button<{ $secondaryBg?: boolean }>`
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--gray-500);
   background-color: ${({ $secondaryBg }) =>
 		$secondaryBg ? 'var(--bg-primary)' : 'var(--bg-body)'};
-  color: var(--text-secondary);
+  color: var(--gray-900);
   display: flex;
   width: 100%;
   padding: 0.75rem 0.5rem;
@@ -46,7 +46,7 @@ export const ItemWrapper = styled.button<{ $secondaryBg?: boolean }>`
   }
 
   .title {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     padding: 0 0 0 0.75rem;
     font-size: 1rem;
   }

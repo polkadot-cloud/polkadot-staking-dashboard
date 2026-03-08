@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .subtitle {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   font-family: var(--font-family-semibold);
   flex: 1;
   display: flex;
@@ -16,7 +16,7 @@
   text-overflow: ellipsis;
 
   &.primary {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
 
     > svg {
       margin-left: 0.5rem;

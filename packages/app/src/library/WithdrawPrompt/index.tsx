@@ -54,7 +54,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-primary')}`,
+						border: `1px solid ${getThemeValue('--gray-1000')}`,
 					}}
 				>
 					<div className="content">

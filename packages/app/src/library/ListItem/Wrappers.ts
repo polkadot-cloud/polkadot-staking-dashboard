@@ -33,8 +33,8 @@ export const Wrapper = styled.div`
       border: var(--item-border-width) solid var(--bg-card-modal);
     }
     &.canvas {
-      background: var(--bg-card-canvas);
-      border: var(--item-border-width) solid var(--bg-card-canvas);
+      background: var(--gray-300);
+      border: var(--item-border-width) solid var(--gray-400)
     }
     &.modal,
     &.canvas {
@@ -55,7 +55,7 @@ export const Wrapper = styled.div`
     transition: border var(--transition-duration) ease;
 
     &.selected {
-      border-color: var(--accent-primary);
+      border-color: var(--gray-1000);
     }
 
     .row {
@@ -111,9 +111,7 @@ export const ValidatorStatusWrapper = styled.div<{
 
   h5 {
     color: ${(props) =>
-			props.$status === 'active'
-				? 'var(--status-success)'
-				: 'var(--text-secondary)'};
+			props.$status === 'active' ? 'var(--status-success)' : 'var(--gray-900)'};
     opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;

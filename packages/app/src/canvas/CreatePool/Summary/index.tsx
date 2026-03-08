@@ -138,6 +138,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 					<SubmitTx
 						submitText={t('createPool')}
 						valid
+						stacked
 						{...submitExtrinsic}
 						displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
 					/>

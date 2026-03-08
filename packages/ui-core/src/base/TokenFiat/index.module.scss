@@ -18,17 +18,17 @@
       flex: 1;
 
       > h1 {
-        color: var(--text-secondary);
-        font-family: var(--font-family-bold);
-        font-size: 1.4rem;
+        color: var(--gray-900);
+        font-family: var(--font-family-mono);
+        font-size: 1.5rem;
         margin-bottom: 0.3rem;
         display: flex;
         align-items: center;
       }
 
       > h3 {
-        color: var(--text-secondary);
-        font-family: var(--font-family-default);
+        color: var(--gray-900);
+        font-family: var(--font-family-mono);
         font-size: 1.2rem;
       }
     }

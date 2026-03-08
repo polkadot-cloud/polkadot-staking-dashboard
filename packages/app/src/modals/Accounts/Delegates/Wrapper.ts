@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 
 export const DelegatesWrapper = styled.div`
-  border-left: 1px solid var(--border);
+  border-left: 1px solid var(--gray-500);
   width: 100%;
   display: flex;
   flex-direction: column;

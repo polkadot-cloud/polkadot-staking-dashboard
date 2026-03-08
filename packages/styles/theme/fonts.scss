@@ -11,23 +11,24 @@ SPDX-License-Identifier: GPL-3.0-only */
  */
 
 :root {
-  --font-family-default: 'Inter', sans-serif;
-  --font-family-semibold: 'InterSemiBold', sans-serif;
-  --font-family-bold: 'InterBold', sans-serif;
+  --font-family-default: 'DM Sans', sans-serif;
+  --font-family-semibold: 'DM Sans Semi Bold', sans-serif;
+  --font-family-bold: 'DM Sans Bold', sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
 }
 
 /**
  * Language-specific font overrides
- * Chinese (zh): Uses regular Inter for semibold and bold weights
- * Korean (ko): Uses regular Inter for semibold and bold weights
+ * Chinese (zh): Uses regular for semibold and bold weights
+ * Korean (ko): Uses regular for semibold and bold weights
  */
 $language-font-overrides: (
   'zh': (
-    'semibold': 'Inter',
-    'bold': 'Inter',
+    'semibold': 'DM Sans Semi Bold',
+    'bold': 'DM Sans Bold',
   ),
    'ko': (
-    'bold': 'InterSemiBold',
+    'bold': 'DM Sans Bold',
   ),
 );
 
@@ -53,6 +54,10 @@ $language-font-overrides: (
   font-family: var(--font-family-bold);
 }
 
+.fontMono {
+  font-family: var(--font-family-mono);
+}
+
 /**
  * SCSS Mixins for use in component stylesheets
  * These make it easy to apply font families while remaining language-aware
@@ -67,4 +72,8 @@ $language-font-overrides: (
 
 @mixin font-bold {
   font-family: var(--font-family-bold);
+}
+
+@mixin font-mono {
+  font-family: var(--font-family-mono);
 }

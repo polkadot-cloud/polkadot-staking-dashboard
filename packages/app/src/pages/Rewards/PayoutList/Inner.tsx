@@ -98,9 +98,7 @@ export const PayoutList = ({
 						<FontAwesomeIcon
 							icon={faBars}
 							color={
-								listFormat === 'row'
-									? getThemeValue('--accent-primary')
-									: 'inherit'
+								listFormat === 'row' ? getThemeValue('--gray-1000') : 'inherit'
 							}
 						/>
 					</button>
@@ -108,9 +106,7 @@ export const PayoutList = ({
 						<FontAwesomeIcon
 							icon={faGripVertical}
 							color={
-								listFormat === 'col'
-									? getThemeValue('--accent-primary')
-									: 'inherit'
+								listFormat === 'col' ? getThemeValue('--gray-1000') : 'inherit'
 							}
 						/>
 					</button>

@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--bg-card-canvas-alt)' : 'none')};
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--shade-400)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -64,19 +64,20 @@ export const Wrapper = styled.div<MinimisedProps>`
 `
 
 export const CategoryHeader = styled.h3`
-  color: var(--accent-primary);
-  border-bottom: 1px solid var(--accent-primary);
+  color: var(--gray-1000);
+  border-bottom: 1px solid var(--gray-1000);
   font-family: var(--font-family-semibold);
   margin: 1.12rem 0.75rem 0.75rem 0.25rem;
   padding-bottom: 0.78rem;
   padding-left: 0.55rem;
   width: 100%;
   display: flex;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 
 
   &:hover {
-    transform: scale(1.02);
+    color: var(--accent-800);
+    border-color: var(--accent-800);
   }
   
   > span {
@@ -111,7 +112,7 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   }
 
   > h3 {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
@@ -140,7 +141,7 @@ export const ToggleWrapper = styled.button`
 
   > .label {
     background: var(--bg-primary);
-    color: var(--text-secondary);
+    color: var(--gray-900);
     width: 100%;
     height: 100%;
     display: flex;
@@ -162,8 +163,8 @@ export const BulletWrapper = styled.div`
 
   > span {
     &.success {
-      color: var(--accent-primary);
-      border: 1px solid var(--accent-primary);
+      color: var(--status-success);
+      border: 1px solid var(--status-success);
     }
     &.warning {
       color: var(--status-warning);
@@ -175,7 +176,7 @@ export const BulletWrapper = styled.div`
 
   &.accent {
     svg {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
   }
   &.success {

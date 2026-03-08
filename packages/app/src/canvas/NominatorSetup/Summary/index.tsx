@@ -153,6 +153,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 						valid={true}
 						{...submitExtrinsic}
 						displayFor="canvas"
+						stacked
 					/>
 				</div>
 			</MotionContainer>

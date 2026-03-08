@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .container {
-  border-bottom: 1px solid var(--border);
-  color: var(--text-secondary);
+  border-bottom: 1px solid var(--gray-500);
+  color: var(--gray-900);
   font-family: var(--font-family-default);
   display: flex;
 
@@ -16,7 +16,7 @@
   }
 
   &.button {
-    border-color: var(--accent-pending);
+    border-color: var(--gray-700);
   }
 
   &:last-child {
@@ -78,7 +78,7 @@
   font-size: 1.2rem;
 
   > button {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
 
     > svg {
       margin-left: 0.3rem;
@@ -90,7 +90,7 @@
   }
 
   > span {
-    color: var(--text-primary);
+    color: var(--gray-1000);
     font-family: var(--font-family-semibold);
     font-size: 0.95rem;
     margin-left: 0.3rem;
@@ -103,18 +103,18 @@
   }
 
   &.primary {
-    color: var(--text-primary);
+    color: var(--gray-1000);
 
     > span {
-      color: var(--text-primary);
+      color: var(--gray-1000);
     }
   }
 
   &.secondary {
-    color: var(--text-secondary);
+    color: var(--gray-900);
 
     > span {
-      color: var(--text-secondary);
+      color: var(--gray-900);
     }
   }
 

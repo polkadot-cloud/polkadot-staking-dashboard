@@ -26,20 +26,24 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     }
   }
   .d1 {
-    background: var(--accent-primary);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--gray-1000);
+    color: var(--gray-100);
+
+    ::selection {
+      background-color: var(--accent-900);
+    }
   }
   .d2 {
-    background: var(--accent-secondary);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--gray-900);
+    color: var(--gray-100);
   }
   .d3 {
-    background: var(--text-secondary);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--gray-800);
+    color: var(--gray-100);
   }
   .d4 {
-    background: var(--btn-bg-tertiary);
-    color: var(--text-secondary);
+    background: var(--gray-400);
+    color: var(--gray-900);
   }
 `
 
@@ -80,7 +84,7 @@ export const Legend = styled.div`
 `
 
 export const Bar = styled.div`
-  background: var(--btn-bg-secondary);
+  background: var(--gray-300);
   border-radius: 0.65rem;
   display: flex;
   overflow: hidden;
