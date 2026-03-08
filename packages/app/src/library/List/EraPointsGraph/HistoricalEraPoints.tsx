@@ -23,8 +23,10 @@ export const HistoricalEraPoints = ({
 	const { validatorsFetched } = useValidators()
 	const { setTooltipTextAndOpen } = useTooltip()
 
-	const eraPointData: bigint[] = eraPoints.map(({ points }) => BigInt(points))
-	const high = eraPointData.sort((a, b) => Number(b - a))[0]
+	const high = eraPoints.reduce<bigint>((acc, { points }) => {
+		const value = BigInt(points)
+		return value > acc ? value : acc
+	}, 0n)
 
 	const normalisedPoints = normaliseEraPoints(
 		Object.fromEntries(
