@@ -27,7 +27,7 @@ export const Tooltip = () => {
 			if (tooltipRef?.current) {
 				setTooltipPosition(
 					pageX,
-					pageY - (tooltipRef.current.offsetHeight || 0)
+					pageY - (tooltipRef.current.offsetHeight || 0),
 				)
 				if (!show) {
 					showTooltip()
