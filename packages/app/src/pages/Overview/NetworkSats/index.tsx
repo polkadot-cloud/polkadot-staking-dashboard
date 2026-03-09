@@ -65,7 +65,7 @@ export const NetworkStats = () => {
 	]
 
 	return (
-		<CardWrapper style={{ boxShadow: 'var(--shadow-alt)' }}>
+		<CardWrapper>
 			<CardHeader margin>
 				<h4>{t('networkStats', { ns: 'pages' })}</h4>
 			</CardHeader>
