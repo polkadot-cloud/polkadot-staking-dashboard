@@ -45,7 +45,7 @@ $shade-lightness-dark: 8;
   }
 
   /* Backgrounds */
-  --bg-body: var(--gray-400);
+  --bg-body: var(--gray-300);
   --bg-primary: var(--gray-200);
   --bg-modal: var(--gray-200);
   --bg-modal-footer: var(--gray-400);
@@ -53,6 +53,7 @@ $shade-lightness-dark: 8;
   --bg-input: var(--gray-100);
   --overlay-backdrop: rgb(228 228 228 / 70%);
   --bg-card-floating: var(--shade-900);
+  --bg-min-side-menu: var(--gray-200);
 
   /* Buttons */
   --btn-bg-secondary: var(--gray-300);
@@ -103,11 +104,11 @@ $shade-lightness-dark: 8;
 
   /* Shadow composites */
   --shadow:
-    -1px -2px 12px 1px var(--shadow-secondary),
-    0px 0.5px 1px 0px var(--shade-500),
-    0 3.5px 6px -1px var(--shadow-primary),
-    0.4px -0.4px 0px 0px var(--shadow-primary),
-    -0.4px 0px 0px 0px var(--shadow-primary);
+    -1px -2px 12px 1px var(--gray-400),
+    0px 0.5px 1px 0px var(--shade-600),
+    0 3.5px 6px -1px var(--gray-500),
+    0.5px -0.5px 0px 0px var(--gray-700),
+    -0.5px 0px 0px 0px var(--gray-700);
   --shadow-alt:
     0px 1px 1px 0px var(--shadow-secondary),
     0 0.5px 1px -1px var(--shadow-secondary),
@@ -136,6 +137,7 @@ $shade-lightness-dark: 8;
   --bg-input: var(--gray-400);
   --overlay-backdrop: rgb(40 40 40 / 80%);
   --bg-card-floating: var(--shade-900);
+  --bg-min-side-menu: var(--gray-300);
 
   /* Buttons */
   --btn-bg-secondary: var(--gray-400);
