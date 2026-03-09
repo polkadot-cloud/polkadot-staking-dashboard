@@ -39,8 +39,7 @@ export const Tooltip = () => {
 					'tooltip-trigger-element',
 				)
 
-				const dataAttribute =
-					target?.getAttribute('data-tooltip-text') ?? false
+				const dataAttribute = target?.getAttribute('data-tooltip-text') ?? false
 				if (!isTriggerElement) {
 					closeTooltip()
 				} else if (dataAttribute !== text) {
@@ -48,7 +47,7 @@ export const Tooltip = () => {
 				}
 			}
 		},
-		[show, text, closeTooltip, showTooltip, setTooltipPosition]
+		[show, text, closeTooltip, showTooltip, setTooltipPosition],
 	)
 
 	useEffect(() => {
