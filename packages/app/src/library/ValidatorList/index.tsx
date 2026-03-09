@@ -159,7 +159,8 @@ export const ValidatorListInner = ({
 		[validators, pageStart, pageLength],
 	)
 
-	// Build a lookup for validator performance to avoid repeated array scans when rendering list items.
+	// Build a lookup for validator performance to avoid repeated array scans when rendering list
+	// items
 	const performanceByAddress = useMemo(
 		() =>
 			new Map(
