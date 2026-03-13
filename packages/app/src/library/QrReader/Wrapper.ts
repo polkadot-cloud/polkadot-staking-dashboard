@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       aspect-ratio: 8;
       background: radial-gradient(
           circle closest-side,
-          var(--text-primary) 100%,
+          var(--gray-1000) 100%,
           #0000
         )
         0 / calc(100% / 3) 100% space;

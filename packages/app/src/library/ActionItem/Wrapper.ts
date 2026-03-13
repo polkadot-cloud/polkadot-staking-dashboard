@@ -1,11 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const Wrapper = styled.h3`
-  border-bottom: 1px solid var(--border);
-  color: var(--text-primary);
+  border-bottom: 1px solid var(--gray-500);
+  color: var(--gray-1000);
   font-family: var(--font-family-semibold);
   display: flex;
   align-items: center;
@@ -19,7 +19,7 @@ export const Wrapper = styled.h3`
 
   .toggle {
     background: var(--bg-input);
-    border: 1px solid var(--border);
+    border: 1px solid var(--gray-500);
     border-radius: 0.4rem;
     margin-right: 0.65rem;
     width: 1.75rem;

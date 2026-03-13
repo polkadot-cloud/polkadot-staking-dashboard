@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -68,6 +68,8 @@ export const Bond = ({ section }: SetupStepProps) => {
 		}
 	}, [setup.section])
 
+	const bondValue = new BigNumber(bond.bond !== '' ? bond.bond : 0)
+
 	return (
 		<>
 			<Header
@@ -87,7 +89,7 @@ export const Bond = ({ section }: SetupStepProps) => {
 					txFees={fee}
 					maxWidth
 				/>
-				<CreatePoolStatusBar value={new BigNumber(bond.bond)} />
+				<CreatePoolStatusBar value={bondValue} />
 				<Footer complete={bondValid} bondFor="pool" />
 			</MotionContainer>
 		</>

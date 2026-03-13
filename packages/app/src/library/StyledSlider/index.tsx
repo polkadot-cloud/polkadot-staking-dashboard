@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import Slider from 'rc-slider'
@@ -25,14 +25,14 @@ export const StyledSlider = ({
 			}}
 			styles={{
 				track: {
-					backgroundColor: 'var(--accent-primary)',
+					backgroundColor: 'var(--gray-1000)',
 				},
 				rail: {
 					backgroundColor: 'var(--btn-bg-secondary)',
 				},
 				handle: {
 					backgroundColor: 'var(--bg-primary)',
-					borderColor: 'var(--accent-primary)',
+					borderColor: 'var(--gray-1000)',
 					opacity: 1,
 				},
 			}}

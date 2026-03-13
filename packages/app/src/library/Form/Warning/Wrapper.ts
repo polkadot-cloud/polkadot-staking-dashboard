@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  background: var(--btn-bg);
+  background: var(--gray-200);
   border: 1px solid var(--status-warning);
   margin: 0.5rem 0;
   padding: 0.6rem 0.9rem;

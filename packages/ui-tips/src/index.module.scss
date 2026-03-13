@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 @use 'styles/theme/variables' as *;
@@ -8,7 +8,7 @@
   position: relative;
 
   .inner {
-    border: 1px solid var(--btn-bg-hover);
+    border: 1px solid var(--gray-500);
     display: flex;
     flex-flow: row wrap;
     border-radius: 1rem;
@@ -130,16 +130,16 @@
         position: relative;
 
         &.active > button > h4:hover {
-          color: var(--accent-primary);
+          color: var(--accent-700);
 
           > svg {
-            color: var(--accent-primary);
+            color: var(--gray-1000);
             opacity: 1;
           }
         }
 
         h4 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           transition: color var(--transition-duration);
           font-family: var(--font-family-default);
           text-align: left;
@@ -150,7 +150,7 @@
           padding-right: 1.75rem;
 
           > svg {
-            color: var(--text-secondary);
+            color: var(--gray-900);
             transition: all var(--transition-duration);
             position: absolute;
             right: 0.2rem;
@@ -175,14 +175,14 @@
 }
 
 .pageToggle {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   display: flex;
   align-items: center;
   margin-left: 0.5rem;
   height: 100%;
 
   > span {
-    border-left: 1px solid var(--border);
+    border-left: 1px solid var(--gray-500);
     height: inherit;
 
     > button {
@@ -193,17 +193,17 @@
       padding: 0 0.75rem;
 
       > svg {
-        color: var(--text-secondary);
+        color: var(--gray-900);
       }
 
       &:hover {
         opacity: 1;
-        color: var(--accent-primary);
+        color: var(--gray-1000);
         background-color: var(--bg-body);
       }
 
       &:disabled {
-        color: var(--text-secondary);
+        color: var(--gray-900);
         opacity: var(--opacity-disabled);
 
         &:hover {

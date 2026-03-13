@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -244,8 +244,8 @@ export const combineRewards = (
 	poolClaims: RewardRecord[],
 ) => {
 	// Check if actual payouts exist
-	const poolClaimExists = poolClaims.find((p) => Number(p.reward) > 0) || null
-	const payoutExists = payouts.find((p) => Number(p.reward) > 0) || null
+	const poolClaimExists = poolClaims.find((p) => Number(p.reward) > 0)
+	const payoutExists = payouts.find((p) => Number(p.reward) > 0)
 
 	// If no pool claims exist but payouts do, return payouts
 	if (

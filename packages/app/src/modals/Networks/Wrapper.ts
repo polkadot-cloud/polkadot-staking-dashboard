@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SectionFullWidthThreshold } from 'consts'
@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   padding: 1rem;
 
   h2 {
-    color: var(--text-primary);
+    color: var(--gray-1000);
     margin-top: 0.5rem;
     margin-bottom: 1rem;
   }
@@ -21,8 +21,8 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
-    border-bottom: 1px solid var(--border);
-    color: var(--text-secondary);
+    border-bottom: 1px solid var(--gray-500);
+    color: var(--gray-900);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
@@ -49,7 +49,7 @@ export const ContentWrapper = styled.div`
 `
 
 export const NetworkButton = styled.button<{ $connected: boolean }>`
-  background: var(--btn-bg);
+  background: var(--gray-400);
   border: 1px solid var(--status-success-transparent);
   padding: 1rem;
   cursor: pointer;
@@ -88,25 +88,25 @@ export const NetworkButton = styled.button<{ $connected: boolean }>`
     justify-content: flex-end;
   }
   &:hover {
-    background: var(--btn-bg-hover);
+    background: var(--gray-500);
   }
   .icon {
     margin-right: 0.5rem;
   }
 
   svg {
-    color: var(--text-secondary);
-    fill: var(--text-secondary);
+    color: var(--gray-900);
+    fill: var(--gray-900);
   }
   p {
-    color: var(--text-primary);
+    color: var(--gray-1000);
     font-size: 1rem;
   }
 
   &:disabled {
     cursor: default;
     &:hover {
-      background: var(--btn-bg);
+      background: var(--gray-400);
     }
   }
 `
@@ -150,7 +150,7 @@ export const ConnectionsWrapper = styled.div`
 `
 
 export const ConnectionButton = styled.button<{ $connected: boolean }>`
-  background: var(--btn-bg);
+  background: var(--gray-400);
   border: 1px solid var(--status-success-transparent);
   position: relative;
   padding: 1rem 0.75rem;
@@ -168,7 +168,7 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
   width: 100%;
 
   &:hover {
-    background: var(--btn-bg-hover);
+    background: var(--gray-500);
   }
 
   > h3 {
@@ -185,7 +185,7 @@ export const ConnectionButton = styled.button<{ $connected: boolean }>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: var(--btn-bg);
+      background: var(--gray-400);
     }
     &.off {
       h3 {

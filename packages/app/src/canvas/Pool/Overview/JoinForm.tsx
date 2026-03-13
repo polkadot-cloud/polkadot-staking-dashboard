@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
@@ -181,7 +181,6 @@ export const JoinForm = ({
 			/>
 			<div className="submit">
 				<SubmitTx
-					displayFor="card"
 					submitText={t('joinPool', { ns: 'pages' })}
 					valid={formValid}
 					{...submitExtrinsic}

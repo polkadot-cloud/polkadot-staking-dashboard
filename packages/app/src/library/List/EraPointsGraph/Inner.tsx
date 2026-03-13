@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Fragment } from 'react/jsx-runtime'
@@ -112,7 +112,7 @@ export const Inner = ({
 							key={`line_coord_${index}`}
 							strokeWidth={5.5}
 							opacity={opacity}
-							stroke={zero ? 'var(--text-tertiary)' : 'var(--accent-primary)'}
+							stroke={zero ? 'var(--text-tertiary)' : 'var(--gray-1000)'}
 							x1={x1}
 							y1={y1}
 							x2={x2}

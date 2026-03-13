@@ -25,3 +25,4 @@ bin
 *.tsbuildinfo
 .env
 .claude/launch.json
+.vscode

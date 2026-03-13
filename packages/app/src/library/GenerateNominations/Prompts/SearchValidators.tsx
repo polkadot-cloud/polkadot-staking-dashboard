@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxNominations } from 'consts'
@@ -62,8 +62,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 				} else {
 					setSearchResults([])
 				}
-			} catch (error) {
-				console.error('Error searching validators:', error)
+			} catch {
 				setSearchResults([])
 			} finally {
 				setIsSearching(false)
@@ -128,7 +127,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 							<h5
 								style={{
 									marginBottom: '0.5rem',
-									color: 'var(--text-secondary)',
+									color: 'var(--gray-900)',
 								}}
 							>
 								{t('maxCommission', { ns: 'modals' })}: {maxCommission}%
@@ -197,7 +196,10 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 					{/* Right Column - Selected Validators (1/3 width) */}
 					<SearchList.RightColumn>
 						<SearchList.Header>
-							Selected Validators ({selected.length})
+							{t('validatorSearch.selectedValidators', {
+								ns: 'app',
+								count: selected.length,
+							})}
 						</SearchList.Header>
 
 						{selected.length > 0 ? (

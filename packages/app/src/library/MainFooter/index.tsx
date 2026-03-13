@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faHive } from '@fortawesome/free-brands-svg-icons'
@@ -73,7 +73,7 @@ export const MainFooter = () => {
 								<div className="stat last">
 									<FontAwesomeIcon icon={faHive} />
 									<Odometer
-										wholeColor="var(--text-secondary)"
+										wholeColor="var(--gray-900)"
 										value={new BigNumber(blockNumber || '0').toFormat()}
 										spaceBefore={'0.35rem'}
 									/>

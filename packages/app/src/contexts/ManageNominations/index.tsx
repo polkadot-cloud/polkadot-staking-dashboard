@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
@@ -39,7 +39,7 @@ export const ManageNominationsProvider = ({
 	// Ref for the height of the validator list container
 	const heightRef = useRef<HTMLDivElement | null>(null)
 
-	// Utility to update povided setters with new nominations
+	// Utility to update provided setters with new nominations
 	const updateSetters = (
 		setters: AnyFunction[],
 		newNominations: Validator[],

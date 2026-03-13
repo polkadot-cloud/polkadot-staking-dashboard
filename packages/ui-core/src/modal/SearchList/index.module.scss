@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 @use 'styles/theme/variables' as *;
@@ -32,29 +32,29 @@
 .rightColumn {
   flex: 1;
   border-left: none;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--gray-500);
   padding-left: 0;
   padding-top: 1rem;
 
   @media (min-width: $page-width-small-threshold) {
-    border-left: 1px solid var(--border);
+    border-left: 1px solid var(--gray-500);
     padding-left: 1rem;
     flex: 1;
   }
 }
 
 .header {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   margin: 0 0 0.5rem;
 }
 
 .searchHeader {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   margin: 1rem 0 0.5rem;
 }
 
 .loadingWrapper {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   padding: 1rem;
   text-align: center;
 }
@@ -65,7 +65,7 @@
 }
 
 .selectedList {
-  border: 1px solid var(--border-alt);
+  border: 1px solid var(--gray-600);
   max-height: 250px;
   overflow-y: auto;
   border-radius: 0.5rem;
@@ -77,8 +77,8 @@
 }
 
 .emptyState {
-  border: 1px dashed var(--border-alt);
-  color: var(--text-secondary);
+  border: 1px dashed var(--gray-600);
+  color: var(--gray-900);
   padding: 2rem 1rem;
   text-align: center;
   border-radius: 0.5rem;
@@ -91,7 +91,7 @@
 
 .clearButton {
   border: 1px solid var(--status-error-color);
-  color: var(--text-primary);
+  color: var(--gray-1000);
   margin-top: 0.5rem;
   width: 100%;
   padding: 0.5rem;
@@ -102,7 +102,7 @@
 
   &:hover {
     background: var(--status-error-color);
-    color: var(--text-secondary);
+    color: var(--gray-900);
   }
 }
 
@@ -116,16 +116,16 @@
 }
 
 .nominationsText {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   font-family: var(--font-family-semibold);
 }
 
 .remainingText {
   &.hasRemaining {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
 
   &.noRemaining {
-    color: var(--text-secondary);
+    color: var(--gray-900);
   }
 }

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Popover } from 'radix-ui'
@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 export const PopoverContent = styled(Popover.Content)`
 	background: var(--bg-primary);
-	border: 1px solid var(--border);
+	border: 1px solid var(--gray-500);
 	border-radius: 1.25rem;
 	padding: 1.25rem 1.5rem;
 	max-width: 450px;
@@ -49,13 +49,13 @@ export const PopoverContent = styled(Popover.Content)`
 
 	h4 {
 		margin: 0 0 0.75rem 0;
-		color: var(--text-primary);
+		color: var(--gray-1000);
 		font-size: 1.2rem;
 	}
 
 	p {
 		margin: 0;
-		color: var(--text-secondary);
+		color: var(--gray-900);
 		font-size: 1.1rem;
 		line-height: 1.5;
 
@@ -82,7 +82,7 @@ export const CloseButton = styled.button`
 	font-size: 1rem;
 
 	&:hover {
-		color: var(--text-primary);
+		color: var(--gray-1000);
 	}
 
 	&:active {

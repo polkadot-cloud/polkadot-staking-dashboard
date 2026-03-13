@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
@@ -29,7 +29,7 @@ export const BalanceLinks = () => {
 						)
 					}
 					iconRight={faExternalLinkAlt}
-					iconTransform="shrink-2"
+					iconTransform="shrink-3"
 					text="Subscan"
 					marginRight
 					disabled={!activeAddress}

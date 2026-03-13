@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .accountTitle {
   --account-title-height: 2.75rem;
 
-  border-bottom: 1px solid var(--border-alt);
+  border-bottom: 1px solid var(--gray-600);
   flex: 1;
   display: flex;
   flex-direction: column;

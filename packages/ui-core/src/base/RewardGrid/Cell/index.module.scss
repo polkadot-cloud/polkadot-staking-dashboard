@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .cell {
@@ -19,6 +19,14 @@
     svg {
       color: var(--status-success);
       margin-right: 0.6rem;
+    }
+  }
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    > h3 {
+      font-family: var(--font-family-mono);
+      color: var(--text-tertiary);
     }
   }
 }

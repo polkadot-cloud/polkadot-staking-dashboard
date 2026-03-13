@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { App } from 'App'
@@ -6,9 +6,8 @@ import { createRoot } from 'react-dom/client'
 import { version } from '../package.json'
 
 // Network styles
-import 'styles/accents/kusama.scss'
+import 'styles/accents/default.scss'
 import 'styles/accents/paseo.scss'
-import 'styles/accents/polkadot.scss'
 import 'styles/accents/westend.scss'
 
 // App styles

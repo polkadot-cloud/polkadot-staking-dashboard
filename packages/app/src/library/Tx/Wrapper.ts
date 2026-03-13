@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
     }
 
     &.canvas {
-      background: var(--bg-card-canvas);
+      background: var(--shade-900);
     }
 
     &.transparent {
@@ -117,7 +117,7 @@ export const PromptWrapper = styled.div`
   margin-top: 0.5rem;
 
   p {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   display: flex;
   align-items: center;
   font-size: 1.1rem;
@@ -125,7 +125,7 @@ export const PromptWrapper = styled.div`
   padding-left: 0.5rem;
 
   &.prompt {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
     align-items: flex-start;
 
     .icon {
@@ -137,7 +137,7 @@ export const PromptWrapper = styled.div`
 `
 
 export const SignerWrapper = styled.p`
-  color: var(--text-secondary);
+  color: var(--gray-900);
   display: flex;
   align-items: center;
   font-size: 1.1rem;
@@ -149,7 +149,7 @@ export const SignerWrapper = styled.p`
   }
 
   .badge {
-    border: 1px solid var(--border-alt);
+    border: 1px solid var(--gray-600);
     border-radius: 0.45rem;
     padding: 0.2rem 0.5rem;
     margin-right: 0.75rem;
@@ -181,13 +181,13 @@ export const ProxySwitcher = styled.span`
   button {
     background: var(--bg-primary);
     border-radius: 0.5rem;
-    color: var(--text-secondary);
+    color: var(--gray-900);
     padding: 0.1rem 0.4rem;
     font-size: 0.85rem;
     transition: all 0.15s;
 
     &:hover {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
 
     &:disabled {

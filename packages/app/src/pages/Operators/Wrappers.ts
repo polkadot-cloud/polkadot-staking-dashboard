@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { motion } from 'motion/react'
@@ -8,7 +8,7 @@ const VERTICAL_THRESHOLD = 800
 
 export const Wrapper = styled.div`
   h2 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
@@ -31,7 +31,7 @@ export const ItemWrapper = styled(motion.div)`
   }
 
   > .inner {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     background: var(--bg-primary);
     box-shadow: var(--shadow);
     border-radius: 0.75rem;
@@ -61,7 +61,7 @@ export const ItemWrapper = styled(motion.div)`
         > button {
           font-size: 1.1rem;
           &.active {
-            color: var(--text-secondary);
+            color: var(--gray-900);
             background: var(--bg-list);
             &:hover {
               background: var(--bg-list);
@@ -80,7 +80,7 @@ export const ItemWrapper = styled(motion.div)`
         padding: 0.3rem 1rem;
 
         svg {
-          color: var(--text-secondary);
+          color: var(--gray-900);
         }
 
         margin: 0.5rem 1rem 0.5rem 0;
@@ -94,7 +94,7 @@ export const ItemWrapper = styled(motion.div)`
           background: var(--btn-bg-secondary);
           transition: background var(--transition-duration);
           &:hover {
-            background: var(--btn-bg-hover);
+            background: var(--gray-500);
           }
         }
         &:last-child {
@@ -132,7 +132,7 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--gray-500);
         border-left: none;
         flex-flow: column wrap;
         justify-content: center;

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
@@ -185,7 +185,7 @@ export const PoolList = ({
 										icon={faBars}
 										color={
 											listFormat === 'row'
-												? getThemeValue('--accent-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
@@ -195,7 +195,7 @@ export const PoolList = ({
 										icon={faGripVertical}
 										color={
 											listFormat === 'col'
-												? getThemeValue('--accent-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
