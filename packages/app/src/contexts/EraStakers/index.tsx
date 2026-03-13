@@ -183,25 +183,29 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		const result: Exposure[] = []
 		let i = 0
 		for (const pages of pagedResults) {
-			// NOTE: Only one page is fetched for each validator for now
-			const page = pages[0]
-
-			// NOTE: Some pages turn up as undefined - might be worth exploring further
-			if (!page) {
-				continue
+			// Merge nominators from all pages for this validator
+			const allOthers: { who: string; value: bigint }[] = []
+			for (const page of pages) {
+				if (page) {
+					const [, { others }] = page
+					allOthers.push(...others)
+				}
 			}
 
-			const [keyArgs, { others }] = page
+			if (allOthers.length === 0) {
+				i++
+				continue
+			}
 
 			const validator = validatorKeys[i]
 			const { own, total } = validators[validator]
 
 			result.push({
-				keys: [keyArgs[0].toString(), validator],
+				keys: [era, validator],
 				val: {
 					total: total.toString(),
 					own: own.toString(),
-					others: others.map(({ who, value }) => ({
+					others: allOthers.map(({ who, value }) => ({
 						who,
 						value: value.toString(),
 					})),
