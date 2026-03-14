@@ -185,14 +185,17 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		for (const pages of pagedResults) {
 			// Merge nominators from all pages for this validator
 			const allOthers: { who: string; value: bigint }[] = []
+			let hasPage = false
 			for (const page of pages) {
 				if (page) {
+					hasPage = true
 					const [, { others }] = page
 					allOthers.push(...others)
 				}
 			}
 
-			if (allOthers.length === 0) {
+			// Skip only when there is no page data at all for this validator.
+			if (!hasPage) {
 				i++
 				continue
 			}
