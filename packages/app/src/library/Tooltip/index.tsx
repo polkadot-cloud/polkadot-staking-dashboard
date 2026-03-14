@@ -3,7 +3,7 @@
 
 import { useTooltip } from 'contexts/Tooltip'
 import type { RefObject } from 'react'
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Wrapper } from './Wrapper'
 
 export const Tooltip = () => {
@@ -20,6 +20,36 @@ export const Tooltip = () => {
 	// Ref for the tooltip element itself.
 	const tooltipRef: RefObject<HTMLDivElement | null> = useRef(null)
 
+	const mouseMoveCallback = useCallback(
+		(e: MouseEvent) => {
+			const { target, pageX, pageY } = e
+
+			if (tooltipRef?.current) {
+				setTooltipPosition(
+					pageX,
+					pageY - (tooltipRef.current.offsetHeight || 0),
+				)
+				if (!show) {
+					showTooltip()
+				}
+			}
+
+			if (target instanceof HTMLElement) {
+				const isTriggerElement = target?.classList.contains(
+					'tooltip-trigger-element',
+				)
+
+				const dataAttribute = target?.getAttribute('data-tooltip-text') ?? false
+				if (!isTriggerElement) {
+					closeTooltip()
+				} else if (dataAttribute !== text) {
+					closeTooltip()
+				}
+			}
+		},
+		[show, text, closeTooltip, showTooltip, setTooltipPosition],
+	)
+
 	useEffect(() => {
 		if (open === 1) {
 			window.addEventListener('mousemove', mouseMoveCallback)
@@ -29,31 +59,7 @@ export const Tooltip = () => {
 		return () => {
 			window.removeEventListener('mousemove', mouseMoveCallback)
 		}
-	}, [open])
-
-	const mouseMoveCallback = (e: MouseEvent) => {
-		const { target, pageX, pageY } = e
-
-		if (tooltipRef?.current) {
-			setTooltipPosition(pageX, pageY - (tooltipRef.current.offsetHeight || 0))
-			if (!show) {
-				showTooltip()
-			}
-		}
-
-		if (target instanceof HTMLElement) {
-			const isTriggerElement = target?.classList.contains(
-				'tooltip-trigger-element',
-			)
-
-			const dataAttribute = target?.getAttribute('data-tooltip-text') ?? false
-			if (!isTriggerElement) {
-				closeTooltip()
-			} else if (dataAttribute !== text) {
-				closeTooltip()
-			}
-		}
-	}
+	}, [open, mouseMoveCallback])
 
 	return (
 		open === 1 && (
