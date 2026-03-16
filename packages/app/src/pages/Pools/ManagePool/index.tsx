@@ -1,22 +1,14 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
-import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
-import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
-import { ButtonRow, CardHeader, Page } from 'ui-core/base'
-import { useOverlay } from 'ui-overlay'
+import { NominationsEmpty } from 'library/NominationsEmpty'
+import { Page } from 'ui-core/base'
 
 export const ManagePool = () => {
-	const { t } = useTranslation()
-	const { openHelpTooltip } = useHelp()
-	const { openCanvas } = useOverlay().canvas
 	const { formatWithPrefs } = useValidators()
 	const { isOwner, isNominator, activePoolNominations, activePool } =
 		useActivePool()
@@ -35,39 +27,12 @@ export const ManagePool = () => {
 		<Page.Row>
 			<CardWrapper>
 				{canNominate && !isNominating && state !== 'Destroying' ? (
-					<>
-						<CardHeader action margin>
-							<h3>
-								{t('nominations', { ns: 'pages' })}
-								<ButtonHelpTooltip
-									marginLeft
-									definition="Nominations"
-									openHelp={openHelpTooltip}
-								/>
-							</h3>
-							<ButtonRow>
-								<ButtonPrimary
-									size="md"
-									iconLeft={faChevronCircleRight}
-									iconTransform="grow-1"
-									text={t('nominate', { ns: 'pages' })}
-									disabled={!canNominate}
-									onClick={() =>
-										openCanvas({
-											key: 'ManageNominations',
-											scroll: false,
-											options: {
-												bondFor: 'pool',
-												nominator,
-												nominated: poolNominated || [],
-											},
-										})
-									}
-								/>
-							</ButtonRow>
-						</CardHeader>
-						<h4>{t('notNominating', { ns: 'app' })}.</h4>
-					</>
+					<NominationsEmpty
+						bondFor="pool"
+						nominator={nominator}
+						nominated={poolNominated}
+						disabled={!canNominate}
+					/>
 				) : (
 					<Nominations bondFor="pool" nominator={nominator} />
 				)}
