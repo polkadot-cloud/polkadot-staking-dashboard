@@ -39,15 +39,9 @@ test('days passed works', () => {
 	const payouts = normalizePayouts(mockPayouts)
 	const today = startOfUTCDay(new Date())
 	// days passed works on `mockPayouts`.
-	expect(
-		daysPassed(fromUnixTime(payouts[0].timestamp), today),
-	).toBe(2)
-	expect(
-		daysPassed(fromUnixTime(payouts[1].timestamp), today),
-	).toBe(3)
-	expect(
-		daysPassed(fromUnixTime(payouts[2].timestamp), today),
-	).toBe(4)
+	expect(daysPassed(fromUnixTime(payouts[0].timestamp), today)).toBe(2)
+	expect(daysPassed(fromUnixTime(payouts[1].timestamp), today)).toBe(3)
+	expect(daysPassed(fromUnixTime(payouts[2].timestamp), today)).toBe(4)
 
 	// max reward of missing days to process should be correct.
 	for (let i = 1; i < 368; i++) {
