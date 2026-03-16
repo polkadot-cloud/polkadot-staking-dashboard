@@ -3,7 +3,7 @@
 
 import { getDurationFromNow } from '@w3ux/hooks/util'
 import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types'
-import { differenceInDays, fromUnixTime, startOfDay } from 'date-fns'
+import { fromUnixTime } from 'date-fns'
 import type { TFunction } from 'i18next'
 
 // Formats a given time breakdown (days, hours, minutes, seconds) into a readable structure using a
@@ -76,6 +76,34 @@ export const timeleftAsString = (
 	return str
 }
 
-// Get days passed since 2 dates
-export const daysPassed = (from: Date, to: Date) =>
-	differenceInDays(startOfDay(to), startOfDay(from))
+// Get start of day in UTC, irrespective of local timezone
+export const startOfUTCDay = (date: Date): Date => {
+	const d = new Date(date)
+	d.setUTCHours(0, 0, 0, 0)
+	return d
+}
+
+// Add days in UTC (avoids DST drift from date-fns addDays)
+export const addUTCDays = (date: Date, days: number): Date => {
+	const d = new Date(date)
+	d.setUTCDate(d.getUTCDate() + days)
+	return d
+}
+
+// Subtract days in UTC (avoids DST drift from date-fns subDays)
+export const subUTCDays = (date: Date, days: number): Date => {
+	const d = new Date(date)
+	d.setUTCDate(d.getUTCDate() - days)
+	return d
+}
+
+// Get days passed since 2 dates using pure UTC calendar days
+export const daysPassed = (from: Date, to: Date) => {
+	const utcFrom = Date.UTC(
+		from.getUTCFullYear(),
+		from.getUTCMonth(),
+		from.getUTCDate(),
+	)
+	const utcTo = Date.UTC(to.getUTCFullYear(), to.getUTCMonth(), to.getUTCDate())
+	return Math.round((utcTo - utcFrom) / 86_400_000)
+}

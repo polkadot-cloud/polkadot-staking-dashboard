@@ -45,8 +45,8 @@ export const ActiveGraph = ({
 
 	const days = 30
 	const fromDate = new Date()
-	fromDate.setDate(fromDate.getDate() - days)
-	fromDate.setHours(0, 0, 0, 0)
+	fromDate.setUTCDate(fromDate.getUTCDate() - days)
+	fromDate.setUTCHours(0, 0, 0, 0)
 
 	const {
 		data: { poolRewards },
@@ -64,8 +64,10 @@ export const ActiveGraph = ({
 		nominatorRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
 
 	const poolClaims = poolRewards ?? []
+	const now = getUnixTime(new Date())
 	const allRewards = (nominatorRewards as RewardResults)
 		.concat(poolClaims)
+		.filter((r) => r.timestamp <= now)
 		.sort((a, b) => b.timestamp - a.timestamp)
 
 	useEffect(() => {
