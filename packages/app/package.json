@@ -39,7 +39,7 @@
 		"compare-versions": "^6.1.1",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
-		"dedot": "^1.0.4",
+		"dedot": "^1.2.0",
 		"dedot-api": "workspace:*",
 		"event-tracking": "workspace:*",
 		"global-bus": "workspace:*",
