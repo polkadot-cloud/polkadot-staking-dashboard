@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
@@ -54,7 +54,7 @@ export const BalanceChart = () => {
 		balances.pool.totalUnlocking +
 		balances.pool.totalUnlocked
 	const inPool = planckToUnitBn(new BigNumber(inPoolPlanck), units)
-	const fundsTransferrable = new BigNumber(
+	const fundsTransferable = new BigNumber(
 		planckToUnit(balances.transferableBalance, units),
 	)
 	const fundsLocked = planckToUnitBn(
@@ -67,7 +67,7 @@ export const BalanceChart = () => {
 	)
 
 	// Graph percentages for staking overview
-	const graphTotal = nominating.plus(inPool).plus(fundsTransferrable)
+	const graphTotal = nominating.plus(inPool).plus(fundsTransferable)
 	const graphNominating = nominating.isGreaterThan(0)
 		? nominating.dividedBy(graphTotal.multipliedBy(0.01))
 		: new BigNumber(0)
@@ -105,6 +105,7 @@ export const BalanceChart = () => {
 
 	const isNominating = nominating.isGreaterThan(0)
 	const isInPool = inPool.isGreaterThan(0)
+	const dualStaking = isNominating && isInPool
 
 	return (
 		<>
@@ -122,7 +123,10 @@ export const BalanceChart = () => {
 						<LegendItem dataClass="d1" label={t('nominating')} />
 					) : null}
 					{inPool.isGreaterThan(0) ? (
-						<LegendItem dataClass="d2" label={t('inPool')} />
+						<LegendItem
+							dataClass={dualStaking ? 'd2' : 'd1'}
+							label={t('inPool')}
+						/>
 					) : null}
 					<LegendItem dataClass="d4" label={t('notStaking')} />
 				</Legend>
@@ -130,20 +134,20 @@ export const BalanceChart = () => {
 					<BarSegment
 						dataClass="d1"
 						widthPercent={Number(graphNominating.toFixed(2))}
-						flexGrow={!inPool && !fundsTransferrable && isNominating ? 1 : 0}
+						flexGrow={!inPool && !fundsTransferable && isNominating ? 1 : 0}
 						label={`${nominating.decimalPlaces(3).toFormat()} ${unit}`}
 					/>
 					<BarSegment
-						dataClass="d2"
+						dataClass={dualStaking ? 'd2' : 'd1'}
 						widthPercent={Number(graphInPool.toFixed(2))}
-						flexGrow={!isNominating && !fundsTransferrable && inPool ? 1 : 0}
+						flexGrow={!isNominating && !fundsTransferable && inPool ? 1 : 0}
 						label={`${inPool.decimalPlaces(3).toFormat()} ${unit}`}
 					/>
 					<BarSegment
 						dataClass="d4"
 						widthPercent={Number(graphNotStaking.toFixed(2))}
 						flexGrow={!isNominating && !inPool ? 1 : 0}
-						label={`${fundsTransferrable.decimalPlaces(3).toFormat()} ${unit}`}
+						label={`${fundsTransferable.decimalPlaces(3).toFormat()} ${unit}`}
 						forceShow={!isNominating && !isInPool}
 					/>
 				</Bar>
@@ -167,7 +171,7 @@ export const BalanceChart = () => {
 								dataClass="d4"
 								widthPercent={100}
 								flexGrow={1}
-								label={`${fundsTransferrable.decimalPlaces(3).toFormat()} ${unit}`}
+								label={`${fundsTransferable.decimalPlaces(3).toFormat()} ${unit}`}
 							/>
 						</Bar>
 					</div>

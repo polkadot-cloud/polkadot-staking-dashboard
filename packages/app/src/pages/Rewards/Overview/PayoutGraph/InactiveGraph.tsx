@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxPayoutDays } from 'consts'
@@ -40,8 +40,6 @@ export const InactiveGraph = () => {
 				average={10}
 				height="65px"
 				data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
-				nominating={false}
-				inPool={false}
 				getThemeValue={getThemeValue}
 				unit={unit}
 				units={units}

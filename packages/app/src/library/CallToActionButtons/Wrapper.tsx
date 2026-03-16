@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -70,15 +70,16 @@ export const CallToActionWrapper = styled.div`
         justify-content: center;
         overflow: hidden;
         white-space: nowrap;
-        overflow: hidden;
+        text-overflow: ellipsis;
         transition: filter 0.15s;
         flex-shrink: 1;
+        min-width: 0;
 
         &.primary {
-          background-color: var(--accent-primary);
+          background-color: var(--gray-1000);
           border-top-left-radius: var(--button-border-radius);
           border-bottom-left-radius: var(--button-border-radius);
-          color: white;
+          color: var(--gray-100);
           flex-grow: 1;
 
           &:hover {
@@ -86,7 +87,7 @@ export const CallToActionWrapper = styled.div`
           }
 
           &.disabled {
-            background-color: var(--accent-pending);
+            background-color: var(--gray-700);
 
             &:hover {
               filter: none;
@@ -94,14 +95,14 @@ export const CallToActionWrapper = styled.div`
           }
 
           &.pulse {
-            box-shadow: 0 0 30px 0 var(--accent-pending);
+            box-shadow: 0 0 30px 0 var(--gray-700);
             transform: scale(1);
             animation: pulse 4s infinite;
 
             @keyframes pulse {
               0% {
                 transform: scale(0.98);
-                box-shadow: 0 0 0 0 var(--accent-pending);
+                box-shadow: 0 0 0 0 var(--gray-700);
               }
 
               70% {
@@ -118,10 +119,10 @@ export const CallToActionWrapper = styled.div`
         }
 
         &.secondary {
-          background-color: var(--btn-bg);
+          background-color: var(--gray-400);
           border-top-right-radius: var(--button-border-radius);
           border-bottom-right-radius: var(--button-border-radius);
-          color: var(--text-primary);
+          color: var(--gray-1000);
 
           &:hover {
             filter: brightness(95%);
@@ -163,7 +164,7 @@ export const CallToActionWrapper = styled.div`
           color: inherit;
           height: inherit;
           transition: transform 0.25s;
-          padding: 0 2rem;
+          padding: 0 1.25rem;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -171,6 +172,10 @@ export const CallToActionWrapper = styled.div`
           font-size: 1.3rem;
           line-height: 1.3rem;
           width: 100%;
+          min-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
 
           .counter {
             font-family: var(--font-family-bold);

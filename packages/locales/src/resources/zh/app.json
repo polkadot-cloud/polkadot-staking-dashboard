@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "质押金额最多只能有 {{units}}个小数位",
 		"bondDecimalsError": "质押金额能最多有 {{units}} 位点数",
 		"bonded": "己质押",
-		"browseValidators": "浏览验证人",
 		"cancel": "取消",
 		"cancelled": "已取消",
 		"chooseAnotherPool": "选择另一个池",
@@ -140,7 +139,6 @@
 			"validationErrorMetadataTooLong": "元数据超过最大长度",
 			"validationErrorParameterRange": "参数值超出有效范围"
 		},
-		"estimatedFee": "预计费用",
 		"exclude": "不含",
 		"exitAdvancedMode": "退出高级模式",
 		"failed": "失败",
@@ -149,6 +147,7 @@
 		"favoritePoolRemoved": "己删除提名池",
 		"favoriteValidatorAdded": "验证人已添加到收藏夹",
 		"favoriteValidatorRemoved": "收藏夹已删除验证人",
+		"fee": "费用",
 		"filter": "筛选",
 		"filterValidators": "过滤验证人",
 		"finalized": "交易已确认",
@@ -361,7 +360,8 @@
 			"clearAllSelected": "清除所有选定项",
 			"searchResults": "搜索结果",
 			"searchValidators": "搜索验证人",
-			"searching": "搜索中..."
+			"searching": "搜索中...",
+			"selectedValidators": "已选验证人 ({{count}})"
 		},
 		"validators": "验证人",
 		"valueTooSmall": "值太小",

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
@@ -174,7 +174,11 @@ export const Bond = () => {
 				/>
 				<p>{t('newlyBondedFunds')}</p>
 			</Padding>
-			<SubmitTx valid={bondValid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t('bond', { ns: 'modals' })}
+				valid={bondValid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

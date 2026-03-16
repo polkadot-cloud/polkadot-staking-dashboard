@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "El monto vinculado solo puede tener como máximo {{units}} decimales.",
 		"bondDecimalsError": "El monto vinculado puede tener como máximo {{units}} decimales.",
 		"bonded": "Vinculado",
-		"browseValidators": "Explorar validadores",
 		"cancel": "Cancelar",
 		"cancelled": "Cancelado",
 		"chooseAnotherPool": "Elegir otro pool",
@@ -140,7 +139,6 @@
 			"validationErrorMetadataTooLong": "Los metadatos exceden la longitud máxima",
 			"validationErrorParameterRange": "Valor del parámetro fuera del rango válido"
 		},
-		"estimatedFee": "Tarifa estimada",
 		"exclude": "Excluir",
 		"exitAdvancedMode": "Salir del Modo Avanzado",
 		"failed": "Fallido",
@@ -149,6 +147,7 @@
 		"favoritePoolRemoved": "Pool Eliminado de Favoritos",
 		"favoriteValidatorAdded": "Validador Añadido a Favoritos",
 		"favoriteValidatorRemoved": "Validador Eliminado de Favoritos",
+		"fee": "Tarifa",
 		"filter": "Filtrar",
 		"filterValidators": "Filtrar Validadores",
 		"finalized": "Finalizado",
@@ -370,7 +369,8 @@
 			"clearAllSelected": "Limpiar todos los seleccionados",
 			"searchResults": "Resultados de la Búsqueda",
 			"searchValidators": "Buscar Validadores",
-			"searching": "Buscando..."
+			"searching": "Buscando...",
+			"selectedValidators": "Validadores Seleccionados ({{count}})"
 		},
 		"validators": "Validadores",
 		"valueTooSmall": "El valor es demasiado pequeño",

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
@@ -54,7 +54,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-primary')}`,
+						border: `1px solid ${getThemeValue('--gray-1000')}`,
 					}}
 				>
 					<div className="content">

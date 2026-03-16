@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
@@ -110,33 +110,29 @@ export const Transfer = () => {
 			<Padding>
 				<Title>{t('send', { ns: 'app' })}</Title>
 
-				<Padding>
-					<AccountDropdown
-						initialAccount={getAccount(activeAccount)}
-						accounts={accountsWithSigners}
-						onSelect={setFromAccount}
-						label={t('from', { ns: 'app' })}
-					/>
-					<Separator transparent />
-					<AccountDropdown
-						initialAccount={accounts?.[0] || null}
-						accounts={accountsWithSigners}
-						onSelect={setToAccount}
-						label={t('to', { ns: 'app' })}
-					/>
-					<Separator transparent />
-					<BalanceInput
-						value={String(amount)}
-						defaultValue={'0'}
-						syncing={false}
-						disabled={false}
-						setters={[setAmount]}
-						maxAvailable={
-							new BigNumber(planckToUnit(transferableBalance, units))
-						}
-						disableTxFeeUpdate={false}
-					/>
-				</Padding>
+				<AccountDropdown
+					initialAccount={getAccount(activeAccount)}
+					accounts={accountsWithSigners}
+					onSelect={setFromAccount}
+					label={t('from', { ns: 'app' })}
+				/>
+				<Separator transparent />
+				<AccountDropdown
+					initialAccount={accounts?.[0] || null}
+					accounts={accountsWithSigners}
+					onSelect={setToAccount}
+					label={t('to', { ns: 'app' })}
+				/>
+				<Separator transparent />
+				<BalanceInput
+					value={String(amount)}
+					defaultValue={'0'}
+					syncing={false}
+					disabled={false}
+					setters={[setAmount]}
+					maxAvailable={new BigNumber(planckToUnit(transferableBalance, units))}
+					disableTxFeeUpdate={false}
+				/>
 			</Padding>
 			<SubmitTx valid={valid} {...submitExtrinsic} {...proxySwitcher} />
 		</>

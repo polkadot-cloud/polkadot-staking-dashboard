@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -66,13 +66,13 @@ export const PayoutBar = ({
 
 	// Determine color for payouts
 	const colorPayouts = !staking
-		? getThemeValue('--accent-transparent')
-		: getThemeValue('--accent-primary')
+		? getThemeValue('--gray-500')
+		: getThemeValue('--gray-1000')
 
 	// Determine color for poolClaims
 	const colorPoolClaims = !staking
-		? getThemeValue('--accent-transparent')
-		: getThemeValue('--accent-secondary')
+		? getThemeValue('--gray-500')
+		: getThemeValue('--gray-1000')
 
 	const borderRadius = 3.5
 	const pointRadius = 0
@@ -110,7 +110,7 @@ export const PayoutBar = ({
 				),
 				label: labels.unclaimedPayouts,
 				borderColor: colorPayouts,
-				backgroundColor: getThemeValue('--accent-pending'),
+				backgroundColor: getThemeValue('--gray-500'),
 				pointRadius,
 				borderRadius,
 			},
@@ -146,7 +146,7 @@ export const PayoutBar = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-secondary'),
+					color: getThemeValue('--gray-500'),
 				},
 			},
 		},
@@ -159,9 +159,9 @@ export const PayoutBar = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-invert'),
-				bodyColor: getThemeValue('--text-invert'),
+				backgroundColor: getThemeValue('--gray-1000'),
+				titleColor: getThemeValue('--gray-100'),
+				bodyColor: getThemeValue('--gray-100'),
 				bodyFont: {
 					weight: 600,
 				},

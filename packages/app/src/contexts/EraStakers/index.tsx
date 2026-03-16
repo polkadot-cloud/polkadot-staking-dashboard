@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
@@ -183,25 +183,32 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		const result: Exposure[] = []
 		let i = 0
 		for (const pages of pagedResults) {
-			// NOTE: Only one page is fetched for each validator for now
-			const page = pages[0]
-
-			// NOTE: Some pages turn up as undefined - might be worth exploring further
-			if (!page) {
-				continue
+			// Merge nominators from all pages for this validator
+			const allOthers: { who: string; value: bigint }[] = []
+			let hasPage = false
+			for (const page of pages) {
+				if (page) {
+					hasPage = true
+					const [, { others }] = page
+					allOthers.push(...others)
+				}
 			}
 
-			const [keyArgs, { others }] = page
+			// Skip only when there is no page data at all for this validator.
+			if (!hasPage) {
+				i++
+				continue
+			}
 
 			const validator = validatorKeys[i]
 			const { own, total } = validators[validator]
 
 			result.push({
-				keys: [keyArgs[0].toString(), validator],
+				keys: [era, validator],
 				val: {
 					total: total.toString(),
 					own: own.toString(),
-					others: others.map(({ who, value }) => ({
+					others: allOthers.map(({ who, value }) => ({
 						who,
 						value: value.toString(),
 					})),

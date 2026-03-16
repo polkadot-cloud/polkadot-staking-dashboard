@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .spinner {
@@ -6,8 +6,8 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background:
-    radial-gradient(farthest-side, #bbb 94%, #0000) top/0.3em 0.3em no-repeat,
-    conic-gradient(#0000 30%, #bbb);
+    radial-gradient(farthest-side, var(--gray-700) 94%, #0000) top/0.3em 0.3em no-repeat,
+    conic-gradient(#0000 30%, var(--gray-700));
   mask: radial-gradient(
     farthest-side,
     #0000 calc(100% - 0.3em),

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 @use 'styles/theme/variables' as *;
@@ -28,12 +28,11 @@
   display: flex;
   flex: 1;
   height: 6rem;
-  padding: 0.45rem;
+  padding: 0.4rem;
 
   .inner {
-    background: var(--btn-popover-tab-bg);
-    border: 1px solid var(--border);
-    box-shadow: 0 2px 2px rgb(0 0 0 / 3%);
+    background: var(--btn-quick-action-bg);
+    border: 1px solid var(--accent-300);
     border-radius: 0.7rem;
     display: flex;
     flex-direction: column;
@@ -59,23 +58,30 @@
   
     > .icon {
       svg {
-        filter: drop-shadow(3px 3px 2px var(--border-alt));
+        filter: drop-shadow(3px 3px 2px var(--gray-600));
+        color: var(--gray-900);
         transition: all 0.3s;
       }
     }
 
     > h4 {
       font-family: var(--font-family-default);
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin-top: 0.5rem;
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 0 0.5rem;
     }
 
     &.active {
       &:hover {
-        background: var(--btn-bg-hover);
+        background: var(--gray-400);
 
         > .icon > svg {
-          transform: scale(1.1);
+          color: var(--accent-700);
+          transform: scale(1.05);
         }
       }
     }
@@ -92,7 +98,7 @@
   }
 
   > .inner {
-    border: 1px solid var(--btn-bg-hover);
+    border: 1px solid var(--gray-500);
     border-radius: 1rem;
     height: $summary-footer-height;
     padding: 0 1.25rem;
@@ -105,7 +111,7 @@
 
     > h4 {
       margin: 0;
-      color: var(--text-secondary);
+      color: var(--gray-900);
       font-family: var(--font-family-default);
       font-size: 1.05rem;
     }
@@ -122,12 +128,12 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--text-secondary);
+  color: var(--gray-900);
   font-size: inherit;
   transition: color var(--transition-duration);
 
   &:hover {
-    color: var(--accent-primary);
+    color: var(--accent-700);
   }
 }
 

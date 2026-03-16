@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
@@ -229,6 +229,7 @@ export const Unbond = () => {
 			</Padding>
 			<SubmitTx
 				noMargin
+				submitText={t('unbond', { ns: 'modals' })}
 				requiresMigratedController={isStaking}
 				valid={bondValid}
 				{...submitExtrinsic}

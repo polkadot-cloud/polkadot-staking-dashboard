@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PageWidthLargeThreshold, PageWidthMediumThreshold } from 'consts'
@@ -23,19 +23,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   transition: border 0.2s;
 
   &.canvas {
-    background: var(--bg-card-canvas);
+    background: var(--gray-300);
     padding: 1.25rem;
 
     &.secondary {
       padding: 1rem;
-
-      @media (max-width: 1000px) {
-        background: var(--bg-card-canvas);
-      }
-
-      @media (min-width: 1001px) {
-        background: var(--bg-card-canvas-alt);
-      }
     }
   }
 
@@ -53,20 +45,24 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.prompt {
-    border: 1px solid var(--accent-pending);
+    border: 1px solid var(--gray-700);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
     padding: 1.25rem 1rem;
   }
 
-  @media (min-width: ${PageWidthMediumThreshold + 1}px) {
-    max-height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
-  }
+  ${(props) =>
+		props.height &&
+		`
+    @media (min-width: ${PageWidthMediumThreshold + 1}px) {
+      max-height: ${props.height}px;
+    }
 
-  @media (min-width: ${PageWidthLargeThreshold + 1}px) {
-    min-height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
-  }
+    @media (min-width: ${PageWidthLargeThreshold + 1}px) {
+      min-height: ${props.height}px;
+    }
+  `}
 
   .inner {
     padding: 1rem;

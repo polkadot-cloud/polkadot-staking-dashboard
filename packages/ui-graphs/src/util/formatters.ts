@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { NominatorReward, PoolReward } from 'plugin-staking-api/types'
@@ -12,10 +12,10 @@ const formatRewardsInternal = (config: FormatRewardsConfig) => {
 	const { fromDate, days, units, payouts, poolClaims, unclaimedPayouts } =
 		config
 
-	// Set the from date to the start of the next day
+	// Set the from date to the start of the next day (UTC)
 	const adjustedFromDate = new Date(fromDate)
-	adjustedFromDate.setDate(adjustedFromDate.getDate() + 1)
-	adjustedFromDate.setHours(0, 0, 0, 0)
+	adjustedFromDate.setUTCDate(adjustedFromDate.getUTCDate() + 1)
+	adjustedFromDate.setUTCHours(0, 0, 0, 0)
 
 	// Process nominator payouts
 	const allPayouts = processPayouts(

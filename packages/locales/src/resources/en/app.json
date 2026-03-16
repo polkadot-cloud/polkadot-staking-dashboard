@@ -42,7 +42,6 @@
 		"bondAmountDecimals": "Bond amount can only have at most {{units}} decimals.",
 		"bondDecimalsError": "Bond amount can have at most {{units}} decimals.",
 		"bonded": "Bonded",
-		"browseValidators": "Browse Validators",
 		"cancel": "Cancel",
 		"cancelled": "Cancelled",
 		"chooseAnotherPool": "Choose Another Pool",
@@ -140,7 +139,6 @@
 			"validationErrorMetadataTooLong": "Metadata exceeds maximum length",
 			"validationErrorParameterRange": "Parameter value out of valid range"
 		},
-		"estimatedFee": "Estimated Fee",
 		"exclude": "Exclude",
 		"exitAdvancedMode": "Exit Advanced Mode",
 		"failed": "Failed",
@@ -149,6 +147,7 @@
 		"favoritePoolRemoved": "Favorite Pool Removed",
 		"favoriteValidatorAdded": "Favorite Validator Added",
 		"favoriteValidatorRemoved": "Favorite Validator Removed",
+		"fee": "Fee",
 		"filter": "Filter",
 		"filterValidators": "Filter Validators",
 		"finalized": "Finalized",
@@ -370,7 +369,8 @@
 			"clearAllSelected": "Clear all selected",
 			"searchResults": "Search Results",
 			"searchValidators": "Search Validators",
-			"searching": "Searching"
+			"searching": "Searching",
+			"selectedValidators": "Selected Validators ({{count}})"
 		},
 		"validators": "Validators",
 		"valueTooSmall": "Value is too small",

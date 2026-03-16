@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './balances'
@@ -7,6 +7,7 @@ export * from './datetime'
 export * from './identity'
 export * from './pools'
 export * from './rate'
+export * from './signers'
 export * from './size'
 export * from './staking'
 export * from './strings'

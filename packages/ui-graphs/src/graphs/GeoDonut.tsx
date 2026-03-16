@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn } from '@w3ux/utils'
@@ -22,7 +22,7 @@ export const GeoDonut = ({
 	const isZero = data.length === 0
 	const backgroundColor = isZero
 		? getThemeValue('--bg-body')
-		: getThemeValue('--accent-primary')
+		: getThemeValue('--gray-1000')
 
 	const total = data.reduce((acc: number, value: number) => acc + value, 0)
 

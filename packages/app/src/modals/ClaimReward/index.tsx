@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
@@ -107,7 +107,13 @@ export const ClaimReward = () => {
 					<p>{t('claimReward2')}</p>
 				)}
 			</Padding>
-			<SubmitTx valid={valid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t(claimType === 'bond' ? 'compound' : 'claim', {
+					ns: 'modals',
+				})}
+				valid={valid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

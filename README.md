@@ -7,3 +7,5 @@
 - [**English:** Welcome to Polkadot Cloud Staking!](docs/EN.md)
 - [**Español:** ¡Bienvenido a Polkadot Cloud Staking!](docs/ES.md)
 - [**中文:** 欢迎使用Polkadot Cloud质押平台](docs/ZH.md)
+- [**Português:** Bem-vindo ao Polkadot Cloud Staking!](docs/PT.md)
+- [**한국어:** Polkadot Cloud 스테이킹에 오신 것을 환영합니다!](docs/KO.md)

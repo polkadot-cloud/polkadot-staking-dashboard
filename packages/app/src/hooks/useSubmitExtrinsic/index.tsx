@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
@@ -28,13 +28,13 @@ import {
 } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
+import { QRSignPrompt } from 'library/QRSignPrompt'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
 import type {
 	VaultSignatureResult,
 	VaultSignStatus,
 } from 'library/Signers/VaultSigner/types'
-import { SignPrompt } from 'library/SubmitTx/ManualSign/Vault/SignPrompt'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ActiveAccount } from 'types'
@@ -222,7 +222,7 @@ export const useSubmitExtrinsic = ({
 						toSign: Uint8Array,
 					) => {
 						openPromptWith(
-							<SignPrompt
+							<QRSignPrompt
 								submitAddress={submitAccount.address}
 								onComplete={onComplete}
 								toSign={toSign}

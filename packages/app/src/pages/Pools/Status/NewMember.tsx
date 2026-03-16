@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
@@ -12,13 +12,11 @@ import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { useOverlay } from 'ui-overlay'
 import type { NewMemberProps } from './types'
 
 export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
 	const { network } = useNetwork()
 	const { advancedMode } = useUi()
 	const { openModal } = useOverlay().modal
@@ -77,11 +75,6 @@ export const NewMember = ({ syncing, showOtherOptions }: NewMemberProps) => {
 						})
 					},
 					disabled: createDisabled,
-					kind: 'secondary',
-				},
-				{
-					label: t('browsePools', { ns: 'pages' }),
-					onClick: () => navigate('/pools'),
 					kind: 'secondary',
 				},
 			],
