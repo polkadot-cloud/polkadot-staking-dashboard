@@ -3,19 +3,13 @@
 
 import BigNumber from 'bignumber.js'
 import { MaximumPayoutDays } from 'consts'
-import {
-	fromUnixTime,
-	getUnixTime,
-	isSameDay,
-	startOfDay,
-	subDays,
-} from 'date-fns'
+import { fromUnixTime, getUnixTime } from 'date-fns'
 import type {
 	NominatorReward,
 	PoolReward,
 	RewardResults,
 } from 'plugin-staking-api/types'
-import { daysPassed, planckToUnitBn } from 'utils'
+import { daysPassed, planckToUnitBn, startOfUTCDay, subUTCDays } from 'utils'
 import type {
 	DailyPayoutConfig,
 	PayoutDayCursor,
@@ -59,7 +53,7 @@ const calculateDailyPayoutsInternal = (config: DailyPayoutConfig) => {
 		p++
 
 		// Extract day from current payout
-		const thisDay = startOfDay(fromUnixTime(payout.timestamp))
+		const thisDay = startOfUTCDay(fromUnixTime(payout.timestamp))
 
 		// Initialize current day if first payout
 		if (p === 1) {
@@ -182,7 +176,7 @@ const processPayoutsInternal = (config: ProcessPayoutsConfig) => {
 		days,
 		avgDays,
 	)
-	const averageFromDate = subDays(fromDate, MaximumPayoutDays)
+	const averageFromDate = subUTCDays(fromDate, MaximumPayoutDays)
 
 	let averages = calculateDailyPayouts(
 		preNormalised,
@@ -271,14 +265,14 @@ export const combineRewards = (
 
 	// Collect all unique days from both pool claims and payouts
 	poolClaims.forEach((p) => {
-		const dayStart = getUnixTime(startOfDay(fromUnixTime(p.timestamp)))
+		const dayStart = getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp)))
 		if (!payoutDays.includes(dayStart)) {
 			payoutDays.push(dayStart)
 		}
 	})
 
 	payouts.forEach((p) => {
-		const dayStart = getUnixTime(startOfDay(fromUnixTime(p.timestamp)))
+		const dayStart = getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp)))
 		if (!payoutDays.includes(dayStart)) {
 			payoutDays.push(dayStart)
 		}
@@ -293,14 +287,14 @@ export const combineRewards = (
 	payoutDays.forEach((d) => {
 		let reward = 0
 
-		// Check payouts exist on this day
-		const payoutsThisDay = payouts.filter((p) =>
-			isSameDay(fromUnixTime(p.timestamp), fromUnixTime(d)),
+		// Check payouts exist on this day (compare UTC-normalised timestamps)
+		const payoutsThisDay = payouts.filter(
+			(p) => getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp))) === d,
 		)
 
 		// Check pool claims exist on this day
-		const poolClaimsThisDay = poolClaims.filter((p) =>
-			isSameDay(fromUnixTime(p.timestamp), fromUnixTime(d)),
+		const poolClaimsThisDay = poolClaims.filter(
+			(p) => getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp))) === d,
 		)
 
 		// Add rewards

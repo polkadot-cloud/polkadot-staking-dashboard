@@ -3,16 +3,9 @@
 
 import { MaximumPayoutDays } from 'consts'
 import type { Locale } from 'date-fns'
-import {
-	addDays,
-	format,
-	fromUnixTime,
-	getUnixTime,
-	startOfDay,
-	subDays,
-} from 'date-fns'
+import { format, fromUnixTime, getUnixTime } from 'date-fns'
 import type { RewardResult, RewardResults } from 'plugin-staking-api/types'
-import { daysPassed } from 'utils'
+import { addUTCDays, daysPassed, startOfUTCDay, subUTCDays } from 'utils'
 import type { RewardRecord } from '../types'
 
 /**
@@ -21,7 +14,7 @@ import type { RewardRecord } from '../types'
 export const normalizePayouts = (payouts: RewardResults): RewardResults =>
 	payouts.map((p) => ({
 		...p,
-		timestamp: getUnixTime(startOfDay(fromUnixTime(p.timestamp))),
+		timestamp: getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp))),
 	}))
 
 /**
@@ -34,10 +27,10 @@ export const prefillMissingDays = (
 	maxDays: number,
 ): RewardResults => {
 	const newPayouts = []
-	const payoutStartDay = subDays(startOfDay(fromDate), maxDays)
+	const payoutStartDay = subUTCDays(startOfUTCDay(fromDate), maxDays)
 	const payoutEndDay = !payouts.length
-		? startOfDay(fromDate)
-		: startOfDay(fromUnixTime(payouts[payouts.length - 1].timestamp))
+		? startOfUTCDay(fromDate)
+		: startOfUTCDay(fromUnixTime(payouts[payouts.length - 1].timestamp))
 
 	const daysToPreFill = daysPassed(payoutStartDay, payoutEndDay)
 
@@ -47,7 +40,7 @@ export const prefillMissingDays = (
 				who: '',
 				poolId: 0,
 				reward: '0',
-				timestamp: getUnixTime(subDays(payoutEndDay, i)),
+				timestamp: getUnixTime(subUTCDays(payoutEndDay, i)),
 			})
 		}
 	}
@@ -64,9 +57,9 @@ export const postFillMissingDays = (
 	maxDays: number,
 ): RewardResults => {
 	const newPayouts = []
-	const payoutsEndDay = startOfDay(fromUnixTime(payouts[0].timestamp))
+	const payoutsEndDay = startOfUTCDay(fromUnixTime(payouts[0].timestamp))
 	const daysSinceLast = Math.min(
-		daysPassed(payoutsEndDay, startOfDay(fromDate)),
+		daysPassed(payoutsEndDay, startOfUTCDay(fromDate)),
 		maxDays,
 	)
 
@@ -75,7 +68,7 @@ export const postFillMissingDays = (
 			who: '',
 			poolId: 0,
 			reward: '0',
-			timestamp: getUnixTime(addDays(payoutsEndDay, i)),
+			timestamp: getUnixTime(addUTCDays(payoutsEndDay, i)),
 		})
 	}
 	return newPayouts
@@ -96,7 +89,7 @@ export const fillGapDays = (payouts: RewardRecord[], fromDate: Date) => {
 			for (let j = 1; j <= gapDays; j++) {
 				finalPayouts.push({
 					reward: '0',
-					timestamp: getUnixTime(subDays(curDay, j)),
+					timestamp: getUnixTime(subUTCDays(curDay, j)),
 				})
 			}
 		}
@@ -115,7 +108,7 @@ export const filterAndSortRewards = (payouts: RewardResults) => {
 		.filter((p) => Number(p.reward) > 0)
 		.sort((a, b) => b.timestamp - a.timestamp)
 
-	const fromTimestamp = getUnixTime(subDays(new Date(), MaximumPayoutDays))
+	const fromTimestamp = getUnixTime(subUTCDays(new Date(), MaximumPayoutDays))
 	return list.filter(({ timestamp }) => timestamp >= fromTimestamp)
 }
 

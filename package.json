@@ -12,7 +12,7 @@
 		"license:headers": "npx @kt3k/license-checker -q"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.4.5",
+		"@biomejs/biome": "^2.4.6",
 		"@kt3k/license-checker": "3.2.2",
 		"@types/chroma-js": "^3.1.2",
 		"@types/react": "^19.2.14",
@@ -28,7 +28,7 @@
 		"sass": "^1.97.3",
 		"stylelint": "^17.4.0",
 		"stylelint-config-standard-scss": "^17.0.0",
-		"stylelint-order": "^7.0.1",
+		"stylelint-order": "^8.0.0",
 		"typescript": "^5.7.2"
 	},
 	"pnpm": {
