@@ -64,10 +64,8 @@ export const ActiveGraph = ({
 		nominatorRewards.filter((reward: NominatorReward) => !reward.claimed) ?? []
 
 	const poolClaims = poolRewards ?? []
-	const now = getUnixTime(new Date())
 	const allRewards = (nominatorRewards as RewardResults)
 		.concat(poolClaims)
-		.filter((r) => r.timestamp <= now)
 		.sort((a, b) => b.timestamp - a.timestamp)
 
 	useEffect(() => {
