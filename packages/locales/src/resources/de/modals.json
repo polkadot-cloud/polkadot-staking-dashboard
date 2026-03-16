@@ -306,7 +306,6 @@
 		"unlockPool": "Pool entsperren",
 		"unlockPoolSubtitle": "Sobald ein Pool entsperrt ist, kann jedes Konto als Poolmitglied beitreten.",
 		"unlockTake": "Entsperrte Beträge können nach {{bondDurationFormatted}} abgehoben werden.",
-		"unlockTakePrefix": "Entsperrungen können nach folgendem Zeitraum abgehoben werden",
 		"unlocked": "Entsperrt",
 		"unlocks": "Freigegeben",
 		"unlocksAfter": "Freigegeben nach",

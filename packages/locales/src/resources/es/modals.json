@@ -306,7 +306,6 @@
 		"unlockPool": "Descomprometer Pool",
 		"unlockPoolSubtitle": "Una vez que un Pool está descomprometido, cualquier cuenta podrá unirse como miembro del Pool.",
 		"unlockTake": "Las desvinculaciones se pueden retirar después de {{bondDurationFormatted}}.",
-		"unlockTakePrefix": "Los desbloqueos se pueden retirar después de",
 		"unlocked": "Descomprometido",
 		"unlocks": "Desvinculaciones",
 		"unlocksAfter": "Se desvincula después de",

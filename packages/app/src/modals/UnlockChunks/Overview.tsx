@@ -11,6 +11,7 @@ import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers'
+import { StaticNote } from 'modals/Utils/StaticNote'
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react'
 import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -147,9 +148,12 @@ export const Overview = forwardRef(
 						/>
 					))}
 					<Notes withPadding>
-						<p>
-							{t('unlockTakePrefix')} <strong>{bondDurationFormatted}</strong>.
-						</p>
+						<StaticNote
+							value={bondDurationFormatted}
+							tKey="unlockTake"
+							valueKey="bondDurationFormatted"
+							deps={[bondDuration]}
+						/>
 						<p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
 						{!isStaking ? <p>{t('unlockChunk')}</p> : null}
 					</Notes>

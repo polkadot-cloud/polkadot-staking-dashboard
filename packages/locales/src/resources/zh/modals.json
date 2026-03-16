@@ -296,7 +296,6 @@
 		"unlockPool": "解锁",
 		"unlockPoolSubtitle": "一旦提名池被解锁, 任何帐户都可以作为成员加入提名池",
 		"unlockTake": "{{bondDurationFormatted}}后解锁金额可被提取",
-		"unlockTakePrefix": "解锁可在以下时间后提取",
 		"unlocked": "已解锁",
 		"unlocks": "解锁",
 		"unlocksAfter": "解锁于",

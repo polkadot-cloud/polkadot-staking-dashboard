@@ -306,7 +306,6 @@
 		"unlockPool": "Desbloquear Pool",
 		"unlockPoolSubtitle": "Uma vez desbloqueado, qualquer conta poderá entrar como membro do pool.",
 		"unlockTake": "Os desbloqueios podem ser sacados após {{bondDurationFormatted}}.",
-		"unlockTakePrefix": "Desbloqueios podem ser retirados após",
 		"unlocked": "Desbloqueado",
 		"unlocks": "Desbloqueia",
 		"unlocksAfter": "Desbloqueia após",

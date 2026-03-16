@@ -306,7 +306,6 @@
 		"unlockPool": "Unlock Pool",
 		"unlockPoolSubtitle": "Once a pool is unlocked, any account will be able to join as a pool member.",
 		"unlockTake": "Unlocks can be withdrawn after {{bondDurationFormatted}}.",
-		"unlockTakePrefix": "Unlocks can be withdrawn after",
 		"unlocked": "Unlocked",
 		"unlocks": "Unlocks",
 		"unlocksAfter": "Unlocks after",

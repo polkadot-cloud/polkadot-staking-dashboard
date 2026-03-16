@@ -306,7 +306,6 @@
 		"unlockPool": "풀 잠금 해제",
 		"unlockPoolSubtitle": "풀이 잠금 해제되면 모든 계정이 풀 멤버로 참여할 수 있습니다.",
 		"unlockTake": "언록은 {{bondDurationFormatted}} 후에 출금할 수 있습니다.",
-		"unlockTakePrefix": "잠금 해제는 다음 기간 후에 출금 가능합니다",
 		"unlocked": "잠금 해제됨",
 		"unlocks": "잠금 해제",
 		"unlocksAfter": "다음 후 잠금 해제",
