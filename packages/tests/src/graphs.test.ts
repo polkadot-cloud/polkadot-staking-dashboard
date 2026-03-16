@@ -37,15 +37,16 @@ const mockPayouts = [
 // `daysPassed` is a utility function that is used throughout the graph data accumulation process.
 test('days passed works', () => {
 	const payouts = normalizePayouts(mockPayouts)
+	const today = startOfUTCDay(new Date())
 	// days passed works on `mockPayouts`.
 	expect(
-		daysPassed(fromUnixTime(payouts[0].timestamp), startOfUTCDay(new Date())),
+		daysPassed(fromUnixTime(payouts[0].timestamp), today),
 	).toBe(2)
 	expect(
-		daysPassed(fromUnixTime(payouts[1].timestamp), startOfUTCDay(new Date())),
+		daysPassed(fromUnixTime(payouts[1].timestamp), today),
 	).toBe(3)
 	expect(
-		daysPassed(fromUnixTime(payouts[2].timestamp), startOfUTCDay(new Date())),
+		daysPassed(fromUnixTime(payouts[2].timestamp), today),
 	).toBe(4)
 
 	// max reward of missing days to process should be correct.
