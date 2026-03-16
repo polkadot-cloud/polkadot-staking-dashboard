@@ -1,13 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only */
 
-import { fromUnixTime, getUnixTime, subDays } from 'date-fns'
+import { fromUnixTime, getUnixTime } from 'date-fns'
 import {
 	normalizePayouts,
 	postFillMissingDays,
 	prefillMissingDays,
 } from 'ui-graphs/util'
-import { daysPassed, startOfUTCDay } from 'utils'
+import { daysPassed, startOfUTCDay, subUTCDays } from 'utils'
 import { expect, test } from 'vitest'
 
 // payouts that were made 2, 3 and 4 days ago.
@@ -16,19 +16,19 @@ const mockPayouts = [
 		who: '',
 		poolId: 0,
 		reward: '10000000000',
-		timestamp: getUnixTime(subDays(new Date(), 2)),
+		timestamp: getUnixTime(subUTCDays(new Date(), 2)),
 	},
 	{
 		who: '',
 		poolId: 0,
 		reward: '15000000000',
-		timestamp: getUnixTime(subDays(new Date(), 3)),
+		timestamp: getUnixTime(subUTCDays(new Date(), 3)),
 	},
 	{
 		who: '',
 		poolId: 0,
 		reward: '5000000000',
-		timestamp: getUnixTime(subDays(new Date(), 4)),
+		timestamp: getUnixTime(subUTCDays(new Date(), 4)),
 	},
 ]
 
@@ -45,7 +45,7 @@ test('days passed works', () => {
 
 	// max reward of missing days to process should be correct.
 	for (let i = 1; i < 368; i++) {
-		expect(daysPassed(subDays(new Date(), i), new Date())).toBe(i)
+		expect(daysPassed(subUTCDays(new Date(), i), new Date())).toBe(i)
 	}
 })
 

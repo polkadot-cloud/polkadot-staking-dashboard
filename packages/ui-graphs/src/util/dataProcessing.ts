@@ -3,13 +3,13 @@
 
 import BigNumber from 'bignumber.js'
 import { MaximumPayoutDays } from 'consts'
-import { fromUnixTime, getUnixTime, subDays } from 'date-fns'
+import { fromUnixTime, getUnixTime } from 'date-fns'
 import type {
 	NominatorReward,
 	PoolReward,
 	RewardResults,
 } from 'plugin-staking-api/types'
-import { daysPassed, planckToUnitBn, startOfUTCDay } from 'utils'
+import { daysPassed, planckToUnitBn, startOfUTCDay, subUTCDays } from 'utils'
 import type {
 	DailyPayoutConfig,
 	PayoutDayCursor,
@@ -176,7 +176,7 @@ const processPayoutsInternal = (config: ProcessPayoutsConfig) => {
 		days,
 		avgDays,
 	)
-	const averageFromDate = subDays(fromDate, MaximumPayoutDays)
+	const averageFromDate = subUTCDays(fromDate, MaximumPayoutDays)
 
 	let averages = calculateDailyPayouts(
 		preNormalised,

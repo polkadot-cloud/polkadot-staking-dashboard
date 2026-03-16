@@ -83,6 +83,20 @@ export const startOfUTCDay = (date: Date): Date => {
 	return d
 }
 
+// Add days in UTC (avoids DST drift from date-fns addDays)
+export const addUTCDays = (date: Date, days: number): Date => {
+	const d = new Date(date)
+	d.setUTCDate(d.getUTCDate() + days)
+	return d
+}
+
+// Subtract days in UTC (avoids DST drift from date-fns subDays)
+export const subUTCDays = (date: Date, days: number): Date => {
+	const d = new Date(date)
+	d.setUTCDate(d.getUTCDate() - days)
+	return d
+}
+
 // Get days passed since 2 dates using pure UTC calendar days
 export const daysPassed = (from: Date, to: Date) => {
 	const utcFrom = Date.UTC(
