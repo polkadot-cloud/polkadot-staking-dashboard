@@ -121,7 +121,8 @@ export const LedgerHardwareProvider = ({
 	): Promise<LedgerDeviceAddress | null> => {
 		try {
 			setIsExecuting(true)
-			const { app } = await Ledger.initialise()
+			const { app, deviceModel: model } = await Ledger.initialise()
+			setDeviceModel(model)
 			const result = (await Ledger.getAddress(
 				app,
 				accountIndex,

@@ -26,10 +26,11 @@ export const useLedgerTxPrompt = (): UseLedgerTxPromptReturn => {
 					})
 				: t('ledgerConnectAndConfirm')
 	} else {
+		const deviceName = getLedgerDeviceName(deviceModel)
 		const approvalText = isTouchscreenDevice(deviceModel)
-			? t('ledgerApproveTouchscreen')
+			? t('ledgerApproveTouchscreen', { device: deviceName })
 			: deviceModel !== 'unknown'
-				? t('ledgerApproveNano')
+				? t('ledgerApproveNano', { device: deviceName })
 				: t('submitTransaction')
 		message = `${t('deviceVerified')}. ${approvalText}`
 	}
