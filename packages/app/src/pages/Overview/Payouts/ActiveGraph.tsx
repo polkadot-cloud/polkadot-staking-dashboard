@@ -45,8 +45,8 @@ export const ActiveGraph = ({
 
 	const days = 30
 	const fromDate = new Date()
-	fromDate.setDate(fromDate.getDate() - days)
-	fromDate.setHours(0, 0, 0, 0)
+	fromDate.setUTCDate(fromDate.getUTCDate() - days)
+	fromDate.setUTCHours(0, 0, 0, 0)
 
 	const {
 		data: { poolRewards },
