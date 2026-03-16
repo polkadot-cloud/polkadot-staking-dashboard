@@ -33,7 +33,7 @@ export const ProgressFill = styled.div<{
 		$status === 'complete'
 			? 'var(--status-success)'
 			: 'linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-primary) 85%, rgba(255, 255, 255, 0.08) 100%)'};
-	transition: width 1.5s cubic-bezier(0, 1, 0, 1);
+	transition: width 1.5s ease-out;
 	position: relative;
 	overflow: hidden;
 
