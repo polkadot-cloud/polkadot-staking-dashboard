@@ -103,8 +103,8 @@ importers:
         specifier: ^2.4.4
         version: 2.4.4(react@19.2.4)
       '@w3ux/react-connect-kit':
-        specifier: ^4.0.3
-        version: 4.0.3(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^4.0.4
+        version: 4.0.4(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/react-odometer':
         specifier: 2.4.5
         version: 2.4.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -304,8 +304,8 @@ importers:
         specifier: ^0.243.0
         version: 0.243.0(dedot@1.0.4(typescript@5.9.3))
       '@w3ux/observables-connect':
-        specifier: ^1.0.6
-        version: 1.0.6(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^1.0.7
+        version: 1.0.7(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/util-dedot':
         specifier: ^1.0.0
         version: 1.0.0(dedot@1.0.4(typescript@5.9.3))
@@ -347,8 +347,8 @@ importers:
   packages/global-bus:
     dependencies:
       '@w3ux/observables-connect':
-        specifier: ^1.0.6
-        version: 1.0.6(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
+        specifier: ^1.0.7
+        version: 1.0.7(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
@@ -1294,12 +1294,6 @@ packages:
 
   '@ledgerhq/logs@6.14.0':
     resolution: {integrity: sha512-kJFu1+asWQmU9XlfR1RM3lYR76wuEoPyZvkI/CNjpft78BQr3+MMf3Nu77ABzcKFnhIcmAkOLlDQ6B8L6hDXHA==}
-
-  '@mimirdev/apps-inject@3.2.0':
-    resolution: {integrity: sha512-yKWFaZsUgxaPIU/xM8OFvWRsNld6x8iCeqbQbt/LyUsikLGlkrHOZl29MwMfSQiYAWrYNqwhFpCU07sS2DTOLQ==}
-
-  '@mimirdev/apps-sdk@3.1.0':
-    resolution: {integrity: sha512-EevWZhaaP9gKcIJeEbokAugx5X0sd8jRae1CX1Uzg5KsVxODjeLLaAE1D90Lj6//JE1NPaEq3QKi9PliSMLVNg==}
 
   '@noble/ciphers@1.3.0':
     resolution: {integrity: sha512-2I0gnIVPtfnMw9ee9h1dJG7tp81+8Ob3OJb3Mv37rx5L40/b0i7djjCVvGOVqc9AEIQyvyu1i6ypKdFw8R8gQw==}
@@ -2619,14 +2613,14 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/observables-connect@1.0.6':
-    resolution: {integrity: sha512-Xsww2CDwywo40qVW5xzlJLmaoI3/u9kfyDs3DDSyP5sVIS7aBizJsG/ExYEiLXHSUFOenh6m76BkgQ7jfRqtHQ==}
+  '@w3ux/observables-connect@1.0.7':
+    resolution: {integrity: sha512-htwX1ydLkwLCkQPNtPXE9a/14fRprE5ss/tDJtZcGf5miF8A6TRIn9aaPydYr20dO0EhvosTxvaXcpOhvH0Kcw==}
     peerDependencies:
       dedot: ^1
       rxjs: ^7.8.2
 
-  '@w3ux/react-connect-kit@4.0.3':
-    resolution: {integrity: sha512-BA1CDWzcns0adR60vyKEeWu4k0m3uwOwJSHGV+r+ZpPPlLF2VzD0+TeH/9OMX823fuoaCK7lREFao0PUxm9+WA==}
+  '@w3ux/react-connect-kit@4.0.4':
+    resolution: {integrity: sha512-cYKocy1ivbQrNOXb6R3Uve1OkZEQrjDnzjhX3tGWJrOkQ3+JehH2IIQnxi2bnoJE1/x9r0gJiUyzPg429MHa2g==}
     peerDependencies:
       dedot: ^1
       react: ^19.1.0
@@ -4915,14 +4909,6 @@ snapshots:
 
   '@ledgerhq/logs@6.14.0': {}
 
-  '@mimirdev/apps-inject@3.2.0':
-    dependencies:
-      '@mimirdev/apps-sdk': 3.1.0
-
-  '@mimirdev/apps-sdk@3.1.0':
-    dependencies:
-      eventemitter3: 5.0.4
-
   '@noble/ciphers@1.3.0': {}
 
   '@noble/curves@1.9.1':
@@ -6222,9 +6208,8 @@ snapshots:
       date-fns: 4.1.0
       react: 19.2.4
 
-  '@w3ux/observables-connect@1.0.6(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)':
+  '@w3ux/observables-connect@1.0.7(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
-      '@mimirdev/apps-inject': 3.2.0
       '@w3ux/extension-assets': 2.3.1(react@19.2.4)
       '@w3ux/util-dedot': 1.0.0(dedot@1.0.4(typescript@5.9.3))
       '@w3ux/utils': 3.1.1
@@ -6233,10 +6218,10 @@ snapshots:
     transitivePeerDependencies:
       - react
 
-  '@w3ux/react-connect-kit@4.0.3(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
+  '@w3ux/react-connect-kit@4.0.4(dedot@1.0.4(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
       '@w3ux/hooks': 2.4.4(react@19.2.4)
-      '@w3ux/observables-connect': 1.0.6(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
+      '@w3ux/observables-connect': 1.0.7(dedot@1.0.4(typescript@5.9.3))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/util-dedot': 1.0.0(dedot@1.0.4(typescript@5.9.3))
       '@w3ux/utils': 3.1.1
       dedot: 1.0.4(typescript@5.9.3)
