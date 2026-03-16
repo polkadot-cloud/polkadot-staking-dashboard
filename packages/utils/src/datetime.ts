@@ -3,7 +3,7 @@
 
 import { getDurationFromNow } from '@w3ux/hooks/util'
 import type { TimeLeftFormatted, TimeLeftRaw } from '@w3ux/types'
-import { differenceInDays, fromUnixTime, startOfDay } from 'date-fns'
+import { differenceInDays, fromUnixTime } from 'date-fns'
 import type { TFunction } from 'i18next'
 
 // Formats a given time breakdown (days, hours, minutes, seconds) into a readable structure using a
@@ -76,6 +76,13 @@ export const timeleftAsString = (
 	return str
 }
 
-// Get days passed since 2 dates
+// Get start of day in UTC, irrespective of local timezone
+export const startOfUTCDay = (date: Date): Date => {
+	const d = new Date(date)
+	d.setUTCHours(0, 0, 0, 0)
+	return d
+}
+
+// Get days passed since 2 dates (UTC-aware)
 export const daysPassed = (from: Date, to: Date) =>
-	differenceInDays(startOfDay(to), startOfDay(from))
+	differenceInDays(startOfUTCDay(to), startOfUTCDay(from))

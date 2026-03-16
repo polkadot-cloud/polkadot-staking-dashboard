@@ -3,19 +3,13 @@
 
 import BigNumber from 'bignumber.js'
 import { MaximumPayoutDays } from 'consts'
-import {
-	fromUnixTime,
-	getUnixTime,
-	isSameDay,
-	startOfDay,
-	subDays,
-} from 'date-fns'
+import { fromUnixTime, getUnixTime, isSameDay, subDays } from 'date-fns'
 import type {
 	NominatorReward,
 	PoolReward,
 	RewardResults,
 } from 'plugin-staking-api/types'
-import { daysPassed, planckToUnitBn } from 'utils'
+import { daysPassed, planckToUnitBn, startOfUTCDay } from 'utils'
 import type {
 	DailyPayoutConfig,
 	PayoutDayCursor,
@@ -59,7 +53,7 @@ const calculateDailyPayoutsInternal = (config: DailyPayoutConfig) => {
 		p++
 
 		// Extract day from current payout
-		const thisDay = startOfDay(fromUnixTime(payout.timestamp))
+		const thisDay = startOfUTCDay(fromUnixTime(payout.timestamp))
 
 		// Initialize current day if first payout
 		if (p === 1) {
@@ -271,14 +265,14 @@ export const combineRewards = (
 
 	// Collect all unique days from both pool claims and payouts
 	poolClaims.forEach((p) => {
-		const dayStart = getUnixTime(startOfDay(fromUnixTime(p.timestamp)))
+		const dayStart = getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp)))
 		if (!payoutDays.includes(dayStart)) {
 			payoutDays.push(dayStart)
 		}
 	})
 
 	payouts.forEach((p) => {
-		const dayStart = getUnixTime(startOfDay(fromUnixTime(p.timestamp)))
+		const dayStart = getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp)))
 		if (!payoutDays.includes(dayStart)) {
 			payoutDays.push(dayStart)
 		}

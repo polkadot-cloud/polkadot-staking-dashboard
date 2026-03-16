@@ -3,16 +3,9 @@
 
 import { MaximumPayoutDays } from 'consts'
 import type { Locale } from 'date-fns'
-import {
-	addDays,
-	format,
-	fromUnixTime,
-	getUnixTime,
-	startOfDay,
-	subDays,
-} from 'date-fns'
+import { addDays, format, fromUnixTime, getUnixTime, subDays } from 'date-fns'
 import type { RewardResult, RewardResults } from 'plugin-staking-api/types'
-import { daysPassed } from 'utils'
+import { daysPassed, startOfUTCDay } from 'utils'
 import type { RewardRecord } from '../types'
 
 /**
@@ -21,7 +14,7 @@ import type { RewardRecord } from '../types'
 export const normalizePayouts = (payouts: RewardResults): RewardResults =>
 	payouts.map((p) => ({
 		...p,
-		timestamp: getUnixTime(startOfDay(fromUnixTime(p.timestamp))),
+		timestamp: getUnixTime(startOfUTCDay(fromUnixTime(p.timestamp))),
 	}))
 
 /**
@@ -34,10 +27,10 @@ export const prefillMissingDays = (
 	maxDays: number,
 ): RewardResults => {
 	const newPayouts = []
-	const payoutStartDay = subDays(startOfDay(fromDate), maxDays)
+	const payoutStartDay = subDays(startOfUTCDay(fromDate), maxDays)
 	const payoutEndDay = !payouts.length
-		? startOfDay(fromDate)
-		: startOfDay(fromUnixTime(payouts[payouts.length - 1].timestamp))
+		? startOfUTCDay(fromDate)
+		: startOfUTCDay(fromUnixTime(payouts[payouts.length - 1].timestamp))
 
 	const daysToPreFill = daysPassed(payoutStartDay, payoutEndDay)
 
@@ -64,9 +57,9 @@ export const postFillMissingDays = (
 	maxDays: number,
 ): RewardResults => {
 	const newPayouts = []
-	const payoutsEndDay = startOfDay(fromUnixTime(payouts[0].timestamp))
+	const payoutsEndDay = startOfUTCDay(fromUnixTime(payouts[0].timestamp))
 	const daysSinceLast = Math.min(
-		daysPassed(payoutsEndDay, startOfDay(fromDate)),
+		daysPassed(payoutsEndDay, startOfUTCDay(fromDate)),
 		maxDays,
 	)
 
