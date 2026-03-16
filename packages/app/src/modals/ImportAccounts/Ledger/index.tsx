@@ -352,7 +352,7 @@ export const Ledger = () => {
 			)}
 			<AccountImport.Header
 				Logo={<DeviceIcon />}
-				title="Ledger"
+				title={getLedgerDeviceName(deviceModel)}
 				websiteText="ledger.com"
 				websiteUrl="https://ledger.com"
 				offsetChildren

@@ -226,13 +226,13 @@ export const LedgerHardwareProvider = ({
 		setIsExecuting(false)
 	}
 
-	// Helper to reset ledger state when a task is completed or cancelled
+	// Helper to reset ledger state when a task is completed or cancelled. Device model is
+	// intentionally preserved so subsequent modals can reference the detected device
 	const handleResetLedgerTask = () => {
 		setIsExecuting(false)
 		resetStatusCode()
 		resetFeedback()
 		setIntegrityChecked(false)
-		setDeviceModel('unknown')
 	}
 
 	// Helper to reset ledger state when the a overlay connecting to the Ledger device unmounts
