@@ -288,7 +288,6 @@
 		"unbondToMinimum": "解除至最少质押",
 		"unbondToMinimumCreate": "存款人解除质押到{{minCreateBondUnit}} {{unit}}的最低保证金",
 		"unbonding": "解除质押中",
-		"unbondingComplete": "完成",
 		"unbondingProgress": "解除质押进度：{{percent}}%",
 		"unbondingWithdraw": "解除质押还将提取您的未申领收益",
 		"undergoingMaintenance": "正在进行维护",

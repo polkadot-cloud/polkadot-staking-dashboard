@@ -298,7 +298,6 @@
 		"unbondToMinimum": "Unbond To Minimum",
 		"unbondToMinimumCreate": "Unbond up to the {{minCreateBondUnit}} {{unit}} minimum bond for pool depositors.",
 		"unbonding": "Unbonding",
-		"unbondingComplete": "Complete",
 		"unbondingProgress": "Unbonding progress: {{percent}}%",
 		"unbondingWithdraw": "Unbonding will also withdraw your outstanding rewards of",
 		"undergoingMaintenance": "Undergoing Maintenance",

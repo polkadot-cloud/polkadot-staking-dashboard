@@ -298,7 +298,6 @@
 		"unbondToMinimum": "Desvincular al mínimo",
 		"unbondToMinimumCreate": "Desvincular hasta el mínimo de {{minCreateBondUnit}} {{unit}} de vinculación para depositantes del Pool.",
 		"unbonding": "Desvinculando",
-		"unbondingComplete": "Completo",
 		"unbondingProgress": "Progreso de desvinculación: {{percent}}%",
 		"unbondingWithdraw": "La desvinculación también retirará tus recompensas pendientes de",
 		"undergoingMaintenance": "En Mantenimiento",

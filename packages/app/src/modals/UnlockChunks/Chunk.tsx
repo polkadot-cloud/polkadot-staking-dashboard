@@ -92,7 +92,8 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 				</span>
 				<ProgressBar
 					progress={progress}
-					status={isUnlocked ? 'unlocked' : 'unbonding'}
+					status={isUnlocked ? 'complete' : 'active'}
+					ariaLabel={t('unbondingProgress', { percent: Math.round(progress) })}
 				/>
 				{!isUnlocked && (
 					<div className="chunk-bar-labels">

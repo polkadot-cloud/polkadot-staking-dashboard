@@ -25,12 +25,12 @@ export const ProgressTrack = styled.div`
 
 export const ProgressFill = styled.div<{
 	$progress: number
-	$status: 'unbonding' | 'unlocked'
+	$status: 'active' | 'complete'
 }>`
 	height: 100%;
 	width: ${({ $progress }) => $progress}%;
 	background: ${({ $status }) =>
-		$status === 'unlocked'
+		$status === 'complete'
 			? 'var(--status-success)'
 			: 'linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-primary) 85%, rgba(255, 255, 255, 0.08) 100%)'};
 	transition: width 1.5s cubic-bezier(0, 1, 0, 1);
@@ -38,7 +38,7 @@ export const ProgressFill = styled.div<{
 	overflow: hidden;
 
 	&::after {
-		content: ${({ $status }) => ($status === 'unbonding' ? "''" : 'none')};
+		content: ${({ $status }) => ($status === 'active' ? "''" : 'none')};
 		position: absolute;
 		top: 0;
 		left: 0;
