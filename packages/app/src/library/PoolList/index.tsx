@@ -101,13 +101,9 @@ export const PoolList = ({
 
 		let filteredPools: BondedPool[] = [...poolsDefault]
 		filteredPools = applyFilter(includes, excludes, filteredPools)
+		// poolSearchFilter already guarantees no duplicates in its output
 		filteredPools = poolSearchFilter(filteredPools, newValue)
 
-		// ensure no duplicates
-		filteredPools = filteredPools.filter(
-			(value, index: number, self) =>
-				index === self.findIndex((i) => i.id === value.id),
-		)
 		setPage(1)
 		setListPools(filteredPools)
 		setSearchTerm('pools', newValue)
