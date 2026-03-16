@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -84,8 +84,7 @@ export const Wrapper = styled.div<{
     transition: border var(--transition-duration);
     background: var(--bg-primary);
     border: 1.75px solid
-      ${(props) =>
-				props.$selected ? 'var(--accent-primary)' : 'var(--border)'};
+      ${(props) => (props.$selected ? 'var(--gray-1000)' : 'var(--gray-500)')};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -94,10 +93,10 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
 				props.$hoverBorder
-					? 'var(--accent-primary)'
+					? 'var(--gray-1000)'
 					: props.$selected
-						? 'var(--accent-primary)'
-						: 'var(--border)'};
+						? 'var(--gray-1000)'
+						: 'var(--gray-500)'};
     }
 
     > button {
@@ -116,7 +115,7 @@ export const Wrapper = styled.div<{
 
       > .icon {
         background: var(--bg-list);
-        color: var(--accent-primary);
+        color: var(--gray-1000);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -145,7 +144,7 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-					props.$selected ? 'var(--accent-primary)' : 'var(--text-secondary)'};
+					props.$selected ? 'var(--gray-1000)' : 'var(--gray-900)'};
         opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

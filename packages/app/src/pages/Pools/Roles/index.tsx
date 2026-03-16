@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -157,7 +157,12 @@ export const Roles = ({
 				)}
 
 				{!(isOwner() || setters.length) ? null : (
-					<ButtonRow>
+					<ButtonRow
+						style={{
+							justifyContent: 'right',
+							width: '100%',
+						}}
+					>
 						{isEditing && (
 							<ButtonType
 								iconLeft={faTimesCircle}

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
@@ -79,7 +79,7 @@ export const useQuickActions = () => {
 					style={{
 						width: '1.5rem',
 						height: '1.5rem',
-						fill: 'var(--text-primary)',
+						fill: 'var(--gray-1000)',
 					}}
 				/>
 			),

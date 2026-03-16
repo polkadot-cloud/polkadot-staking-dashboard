@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -138,9 +138,7 @@ export const MenuPopover = ({
 					<div>
 						<FontAwesomeIcon
 							icon={advancedMode ? faToggleOn : faToggleOff}
-							color={
-								advancedMode ? 'var(--accent-primary)' : 'var(--text-tertiary)'
-							}
+							color={advancedMode ? 'var(--gray-1000)' : 'var(--text-tertiary)'}
 							transform="grow-8"
 						/>
 					</div>
@@ -158,9 +156,7 @@ export const MenuPopover = ({
 						<FontAwesomeIcon
 							icon={mode === 'dark' ? faToggleOn : faToggleOff}
 							color={
-								mode === 'dark'
-									? 'var(--accent-primary)'
-									: 'var(--text-tertiary)'
+								mode === 'dark' ? 'var(--gray-1000)' : 'var(--text-tertiary)'
 							}
 							transform="grow-8"
 						/>
@@ -178,9 +174,7 @@ export const MenuPopover = ({
 					<div>
 						<FontAwesomeIcon
 							icon={showHelp ? faToggleOn : faToggleOff}
-							color={
-								showHelp ? 'var(--accent-primary)' : 'var(--text-tertiary)'
-							}
+							color={showHelp ? 'var(--gray-1000)' : 'var(--text-tertiary)'}
 							transform="grow-8"
 						/>
 					</div>

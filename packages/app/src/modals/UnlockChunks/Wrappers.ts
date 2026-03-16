@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -30,7 +30,7 @@ export const ChunkWrapper = styled.div`
   margin-top: 1.25rem;
 
   > div {
-    background: var(--btn-bg);
+    background: var(--gray-400);
     display: flex;
     flex-flow: column nowrap;
     width: 100%;

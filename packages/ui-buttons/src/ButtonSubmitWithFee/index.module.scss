@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .wrapper {
@@ -25,8 +25,8 @@
   overflow: hidden;
   flex-grow: 1;
   flex-shrink: 1;
-  background-color: var(--accent-primary);
-  color: white;
+  background-color: var(--gray-1000);
+color: var(--gray-100);
   transition: filter 0.15s;
   cursor: pointer;
 
@@ -76,7 +76,7 @@
 }
 
 .buttonDisabled {
-  background-color: var(--accent-pending);
+  background-color: var(--gray-700);
 
   &:hover {
     filter: none;
@@ -85,14 +85,14 @@
 
 
 .buttonPulse {
-  box-shadow: 0 0 30px 0 var(--accent-pending);
+  box-shadow: 0 0 30px 0 var(--gray-700);
   transform: scale(1);
   animation: pulse 4s infinite;
 
   @keyframes pulse {
     0% {
       transform: scale(0.98);
-      box-shadow: 0 0 0 0 var(--accent-pending);
+      box-shadow: 0 0 0 0 var(--gray-700);
     }
 
     70% {

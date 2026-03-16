@@ -1,14 +1,14 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const JoinFormWrapper = styled.div`
-  background: var(--bg-card-canvas);
-  border: 0.75px solid var(--border);
+  background: var(--gray-300);
+  border: 0.75px solid var(--gray-500);
   box-shadow: var(--shadow);
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 0;
   width: 100%;
 
   .head {
@@ -19,7 +19,7 @@ export const JoinFormWrapper = styled.div`
     width: 100%;
 
     > h2 {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       margin: 0.25rem 0;
       width: auto;
     }
@@ -38,7 +38,7 @@ export const JoinFormWrapper = styled.div`
     display: flex;
     align-items: center;
     &.note {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       font-family: var(--font-family-default);
     }
   }
@@ -48,14 +48,14 @@ export const JoinFormWrapper = styled.div`
     color: var(--text-tertiary);
 
     &.underline {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--gray-500);
       padding-bottom: 0.5rem;
       margin: 2rem 0 1rem 0;
     }
   }
 
   > .input {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--gray-500);
     padding: 0 0.25rem;
     display: flex;
     align-items: flex-end;
@@ -115,11 +115,11 @@ export const InviteHeader = styled.div`
     font-size: 1.8rem;
     margin-bottom: 0.75rem;
     font-family: var(--font-family-bold);
-    color: var(--text-primary);
+    color: var(--gray-1000);
   }
 
   h4 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     max-width: 40rem;
     margin: 0 auto;
   }

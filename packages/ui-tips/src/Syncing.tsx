@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faRefresh } from '@fortawesome/free-solid-svg-icons'
@@ -35,11 +35,7 @@ export const Syncing = () => {
 							justifyContent: 'center',
 						}}
 					>
-						<FontAwesomeIcon
-							icon={faRefresh}
-							spin
-							color="var(--text-secondary)"
-						/>
+						<FontAwesomeIcon icon={faRefresh} spin color="var(--gray-900)" />
 					</section>
 					<section>
 						<div className={styles.desc}>

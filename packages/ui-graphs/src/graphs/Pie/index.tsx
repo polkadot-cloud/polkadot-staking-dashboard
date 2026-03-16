@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { memo } from 'react'
@@ -32,7 +32,7 @@ const Wrapper = styled.div<{
 // Memoizing component to prevent animation restarts
 export const Pie = memo(({ value = 0, size = '2rem' }: Props) => {
 	const inactive = 100 - value
-	const activeColor = 'var(--accent-primary)'
+	const activeColor = 'var(--gray-1000)'
 	const inactiveColor = 'var(--bg-body)'
 
 	// Define the keyframes for the pie

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
@@ -156,7 +156,7 @@ export const LedgerHardwareProvider = ({
 					code: 'NestingNotSupported',
 				})
 				break
-			// Cccurs when the device is not connected
+			// Occurs when the device is not connected
 			case 'deviceNotConnected':
 				setStatusFeedback({
 					message: t('connectLedgerToContinue'),

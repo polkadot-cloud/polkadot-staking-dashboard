@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { validatorListSupported } from '@w3ux/validator-assets'
@@ -46,7 +46,7 @@ export const getPagesConfig = (
 			)
 		}
 	} else {
-		// In Advanced mode, always hide the unified  page and show separate pages
+		// In Advanced mode, always hide the unified page and show separate pages
 		pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
 	}
 

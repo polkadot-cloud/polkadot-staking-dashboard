@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useAutoFitText } from '@w3ux/hooks'
@@ -22,7 +22,7 @@ export const Subtitle = forwardRef<
 	})
 	const { containerRef, fontSize } = useAutoFitText({
 		minFontSize: 0.625,
-		maxFontSize: 1.08,
+		maxFontSize: 1.12,
 		unit: 'rem',
 	})
 

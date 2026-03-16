@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCalculator } from '@fortawesome/free-solid-svg-icons'
@@ -48,7 +48,7 @@ export const useRewardOverviewStats = (
 			Icon: (
 				<FontAwesomeIcon
 					icon={faCalculator}
-					color="var(--accent-primary)"
+					color="var(--gray-1000)"
 					style={{ marginLeft: '0.25rem', height: '2.1rem' }}
 				/>
 			),

@@ -1,8 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -16,6 +17,7 @@ export const [ActiveStakerContext, useActiveStaker] =
 	createSafeContext<ActiveStakerContextInterface>()
 
 export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
+	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
@@ -37,7 +39,12 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 
 	// Handle fetching of active nominator status
 	const handleFetchNominationStatus = async (who: string) => {
-		const result = await fetchGetStakerWithNominees(network, who, nominations)
+		const result = await fetchGetStakerWithNominees(
+			network,
+			activeEra.index,
+			who,
+			nominations,
+		)
 		setActiveNominatorData(result)
 	}
 
@@ -45,6 +52,7 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 	const handleFetchPoolStatus = async (who: string) => {
 		const result = await fetchGetStakerWithNominees(
 			network,
+			activeEra.index,
 			who,
 			poolNominations,
 		)
@@ -55,6 +63,7 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (
 			pluginEnabled('staking_api') &&
+			activeEra.index !== 0 &&
 			activeAddress &&
 			nominations.length > 0
 		) {
@@ -62,12 +71,13 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 		} else {
 			setActiveNominatorData(undefined)
 		}
-	}, [activeAddress, nominations])
+	}, [activeAddress, nominations, activeEra.index])
 
 	// Fetch active pool nominating status when pool nominations update
 	useEffect(() => {
 		if (
 			pluginEnabled('staking_api') &&
+			activeEra.index !== 0 &&
 			activeAddress &&
 			poolNominations.length > 0 &&
 			activePool?.addresses.stash
@@ -76,7 +86,7 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 		} else {
 			setActivePoolData(undefined)
 		}
-	}, [poolNominations])
+	}, [poolNominations, activeEra.index])
 
 	return (
 		<ActiveStakerContext.Provider

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -46,18 +46,18 @@ export const PayoutLine = ({
 		: entries.map((entry) => new BigNumber(entry.reward).toString())
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-primary')
+	const color = getThemeValue('--gray-1000')
 
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
-		family: "'Inter', 'sans-serif'",
+		family: "'DM Sans', 'sans-serif'",
 		weight: 'lighter',
 		size: 11,
 	}
 	const titleStyle = {
 		display: true,
 		...titleFontSpec,
-		color: getThemeValue('--text-secondary'),
+		color: getThemeValue('--gray-900'),
 	}
 
 	const options = {
@@ -89,7 +89,7 @@ export const PayoutLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-canvas'),
+					color: getThemeValue('--gray-500'),
 				},
 				title: {
 					...titleStyle,
@@ -106,9 +106,9 @@ export const PayoutLine = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-invert'),
-				bodyColor: getThemeValue('--text-invert'),
+				backgroundColor: getThemeValue('--gray-1000'),
+				titleColor: getThemeValue('--gray-100'),
+				bodyColor: getThemeValue('--gray-100'),
 				bodyFont: {
 					weight: 600,
 				},
