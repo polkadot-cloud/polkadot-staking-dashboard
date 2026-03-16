@@ -100,8 +100,9 @@ export const PoolList = ({
 		const newValue = e.currentTarget.value
 
 		let filteredPools: BondedPool[] = [...poolsDefault]
+		// Apply filters first, then search, to avoid unnecessary search computations on pools that are
+		// already filtered out
 		filteredPools = applyFilter(includes, excludes, filteredPools)
-		// poolSearchFilter already guarantees no duplicates in its output
 		filteredPools = poolSearchFilter(filteredPools, newValue)
 
 		setPage(1)
