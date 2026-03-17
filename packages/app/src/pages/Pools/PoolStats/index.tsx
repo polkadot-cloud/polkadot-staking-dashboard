@@ -8,10 +8,9 @@ import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePoolCommission } from 'hooks/usePoolCommission'
-import { Header } from 'library/Announcements/Header'
-import type { PoolStatLabel } from 'library/Announcements/types'
-import { Wrapper } from 'library/Announcements/Wrappers'
+import type { AnnouncementItem } from 'library/Announcements/types'
 import { CardWrapper } from 'library/Card/Wrappers'
+import { Wrapper } from 'library/List'
 import { useTranslation } from 'react-i18next'
 import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
@@ -49,7 +48,7 @@ export const PoolStats = () => {
 			break
 	}
 
-	const items: PoolStatLabel[] = [
+	const items: AnnouncementItem[] = [
 		{
 			label: t('poolState'),
 			value: stateDisplay,
@@ -90,13 +89,12 @@ export const PoolStats = () => {
 	)
 
 	return (
-		<CardWrapper style={{ boxShadow: 'var(--shadow-alt)' }}>
+		<CardWrapper>
 			<CardHeader margin>
 				<h3>{t('poolStats')}</h3>
 			</CardHeader>
 			<Wrapper>
-				<Header items={items} />
-				<Announcements />
+				<Announcements items={items} />
 			</Wrapper>
 		</CardWrapper>
 	)

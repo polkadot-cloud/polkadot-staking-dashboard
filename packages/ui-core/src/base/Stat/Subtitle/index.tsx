@@ -22,7 +22,7 @@ export const Subtitle = forwardRef<
 	})
 	const { containerRef, fontSize } = useAutoFitText({
 		minFontSize: 0.625,
-		maxFontSize: 1.08,
+		maxFontSize: 1.12,
 		unit: 'rem',
 	})
 

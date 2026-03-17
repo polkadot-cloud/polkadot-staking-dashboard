@@ -5,20 +5,20 @@
   background: var(--btn-bg-secondary);
   border: 1px solid var(--btn-bg-secondary);
   border-radius: var(--btn-lg-radius);
-  color: var(--text-secondary);
+  color: var(--gray-900);
 
   &.asTab {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     background: transparent;
-    border-color: var(--btn-bg-hover);
+    border-color: var(--gray-500);
   }
 
   &.active {
-    background: var(--btn-bg-secondary);
-    border-color: var(--text-tertiary);
+    background: transparent;
+    border-color: var(--accent-400);
 
     &.asTab {
-      color: var(--text-secondary);
+      color: var(--accent-900);
     }
   }
 }

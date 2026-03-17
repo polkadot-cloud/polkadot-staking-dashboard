@@ -157,7 +157,12 @@ export const Roles = ({
 				)}
 
 				{!(isOwner() || setters.length) ? null : (
-					<ButtonRow>
+					<ButtonRow
+						style={{
+							justifyContent: 'right',
+							width: '100%',
+						}}
+					>
 						{isEditing && (
 							<ButtonType
 								iconLeft={faTimesCircle}

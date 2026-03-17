@@ -43,7 +43,7 @@
     }
 
     > label {
-      background: var(--bg-invert);
+      background: var(--gray-1000);
       opacity: 0;
       position: absolute;
       top: -1rem;
@@ -56,7 +56,7 @@
       transition: opacity var(--transition-duration);
 
       > h3 {
-        color: var(--text-invert);
+        color: var(--gray-100);
         font-family: var(--font-family-semibold);
         text-align: center;
         margin: 0;
@@ -83,11 +83,11 @@
   }
 
   > button {
-    border: 1px solid var(--accent-pending);
+    border: 1px solid var(--gray-700);
     transition: border 0.1s;
 
     &:hover {
-      border: 1px solid var(--accent-primary);
+      border: 1px solid var(--gray-1000);
     }
   }
 }

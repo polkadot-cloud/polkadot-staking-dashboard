@@ -29,18 +29,18 @@ body {
 h1 {
   @include fonts.font-semibold;
 
-  color: var(--text-primary);
-  font-size: 1.6rem;
-  line-height: 1.6rem;
+  color: var(--gray-1000);
+  font-size: 1.7rem;
+  line-height: 1.7rem;
   margin: 0;
 }
 
 h2 {
   @include fonts.font-semibold;
   
-  color: var(--text-primary);
-  font-size: 1.4rem;
-  line-height: 1.6rem;
+  color: var(--gray-1000);
+  font-size: 1.5rem;
+  line-height: 1.65rem;
   font-weight: 600;
   margin: 0;
 }
@@ -48,9 +48,9 @@ h2 {
 h3 {
   @include fonts.font-semibold;
 
-  color: var(--text-primary);
-  font-size: 1.25rem;
-  line-height: 1.55rem;
+  color: var(--gray-1000);
+  font-size: 1.35rem;
+  line-height: 1.6rem;
   font-weight: 500;
   margin: 0;
 }
@@ -58,30 +58,30 @@ h3 {
 h4 {
   @include fonts.font-semibold;
 
-  color: var(--text-secondary);
-  font-size: 1.08rem;
-  line-height: 1.65rem;
+  color: var(--gray-900);
+  font-size: 1.14rem;
+  line-height: 1.71rem;
   font-weight: 500;
   margin: 0;
 }
 
 h5 {
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.02rem;
+  color: var(--gray-900);
+  font-size: 1.1rem;
+  line-height: 1.07rem;
   font-weight: 500;
   margin: 0;
 }
 
 p {
-  color: var(--text-secondary);
-  font-size: 1.04rem;
+  color: var(--gray-900);
+  font-size: 1.1rem;
   line-height: 1.5rem;
   margin: 0.75rem 0;
 }
 
 a {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   text-decoration: none;
   cursor: pointer;
 }
@@ -89,7 +89,7 @@ a {
 button {
   @include fonts.font-default;
 
-  color: var(--text-secondary);
+  color: var(--gray-900);
   -webkit-tap-highlight-color: transparent;
   background: none;
   border: none;
@@ -101,18 +101,18 @@ button {
 input {
   @include fonts.font-default;
 
-  color: var(--text-primary);
+  color: var(--gray-1000);
   font-size: 1.1rem;
   padding: 0.7rem 0;
   background: none;
   border: none;
 
   &::placeholder {
-    color: #aaa;
+    color: var(--gray-700);
   }
 
   &.underline {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--gray-500);
   }
 }
 
@@ -126,21 +126,21 @@ textarea:focus {
 path.primary,
 circle.primary,
 ellipse.primary {
-  fill: var(--text-primary);
+  fill: var(--gray-1000);
 }
 
 path.primaryStroke {
-  stroke: var(--text-primary);
+  stroke: var(--gray-1000);
 }
 
 path.accent,
 circle.accent,
 ellipse.accent {
-  fill: var(--accent-primary);
+  fill: var(--gray-1000);
 }
 
 label {
-  color: var(--text-primary);
+  color: var(--gray-1000);
 }
 
 .pagePadding {
@@ -176,4 +176,12 @@ label {
 
 [data-simplebar]::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.light ::selection {
+  background-color: #f8e4e8;
+}
+
+.dark ::selection {
+  background-color: #2a151a;
 }

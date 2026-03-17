@@ -372,7 +372,8 @@
 			"clearAllSelected": "Clear all selected",
 			"searchResults": "Search Results",
 			"searchValidators": "Search Validators",
-			"searching": "Searching"
+			"searching": "Searching",
+			"selectedValidators": "Selected Validators ({{count}})"
 		},
 		"validators": "Validators",
 		"valueTooSmall": "Value is too small",

@@ -159,6 +159,16 @@ export const ValidatorListInner = ({
 		[validators, pageStart, pageLength],
 	)
 
+	// Build a lookup for validator performance to avoid repeated array scans when rendering list
+	// items
+	const performanceByAddress = useMemo(
+		() =>
+			new Map(
+				performances.map((entry) => [entry.validator, entry.points] as const),
+			),
+		[performances],
+	)
+
 	const pageKey = useMemo(() => {
 		const itemKeys = listItems
 			.map(({ address }, i) => `${i}${address}`)
@@ -327,7 +337,7 @@ export const ValidatorListInner = ({
 										icon={faBars}
 										color={
 											listFormat === 'row'
-												? getThemeValue('--accent-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
@@ -337,7 +347,7 @@ export const ValidatorListInner = ({
 										icon={faGripVertical}
 										color={
 											listFormat === 'col'
-												? getThemeValue('--accent-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
@@ -374,11 +384,7 @@ export const ValidatorListInner = ({
 									toggleFavorites={toggleFavorites}
 									bondFor={bondFor}
 									displayFor={displayFor}
-									eraPoints={
-										performances.find(
-											(entry) => entry.validator === validator.address,
-										)?.points || []
-									}
+									eraPoints={performanceByAddress.get(validator.address) || []}
 									rate={rates[pageKey]?.[validator.address]}
 									nominationStatus={nominationStatus.current[validator.address]}
 									onRemove={onRemove}

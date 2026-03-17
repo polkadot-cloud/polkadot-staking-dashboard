@@ -109,7 +109,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 							{t('bondAmount')}:
 						</div>
 						<div>
-							{new BigNumber(bond).toFormat()} {unit}
+							{new BigNumber(bond || 0).toFormat()} {unit}
 						</div>
 					</section>
 					<section>
@@ -138,6 +138,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 					<SubmitTx
 						submitText={t('createPool')}
 						valid
+						stacked
 						{...submitExtrinsic}
 						displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
 					/>

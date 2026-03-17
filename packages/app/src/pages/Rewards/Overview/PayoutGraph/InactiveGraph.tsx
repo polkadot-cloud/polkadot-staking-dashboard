@@ -40,8 +40,6 @@ export const InactiveGraph = () => {
 				average={10}
 				height="65px"
 				data={{ payouts: [], unclaimedPayouts: [], poolClaims: [] }}
-				nominating={false}
-				inPool={false}
 				getThemeValue={getThemeValue}
 				unit={unit}
 				units={units}

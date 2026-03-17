@@ -33,65 +33,70 @@ export const poolSearchFilter = (
 	searchTerm: string,
 	poolsMetaData: Record<number, string> = {},
 ): BondedPool[] => {
+	// Pre-compute values that are constant across all iterations
+	const hasMetadata = Object.keys(poolsMetaData).length > 0
+	const searchTermLower = searchTerm.toLowerCase()
+	const numbersInSearch = searchTerm.match(/\d+/g)
+
+	// Track added pool IDs to avoid O(n²) dedup at the end
+	const seen = new Set<number>()
 	const filteredList: BondedPool[] = []
 
 	for (const pool of pools) {
 		// If pool metadata has not yet been synced, include the pool in results
-		if (!Object.values(poolsMetaData).length) {
-			filteredList.push(pool)
+		if (!hasMetadata) {
+			if (!seen.has(pool.id)) {
+				seen.add(pool.id)
+				filteredList.push(pool)
+			}
 			continue
 		}
 
 		const address = pool?.addresses?.stash ?? ''
 		const metadata = poolsMetaData[pool.id] || ''
-		const searchTermLower = searchTerm.toLowerCase()
+		const poolIdStr = String(pool.id)
 
 		// Enhanced pool ID matching logic
 		let poolIdMatches = false
 
 		// 1. Direct number match (e.g., "123" matches pool 123)
-		if (String(pool.id) === searchTerm) {
+		if (poolIdStr === searchTerm) {
 			poolIdMatches = true
 		}
 		// 2. Pool ID contains the search term (for partial matches)
-		else if (String(pool.id).includes(searchTermLower)) {
+		else if (poolIdStr.includes(searchTermLower)) {
 			poolIdMatches = true
 		}
 		// 3. "Pool X" format (e.g., "Pool 123" should match pool 123)
 		else if (searchTermLower.startsWith('pool ')) {
 			const poolNumber = searchTermLower.replace('pool ', '').trim()
-			if (String(pool.id) === poolNumber) {
+			if (poolIdStr === poolNumber) {
 				poolIdMatches = true
 			}
 		}
 		// 4. Extract numbers from search term and match against pool ID
-		else {
-			const numbersInSearch = searchTerm.match(/\d+/g)
-			if (numbersInSearch) {
-				for (const num of numbersInSearch) {
-					if (String(pool.id) === num) {
-						poolIdMatches = true
-						break
-					}
+		else if (numbersInSearch) {
+			for (const num of numbersInSearch) {
+				if (poolIdStr === num) {
+					poolIdMatches = true
+					break
 				}
 			}
 		}
 
-		if (poolIdMatches) {
-			filteredList.push(pool)
-		}
-		if (address.toLowerCase().includes(searchTermLower)) {
-			filteredList.push(pool)
-		}
-		if (metadata.toLowerCase().includes(searchTermLower)) {
+		const addressMatches = address.toLowerCase().includes(searchTermLower)
+		const metadataMatches = metadata.toLowerCase().includes(searchTermLower)
+
+		if (
+			(poolIdMatches || addressMatches || metadataMatches) &&
+			!seen.has(pool.id)
+		) {
+			seen.add(pool.id)
 			filteredList.push(pool)
 		}
 	}
 
-	// Remove duplicates
-	return filteredList.filter(
-		(value, index, self) => index === self.findIndex((i) => i.id === value.id),
-	)
+	return filteredList
 }
 
 // Determine bonded pool's current nomination status

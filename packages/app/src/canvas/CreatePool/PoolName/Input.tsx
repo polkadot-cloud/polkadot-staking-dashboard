@@ -44,7 +44,7 @@ export const Input = ({
 			<div style={{ margin: '1rem 0' }}>
 				<input
 					className="underline"
-					style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
+					style={{ width: '100%' }}
 					placeholder={t('poolName')}
 					type="text"
 					onChange={(e) => handleChange(e)}

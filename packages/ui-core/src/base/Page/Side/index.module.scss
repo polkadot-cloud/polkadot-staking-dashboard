@@ -13,8 +13,8 @@
 
 .bar {
   background: 
-    linear-gradient(to bottom, var(--accent-primary), 
-    color-mix(in srgb, var(--accent-primary) 95%, black));
+    linear-gradient(to bottom, var(--gray-1000), 
+    color-mix(in srgb, var(--gray-1000) 95%, black));
   width: $side-bar-width;
   height: inherit;
   display: flex;
@@ -30,8 +30,8 @@
   }
 
   :global(.dark) & {
-    background: linear-gradient(to bottom, var(--bg-menu), var(--bg-list));
-    border-right: 1px solid var(--border);
+    background: linear-gradient(to bottom, var(--gray-400), var(--bg-list));
+    border-right: 1px solid var(--gray-500);
   }
 }
 
@@ -95,7 +95,7 @@
   align-items: center;
 
   h5 {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     margin: 1.1rem 0 0.75rem;
     padding: 0 0.5rem;
     opacity: 0.7;

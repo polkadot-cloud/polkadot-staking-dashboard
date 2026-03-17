@@ -9,8 +9,8 @@ import type {
 } from '../types'
 
 const QUERY = gql`
-  query GetStakerWithNominees($network: String!, $who: String!, $addresses: [String!]!) {
-  getNomineesStatus(network: $network, who: $who, addresses: $addresses) {
+  query GetStakerWithNominees($network: String!, $era: Int!, $who: String!, $addresses: [String!]!) {
+  getNomineesStatus(network: $network, era: $era, who: $who, addresses: $addresses) {
     statuses {
       address
       status
@@ -29,13 +29,14 @@ const DEFAULT: ActiveStatusWithNominees = {
 
 export const fetchGetStakerWithNominees = async (
 	network: string,
+	era: number,
 	who: string,
 	addresses: string[],
 ): Promise<ActiveStatusWithNominees> => {
 	try {
 		const result = await client.query<GetActiveStakerWithNomineesData>({
 			query: QUERY,
-			variables: { network, who, addresses },
+			variables: { network, era, who, addresses },
 		})
 		return result?.data
 			? {

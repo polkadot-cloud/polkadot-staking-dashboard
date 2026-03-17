@@ -34,7 +34,7 @@ export const ItemWrapper = styled.div`
       }
 
       &:last-child {
-        border-top: 1px solid var(--border);
+        border-top: 1px solid var(--gray-500);
         padding-top: 0rem;
 
         > div {
@@ -50,27 +50,27 @@ export const ItemWrapper = styled.div`
         max-width: 100%;
 
         h4 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           font-family: var(--font-family-semibold);
           &.claim {
-            color: var(--accent-primary);
+            color: var(--gray-1000);
           }
           &.reward {
-            color: var(--accent-primary);
+            color: var(--gray-1000);
           }
         }
 
         h5 {
-          color: var(--text-secondary);
+          color: var(--gray-900);
           &.claim {
-            color: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
+            color: var(--gray-1000);
+            border: 1px solid var(--gray-1000);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
           &.reward {
-            color: var(--accent-primary);
-            border: 1px solid var(--accent-primary);
+            color: var(--gray-1000);
+            border: 1px solid var(--gray-1000);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
@@ -89,7 +89,7 @@ export const ItemWrapper = styled.div`
           justify-content: flex-end;
 
           > h4 {
-            color: var(--text-secondary);
+            color: var(--gray-900);
             opacity: 0.8;
           }
         }

@@ -45,15 +45,15 @@ export const EraPointsLine = ({
 		: entries.map((entry) => new BigNumber(entry.points).toString())
 
 	// Use primary color for line
-	const color = getThemeValue('--accent-primary')
+	const color = getThemeValue('--gray-1000')
 	// Styling of axis titles
 	const titleFontSpec: Partial<FontSpec> = {
-		family: "'Inter', 'sans-serif'",
+		family: "'DM Sans', 'sans-serif'",
 		weight: 'lighter',
 		size: 11,
 	}
 	const titleStyle = {
-		color: getThemeValue('--text-secondary'),
+		color: getThemeValue('--gray-900'),
 		display: true,
 		padding: 6,
 		font: titleFontSpec,
@@ -68,7 +68,7 @@ export const EraPointsLine = ({
 					display: false,
 				},
 				ticks: {
-					color: getThemeValue('--grid-canvas-axis'),
+					color: getThemeValue('--gray-1000'),
 					font: {
 						size: 10,
 					},
@@ -82,7 +82,7 @@ export const EraPointsLine = ({
 			y: {
 				beginAtZero: true,
 				ticks: {
-					color: getThemeValue('--grid-canvas-axis'),
+					color: getThemeValue('--gray-1000'),
 					font: {
 						size: 10,
 					},
@@ -91,7 +91,7 @@ export const EraPointsLine = ({
 					display: false,
 				},
 				grid: {
-					color: getThemeValue('--grid-canvas'),
+					color: getThemeValue('--gray-600'),
 				},
 				title: {
 					...titleStyle,
@@ -108,9 +108,9 @@ export const EraPointsLine = ({
 			},
 			tooltip: {
 				displayColors: false,
-				backgroundColor: getThemeValue('--bg-invert'),
-				titleColor: getThemeValue('--text-invert'),
-				bodyColor: getThemeValue('--text-invert'),
+				backgroundColor: getThemeValue('--gray-1000'),
+				titleColor: getThemeValue('--gray-100'),
+				bodyColor: getThemeValue('--gray-100'),
 				bodyFont: {
 					weight: 600,
 				},

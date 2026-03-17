@@ -4,7 +4,7 @@
 @use 'styles/theme/variables' as *;
 
 .headerButton {
-  color: var(--text-secondary);
+  color: var(--gray-900);
   position: relative;
   display: flex;
   align-items: center;
@@ -25,8 +25,7 @@
 
   > button,
   > span {
-    background: var(--shimmer-fg);
-    color: var(--text-secondary);
+    background: var(--gray-400);
     padding: 0 0.1rem;
     font-size: 1rem;
     border-radius: 50%;
@@ -42,11 +41,15 @@
     }
 
     &.active {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
 
     &:disabled {
       opacity: var(--opacity-disabled);
+    }
+
+    > svg {
+      color: var(--accent-900);
     }
   }
 
@@ -73,7 +76,7 @@
       }
     }
 
-    > svg {
+     svg {
       margin: 0;
     }
   }
@@ -81,7 +84,7 @@
   &.noMargin {
     margin: 0;
 
-    > svg {
+     svg {
       margin: 0;
     }
   }

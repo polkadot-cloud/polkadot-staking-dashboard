@@ -45,8 +45,8 @@ export const ActiveGraph = ({
 
 	const days = 30
 	const fromDate = new Date()
-	fromDate.setDate(fromDate.getDate() - days)
-	fromDate.setHours(0, 0, 0, 0)
+	fromDate.setUTCDate(fromDate.getUTCDate() - days)
+	fromDate.setUTCHours(0, 0, 0, 0)
 
 	const {
 		data: { poolRewards },
@@ -98,8 +98,6 @@ export const ActiveGraph = ({
 					average={10}
 					height="65px"
 					data={{ payouts, unclaimedPayouts, poolClaims }}
-					nominating={nominating}
-					inPool={inPool}
 					getThemeValue={getThemeValue}
 					unit={unit}
 					units={units}

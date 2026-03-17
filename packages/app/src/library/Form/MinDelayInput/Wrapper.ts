@@ -4,8 +4,8 @@
 import styled from 'styled-components'
 
 export const MinDelayInputWrapper = styled.div`
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
+  color: var(--gray-900);
+  border: 1px solid var(--gray-500);
   flex: 0 1 auto;
   display: flex;
   height: 3rem;
@@ -34,7 +34,7 @@ export const MinDelayInputWrapper = styled.div`
   }
 
   > .toggle {
-    background: var(--btn-bg);
+    background: var(--gray-400);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,7 +43,7 @@ export const MinDelayInputWrapper = styled.div`
     width: 1.5rem;
 
     > button {
-      color: var(--text-secondary);
+      color: var(--gray-900);
       height: 1.5rem;
       width: 100%;
       display: flex;

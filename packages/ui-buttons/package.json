@@ -26,7 +26,7 @@
 	},
 	"devDependencies": {
 		"@w3ux/types": "^2.4.2",
-		"dedot": "^1",
+		"dedot": "^1.2.0",
 		"types": "workspace:*"
 	}
 }

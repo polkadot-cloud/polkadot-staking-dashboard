@@ -10,7 +10,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 .button {
   background: var(--bg-primary);
-  color: var(--text-primary);
+  color: var(--gray-1000);
   border-radius: 0.75rem;
   width: 100%;
   padding: 0.75rem 1rem;
@@ -18,15 +18,11 @@ SPDX-License-Identifier: GPL-3.0-only */
   transition: all 0.2s;
   
   &.active {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
 
   &:hover {
-    color: var(--text-secondary);
+    color: var(--accent-800);
     box-shadow: var(--shadow-alt);  
-
-    &.active {
-      color: var(--accent-primary)
-    }
   }
 }

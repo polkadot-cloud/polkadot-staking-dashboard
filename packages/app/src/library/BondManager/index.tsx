@@ -17,6 +17,7 @@ import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
+import { useStaking } from 'contexts/Staking'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useNominatorBondActions } from 'hooks/useNominatorBondActions'
 import { usePoolBondActions } from 'hooks/usePoolBondActions'
@@ -31,6 +32,7 @@ import type { BondConfig, BondManagerProps } from './types'
 export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
+	const { isBonding } = useStaking()
 	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
@@ -59,7 +61,7 @@ export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 				bondButtonsDisabled: nominatorBondDisabled,
 				bondDisabled: !canBond,
 				unbondDisabled: !canUnbond,
-				showUnstakeButton: !isReadOnlyAccount(activeAddress),
+				showUnstakeButton: !isReadOnlyAccount(activeAddress) && isBonding,
 				unstakeDisabled: !canUnstake,
 				unstakeModalKey: 'Unstake',
 				unstakeIcon: faSignOutAlt,

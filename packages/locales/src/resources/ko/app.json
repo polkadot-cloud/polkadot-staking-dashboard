@@ -373,7 +373,8 @@
 			"clearAllSelected": "선택된 항목 모두 지우기",
 			"searchResults": "검색 결과",
 			"searchValidators": "검증자 검색",
-			"searching": "검색 중"
+			"searching": "검색 중",
+			"selectedValidators": "선택된 검증자 ({{count}})"
 		},
 		"validators": "검증자",
 		"valueTooSmall": "값이 너무 작습니다",

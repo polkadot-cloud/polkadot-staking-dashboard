@@ -68,6 +68,8 @@ export const Bond = ({ section }: SetupStepProps) => {
 		}
 	}, [setup.section])
 
+	const bondValue = new BigNumber(bond.bond !== '' ? bond.bond : 0)
+
 	return (
 		<>
 			<Header
@@ -87,7 +89,7 @@ export const Bond = ({ section }: SetupStepProps) => {
 					txFees={fee}
 					maxWidth
 				/>
-				<CreatePoolStatusBar value={new BigNumber(bond.bond)} />
+				<CreatePoolStatusBar value={bondValue} />
 				<Footer complete={bondValid} bondFor="pool" />
 			</MotionContainer>
 		</>

@@ -46,7 +46,7 @@ export const getPagesConfig = (
 			)
 		}
 	} else {
-		// In Advanced mode, always hide the unified  page and show separate pages
+		// In Advanced mode, always hide the unified page and show separate pages
 		pagesConfig = pagesConfig.filter((page) => page.key !== 'stake')
 	}
 

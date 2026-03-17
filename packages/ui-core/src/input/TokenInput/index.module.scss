@@ -7,22 +7,22 @@
   }
 
   &:focus-within label {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
 
   > label {
-    color: var(--text-secondary);
+    color: var(--gray-900);
     font-family: var(--font-family-semibold);
 
     &:focus {
-      color: var(--accent-primary);
+      color: var(--gray-1000);
     }
   }
 
   > input {
-    border: 1px solid var(--border);
+    border: 1px solid var(--gray-500);
     background: var(--bg-body);
-    color: var(--text-primary);
+    color: var(--gray-1000);
     border-radius: 1.5rem;
     padding: 1rem 1.25rem;
     width: 100%;
@@ -30,7 +30,7 @@
     margin-top: 0.5rem;
 
     &:focus {
-      border-color: var(--accent-pending);
+      border-color: var(--gray-700);
     }
   }
 }

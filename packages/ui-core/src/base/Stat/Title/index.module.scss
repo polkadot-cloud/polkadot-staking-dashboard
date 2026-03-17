@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .title {
-  font-family: var(--font-family-bold);
+  font-family: 'JetBrains Mono', monospace;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -23,7 +23,7 @@
   }
 
   &.primary {
-    color: var(--accent-primary);
+    color: var(--gray-1000);
   }
 
   &.text {
