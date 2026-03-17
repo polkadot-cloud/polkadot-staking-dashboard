@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
 import svgr from 'vite-plugin-svgr'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vitejs.dev/config/
 // - `BASE_URL`env variable is used in the codebase to refer to the supplied base.
@@ -13,11 +12,13 @@ export default defineConfig({
 	plugins: [
 		react(),
 		svgr(),
-		tsconfigPaths(),
 		checker({
 			typescript: true,
 		}),
 	],
+	resolve: {
+		tsconfigPaths: true,
+	},
 	build: {
 		outDir: 'build',
 	},
