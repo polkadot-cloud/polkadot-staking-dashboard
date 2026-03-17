@@ -13,6 +13,10 @@ export const ContentWrapper = styled.div`
     margin-bottom: 0;
   }
 
+  .has-unlocked {
+    color: var(--status-success);
+  }
+
   .withdraw-action {
     margin: 1rem 0 0.5rem 0;
     width: 100%;

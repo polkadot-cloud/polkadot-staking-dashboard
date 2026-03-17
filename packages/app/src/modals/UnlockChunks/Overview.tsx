@@ -77,11 +77,7 @@ export const Overview = forwardRef(
 					<StatsWrapper>
 						<StatWrapper>
 							<div className="inner">
-								<h4
-									style={
-										hasUnlocked ? { color: 'var(--status-success)' } : undefined
-									}
-								>
+								<h4 className={hasUnlocked ? 'has-unlocked' : undefined}>
 									<FontAwesomeIcon icon={faCheckCircle} className="icon" />{' '}
 									{t('unlocked')}
 								</h4>
