@@ -3,7 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import type { AnyFunction } from 'types'
 import { defaultExcludes, defaultIncludes } from './defaults'
 import type {
@@ -34,202 +34,236 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 	const [searchTerms, setSearchTerms] = useState<FilterSearches>([])
 
 	// Get stored includes or excludes for a group
-	const getFilters = (type: FilterType, group: string): string[] | null => {
-		const current = type === 'exclude' ? excludes : includes
-		return current.find((e) => e.key === group)?.filters || null
-	}
+	const getFilters = useCallback(
+		(type: FilterType, group: string): string[] | null => {
+			const current = type === 'exclude' ? excludes : includes
+			return current.find((e) => e.key === group)?.filters || null
+		},
+		[excludes, includes],
+	)
 
-	const setFilters = (t: FilterType, n: FilterItems) => {
+	const setFilters = useCallback((t: FilterType, n: FilterItems) => {
 		if (t === 'exclude') {
 			setExcludes(n)
 		} else {
 			setIncludes(n)
 		}
-	}
+	}, [])
 
 	// Toggle a filter for a group
 	// Adds the group to `excludes` or `includes` if it does not already exist
-	const toggleFilter = (t: FilterType, g: string, f: string) => {
-		const current = t === 'exclude' ? excludes : includes
-		const exists = getFilters(t, g)
+	const toggleFilter = useCallback(
+		(t: FilterType, g: string, f: string) => {
+			const current = t === 'exclude' ? excludes : includes
+			const exists = getFilters(t, g)
 
-		if (!exists) {
-			const newFilters = [...current, { key: g, filters: [f] }]
+			if (!exists) {
+				const newFilters = [...current, { key: g, filters: [f] }]
+				setFilters(t, newFilters)
+				return
+			}
+			const newFilters = [...current]
+				.map((e) => {
+					if (e.key !== g) {
+						return e
+					}
+					let { filters } = e
+
+					if (filters.includes(f)) {
+						filters.splice(filters.indexOf(f), 1)
+					} else {
+						filters = filters.concat(f)
+					}
+					return {
+						key: e.key,
+						filters,
+					}
+				})
+				.filter((e) => e.filters.length !== 0)
 			setFilters(t, newFilters)
-			return
-		}
-		const newFilters = [...current]
-			.map((e) => {
-				if (e.key !== g) {
-					return e
-				}
-				let { filters } = e
-
-				if (filters.includes(f)) {
-					filters.splice(filters.indexOf(f), 1)
-				} else {
-					filters = filters.concat(f)
-				}
-				return {
-					key: e.key,
-					filters,
-				}
-			})
-			.filter((e) => e.filters.length !== 0)
-		setFilters(t, newFilters)
-	}
+		},
+		[excludes, includes, getFilters, setFilters],
+	)
 
 	// Sets an array of filters to a group
-	const setMultiFilters = (
-		t: FilterType,
-		g: string,
-		fs: string[],
-		reset: boolean,
-	) => {
-		// get the current filters from the group
-		const current = reset ? [] : t === 'exclude' ? excludes : includes
-		// check if filters currently exist in the group
-		const exists = getFilters(t, g)
+	const setMultiFilters = useCallback(
+		(t: FilterType, g: string, fs: string[], reset: boolean) => {
+			// get the current filters from the group
+			const current = reset ? [] : t === 'exclude' ? excludes : includes
+			// check if filters currently exist in the group
+			const exists = getFilters(t, g)
 
-		if (!exists) {
-			const newFilters = [...current, { key: g, filters: [...fs] }]
+			if (!exists) {
+				const newFilters = [...current, { key: g, filters: [...fs] }]
+				setFilters(t, newFilters)
+				return
+			}
+
+			let newFilters: FilterItems
+			if (current.length) {
+				newFilters = [...current].map((e) => {
+					// return groups we are not manipulating
+					if (e.key !== g) {
+						return e
+					}
+
+					let { filters } = e
+					filters = filters.filter((f: string) => !fs.includes(f)).concat(fs)
+					return {
+						key: e.key,
+						filters,
+					}
+				})
+			} else {
+				newFilters = [{ key: g, filters: fs }]
+			}
 			setFilters(t, newFilters)
-			return
-		}
-
-		let newFilters: FilterItems
-		if (current.length) {
-			newFilters = [...current].map((e) => {
-				// return groups we are not manipulating
-				if (e.key !== g) {
-					return e
-				}
-
-				let { filters } = e
-				filters = filters.filter((f: string) => !fs.includes(f)).concat(fs)
-				return {
-					key: e.key,
-					filters,
-				}
-			})
-		} else {
-			newFilters = [{ key: g, filters: fs }]
-		}
-		setFilters(t, newFilters)
-	}
+		},
+		[excludes, includes, getFilters, setFilters],
+	)
 
 	// Get the current order of a list or null
-	const getOrder = (g: string) =>
-		orders.find((o) => o.key === g)?.order || 'default'
+	const getOrder = useCallback(
+		(g: string) => orders.find((o) => o.key === g)?.order || 'default',
+		[orders],
+	)
 
 	// Sets an order key for a group
-	const setOrder = (g: string, o: string) => {
-		let newOrders = []
-		if (o === 'default') {
-			newOrders = [...orders].filter((order) => order.key !== g)
-		} else if (orders.length) {
-			// Attempt to replace the order record if it exists
-			newOrders = [...orders].map((order) =>
-				order.key !== g ? order : { ...order, order: o },
-			)
-			// If order for this key does not exist, add it
-			if (newOrders.find(({ key }) => key === g) === undefined) {
-				newOrders.push({ key: g, order: o })
+	const setOrder = useCallback(
+		(g: string, o: string) => {
+			let newOrders = []
+			if (o === 'default') {
+				newOrders = [...orders].filter((order) => order.key !== g)
+			} else if (orders.length) {
+				// Attempt to replace the order record if it exists
+				newOrders = [...orders].map((order) =>
+					order.key !== g ? order : { ...order, order: o },
+				)
+				// If order for this key does not exist, add it
+				if (newOrders.find(({ key }) => key === g) === undefined) {
+					newOrders.push({ key: g, order: o })
+				}
+			} else {
+				newOrders = [{ key: g, order: o }]
 			}
-		} else {
-			newOrders = [{ key: g, order: o }]
-		}
-		setOrders(newOrders)
-	}
+			setOrders(newOrders)
+		},
+		[orders],
+	)
 
 	// Get the current search term of a list or null
-	const getSearchTerm = (g: string) =>
-		searchTerms.find((o) => o.key === g)?.searchTerm || null
+	const getSearchTerm = useCallback(
+		(g: string) => searchTerms.find((o) => o.key === g)?.searchTerm || null,
+		[searchTerms],
+	)
 
 	// Sets an order key for a group
-	const setSearchTerm = (g: string, t: string) => {
-		let newSearchTerms = []
-		if (orders.length) {
-			// Attempt to replace the search term if it exists
-			newSearchTerms = [...searchTerms].map((term) =>
-				term.key !== g ? term : { ...term, searchTerm: t },
-			)
+	const setSearchTerm = useCallback(
+		(g: string, t: string) => {
+			let newSearchTerms = []
+			if (orders.length) {
+				// Attempt to replace the search term if it exists
+				newSearchTerms = [...searchTerms].map((term) =>
+					term.key !== g ? term : { ...term, searchTerm: t },
+				)
 
-			// If search term for this key does not exist, add it
-			if (newSearchTerms.find(({ key }) => key === g) === undefined) {
-				newSearchTerms.push({ key: g, searchTerm: t })
+				// If search term for this key does not exist, add it
+				if (newSearchTerms.find(({ key }) => key === g) === undefined) {
+					newSearchTerms.push({ key: g, searchTerm: t })
+				}
+			} else {
+				newSearchTerms = [{ key: g, searchTerm: t }]
 			}
-		} else {
-			newSearchTerms = [{ key: g, searchTerm: t }]
-		}
-		setSearchTerms(newSearchTerms)
-	}
+			setSearchTerms(newSearchTerms)
+		},
+		[orders, searchTerms],
+	)
 
 	// resets excludes for a given group
-	const resetFilters = (t: FilterType, g: string) => {
-		const current = t === 'exclude' ? excludes : includes
-		setFilters(
-			t,
-			[...current].filter((e: FilterItem) => e.key !== g),
-		)
-	}
+	const resetFilters = useCallback(
+		(t: FilterType, g: string) => {
+			const current = t === 'exclude' ? excludes : includes
+			setFilters(
+				t,
+				[...current].filter((e: FilterItem) => e.key !== g),
+			)
+		},
+		[excludes, includes, setFilters],
+	)
 
 	// resets order for a given group
-	const resetOrder = (g: string) => {
-		setOrders([...orders].filter((e: FilterOrder) => e.key !== g))
-	}
+	const resetOrder = useCallback(
+		(g: string) => {
+			setOrders([...orders].filter((e: FilterOrder) => e.key !== g))
+		},
+		[orders],
+	)
 
 	// clear searchTerm from given group
-	const clearSearchTerm = (g: string) => {
-		setSearchTerms([...searchTerms].filter((e: FilterSearch) => e.key !== g))
-	}
+	const clearSearchTerm = useCallback(
+		(g: string) => {
+			setSearchTerms([...searchTerms].filter((e: FilterSearch) => e.key !== g))
+		},
+		[searchTerms],
+	)
 
 	// apply filters to list
-	const applyFilters = (
-		t: FilterType,
-		g: string,
-		list: unknown[],
-		fn: AnyFunction,
-	): unknown[] => {
-		const filtersToApply = getFilters(t, g)
+	const applyFilters = useCallback(
+		(t: FilterType, g: string, list: unknown[], fn: AnyFunction): unknown[] => {
+			const filtersToApply = getFilters(t, g)
 
-		if (!filtersToApply) {
-			return list
-		}
-		return fn(list, filtersToApply)
-	}
+			if (!filtersToApply) {
+				return list
+			}
+			return fn(list, filtersToApply)
+		},
+		[getFilters],
+	)
 
 	// apply order to a list
-	const applyOrder = (
-		g: string,
-		list: unknown[],
-		fn: AnyFunction,
-	): unknown[] => {
-		const orderToApply = getOrder(g)
-		if (!orderToApply) {
-			return list
-		}
-		return fn(list, orderToApply)
-	}
+	const applyOrder = useCallback(
+		(g: string, list: unknown[], fn: AnyFunction): unknown[] => {
+			const orderToApply = getOrder(g)
+			if (!orderToApply) {
+				return list
+			}
+			return fn(list, orderToApply)
+		},
+		[getOrder],
+	)
+
+	const value = useMemo(
+		() => ({
+			getFilters,
+			toggleFilter,
+			setMultiFilters,
+			getOrder,
+			setOrder,
+			getSearchTerm,
+			setSearchTerm,
+			resetFilters,
+			resetOrder,
+			clearSearchTerm,
+			applyFilters,
+			applyOrder,
+		}),
+		[
+			getFilters,
+			toggleFilter,
+			setMultiFilters,
+			getOrder,
+			setOrder,
+			getSearchTerm,
+			setSearchTerm,
+			resetFilters,
+			resetOrder,
+			clearSearchTerm,
+			applyFilters,
+			applyOrder,
+		],
+	)
 
 	return (
-		<FiltersContext.Provider
-			value={{
-				getFilters,
-				toggleFilter,
-				setMultiFilters,
-				getOrder,
-				setOrder,
-				getSearchTerm,
-				setSearchTerm,
-				resetFilters,
-				resetOrder,
-				clearSearchTerm,
-				applyFilters,
-				applyOrder,
-			}}
-		>
-			{children}
-		</FiltersContext.Provider>
+		<FiltersContext.Provider value={value}>{children}</FiltersContext.Provider>
 	)
 }
