@@ -9,7 +9,7 @@ import { hexToString } from 'dedot/utils'
 import { removeSyncing } from 'global-bus'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import type { ReactNode } from 'react'
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import type {
 	AnyJson,
 	BondedPool,
@@ -253,9 +253,13 @@ export const BondedPoolsProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [activeEra.index, bondedPools.length])
 
-	// Wrapped pool search filter that uses the provider's metadata
-	const wrappedPoolSearchFilter = (pools: BondedPool[], searchTerm: string) =>
-		poolSearchFilter(pools, searchTerm, poolsMetaData)
+	// Wrapped pool search filter that uses the provider's metadata. Memoised so consumers that depend
+	// on this function do not re-render when unrelated state in this provider changes
+	const wrappedPoolSearchFilter = useCallback(
+		(pools: BondedPool[], searchTerm: string) =>
+			poolSearchFilter(pools, searchTerm, poolsMetaData),
+		[poolsMetaData],
+	)
 
 	return (
 		<BondedPoolsContext.Provider
