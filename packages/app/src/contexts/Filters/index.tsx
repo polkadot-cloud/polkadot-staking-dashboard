@@ -218,9 +218,6 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 	const applyOrder = useCallback(
 		(g: string, list: unknown[], fn: AnyFunction): unknown[] => {
 			const orderToApply = getOrder(g)
-			if (!orderToApply) {
-				return list
-			}
 			return fn(list, orderToApply)
 		},
 		[getOrder],
