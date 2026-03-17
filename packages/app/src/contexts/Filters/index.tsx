@@ -86,38 +86,34 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 	// Sets an array of filters to a group
 	const setMultiFilters = useCallback(
 		(t: FilterType, g: string, fs: string[], reset: boolean) => {
-			// get the current filters from the group
-			const current = reset ? [] : t === 'exclude' ? excludes : includes
-			// check if filters currently exist in the group
-			const exists = getFilters(t, g)
+			// get all current filter groups for the given type
+			const allGroups = t === 'exclude' ? excludes : includes
 
-			if (!exists) {
-				const newFilters = [...current, { key: g, filters: [...fs] }]
-				setFilters(t, newFilters)
-				return
-			}
+			// separate the target group from other groups
+			const otherGroups = allGroups.filter((e) => e.key !== g)
+			const existingGroup = allGroups.find((e) => e.key === g)
 
-			let newFilters: FilterItems
-			if (current.length) {
-				newFilters = [...current].map((e) => {
-					// return groups we are not manipulating
-					if (e.key !== g) {
-						return e
-					}
-
-					let { filters } = e
-					filters = filters.filter((f: string) => !fs.includes(f)).concat(fs)
-					return {
-						key: e.key,
-						filters,
-					}
-				})
+			// determine the new filters for the target group
+			let filters: string[]
+			if (reset || !existingGroup) {
+				// on reset, or when the group does not yet exist, use fs as-is
+				filters = [...fs]
 			} else {
-				newFilters = [{ key: g, filters: fs }]
+				// merge existing filters with fs, avoiding duplicates and
+				// appending new filters at the end (preserves original behavior)
+				filters = existingGroup.filters
+					.filter((f: string) => !fs.includes(f))
+					.concat(fs)
 			}
+
+			const newFilters: FilterItems = [
+				...otherGroups,
+				{ key: g, filters },
+			]
+
 			setFilters(t, newFilters)
 		},
-		[excludes, includes, getFilters, setFilters],
+		[excludes, includes, setFilters],
 	)
 
 	// Get the current order of a list or null
