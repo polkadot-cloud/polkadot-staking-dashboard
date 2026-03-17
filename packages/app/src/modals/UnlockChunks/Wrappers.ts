@@ -34,7 +34,7 @@ export const ChunkWrapper = styled.div`
   margin-top: 1.25rem;
 
   > div {
-    background: var(--gray-400);
+    background: var(--btn-bg);
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
