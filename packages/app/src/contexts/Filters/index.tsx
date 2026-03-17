@@ -67,16 +67,14 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 					if (e.key !== g) {
 						return e
 					}
-					let { filters } = e
+					const currentFilters = e.filters
+					const nextFilters = currentFilters.includes(f)
+						? currentFilters.filter((item) => item !== f)
+						: currentFilters.concat(f)
 
-					if (filters.includes(f)) {
-						filters.splice(filters.indexOf(f), 1)
-					} else {
-						filters = filters.concat(f)
-					}
 					return {
 						key: e.key,
-						filters,
+						filters: nextFilters,
 					}
 				})
 				.filter((e) => e.filters.length !== 0)
