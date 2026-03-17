@@ -11,7 +11,10 @@ import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
 import type { BondFor, MaybeAddress, NominationStatus } from 'types'
-import { filterNomineesByStatus, getPoolNominationStatusCode } from 'utils'
+import {
+	groupNomineesByStatus,
+	getPoolNominationStatusCode,
+} from 'utils'
 
 export const useNominationStatus = () => {
 	const { t } = useTranslation()
@@ -54,10 +57,11 @@ export const useNominationStatus = () => {
 
 	// Gets the status of the provided account's nominations, and whether they are earning rewards
 	const getNominationStatus = (who: MaybeAddress, type: BondFor) => {
-		// Get the sets nominees from the provided account's targets
+		// Get the sets nominees from the provided account's targets and categorise
+		// them in a single pass (active / inactive / waiting).
 		const nominees = Object.entries(getNominationSetStatus(who, type))
-		const activeNominees = filterNomineesByStatus(nominees, 'active')
-		const earningRewards = activeNominees.length > 0
+		const grouped = groupNomineesByStatus(nominees)
+		const earningRewards = grouped.active.length > 0
 
 		// Determine the localised message to display based on the nomination status
 		let message
@@ -74,7 +78,7 @@ export const useNominationStatus = () => {
 			message = t('notNominating', { ns: 'pages' })
 		} else if (!nominees.length) {
 			message = t('noNominationsSet', { ns: 'pages' })
-		} else if (activeNominees.length) {
+		} else if (grouped.active.length) {
 			message = t('nominatingAnd', { ns: 'pages' })
 			if (earningRewards) {
 				message += ` ${t('earningRewards', { ns: 'pages' })}`
@@ -86,11 +90,7 @@ export const useNominationStatus = () => {
 		}
 
 		return {
-			nominees: {
-				active: activeNominees,
-				inactive: filterNomineesByStatus(nominees, 'inactive'),
-				waiting: filterNomineesByStatus(nominees, 'waiting'),
-			},
+			nominees: grouped,
 			earningRewards,
 			message,
 			syncing: isSyncing,
