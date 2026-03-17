@@ -82,14 +82,14 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 						/>
 					)}
 				</div>
-				<span className={isUnlocked ? 'status-line ready' : 'status-line'}>
+				<output className={isUnlocked ? 'status-line ready' : 'status-line'}>
 					<FontAwesomeIcon icon={isUnlocked ? faCheckCircle : faClock} />
 					{isUnlocked ? (
 						t('readyToWithdraw')
 					) : (
 						<Countdown timeleft={formatted} markup={false} />
 					)}
-				</span>
+				</output>
 				<ProgressBar
 					progress={progress}
 					status={isUnlocked ? 'complete' : 'active'}

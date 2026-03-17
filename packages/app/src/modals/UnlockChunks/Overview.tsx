@@ -135,9 +135,9 @@ export const Overview = forwardRef(
 						</div>
 					)}
 
-					{unlocking.map((chunk, i: number) => (
+					{unlocking.map((chunk) => (
 						<Chunk
-							key={`unlock_chunk_${i}`}
+							key={`unlock_chunk_${chunk.era}`}
 							chunk={chunk}
 							bondFor={bondFor}
 							onRebond={onRebondHandler}
