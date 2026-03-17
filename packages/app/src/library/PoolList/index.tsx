@@ -100,14 +100,11 @@ export const PoolList = ({
 		const newValue = e.currentTarget.value
 
 		let filteredPools: BondedPool[] = [...poolsDefault]
+		// Apply filters first, then search, to avoid unnecessary search computations on pools that are
+		// already filtered out
 		filteredPools = applyFilter(includes, excludes, filteredPools)
 		filteredPools = poolSearchFilter(filteredPools, newValue)
 
-		// ensure no duplicates
-		filteredPools = filteredPools.filter(
-			(value, index: number, self) =>
-				index === self.findIndex((i) => i.id === value.id),
-		)
 		setPage(1)
 		setListPools(filteredPools)
 		setSearchTerm('pools', newValue)
