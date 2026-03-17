@@ -159,7 +159,7 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 	const setSearchTerm = useCallback(
 		(g: string, t: string) => {
 			let newSearchTerms = []
-			if (orders.length) {
+			if (searchTerms.length) {
 				// Attempt to replace the search term if it exists
 				newSearchTerms = [...searchTerms].map((term) =>
 					term.key !== g ? term : { ...term, searchTerm: t },
@@ -174,7 +174,7 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 			}
 			setSearchTerms(newSearchTerms)
 		},
-		[orders, searchTerms],
+		[searchTerms],
 	)
 
 	// resets excludes for a given group
