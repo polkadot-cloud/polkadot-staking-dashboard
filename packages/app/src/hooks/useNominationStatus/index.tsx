@@ -11,10 +11,7 @@ import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
 import type { BondFor, MaybeAddress, NominationStatus } from 'types'
-import {
-	groupNomineesByStatus,
-	getPoolNominationStatusCode,
-} from 'utils'
+import { getPoolNominationStatusCode, groupNomineesByStatus } from 'utils'
 
 export const useNominationStatus = () => {
 	const { t } = useTranslation()

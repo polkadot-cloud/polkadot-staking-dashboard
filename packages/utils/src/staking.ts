@@ -10,8 +10,8 @@ export const filterNomineesByStatus = (
 ): string[] =>
 	nominees.filter(([_, s]) => s === status).map(([address]) => address)
 
-// Utility to categorise nominees into active, inactive, and waiting buckets in a
-// single pass — avoids three separate filter+map passes over the same array.
+// Utility to categorise nominees into active, inactive, and waiting buckets in a single pass —
+// avoids three separate filter+map passes over the same array
 export const groupNomineesByStatus = (
 	nominees: [string, NominationStatus][],
 ): { active: string[]; inactive: string[]; waiting: string[] } => {
