@@ -19,7 +19,7 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
 		tooltipAnchor: null,
 	})
 
-	// New tooltip-based help functions
+	// Tooltip-based help functions
 	const openHelpTooltip = useCallback(
 		(definition: MaybeString, anchor: HTMLButtonElement | null) => {
 			setState((prev) => ({
