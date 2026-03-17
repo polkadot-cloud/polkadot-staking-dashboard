@@ -218,7 +218,7 @@
     color: var(--text-tertiary);
     margin: 0 0.5rem 0 0;
 
-    @media (max-width: #{$small-font-size-max-width}px) {
+    @media (max-width: $small-font-size-max-width) {
       display: none;
     }
 
