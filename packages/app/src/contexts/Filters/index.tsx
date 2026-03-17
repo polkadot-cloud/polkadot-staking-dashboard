@@ -106,10 +106,7 @@ export const FiltersProvider = ({ children }: { children: ReactNode }) => {
 					.concat(fs)
 			}
 
-			const newFilters: FilterItems = [
-				...otherGroups,
-				{ key: g, filters },
-			]
+			const newFilters: FilterItems = [...otherGroups, { key: g, filters }]
 
 			setFilters(t, newFilters)
 		},
