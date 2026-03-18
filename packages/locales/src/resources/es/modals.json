@@ -256,7 +256,7 @@
 		"root": "Root",
 		"rpcProviders": "Proveedores RPC",
 		"scanFromPolkadotVault": "Escanear desde Polkadot Vault",
-		"scanToSync": "Escanea este código QR para sincronizar tu cuenta.",
+		"scanToSync": "Escanea este código QR para sincronizar tus cuentas.",
 		"searchAccount": "Buscar Cuenta",
 		"searchCurrency": "Buscar",
 		"selectCurrency": "Seleccionar Moneda",
