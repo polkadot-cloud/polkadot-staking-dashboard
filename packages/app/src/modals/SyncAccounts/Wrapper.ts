@@ -50,7 +50,7 @@ export const ExplainerBox = styled.div`
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  background-color: var(--gray-200);
+  background-color: var(--shade-300);
   border: 1px solid var(--gray-500);
   border-radius: 1rem;
   padding: 1rem 1.25rem;
