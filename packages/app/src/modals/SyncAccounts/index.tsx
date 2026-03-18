@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Spinner } from 'ui-core/base'
-import { Padding, Support } from 'ui-core/modal'
+import { Support } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import {
 	ExplainerBox,
@@ -120,73 +120,71 @@ export const SyncAccounts = () => {
 	return (
 		<>
 			<Title title={t('syncAccounts', { ns: 'app' })} icon={faQrcode} />
-			<Padding verticalOnly>
-				<Support>
-					<ModeToggle>
-						<ButtonPrimary
-							text={t('activeAccount', { ns: 'modals' })}
-							className={mode === 'active' ? 'active' : ''}
-							onClick={() => setMode('active')}
+			<Support>
+				<ModeToggle>
+					<ButtonPrimary
+						text={t('activeAccount', { ns: 'modals' })}
+						className={mode === 'active' ? 'active' : ''}
+						onClick={() => setMode('active')}
+					/>
+					<ButtonPrimary
+						text={t('allAccounts', { ns: 'modals' })}
+						className={mode === 'all' ? 'active' : ''}
+						onClick={() => setMode('all')}
+					/>
+				</ModeToggle>
+				<QrContainer>
+					{loading && (
+						<SpinnerOverlay>
+							<Spinner style={{ width: '3rem', height: '3rem' }} />
+						</SpinnerOverlay>
+					)}
+					{loading ? (
+						<FontAwesomeIcon
+							icon={faQrcode}
+							style={{ opacity: 0.1, fontSize: '5rem' }}
 						/>
-						<ButtonPrimary
-							text={t('allAccounts', { ns: 'modals' })}
-							className={mode === 'all' ? 'active' : ''}
-							onClick={() => setMode('all')}
+					) : error ? (
+						<FontAwesomeIcon
+							icon={faQrcode}
+							style={{ opacity: 0.4, fontSize: '5rem' }}
 						/>
-					</ModeToggle>
-					<QrContainer>
-						{loading && (
-							<SpinnerOverlay>
-								<Spinner style={{ width: '3rem', height: '3rem' }} />
-							</SpinnerOverlay>
-						)}
-						{loading ? (
-							<FontAwesomeIcon
-								icon={faQrcode}
-								style={{ opacity: 0.1, fontSize: '5rem' }}
-							/>
-						) : error ? (
-							<FontAwesomeIcon
-								icon={faQrcode}
-								style={{ opacity: 0.4, fontSize: '5rem' }}
-							/>
-						) : token ? (
-							<QrImage
-								src={generateQrDataUrl(token)}
-								alt={t('scanToSync', { ns: 'modals' })}
-							/>
-						) : null}
-					</QrContainer>
-					<h4 style={{ padding: '1rem 0' }}>
-						{loading
-							? t('generatingQrCode', { ns: 'modals' })
-							: error
-								? error
-								: token
-									? t('scanToSync', { ns: 'modals' })
-									: null}
-					</h4>
-					<ExplainerBox>
-						<div className="text">
-							<h3>
-								Staking Companion App
-								<span className="badge">Private Beta</span>
-							</h3>
-							<p>{t('syncAccountsExplainer', { ns: 'modals' })}</p>
-							<a
-								href="https://polkadot.cloud/app"
-								target="_blank"
-								rel="noreferrer"
-							>
-								{t('learnMore', { ns: 'modals' })} &rarr;
-							</a>
-						</div>
-						<div className="icon">
-							<FontAwesomeIcon icon={faMobileScreenButton} transform="grow-5" />
-						</div>
-					</ExplainerBox>
-				</Support>
-			</Padding>
+					) : token ? (
+						<QrImage
+							src={generateQrDataUrl(token)}
+							alt={t('scanToSync', { ns: 'modals' })}
+						/>
+					) : null}
+				</QrContainer>
+				<h4 style={{ padding: '1rem 0' }}>
+					{loading
+						? t('generatingQrCode', { ns: 'modals' })
+						: error
+							? error
+							: token
+								? t('scanToSync', { ns: 'modals' })
+								: null}
+				</h4>
+				<ExplainerBox>
+					<div className="text">
+						<h3>
+							Staking Companion App
+							<span className="badge">Private Beta</span>
+						</h3>
+						<p>{t('syncAccountsExplainer', { ns: 'modals' })}</p>
+						<a
+							href="https://polkadot.cloud/app"
+							target="_blank"
+							rel="noreferrer"
+						>
+							{t('learnMore', { ns: 'modals' })} &rarr;
+						</a>
+					</div>
+					<div className="icon">
+						<FontAwesomeIcon icon={faMobileScreenButton} transform="grow-5" />
+					</div>
+				</ExplainerBox>
+			</Support>
 		</>
 	)
 }
