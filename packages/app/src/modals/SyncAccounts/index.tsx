@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Spinner } from 'ui-core/base'
 import { Padding, Support } from 'ui-core/modal'
+import { useOverlay } from 'ui-overlay'
 import { ModeToggle, QrContainer, QrImage, SpinnerOverlay } from './Wrapper'
 
 type SyncMode = 'active' | 'all'
@@ -19,6 +20,7 @@ export const SyncAccounts = () => {
 	const { t } = useTranslation()
 	const { activeAccount } = useActiveAccounts()
 	const { getAccount, accounts } = useImportedAccounts()
+	const { setModalResize } = useOverlay().modal
 
 	const [token, setToken] = useState<string | null>(null)
 	const [loading, setLoading] = useState(true)
@@ -94,6 +96,8 @@ export const SyncAccounts = () => {
 			controllerRef.current?.abort()
 		}
 	}, [mode, address, name, accounts.length])
+
+	useEffect(() => setModalResize(), [loading, error, token])
 
 	const generateQrDataUrl = (value: string): string => {
 		const qr = qrcode(0, 'M')
