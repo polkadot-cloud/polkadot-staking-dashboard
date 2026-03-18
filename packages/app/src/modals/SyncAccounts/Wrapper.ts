@@ -11,12 +11,6 @@ export const ModeToggle = styled.div`
   button {
     background-color: var(--gray-300);
     color: var(--gray-700);
-    padding: 0.4rem 1rem;
-    border-radius: 1.25rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
 
     &.active {
       background-color: var(--accent-200);

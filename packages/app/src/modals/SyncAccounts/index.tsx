@@ -12,6 +12,7 @@ import { Title } from 'library/Modal/Title'
 import { qrcode } from 'library/QRCode/qrcode'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ButtonPrimary } from 'ui-buttons'
 import { Spinner } from 'ui-core/base'
 import { Padding, Support } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -121,20 +122,16 @@ export const SyncAccounts = () => {
 			<Padding verticalOnly>
 				<Support>
 					<ModeToggle>
-						<button
-							type="button"
+						<ButtonPrimary
+							text={t('activeAccount', { ns: 'modals' })}
 							className={mode === 'active' ? 'active' : ''}
 							onClick={() => setMode('active')}
-						>
-							{t('activeAccount', { ns: 'modals' })}
-						</button>
-						<button
-							type="button"
+						/>
+						<ButtonPrimary
+							text={t('allAccounts', { ns: 'modals' })}
 							className={mode === 'all' ? 'active' : ''}
 							onClick={() => setMode('all')}
-						>
-							{t('allAccounts', { ns: 'modals' })}
-						</button>
+						/>
 					</ModeToggle>
 					<QrContainer>
 						{loading && (
