@@ -85,6 +85,10 @@ export const SyncAccounts = () => {
 		}
 	}
 
+	const accountsSignature = JSON.stringify(
+		accounts.map(({ address, name }) => ({ address, name })),
+	)
+
 	useEffect(() => {
 		if (mode === 'active') {
 			if (!address) {
@@ -105,7 +109,7 @@ export const SyncAccounts = () => {
 		return () => {
 			controllerRef.current?.abort()
 		}
-	}, [mode, address, name, accounts.length])
+	}, [mode, address, name, accountsSignature])
 
 	useEffect(() => setModalResize(), [loading, error, token])
 
