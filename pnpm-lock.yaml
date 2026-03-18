@@ -168,6 +168,9 @@ importers:
       motion:
         specifier: 12.23.24
         version: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      plugin-gateway:
+        specifier: workspace:*
+        version: link:../plugin-gateway
       plugin-staking-api:
         specifier: workspace:*
         version: link:../plugin-staking-api
@@ -430,6 +433,8 @@ importers:
       vite:
         specifier: ^8.0.0
         version: 8.0.0(@types/node@25.5.0)(esbuild@0.27.3)(sass@1.98.0)(tsx@4.21.0)
+
+  packages/plugin-gateway: {}
 
   packages/plugin-staking-api:
     dependencies:

@@ -10,6 +10,7 @@ import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { Title } from 'library/Modal/Title'
 import { qrcode } from 'library/QRCode/qrcode'
+import { fetchAccountsToken } from 'plugin-gateway'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
@@ -52,21 +53,9 @@ export const SyncAccounts = () => {
 		setError(null)
 
 		try {
-			const response = await fetch(
-				'https://gateway.polkadot.cloud/accounts-token',
-				{
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ addresses }),
-					signal: controller.signal,
-				},
-			)
-
-			if (!response.ok) {
-				throw new Error(`Request failed: ${response.status}`)
-			}
-
-			const data = await response.json()
+			const data = await fetchAccountsToken(addresses, {
+				signal: controller.signal,
+			})
 			if (!controller.signal.aborted) {
 				setToken(data.token)
 			}
