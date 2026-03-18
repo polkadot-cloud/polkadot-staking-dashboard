@@ -20,8 +20,7 @@ export const ModeToggle = styled.div`
 `
 
 export const QrContainer = styled.div`
-  background-color: var(--gray-300);
-  border: 1px solid var(--gray-400);
+  border: 1px solid var(--gray-500);
   width: 210px;
   height: 210px;
   display: flex;
