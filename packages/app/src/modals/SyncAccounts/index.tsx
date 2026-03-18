@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { Title } from 'library/Modal/Title'
-import { qrcode } from 'library/QRCode/qrcode'
 import { fetchAccountsToken } from 'plugin-gateway'
+import qrcode from 'qrcode-generator'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
@@ -103,6 +103,14 @@ export const SyncAccounts = () => {
 	useEffect(() => setModalResize(), [loading, error, token])
 
 	const generateQrDataUrl = (value: string): string => {
+		// Restore default string encoding — the shared qrcode module overrides
+		// stringToBytes globally to pass through raw Uint8Array bytes for
+		// substrate address QR codes. Reset it here so the token is encoded as
+		// a UTF-8 text string.
+		// biome-ignore lint/suspicious/noExplicitAny: <qr data>
+		;(qrcode as any).stringToBytes = (s: string): number[] => [
+			...new TextEncoder().encode(s),
+		]
 		const qr = qrcode(0, 'M')
 		qr.addData(value)
 		qr.make()
@@ -162,7 +170,7 @@ export const SyncAccounts = () => {
 						<div className="text">
 							<h3>
 								Staking Companion App
-								<span className="badge">Pre-release</span>
+								<span className="badge">Private Beta</span>
 							</h3>
 							<p>{t('syncAccountsExplainer', { ns: 'modals' })}</p>
 							<a
