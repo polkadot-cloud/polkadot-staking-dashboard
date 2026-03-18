@@ -173,7 +173,7 @@ export const SyncAccounts = () => {
 					<div className="text">
 						<h3>
 							Staking Companion App
-							<span className="badge">Private Beta</span>
+							<span className="badge">{t('privateBeta', { ns: 'modals' })}</span>
 						</h3>
 						<p>{t('syncAccountsExplainer', { ns: 'modals' })}</p>
 						<a
