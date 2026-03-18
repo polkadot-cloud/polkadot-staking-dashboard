@@ -150,7 +150,10 @@ export const SyncAccounts = () => {
 								style={{ opacity: 0.4, fontSize: '5rem' }}
 							/>
 						) : token ? (
-							<QrImage src={generateQrDataUrl(token)} alt="Sync QR Code" />
+							<QrImage
+								src={generateQrDataUrl(token)}
+								alt={t('scanToSync', { ns: 'modals' })}
+							/>
 						) : null}
 					</QrContainer>
 					<h4 style={{ padding: '1rem 0' }}>
