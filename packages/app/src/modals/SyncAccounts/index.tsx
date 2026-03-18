@@ -11,7 +11,7 @@ import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { Title } from 'library/Modal/Title'
 import { fetchAccountsToken } from 'plugin-gateway'
 import qrcode from 'qrcode-generator'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { Spinner } from 'ui-core/base'
@@ -73,8 +73,13 @@ export const SyncAccounts = () => {
 		}
 	}
 
-	const accountsSignature = JSON.stringify(
-		accounts.map(({ address, name }) => ({ address, name })),
+	const accountsSignature = useMemo(
+		() =>
+			accounts
+				.map(({ address, name: n }) => `${address}:${n}`)
+				.sort()
+				.join(','),
+		[accounts],
 	)
 
 	useEffect(() => {
