@@ -7,6 +7,7 @@
 		"accountAlreadyImported": "帐户已导入",
 		"accountAlreadyImportedOtherDevice": "账户属于另一台设备",
 		"accounts": "账户",
+		"activeAccount": "活跃账户",
 		"activeRoles": "有活跃角色在 {{count}} 个提名池",
 		"activeRoles_zero": "无活跃角色在提名池",
 		"add": "添加",
@@ -17,6 +18,7 @@
 		"addingFavorite": "正在添加{{count}} 个提名",
 		"addressReceived": "己收到地址:",
 		"afterClaiming": "申领后资金将立即变成可用余额",
+		"allAccounts": "所有账户",
 		"allNominations": "所有提名",
 		"allPoolRoles": "所有池角色",
 		"allowToJoin": "允许新成员加入",
@@ -110,6 +112,7 @@
 		"enterRecipientAddress": "输入接收地址",
 		"exitYourStakingPosition": "退出抵押",
 		"extensions": "扩展",
+		"failedToFetchToken": "无法获取代币",
 		"favoriteNotNominated": "收藏夹中的验证人/未提名",
 		"favoriteValidators": "收藏夹中的验证人",
 		"favoritesAddedSubtitle": "已将{{count}}个验证人添加到您的提名列表中",
@@ -118,6 +121,7 @@
 		"for": "委托人",
 		"forget": "清除",
 		"free": "可用余额",
+		"generatingQrCode": "生成二维码...",
 		"gettingAddress": "正在获取地址...",
 		"goToDiscord": "前往 Discord",
 		"hardware": "硬件",
@@ -320,6 +324,9 @@
 		"withdrawSubtitle": "资金将在取款后立即转作可用余额",
 		"withdrawUnlocked": "取出己解锁",
 		"years": "年",
-		"youHaveActiveUnlocks": "您有资金在解锁中,   {{bondDurationFormatted}} 的解锁期过后，可取出资金"
+		"youHaveActiveUnlocks": "您有资金在解锁中,   {{bondDurationFormatted}} 的解锁期过后，可取出资金",
+		"noAccountsAvailable": "没有可用的账户",
+		"scanToSync": "扫描此二维码以同步您的账户。",
+		"syncAccounts": "同步账户"
 	}
 }

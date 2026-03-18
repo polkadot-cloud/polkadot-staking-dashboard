@@ -7,6 +7,7 @@
 		"accountAlreadyImported": "이미 가져온 계정",
 		"accountAlreadyImportedOtherDevice": "계정이 다른 장치에 속해 있습니다",
 		"accounts": "계정들",
+		"activeAccount": "활성 계정",
 		"activeRoles_one": "{{count}}개 풀의 활성 역할",
 		"activeRoles_other": "{{count}}개 풀의 활성 역할",
 		"activeRoles_zero": "다른 활성 풀 역할 없음",
@@ -20,6 +21,7 @@
 		"addingFavorite_other": "{{count}}개 지명 추가 중",
 		"addressReceived": "수신된 주소:",
 		"afterClaiming": "청구 후 자금이 자유 잔액으로 즉시 사용 가능합니다.",
+		"allAccounts": "모든 계정",
 		"allNominations": "모든 지명",
 		"allPoolRoles": "모든 풀 역할",
 		"allowToJoin": "새로운 멤버가 풀에 참여하도록 허용합니다.",
@@ -113,6 +115,7 @@
 		"enterRecipientAddress": "수신자 주소 입력",
 		"exitYourStakingPosition": "스테이킹 포지션 종료",
 		"extensions": "확장 프로그램",
+		"failedToFetchToken": "토큰을 가져오는 데 실패했습니다",
 		"favoriteNotNominated": "선호 검증인 / 미지정",
 		"favoriteValidators": "선호 검증인",
 		"favoritesAddedSubtitle_one": "{{count}}명의 검증인이 지정 목록에 추가되었습니다",
@@ -123,6 +126,7 @@
 		"for": "기간",
 		"forget": "삭제",
 		"free": "무료",
+		"generatingQrCode": "QR 코드 생성 중...",
 		"gettingAddress": "주소 가져오는 중...",
 		"goToDiscord": "Discord로 이동",
 		"hardware": "하드웨어",
@@ -331,6 +335,9 @@
 		"withdrawSubtitle": "인출 후 자금은 자유 잔액으로 즉시 사용 가능합니다.",
 		"withdrawUnlocked": "잠금 해제 인출",
 		"years": "년",
-		"youHaveActiveUnlocks": "활성화된 잠금 해제가 있습니다. {{bondDurationFormatted}}의 잠금 해제 기간이 지나면 잠금 해제를 인출할 수 있습니다."
+		"youHaveActiveUnlocks": "활성화된 잠금 해제가 있습니다. {{bondDurationFormatted}}의 잠금 해제 기간이 지나면 잠금 해제를 인출할 수 있습니다.",
+		"noAccountsAvailable": "사용 가능한 계정이 없습니다",
+		"scanToSync": "이 QR 코드를 스캔하여 계정을 동기화하세요.",
+		"syncAccounts": "계정 동기화"
 	}
 }

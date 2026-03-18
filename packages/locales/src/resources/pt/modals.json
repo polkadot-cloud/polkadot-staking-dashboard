@@ -7,6 +7,7 @@
 		"accountAlreadyImported": "Conta Já Importada",
 		"accountAlreadyImportedOtherDevice": "Conta pertence a outro dispositivo",
 		"accounts": "Contas",
+		"activeAccount": "Conta Ativa",
 		"activeRoles_one": "Funções Ativas em {{count}} Pool",
 		"activeRoles_other": "Funções Ativas em {{count}} Pools",
 		"activeRoles_zero": "Nenhuma Outra Função Ativa no Pool",
@@ -20,6 +21,7 @@
 		"addingFavorite_other": "Adicionando {{count}} Nomeações",
 		"addressReceived": "Endereço Recebido:",
 		"afterClaiming": "Os fundos estarão imediatamente disponíveis como saldo livre após a reivindicação.",
+		"allAccounts": "Todas as Contas",
 		"allNominations": "Todas as Nomeações",
 		"allPoolRoles": "Todas as Funções do Pool",
 		"allowToJoin": "Permitir que novos membros se juntem ao pool.",
@@ -113,6 +115,7 @@
 		"enterRecipientAddress": "Digite o endereço do destinatário",
 		"exitYourStakingPosition": "Saia da sua posição de staking.",
 		"extensions": "Extensões",
+		"failedToFetchToken": "Falha ao buscar token",
 		"favoriteNotNominated": "Validadores Favoritos / Não Nomeados",
 		"favoriteValidators": "Validadores Favoritos",
 		"favoritesAddedSubtitle_one": "{{count}} validador foi adicionado aos seus nomeados",
@@ -123,6 +126,7 @@
 		"for": "Para",
 		"forget": "Esquecer",
 		"free": "Livre",
+		"generatingQrCode": "Gerando Código QR...",
 		"gettingAddress": "Obtendo Endereço...",
 		"goToDiscord": "Ir para Discord",
 		"hardware": "Hardware",
@@ -331,6 +335,9 @@
 		"withdrawSubtitle": "Os fundos estarão imediatamente disponíveis como saldo livre após o saque.",
 		"withdrawUnlocked": "Sacar Desbloqueado",
 		"years": "Anos",
-		"youHaveActiveUnlocks": "Você tem desbloqueios ativos. Os desbloqueios podem ser sacados uma vez que o período de desbloqueio de {{bondDurationFormatted}} tenha passado."
+		"youHaveActiveUnlocks": "Você tem desbloqueios ativos. Os desbloqueios podem ser sacados uma vez que o período de desbloqueio de {{bondDurationFormatted}} tenha passado.",
+		"noAccountsAvailable": "Nenhuma conta disponível",
+		"scanToSync": "Escaneie este código QR para sincronizar sua conta.",
+		"syncAccounts": "Sincronizar Contas"
 	}
 }

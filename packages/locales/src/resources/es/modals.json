@@ -7,6 +7,7 @@
 		"accountAlreadyImported": "Cuenta ya importada",
 		"accountAlreadyImportedOtherDevice": "La cuenta pertenece a otro dispositivo",
 		"accounts": "Cuentas",
+		"activeAccount": "Cuenta Activa",
 		"activeRoles_one": "Roles activos en {{count}} Pool",
 		"activeRoles_other": "Roles activos en {{count}} Pools",
 		"activeRoles_zero": "Sin otros roles activos en Pools",
@@ -20,6 +21,7 @@
 		"addingFavorite_other": "Añadiendo {{count}} nominaciones",
 		"addressReceived": "Dirección Recibida:",
 		"afterClaiming": "Los fondos estarán disponibles inmediatamente como saldo libre después de reclamarlos.",
+		"allAccounts": "Todas las cuentas",
 		"allNominations": "Todas las Nominaciones",
 		"allPoolRoles": "Todos los roles del Pool",
 		"allowToJoin": "Permitir que nuevos miembros se unan al Pool.",
@@ -113,6 +115,7 @@
 		"enterRecipientAddress": "Introduce la dirección del destinatario",
 		"exitYourStakingPosition": "Salir de tu posición de staking.",
 		"extensions": "Extensiones",
+		"failedToFetchToken": "Error al obtener el token",
 		"favoriteNotNominated": "Validadores Favoritos / No Nominados",
 		"favoriteValidators": "Validadores Favoritos",
 		"favoritesAddedSubtitle_one": "{{count}} validador ha sido añadido a tus nominados",
@@ -123,6 +126,7 @@
 		"for": "Para",
 		"forget": "Olvidar",
 		"free": "Disponible",
+		"generatingQrCode": "Generando código QR...",
 		"gettingAddress": "Obteniendo dirección...",
 		"goToDiscord": "Ir a Discord",
 		"hardware": "Hardware",
@@ -331,6 +335,9 @@
 		"withdrawSubtitle": "Los fondos estarán disponibles inmediatamente como saldo libre después de retirar.",
 		"withdrawUnlocked": "Retirar Descomprometidos",
 		"years": "Años",
-		"youHaveActiveUnlocks": "Tienes desbloqueos activos. Los desbloqueos pueden ser retirados una vez que el período de desbloqueo de {{bondDurationFormatted}} haya pasado."
+		"youHaveActiveUnlocks": "Tienes desbloqueos activos. Los desbloqueos pueden ser retirados una vez que el período de desbloqueo de {{bondDurationFormatted}} haya pasado.",
+		"noAccountsAvailable": "No hay cuentas disponibles",
+		"scanToSync": "Escanea este código QR para sincronizar tu cuenta.",
+		"syncAccounts": "Sincronizar Cuentas"
 	}
 }

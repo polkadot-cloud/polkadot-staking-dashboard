@@ -12,6 +12,7 @@ import {
 	faInfo,
 	faMoon,
 	faPuzzlePiece,
+	faQrcode,
 	faShare,
 	faToggleOff,
 	faToggleOn,
@@ -180,6 +181,14 @@ export const MenuPopover = ({
 					</div>
 				</div>
 			</MenuItemButton>
+			<DefaultButton
+				text={t('syncAccounts', { ns: 'app' })}
+				iconLeft={faQrcode}
+				onClick={() => {
+					setOpen(false)
+					openModal({ key: 'SyncAccounts', size: 'sm' })
+				}}
+			/>
 			<DefaultButton
 				text={t('share', { ns: 'app' })}
 				note={notStaking ? t('notStaking', { ns: 'app' }) : undefined}

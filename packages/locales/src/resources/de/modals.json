@@ -7,6 +7,7 @@
 		"accountAlreadyImported": "Konto wurde bereits importiert",
 		"accountAlreadyImportedOtherDevice": "Das Konto gehört zu einem anderen Gerät",
 		"accounts": "Konten",
+		"activeAccount": "Aktives Konto",
 		"activeRoles_one": "Aktive Rollen im {{count}} Pool",
 		"activeRoles_other": "Aktive Rollen in {{count}} Pools",
 		"activeRoles_zero": "Keine anderen aktiven Pool-Rollen",
@@ -20,6 +21,7 @@
 		"addingFavorite_other": "{{count}} Nominierungen werden hinzugefügt",
 		"addressReceived": "Adresse empfangen:",
 		"afterClaiming": "Mittel stehen nach dem Abheben sofort als freier Kontostand zur Verfügung.",
+		"allAccounts": "Alle Konten",
 		"allNominations": "Alle Nominierungen",
 		"allPoolRoles": "Alle Pool-Rollen",
 		"allowToJoin": "Erlaube neuen Mitgliedern, dem Pool beizutreten.",
@@ -113,6 +115,7 @@
 		"enterRecipientAddress": "Empfängeradresse eingeben",
 		"exitYourStakingPosition": "Beende deine Staking-Position.",
 		"extensions": "Erweiterungen",
+		"failedToFetchToken": "Token konnte nicht abgerufen werden",
 		"favoriteNotNominated": "Favoriten-Validatoren / Nicht nominiert",
 		"favoriteValidators": "Favoriten-Validatoren",
 		"favoritesAddedSubtitle_one": "{{count}} Validator wurde zu deinen Kandidaten hinzugefügt",
@@ -123,6 +126,7 @@
 		"for": "Für",
 		"forget": "Vergessen",
 		"free": "Kostenlos",
+		"generatingQrCode": "QR-Code wird generiert...",
 		"gettingAddress": "Adresse wird abgerufen...",
 		"goToDiscord": "Discord öffnen",
 		"hardware": "Hardware",
@@ -331,6 +335,9 @@
 		"withdrawSubtitle": "Gelder sind nach dem Abheben sofort als freier Saldo verfügbar.",
 		"withdrawUnlocked": "Entsperrt abheben",
 		"years": "Jahre",
-		"youHaveActiveUnlocks": "du hast aktive Freigaben. Freigaben können nach Ablauf des Entsperrungszeitraums von {{bondDurationFormatted}} abgehoben werden."
+		"youHaveActiveUnlocks": "du hast aktive Freigaben. Freigaben können nach Ablauf des Entsperrungszeitraums von {{bondDurationFormatted}} abgehoben werden.",
+		"noAccountsAvailable": "Keine Konten verfügbar",
+		"scanToSync": "Scannen Sie diesen QR-Code, um Ihr Konto zu synchronisieren.",
+		"syncAccounts": "Konten synchronisieren"
 	}
 }

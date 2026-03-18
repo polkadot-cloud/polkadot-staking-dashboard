@@ -1,0 +1,159 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { faQrcode } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { Title } from 'library/Modal/Title'
+import { qrcode } from 'library/QRCode/qrcode'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Spinner } from 'ui-core/base'
+import { Padding, Support } from 'ui-core/modal'
+import { ModeToggle, QrContainer, QrImage, SpinnerOverlay } from './Wrapper'
+
+type SyncMode = 'active' | 'all'
+
+export const SyncAccounts = () => {
+	const { t } = useTranslation()
+	const { activeAccount } = useActiveAccounts()
+	const { getAccount, accounts } = useImportedAccounts()
+
+	const [token, setToken] = useState<string | null>(null)
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState<string | null>(null)
+	const [mode, setMode] = useState<SyncMode>('active')
+	const controllerRef = useRef<AbortController | null>(null)
+
+	const account = getAccount(activeAccount)
+	const address = activeAccount?.address || ''
+	const name = account?.name || ''
+
+	const fetchToken = async (addresses: { address: string; name: string }[]) => {
+		controllerRef.current?.abort()
+		const controller = new AbortController()
+		controllerRef.current = controller
+
+		setToken(null)
+		setLoading(true)
+		setError(null)
+
+		try {
+			const response = await fetch(
+				'https://gateway.polkadot.cloud/accounts-token',
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ addresses }),
+					signal: controller.signal,
+				},
+			)
+
+			if (!response.ok) {
+				throw new Error(`Request failed: ${response.status}`)
+			}
+
+			const data = await response.json()
+			if (!controller.signal.aborted) {
+				setToken(data.token)
+			}
+		} catch (err) {
+			if (!controller.signal.aborted) {
+				setError(
+					err instanceof Error
+						? err.message
+						: t('failedToFetchToken', { ns: 'app' }),
+				)
+			}
+		} finally {
+			if (!controller.signal.aborted) {
+				setLoading(false)
+			}
+		}
+	}
+
+	useEffect(() => {
+		if (mode === 'active') {
+			if (!address) {
+				setLoading(false)
+				setError(t('noActiveAccount', { ns: 'modals' }))
+				return
+			}
+			fetchToken([{ address, name }])
+		} else {
+			if (accounts.length === 0) {
+				setLoading(false)
+				setError(t('noAccountsAvailable', { ns: 'modals' }))
+				return
+			}
+			fetchToken(accounts.map((a) => ({ address: a.address, name: a.name })))
+		}
+
+		return () => {
+			controllerRef.current?.abort()
+		}
+	}, [mode, address, name, accounts.length])
+
+	const generateQrDataUrl = (value: string): string => {
+		const qr = qrcode(0, 'M')
+		qr.addData(value)
+		qr.make()
+		return qr.createDataURL(6, 0)
+	}
+
+	return (
+		<>
+			<Title title={t('syncAccounts', { ns: 'app' })} icon={faQrcode} />
+			<Padding verticalOnly>
+				<Support>
+					<ModeToggle>
+						<button
+							type="button"
+							className={mode === 'active' ? 'active' : ''}
+							onClick={() => setMode('active')}
+						>
+							{t('activeAccount', { ns: 'modals' })}
+						</button>
+						<button
+							type="button"
+							className={mode === 'all' ? 'active' : ''}
+							onClick={() => setMode('all')}
+						>
+							{t('allAccounts', { ns: 'modals' })}
+						</button>
+					</ModeToggle>
+					<QrContainer>
+						{loading && (
+							<SpinnerOverlay>
+								<Spinner style={{ width: '3rem', height: '3rem' }} />
+							</SpinnerOverlay>
+						)}
+						{loading ? (
+							<FontAwesomeIcon
+								icon={faQrcode}
+								style={{ opacity: 0.1, fontSize: '5rem' }}
+							/>
+						) : error ? (
+							<FontAwesomeIcon
+								icon={faQrcode}
+								style={{ opacity: 0.4, fontSize: '5rem' }}
+							/>
+						) : token ? (
+							<QrImage src={generateQrDataUrl(token)} alt="Sync QR Code" />
+						) : null}
+					</QrContainer>
+					<h4>
+						{loading
+							? t('generatingQrCode', { ns: 'modals' })
+							: error
+								? error
+								: token
+									? t('scanToSync', { ns: 'modals' })
+									: null}
+					</h4>
+				</Support>
+			</Padding>
+		</>
+	)
+}
