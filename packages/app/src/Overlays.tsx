@@ -31,6 +31,7 @@ import { SetController } from 'modals/SetController'
 import { SimpleNominate } from 'modals/SimpleNominate'
 import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
+import { SyncAccounts } from 'modals/SyncAccounts'
 import { Transfer } from 'modals/Transfer'
 import { Unbond } from 'modals/Unbond'
 import { UnlockChunks } from 'modals/UnlockChunks'
@@ -67,6 +68,7 @@ export const Overlays = () => {
 				SetController,
 				StakingOptions,
 				SimpleNominate,
+				SyncAccounts,
 				Transfer,
 				Plugins,
 				UnlockChunks,

@@ -3,7 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import type { ReactNode } from 'react'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import type {
 	Prompt,
 	PromptContextInterface,
@@ -25,70 +25,62 @@ export const PromptProvider = ({ children }: { children: ReactNode }) => {
 	// Whether prompt can be closed by clicking outside on container
 	const [closeOnOutsideClick, setCloseOnOutsideClick] = useState(false)
 
-	const setPrompt = (Prompt: Prompt) => {
-		setState({
-			...state,
-			Prompt,
-		})
-	}
+	// Stable — functional setState avoids stale state capture.
+	const setPrompt = useCallback((Prompt: Prompt) => {
+		setState((prev) => ({ ...prev, Prompt }))
+	}, [])
 
-	const setStatus = (status: number) => {
-		setState({
-			...state,
-			status,
-		})
-	}
+	const setStatus = useCallback((status: number) => {
+		setState((prev) => ({ ...prev, status }))
+	}, [])
 
-	const openPromptWith = (
-		Prompt: Prompt,
-		size: PromptSize = 'sm',
-		closeOutside = true,
-	) => {
-		setState({
-			...state,
-			size,
-			Prompt,
-			status: 1,
-		})
-		setCloseOnOutsideClick(closeOutside)
-	}
+	const openPromptWith = useCallback(
+		(Prompt: Prompt, size: PromptSize = 'sm', closeOutside = true) => {
+			setState((prev) => ({ ...prev, size, Prompt, status: 1 }))
+			setCloseOnOutsideClick(closeOutside)
+		},
+		[],
+	)
 
-	const closePrompt = () => {
-		if (state.onClosePrompt) {
-			state.onClosePrompt()
-		}
-
-		setState({
-			...state,
-			status: 0,
-			Prompt: null,
-			onClosePrompt: null,
+	// Reads onClosePrompt via functional updater to avoid stale closure.
+	const closePrompt = useCallback(() => {
+		setState((prev) => {
+			prev.onClosePrompt?.()
+			return { ...prev, status: 0, Prompt: null, onClosePrompt: null }
 		})
-	}
+	}, [])
 
-	const setOnClosePrompt = (onClosePrompt: (() => void) | null) => {
-		setState({
-			...state,
-			onClosePrompt,
-		})
-	}
+	const setOnClosePrompt = useCallback((onClosePrompt: (() => void) | null) => {
+		setState((prev) => ({ ...prev, onClosePrompt }))
+	}, [])
+
+	const value = useMemo(
+		() => ({
+			setOnClosePrompt,
+			openPromptWith,
+			closePrompt,
+			setStatus,
+			setPrompt,
+			setCloseOnOutsideClick,
+			size: state.size,
+			status: state.status,
+			Prompt: state.Prompt,
+			closeOnOutsideClick,
+		}),
+		[
+			setOnClosePrompt,
+			openPromptWith,
+			closePrompt,
+			setStatus,
+			setPrompt,
+			state.size,
+			state.status,
+			state.Prompt,
+			closeOnOutsideClick,
+		],
+	)
 
 	return (
-		<PromptContext.Provider
-			value={{
-				setOnClosePrompt,
-				openPromptWith,
-				closePrompt,
-				setStatus,
-				setPrompt,
-				setCloseOnOutsideClick,
-				size: state.size,
-				status: state.status,
-				Prompt: state.Prompt,
-				closeOnOutsideClick,
-			}}
-		>
-			{children}
-		</PromptContext.Provider>
+		<PromptContext.Provider value={value}>{children}</PromptContext.Provider>
 	)
 }
