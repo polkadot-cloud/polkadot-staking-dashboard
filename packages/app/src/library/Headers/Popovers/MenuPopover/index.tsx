@@ -128,14 +128,16 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
-			<DefaultButton
-				text={t('syncAccounts', { ns: 'app' })}
-				iconLeft={faQrcode}
-				onClick={() => {
-					setOpen(false)
-					openModal({ key: 'SyncAccounts', size: 'sm' })
-				}}
-			/>
+			{network === 'polkadot' && (
+				<DefaultButton
+					text={t('syncAccounts', { ns: 'app' })}
+					iconLeft={faQrcode}
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'SyncAccounts', size: 'sm' })
+					}}
+				/>
+			)}
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
 					<FontAwesomeIcon icon={faCog} transform="shrink-2" />
