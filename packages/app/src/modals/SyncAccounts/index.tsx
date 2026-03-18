@@ -75,7 +75,7 @@ export const SyncAccounts = () => {
 				setError(
 					err instanceof Error
 						? err.message
-						: t('failedToFetchToken', { ns: 'app' }),
+						: t('failedToFetchToken', { ns: 'modals' }),
 				)
 			}
 		} finally {
