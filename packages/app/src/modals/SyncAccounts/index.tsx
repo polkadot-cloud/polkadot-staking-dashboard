@@ -1,7 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faQrcode } from '@fortawesome/free-solid-svg-icons'
+import {
+	faMobileScreenButton,
+	faQrcode,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -12,7 +15,13 @@ import { useTranslation } from 'react-i18next'
 import { Spinner } from 'ui-core/base'
 import { Padding, Support } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
-import { ModeToggle, QrContainer, QrImage, SpinnerOverlay } from './Wrapper'
+import {
+	ExplainerBox,
+	ModeToggle,
+	QrContainer,
+	QrImage,
+	SpinnerOverlay,
+} from './Wrapper'
 
 type SyncMode = 'active' | 'all'
 
@@ -147,7 +156,7 @@ export const SyncAccounts = () => {
 							<QrImage src={generateQrDataUrl(token)} alt="Sync QR Code" />
 						) : null}
 					</QrContainer>
-					<h4>
+					<h4 style={{ padding: '1rem 0' }}>
 						{loading
 							? t('generatingQrCode', { ns: 'modals' })
 							: error
@@ -156,6 +165,25 @@ export const SyncAccounts = () => {
 									? t('scanToSync', { ns: 'modals' })
 									: null}
 					</h4>
+					<ExplainerBox>
+						<div className="text">
+							<h3>
+								Staking Companion App
+								<span className="badge">Pre-release</span>
+							</h3>
+							<p>{t('syncAccountsExplainer', { ns: 'modals' })}</p>
+							<a
+								href="https://polkadot.cloud/app"
+								target="_blank"
+								rel="noreferrer"
+							>
+								{t('learnMore', { ns: 'modals' })} &rarr;
+							</a>
+						</div>
+						<div className="icon">
+							<FontAwesomeIcon icon={faMobileScreenButton} transform="grow-5" />
+						</div>
+					</ExplainerBox>
 				</Support>
 			</Padding>
 		</>

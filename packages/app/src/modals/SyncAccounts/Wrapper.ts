@@ -51,3 +51,59 @@ export const QrImage = styled.img`
   height: 180px;
   image-rendering: pixelated;
 `
+
+export const ExplainerBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background-color: var(--gray-200);
+  border: 1px solid var(--gray-500);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  margin-top: 0.75rem;
+  width: 100%;
+
+  .text {
+    font-size: 1.1rem;
+    flex: 1;
+
+    h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      margin: 0 0 0.6rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background-color: var(--accent-200);
+      color: var(--accent-900);
+      font-family: Inter, sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.2rem 0.75rem;
+      border-radius: 0.75rem;
+      margin-left: 0.4rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    a {
+      color: var(--accent-700);
+      display: inline-block;
+      margin-top: 0.75rem;
+    }
+  }
+
+  .icon {
+    color: var(--gray-500);
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+`
