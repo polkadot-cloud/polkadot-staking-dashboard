@@ -29,9 +29,9 @@ type SyncMode = 'active' | 'all'
 
 export const SyncAccounts = () => {
 	const { t } = useTranslation()
-	const { activeAccount } = useActiveAccounts()
-	const { getAccount, accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
+	const { getAccount, accounts } = useImportedAccounts()
+	const { activeAccount, activeAddress } = useActiveAccounts()
 
 	const [token, setToken] = useState<string | null>(null)
 	const [loading, setLoading] = useState(true)
@@ -40,7 +40,6 @@ export const SyncAccounts = () => {
 	const controllerRef = useRef<AbortController | null>(null)
 
 	const account = getAccount(activeAccount)
-	const address = activeAccount?.address || ''
 	const name = account?.name || ''
 
 	const fetchToken = async (addresses: { address: string; name: string }[]) => {
@@ -80,12 +79,12 @@ export const SyncAccounts = () => {
 
 	useEffect(() => {
 		if (mode === 'active') {
-			if (!address) {
+			if (!activeAddress) {
 				setLoading(false)
 				setError(t('noActiveAccount', { ns: 'modals' }))
 				return
 			}
-			fetchToken([{ address, name }])
+			fetchToken([{ address: activeAddress, name }])
 		} else {
 			if (accounts.length === 0) {
 				setLoading(false)
@@ -98,7 +97,7 @@ export const SyncAccounts = () => {
 		return () => {
 			controllerRef.current?.abort()
 		}
-	}, [mode, address, name, accountsSignature])
+	}, [mode, activeAddress, name, accountsSignature])
 
 	useEffect(() => setModalResize(), [loading, error, token])
 
