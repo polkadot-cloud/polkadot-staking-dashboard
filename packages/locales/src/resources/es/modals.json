@@ -145,6 +145,7 @@
 		"inputPayeeAccount": "Introducir Cuenta de Beneficiario",
 		"invalidAddress": "Dirección Inválida",
 		"joinPool": "Unirse al Pool",
+		"learnMore": "Aprender más",
 		"leavePool": "Salir del Pool",
 		"ledgerAccount": "Cuenta Ledger",
 		"ledgerAccountFetched": "Cuenta Ledger Obtenida",
@@ -178,6 +179,7 @@
 		"newDevice": "Nuevo Dispositivo",
 		"newTotalBond": "Nueva vinculación total:",
 		"newlyBondedFunds": "Los fondos recién vinculados respaldarán las nominaciones activas desde el inicio de la siguiente era.",
+		"noAccountsAvailable": "No hay cuentas disponibles",
 		"noActiveAccount": "Sin cuenta activa",
 		"noCurrenciesFound": "No se encontraron monedas",
 		"noFavoritesAvailable": "No hay favoritos disponibles.",
@@ -254,6 +256,7 @@
 		"root": "Root",
 		"rpcProviders": "Proveedores RPC",
 		"scanFromPolkadotVault": "Escanear desde Polkadot Vault",
+		"scanToSync": "Escanea este código QR para sincronizar tu cuenta.",
 		"searchAccount": "Buscar Cuenta",
 		"searchCurrency": "Buscar",
 		"selectCurrency": "Seleccionar Moneda",
@@ -281,6 +284,8 @@
 		"successfullyFetchedAddress": "Dirección Obtenida Exitosamente",
 		"supportDiscord": "Únete al canal de Discord del Cloud Staking para recibir soporte dedicado de nuestro equipo y conectar con la comunidad de Polkadot.",
 		"supportEmail": "Proporcionamos soporte por correo dedicado para usuarios del Cloud Staking. Contáctanos, y nuestro equipo se esforzará por responder rápidamente para ayudarte.",
+		"syncAccounts": "Sincronizar Cuentas",
+		"syncAccountsExplainer": "Sincroniza tus cuentas con la aplicación Staking Companion para gestionar tu staking y recibir notificaciones mientras estás en movimiento.",
 		"thisMinimumDelay_one": "Este retraso mínimo es el equivalente aproximado a {{count}} bloque.",
 		"thisMinimumDelay_other": "Este retraso mínimo es el equivalente aproximado a {{count}} bloques.",
 		"titleExtensionConnected": "La extensión {{title}} ha sido conectada.",
@@ -335,9 +340,6 @@
 		"withdrawSubtitle": "Los fondos estarán disponibles inmediatamente como saldo libre después de retirar.",
 		"withdrawUnlocked": "Retirar Descomprometidos",
 		"years": "Años",
-		"youHaveActiveUnlocks": "Tienes desbloqueos activos. Los desbloqueos pueden ser retirados una vez que el período de desbloqueo de {{bondDurationFormatted}} haya pasado.",
-		"noAccountsAvailable": "No hay cuentas disponibles",
-		"scanToSync": "Escanea este código QR para sincronizar tu cuenta.",
-		"syncAccounts": "Sincronizar Cuentas"
+		"youHaveActiveUnlocks": "Tienes desbloqueos activos. Los desbloqueos pueden ser retirados una vez que el período de desbloqueo de {{bondDurationFormatted}} haya pasado."
 	}
 }

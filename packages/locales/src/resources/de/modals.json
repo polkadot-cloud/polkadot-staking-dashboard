@@ -145,6 +145,7 @@
 		"inputPayeeAccount": "Empfängerkonto eingeben",
 		"invalidAddress": "Ungültige Adresse",
 		"joinPool": "Pool beitreten",
+		"learnMore": "Mehr Erfahren",
 		"leavePool": "Pool verlassen",
 		"ledgerAccount": "Ledger-Konto",
 		"ledgerAccountFetched": "Ledger-Konto abgerufen",
@@ -178,6 +179,7 @@
 		"newDevice": "Neues Gerät",
 		"newTotalBond": "Neue Gesamtanlage:",
 		"newlyBondedFunds": "Neu angelegte Mittel werden ab Beginn der nächsten Ära aktive Nominierungen unterstützen.",
+		"noAccountsAvailable": "Keine Konten verfügbar",
 		"noActiveAccount": "Kein aktives Konto",
 		"noCurrenciesFound": "Keine Währungen gefunden",
 		"noFavoritesAvailable": "Keine Favoriten verfügbar.",
@@ -254,6 +256,7 @@
 		"root": "Root",
 		"rpcProviders": "RPC-Anbieter",
 		"scanFromPolkadotVault": "Von Polkadot Vault scannen",
+		"scanToSync": "Scannen Sie diesen QR-Code, um Ihr Konto zu synchronisieren.",
 		"searchAccount": "Konto durchsuchen",
 		"searchCurrency": "Suchen",
 		"selectCurrency": "Währung wählen",
@@ -281,6 +284,8 @@
 		"successfullyFetchedAddress": "Adresse erfolgreich abgerufen",
 		"supportDiscord": "Tritt dem Cloud Staking Discord-Kanal bei, um dedizierte Unterstützung von unserem Team zu erhalten und sich mit der Polkadot-Community zu verbinden.",
 		"supportEmail": "Wir bieten dedizierten E-Mail-Support für Cloud Staking-Nutzer. Kontaktiere uns, und unser Team wird sich bemühen, schnell zu antworten und dir zu helfen.",
+		"syncAccounts": "Konten synchronisieren",
+		"syncAccountsExplainer": "Synchronisieren Sie Ihre Konten mit der Staking Companion-App für das Management und die Benachrichtigungen beim Staking unterwegs.",
 		"thisMinimumDelay_one": "Diese Mindestverzögerung entspricht ungefähr {{count}} Block.",
 		"thisMinimumDelay_other": "Diese Mindestverzögerung entspricht ungefähr {{count}} Blöcken.",
 		"titleExtensionConnected": "Die {{title}}-Erweiterung wurde verbunden.",
@@ -335,9 +340,6 @@
 		"withdrawSubtitle": "Gelder sind nach dem Abheben sofort als freier Saldo verfügbar.",
 		"withdrawUnlocked": "Entsperrt abheben",
 		"years": "Jahre",
-		"youHaveActiveUnlocks": "du hast aktive Freigaben. Freigaben können nach Ablauf des Entsperrungszeitraums von {{bondDurationFormatted}} abgehoben werden.",
-		"noAccountsAvailable": "Keine Konten verfügbar",
-		"scanToSync": "Scannen Sie diesen QR-Code, um Ihr Konto zu synchronisieren.",
-		"syncAccounts": "Konten synchronisieren"
+		"youHaveActiveUnlocks": "du hast aktive Freigaben. Freigaben können nach Ablauf des Entsperrungszeitraums von {{bondDurationFormatted}} abgehoben werden."
 	}
 }

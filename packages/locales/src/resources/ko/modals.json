@@ -145,6 +145,7 @@
 		"inputPayeeAccount": "수익자 계정 입력",
 		"invalidAddress": "유효하지 않은 주소",
 		"joinPool": "풀 참여",
+		"learnMore": "자세히 알아보기",
 		"leavePool": "풀 탈퇴",
 		"ledgerAccount": "Ledger 계정",
 		"ledgerAccountFetched": "Ledger 계정 가져오기 완료",
@@ -178,6 +179,7 @@
 		"newDevice": "새 장치",
 		"newTotalBond": "새로운 총 본딩액:",
 		"newlyBondedFunds": "새로 본딩된 자금은 다음 에라 시작부터 활성 지정을 지원합니다.",
+		"noAccountsAvailable": "사용 가능한 계정이 없습니다",
 		"noActiveAccount": "활성 계정 없음",
 		"noCurrenciesFound": "화폐 없음",
 		"noFavoritesAvailable": "선호 검증인 없음",
@@ -254,6 +256,7 @@
 		"root": "루트",
 		"rpcProviders": "RPC 제공자",
 		"scanFromPolkadotVault": "Polkadot Vault에서 스캔",
+		"scanToSync": "이 QR 코드를 스캔하여 계정을 동기화하세요.",
 		"searchAccount": "계정 검색",
 		"searchCurrency": "검색",
 		"selectCurrency": "통화 선택",
@@ -281,6 +284,8 @@
 		"successfullyFetchedAddress": "주소를 성공적으로 가져왔습니다",
 		"supportDiscord": "Cloud Staking Discord 채널에 참여하여 당사 팀으로부터 전용 지원을 받고 Polkadot 커뮤니티와 연결하십시오.",
 		"supportEmail": "Cloud Staking 사용자를 위해 전용 이메일 지원을 제공합니다. 저희에게 문의하면 당사 팀이 신속하게 대응하여 도움을 드리겠습니다.",
+		"syncAccounts": "계정 동기화",
+		"syncAccountsExplainer": "스테이킹 컴패니언 앱과 계정을 동기화하여 이동 중에도 스테이킹 관리 및 알림을 받을 수 있습니다.",
 		"thisMinimumDelay_one": "이 최소 지연은 약 {{count}}개 블록에 해당합니다.",
 		"thisMinimumDelay_other": "이 최소 지연은 약 {{count}}개 블록에 해당합니다.",
 		"titleExtensionConnected": "{{title}} 확장 프로그램이 연결되었습니다.",
@@ -335,9 +340,6 @@
 		"withdrawSubtitle": "인출 후 자금은 자유 잔액으로 즉시 사용 가능합니다.",
 		"withdrawUnlocked": "잠금 해제 인출",
 		"years": "년",
-		"youHaveActiveUnlocks": "활성화된 잠금 해제가 있습니다. {{bondDurationFormatted}}의 잠금 해제 기간이 지나면 잠금 해제를 인출할 수 있습니다.",
-		"noAccountsAvailable": "사용 가능한 계정이 없습니다",
-		"scanToSync": "이 QR 코드를 스캔하여 계정을 동기화하세요.",
-		"syncAccounts": "계정 동기화"
+		"youHaveActiveUnlocks": "활성화된 잠금 해제가 있습니다. {{bondDurationFormatted}}의 잠금 해제 기간이 지나면 잠금 해제를 인출할 수 있습니다."
 	}
 }
