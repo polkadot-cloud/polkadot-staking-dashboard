@@ -5,7 +5,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
-import { NominationsEmpty } from 'library/NominationsEmpty'
+import { Empty } from 'library/Nominations/Empty'
 import { Page } from 'ui-core/base'
 
 export const ManagePool = () => {
@@ -27,7 +27,7 @@ export const ManagePool = () => {
 		<Page.Row>
 			<CardWrapper>
 				{canNominate && !isNominating && state !== 'Destroying' ? (
-					<NominationsEmpty
+					<Empty
 						bondFor="pool"
 						nominator={nominator}
 						nominated={poolNominated}

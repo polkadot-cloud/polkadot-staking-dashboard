@@ -10,7 +10,7 @@ import { useSyncing } from 'hooks/useSyncing'
 import { BondManager } from 'library/BondManager'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Nominations } from 'library/Nominations'
-import { NominationsEmpty } from 'library/NominationsEmpty'
+import { Empty } from 'library/Nominations/Empty'
 import { Stats } from 'library/Stats'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
@@ -56,7 +56,7 @@ export const Active = () => {
 						{nominated?.length || syncing ? (
 							<Nominations bondFor="nominator" nominator={activeAddress} />
 						) : (
-							<NominationsEmpty
+							<Empty
 								bondFor="nominator"
 								nominator={activeAddress}
 								nominated={nominated}

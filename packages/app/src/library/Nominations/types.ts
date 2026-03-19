@@ -13,3 +13,11 @@ export interface ManageNominationsInterface {
 	listFormat: ListFormat
 	selectTogglable: boolean
 }
+
+export interface NominationsEmptyProps {
+	bondFor: 'nominator' | 'pool'
+	nominator: string | null
+	nominated: Validator[]
+	disabled?: boolean
+	title?: string
+}

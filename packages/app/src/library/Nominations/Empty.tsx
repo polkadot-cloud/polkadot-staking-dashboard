@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next'
 import { ButtonPrimary } from 'ui-buttons'
 import { CardHeader } from 'ui-core/base'
 import { useOverlay } from 'ui-overlay'
-import type { NominationsEmptyProps } from './types'
+import type { NominationsEmptyProps } from '../Nominations/types'
 
-export const NominationsEmpty = ({
+export const Empty = ({
 	bondFor,
 	nominator,
 	nominated,
