@@ -3,6 +3,7 @@
 
 import { faEnvelopeOpenText, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ProductionURL } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -31,7 +32,7 @@ export const Invite = () => {
 	let faIcon = faEnvelopeOpenText
 
 	if (membership) {
-		toCopy = `https://staking.polkadot.cloud/#/overview?n=${network}&i=pool&id=${poolId}`
+		toCopy = `https://${ProductionURL}/#/overview?n=${network}&i=pool&id=${poolId}`
 		title = t('copyPoolInviteLink', { ns: 'app' })
 		subtitle = toCopy
 	} else if (nominated.length > 0) {
