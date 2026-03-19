@@ -4,6 +4,7 @@
 import { useEraStakers } from 'contexts/EraStakers'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import type { AnyFilter } from 'library/Filter/types'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyFunction, AnyJson } from 'types'
 
@@ -12,7 +13,10 @@ export const useValidatorFilters = () => {
 	const { validatorSupers, getValidatorRank, validatorIdentities } =
 		useValidators()
 	const { eraStakers } = useEraStakers()
-	const eraValidators = eraStakers.stakers.map((staker) => staker.address)
+	const eraValidatorSet = useMemo(
+		() => new Set(eraStakers.stakers.map((staker) => staker.address)),
+		[eraStakers.stakers],
+	)
 
 	/*
 	 * filterMissingIdentity: Iterates through the supplied list and filters those with missing
@@ -65,7 +69,7 @@ export const useValidatorFilters = () => {
 			return list
 		}
 		return list.filter((validator: AnyFilter) =>
-			eraValidators.includes(validator.address),
+			eraValidatorSet.has(validator.address),
 		)
 	}
 
@@ -79,7 +83,7 @@ export const useValidatorFilters = () => {
 			return list
 		}
 		return list.filter(
-			(validator: AnyFilter) => !eraValidators.includes(validator.address),
+			(validator: AnyFilter) => !eraValidatorSet.has(validator.address),
 		)
 	}
 
