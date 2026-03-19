@@ -90,7 +90,8 @@ const RouterInner = () => {
 	// Support opening validator metrics from url
 	useValidatorFromUrl()
 
-	// Support opening pool details from url
+	// Support opening pool details from url. NOTE: validator param takes precedence over pool param,
+	// so if both are present, only validator will be processed
 	usePoolFromUrl()
 
 	// Handle automatic navigation on account switch based on staking status
