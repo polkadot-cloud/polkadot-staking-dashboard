@@ -65,6 +65,7 @@
 		"copied": "복사됨!",
 		"copy": "복사",
 		"copyAddress": "주소 복사",
+		"copyFailed": "복사 실패",
 		"copyNominations": "지명 주소 복사",
 		"copyPoolAddress": "풀 {{type}} 주소 복사",
 		"copyPoolInviteLink": "풀 초대 링크 복사",

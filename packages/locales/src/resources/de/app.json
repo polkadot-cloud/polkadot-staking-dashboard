@@ -65,6 +65,7 @@
 		"copied": "Kopiert!",
 		"copy": "Kopieren",
 		"copyAddress": "Adresse kopieren",
+		"copyFailed": "Kopieren fehlgeschlagen",
 		"copyNominations": "Nominierungsadressen kopieren",
 		"copyPoolAddress": "Pool {{type}} Adresse kopieren",
 		"copyPoolInviteLink": "Pool-Einladungslink kopieren",

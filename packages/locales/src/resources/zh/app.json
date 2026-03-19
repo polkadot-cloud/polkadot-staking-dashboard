@@ -65,6 +65,7 @@
 		"copied": "已复制!",
 		"copy": "复制",
 		"copyAddress": "复制地址",
+		"copyFailed": "复制失败",
 		"copyNominations": "复制提名地址",
 		"copyPoolAddress": "复制池{{type}}地址",
 		"copyPoolInviteLink": "复制提名池邀请链接",

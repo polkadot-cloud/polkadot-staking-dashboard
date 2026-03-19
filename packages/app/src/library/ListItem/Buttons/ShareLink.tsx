@@ -34,13 +34,20 @@ export const ShareLink = ({ paramValue, paramKey }: ShareLinkProps) => {
 				pointer
 				text={tooltipText}
 				onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
-				onClick={() => {
+				onClick={async () => {
 					const url = buildShareUrl()
-					navigator.clipboard.writeText(url)
-					emitNotification({
-						title: t('linkCopied'),
-						subtitle: url,
-					})
+					try {
+						await navigator.clipboard.writeText(url)
+						emitNotification({
+							title: t('linkCopied'),
+							subtitle: url,
+						})
+					} catch {
+						emitNotification({
+							title: t('copyFailed'),
+							subtitle: url,
+						})
+					}
 				}}
 			/>
 			<button type="button">

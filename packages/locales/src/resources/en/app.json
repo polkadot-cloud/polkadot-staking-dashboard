@@ -65,6 +65,7 @@
 		"copied": "Copied!",
 		"copy": "Copy",
 		"copyAddress": "Copy Address",
+		"copyFailed": "Copy Failed",
 		"copyNominations": "Copy Nomination Addresses",
 		"copyPoolAddress": "Copy Pool {{type}} Address",
 		"copyPoolInviteLink": "Copy Pool Invite Link",
