@@ -27,6 +27,12 @@ export const usePoolFromUrl = () => {
 			return
 		}
 
+		// If a validator param is present, do not process pool param, as validator param takes
+		// precedence
+		if (extractUrlValue('v')) {
+			return
+		}
+
 		const poolId = extractUrlValue('p')
 		if (!poolId || poolId === openedRef.current) {
 			return
