@@ -3,6 +3,7 @@
 
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ProductionURL } from 'consts'
 import { useTooltip } from 'contexts/Tooltip'
 import { emitNotification } from 'global-bus'
 import { useTranslation } from 'react-i18next'
@@ -23,7 +24,7 @@ export const ShareLink = ({ paramValue, paramKey }: ShareLinkProps) => {
 	const tooltipText = t('copyShareLink')
 
 	const buildShareUrl = () => {
-		const base = `https://staking.polkadot.cloud/#/overview`
+		const base = `${ProductionURL}/#/overview`
 		return `${base}?${paramKey}=${paramValue}`
 	}
 
