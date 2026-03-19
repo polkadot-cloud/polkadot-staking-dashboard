@@ -4,6 +4,7 @@
 import { extractUrlValue } from '@w3ux/utils'
 import { useApi } from 'contexts/Api'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useUi } from 'contexts/UI'
 import { emitNotification } from 'global-bus'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,8 +15,9 @@ export const usePoolFromUrl = () => {
 	const { t } = useTranslation('app')
 	const { isReady } = useApi()
 	const { search } = useLocation()
-	const { openCanvas, setCanvasConfig, status } = useOverlay().canvas
+	const { setAdvancedMode } = useUi()
 	const { bondedPools } = useBondedPools()
+	const { openCanvas, setCanvasConfig, status } = useOverlay().canvas
 
 	// Track the pool id that was last opened from a URL param
 	const openedRef = useRef<string | null>(null)
@@ -61,6 +63,9 @@ export const usePoolFromUrl = () => {
 		}
 
 		openedRef.current = poolId
+
+		// Enable advanced mode when a valid pool is discovered from the URL
+		setAdvancedMode(true)
 
 		// If canvas is already open, swap the content in place
 		if (status === 'open') {

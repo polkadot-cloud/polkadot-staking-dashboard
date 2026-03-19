@@ -3,6 +3,7 @@
 
 import { extractUrlValue } from '@w3ux/utils'
 import { useApi } from 'contexts/Api'
+import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { emitNotification } from 'global-bus'
 import { getIdentityDisplay } from 'library/List/Utils'
@@ -16,6 +17,7 @@ export const useValidatorFromUrl = () => {
 	const { isReady } = useApi()
 	const { search } = useLocation()
 	const { openCanvas, setCanvasConfig, status } = useOverlay().canvas
+	const { setAdvancedMode } = useUi()
 	const {
 		getValidators,
 		validatorIdentities,
@@ -74,6 +76,9 @@ export const useValidatorFromUrl = () => {
 		}
 
 		openedRef.current = validator
+
+		// Enable advanced mode when a valid validator is discovered from the URL
+		setAdvancedMode(true)
 
 		// If canvas is already open, swap the content in place
 		if (status === 'open') {
