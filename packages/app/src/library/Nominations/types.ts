@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ListFormat } from 'contexts/List/types'
-import type { Validator } from 'types'
+import type { BondFor, Validator } from 'types'
 
 export interface ManageNominationsInterface {
 	addToSelected: (item: Validator) => void
@@ -15,7 +15,7 @@ export interface ManageNominationsInterface {
 }
 
 export interface NominationsEmptyProps {
-	bondFor: 'nominator' | 'pool'
+	bondFor: BondFor
 	nominator: string | null
 	nominated: Validator[]
 	disabled?: boolean
