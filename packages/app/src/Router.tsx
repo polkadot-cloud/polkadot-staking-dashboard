@@ -21,6 +21,8 @@ import {
 } from 'event-tracking'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
+import { usePoolFromUrl } from 'hooks/usePoolFromUrl'
+import { useValidatorFromUrl } from 'hooks/useValidatorFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { HelpTooltip } from 'library/HelpTooltip'
@@ -84,6 +86,13 @@ const RouterInner = () => {
 
 	// Support active account from url
 	useAccountFromUrl()
+
+	// Support opening validator metrics from url
+	useValidatorFromUrl()
+
+	// Support opening pool details from url. NOTE: validator param takes precedence over pool param,
+	// so if both are present, only validator will be processed
+	usePoolFromUrl()
 
 	// Handle automatic navigation on account switch based on staking status
 	useAccountSwitchNavigation()

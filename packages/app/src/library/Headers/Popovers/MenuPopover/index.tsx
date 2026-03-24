@@ -12,6 +12,7 @@ import {
 	faInfo,
 	faMoon,
 	faPuzzlePiece,
+	faQrcode,
 	faShare,
 	faToggleOff,
 	faToggleOn,
@@ -127,6 +128,16 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
+			{network === 'polkadot' && (
+				<DefaultButton
+					text={t('syncAccounts', { ns: 'app' })}
+					iconLeft={faQrcode}
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'SyncAccounts', size: 'sm' })
+					}}
+				/>
+			)}
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
 					<FontAwesomeIcon icon={faCog} transform="shrink-2" />
