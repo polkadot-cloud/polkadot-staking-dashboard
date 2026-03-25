@@ -7,16 +7,14 @@ import LedgerNanoWebP from 'assets/brands/ledgerNano.webp'
 import LedgerStaxWebP from 'assets/brands/ledgerStax.webp'
 import type { ComponentType, FunctionComponent, ImgHTMLAttributes } from 'react'
 import { createElement } from 'react'
-import type { LedgerDeviceModel } from './deviceModel'
+import type { LedgerDeviceModel } from 'types'
 
-type LedgerDeviceIconComponent = ComponentType
-type ImageComponent = FunctionComponent<ImgHTMLAttributes<HTMLImageElement>>
-
-const createLedgerDeviceImage = (src: string, alt: string): ImageComponent => {
-	const LedgerDeviceImage: ImageComponent = ({ alt: _alt, ...props }) =>
+const createLedgerDeviceImage = (
+	src: string,
+	alt: string,
+): FunctionComponent<ImgHTMLAttributes<HTMLImageElement>> => {
+	return ({ alt: _alt, ...props }) =>
 		createElement('img', { alt, src, ...props })
-
-	return LedgerDeviceImage
 }
 
 const LedgerNanoImage = createLedgerDeviceImage(LedgerNanoWebP, 'Ledger Nano')
@@ -29,7 +27,7 @@ const LedgerStaxImage = createLedgerDeviceImage(LedgerStaxWebP, 'Ledger Stax')
  */
 export const getLedgerDeviceIcon = (
 	model: LedgerDeviceModel,
-): LedgerDeviceIconComponent => {
+): ComponentType => {
 	switch (model) {
 		case 'nano_s':
 		case 'nano_x':

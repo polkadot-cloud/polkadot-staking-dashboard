@@ -11,13 +11,10 @@ import { getStakingChainData } from 'consts/util'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { getLedgerDeviceName } from 'contexts/LedgerHardware/deviceModel'
 import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
-import type {
-	LedgerAddress,
-	LedgerResponse,
-} from 'contexts/LedgerHardware/types'
 import { useNetwork } from 'contexts/Network'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { LedgerAddress, LedgerResponse } from 'types'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'

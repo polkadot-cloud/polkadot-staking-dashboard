@@ -7,18 +7,18 @@ import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
-import { defaultFeedback } from './defaults'
-import type { LedgerDeviceModel } from './deviceModel'
-import { getLedgerDeviceName } from './deviceModel'
-import { Ledger } from './static/ledger'
 import type {
+	AnyJson,
 	FeedbackMessage,
 	HandleErrorFeedback,
 	LedgerDeviceAddress,
-	LedgerHardwareContextInterface,
+	LedgerDeviceModel,
 	LedgerResponse,
-} from './types'
+} from 'types'
+import { defaultFeedback } from './defaults'
+import { getLedgerDeviceName } from './deviceModel'
+import { Ledger } from './static/ledger'
+import type { LedgerHardwareContextInterface } from './types'
 import { getLedgerErrorType } from './Utils'
 
 export const [LedgerHardwareContext, useLedgerHardware] =

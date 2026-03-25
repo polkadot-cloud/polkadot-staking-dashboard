@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { LedgerDeviceModel } from './deviceModel'
+import type { LedgerDeviceModel } from 'types'
 
 export const defaultDeviceModel: LedgerDeviceModel = 'unknown'
 

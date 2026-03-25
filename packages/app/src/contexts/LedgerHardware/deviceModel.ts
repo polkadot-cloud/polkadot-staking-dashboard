@@ -1,21 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-/**
- * Supported Ledger device models.
- */
-export type LedgerDeviceModel =
-	| 'nano_s'
-	| 'nano_x'
-	| 'nano_s_plus'
-	| 'flex'
-	| 'stax'
-	| 'unknown'
-
-/**
- * Device family grouping: nano (button-based) vs touchscreen.
- */
-export type LedgerDeviceFamily = 'nano' | 'touchscreen' | 'unknown'
+import type { LedgerDeviceFamily, LedgerDeviceModel } from 'types'
 
 /**
  * Maps a WebHID `productName` string to a known `LedgerDeviceModel`.

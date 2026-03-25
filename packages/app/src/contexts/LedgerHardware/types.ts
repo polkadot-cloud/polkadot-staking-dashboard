@@ -2,10 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { MaybeString } from '@w3ux/types'
-import type { AnyJson, NetworkId } from 'types'
-import type { LedgerDeviceModel } from './deviceModel'
-
-export type { LedgerDeviceFamily, LedgerDeviceModel } from './deviceModel'
+import type {
+	AnyJson,
+	FeedbackMessage,
+	LedgerDeviceAddress,
+	LedgerDeviceModel,
+	LedgerResponse,
+	LedgerStatusCode,
+} from 'types'
 
 export interface LedgerHardwareContextInterface {
 	deviceModel: LedgerDeviceModel
@@ -29,56 +33,4 @@ export interface LedgerHardwareContextInterface {
 		accountIndex: number,
 		ss58Prefix: number,
 	) => Promise<LedgerDeviceAddress | null>
-}
-
-export interface FeedbackMessage {
-	message: MaybeString
-	helpKey?: MaybeString
-}
-
-export type LedgerStatusCode =
-	| 'GettingAddress'
-	| 'ReceivedAddress'
-	| 'SigningPayload'
-	| 'SignedPayload'
-	| 'DeviceBusy'
-	| 'DeviceTimeout'
-	| 'MethodNotSupported'
-	| 'NestingNotSupported'
-	| 'WrongTransaction'
-	| 'DeviceNotConnected'
-	| 'DeviceLocked'
-	| 'TransactionVersionNotSupported'
-	| 'TransactionRejected'
-	| 'AppNotOpenContinue'
-	| 'AppNotOpen'
-
-export interface LedgerResponse {
-	ack: string
-	statusCode: LedgerStatusCode
-	body?: AnyJson
-	options?: AnyJson
-}
-
-export type LedgerTask = 'get_address' | 'sign_tx'
-
-export type PairingStatus = 'paired' | 'unpaired' | 'unknown'
-
-export interface LedgerAddress {
-	address: string
-	index: number
-	name: string
-	network: NetworkId
-	pubKey: string
-}
-
-export interface LedgerDeviceAddress {
-	address: string
-	pubKey: string
-}
-
-export interface HandleErrorFeedback {
-	message: MaybeString
-	helpKey?: MaybeString
-	code: LedgerStatusCode
 }
