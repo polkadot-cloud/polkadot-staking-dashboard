@@ -5,6 +5,7 @@
 export const DappName = 'Polkadot Cloud Staking'
 export const DappOrganisation = 'Polkadot Cloud'
 export const PlatformURL = 'https://polkadot.cloud'
+export const ProductionURL = 'https://staking.polkadot.cloud'
 export const PlatformDocsURL = 'https://docs.staking.polkadot.cloud'
 export const PlatformPrivacyURL = 'https://polkadot.cloud/privacy'
 export const PlatformDisclaimerURL = 'https://polkadot.cloud/disclaimer'

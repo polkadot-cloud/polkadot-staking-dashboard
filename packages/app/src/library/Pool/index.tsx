@@ -7,6 +7,7 @@ import { usePoolCommission } from 'hooks/usePoolCommission'
 import { useSyncing } from 'hooks/useSyncing'
 import { FavoritePool } from 'library/ListItem/Buttons/FavoritePool'
 import { PoolMembers } from 'library/ListItem/Buttons/PoolMembers'
+import { ShareLink } from 'library/ListItem/Buttons/ShareLink'
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded'
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
@@ -34,6 +35,7 @@ export const Pool = ({ pool }: PoolProps) => {
 					<PoolIdentity pool={pool} />
 					<div>
 						<HeaderButtonRow>
+							<ShareLink paramKey="p" paramValue={String(id)} />
 							<FavoritePool address={addresses.stash} />
 							<PoolMembers pool={pool} memberCounter={memberCounter} />
 							<PoolMetrics

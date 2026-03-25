@@ -11,6 +11,7 @@ import { getIdentityDisplay } from 'library/List/Utils'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
 import { Metrics } from 'library/ListItem/Buttons/Metrics'
 import { Remove } from 'library/ListItem/Buttons/Remove'
+import { ShareLink } from 'library/ListItem/Buttons/ShareLink'
 import { APY } from 'library/ListItem/Labels/APY'
 import { Quartile } from 'library/ListItem/Labels/Quartile'
 import { Wrapper } from 'library/ListItem/Wrappers'
@@ -65,6 +66,7 @@ export const Item = ({
 					<div>
 						<HeaderButtonRow>
 							<CopyAddress address={address} />
+							<ShareLink paramKey="v" paramValue={address} />
 							{toggleFavorites && <FavoriteValidator address={address} />}
 							{displayFor === 'default' && (
 								<Metrics

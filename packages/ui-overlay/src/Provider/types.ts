@@ -27,6 +27,7 @@ export interface OverlayContextInterface {
 		openCanvas: (config: CanvasConfig) => void
 		closeCanvas: () => void
 		setCanvasStatus: (status: CanvasStatus) => void
+		setCanvasConfig: (config: CanvasConfig) => void
 	}
 	modal: {
 		status: ModalStatus
