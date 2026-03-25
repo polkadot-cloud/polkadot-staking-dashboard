@@ -1,7 +1,9 @@
 {
 	"extends": "../../tsconfig.react.json",
 	"compilerOptions": {
-		"baseUrl": "src",
+		"paths": {
+			"*": ["./src/*"]
+		},
 		"outDir": "build",
 		"target": "ESNext",
 		"useDefineForClassFields": true,
@@ -12,7 +14,6 @@
 		"allowSyntheticDefaultImports": true,
 		"allowImportingTsExtensions": true,
 		"allowJs": false,
-		"esModuleInterop": false,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"jsx": "react-jsx",

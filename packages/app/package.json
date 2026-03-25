@@ -74,7 +74,7 @@
 	},
 	"devDependencies": {
 		"types": "workspace:*",
-		"typescript": "^5.8.2",
+		"typescript": "^6.0.2",
 		"vite": "^8.0.2",
 		"vite-bundle-visualizer": "^1.2.1",
 		"vite-plugin-checker": "^0.12.0",
