@@ -6,7 +6,7 @@ import { withTimeout } from '@w3ux/utils'
 import { PolkadotGenericApp } from '@zondax/ledger-substrate'
 import { Buffer } from 'buffer'
 import type { AnyJson } from 'types'
-import { getLedgerDeviceModel } from '../deviceModel'
+import { getLedgerDeviceModel } from '../util'
 
 export class Ledger {
 	// The ledger device transport. `null` when not actively in use

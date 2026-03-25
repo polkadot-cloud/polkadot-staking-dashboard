@@ -5,7 +5,7 @@ import { useLedgerHardware } from 'contexts/LedgerHardware'
 import {
 	getLedgerDeviceName,
 	isTouchscreenDevice,
-} from 'contexts/LedgerHardware/deviceModel'
+} from 'contexts/LedgerHardware/util'
 import { useTranslation } from 'react-i18next'
 import type { UseLedgerTxPromptReturn } from './types'
 
