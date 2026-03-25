@@ -36,7 +36,7 @@ export const NavSimple = () => {
 				<section>
 					<LogoWrapper $minimised={sideMenuMinimised}>
 						<CloudSVG />
-						{!sideMenuMinimised && <h3>Stake</h3>}
+						{!sideMenuMinimised && <h3>Cloud</h3>}
 					</LogoWrapper>
 					<Main activeCategory={null} />
 				</section>
