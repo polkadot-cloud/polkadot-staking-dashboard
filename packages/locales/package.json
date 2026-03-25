@@ -19,11 +19,11 @@
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
 		"event-tracking": "workspace:*",
-		"i18next": "^25.8.18",
-		"react-i18next": "^16.5.8",
+		"i18next": "^25.10.5",
+		"react-i18next": "^16.6.2",
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"vite": "^8.0.0"
+		"vite": "^8.0.2"
 	}
 }
