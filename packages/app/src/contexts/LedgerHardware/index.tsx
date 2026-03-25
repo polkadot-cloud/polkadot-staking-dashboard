@@ -19,7 +19,7 @@ import { defaultFeedback } from './defaults'
 import { getLedgerDeviceName } from './deviceModel'
 import { Ledger } from './static/ledger'
 import type { LedgerHardwareContextInterface } from './types'
-import { getLedgerErrorType } from './Utils'
+import { getLedgerErrorType } from './util'
 
 export const [LedgerHardwareContext, useLedgerHardware] =
 	createSafeContext<LedgerHardwareContextInterface>()
