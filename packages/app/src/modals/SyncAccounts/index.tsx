@@ -171,12 +171,7 @@ export const SyncAccounts = () => {
 				</h4>
 				<ExplainerBox>
 					<div className="text">
-						<h3>
-							Staking Companion App
-							<span className="badge">
-								{t('privateBeta', { ns: 'modals' })}
-							</span>
-						</h3>
+						<h3>Staking Companion App</h3>
 						<p>{t('syncAccountsExplainer', { ns: 'modals' })}</p>
 						<a
 							href="https://polkadot.cloud/app"
