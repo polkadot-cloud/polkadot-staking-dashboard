@@ -32,7 +32,6 @@ export const Ledger = () => {
 		getHardwareAccounts,
 	} = useHardwareAccounts()
 	const {
-		deviceModel,
 		getFeedback,
 		setFeedback,
 		isExecuting,
@@ -112,7 +111,7 @@ export const Ledger = () => {
 		setStatusCode({ ack, statusCode })
 
 		if (statusCode === 'ReceivedAddress') {
-			const responseDeviceModel = device?.deviceModel ?? deviceModel
+			const responseDeviceModel = device?.deviceModel ?? 'unknown'
 			const deviceName = getLedgerDeviceName(responseDeviceModel)
 			const accountNumber = addressesRef.current.length + 1
 			const defaultName = `${deviceName} ${accountNumber}`

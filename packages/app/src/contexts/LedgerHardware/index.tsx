@@ -5,7 +5,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type {
 	AnyJson,
@@ -18,7 +18,11 @@ import type {
 import { defaultFeedback } from './defaults'
 import { Ledger } from './static/ledger'
 import type { LedgerHardwareContextInterface } from './types'
-import { getLedgerDeviceName, getLedgerErrorType } from './util'
+import {
+	getLedgerDeviceModel,
+	getLedgerDeviceName,
+	getLedgerErrorType,
+} from './util'
 
 export const [LedgerHardwareContext, useLedgerHardware] =
 	createSafeContext<LedgerHardwareContextInterface>()
@@ -30,19 +34,10 @@ export const LedgerHardwareProvider = ({
 }) => {
 	const { t } = useTranslation('modals')
 
-	// Store the detected Ledger device model, restoring from localStorage if available
-	const [deviceModel, setDeviceModel] = useState<LedgerDeviceModel>(
-		() =>
-			(localStorage.getItem('ledger_device_model') as LedgerDeviceModel) ||
-			'unknown',
-	)
-
-	// Persist deviceModel to localStorage when it changes
-	useEffect(() => {
-		if (deviceModel !== 'unknown') {
-			localStorage.setItem('ledger_device_model', deviceModel)
-		}
-	}, [deviceModel])
+	// Resolve the current Ledger model directly from the active transport instead of persisting a
+	// global device selection in React state.
+	const getDeviceModel = (): LedgerDeviceModel =>
+		getLedgerDeviceModel(Ledger.transport?.device?.productName || '')
 
 	// Store whether a Ledger device task is in progress
 	const [isExecuting, setIsExecutingState] = useState<boolean>(false)
@@ -88,8 +83,7 @@ export const LedgerHardwareProvider = ({
 	const checkRuntimeVersion = async () => {
 		try {
 			setIsExecuting(true)
-			const { app, deviceModel: model } = await Ledger.initialise()
-			setDeviceModel(model)
+			const { app } = await Ledger.initialise()
 			// Device is connected, verify it's responding
 			await Ledger.getVersion(app)
 
@@ -106,7 +100,6 @@ export const LedgerHardwareProvider = ({
 		try {
 			setIsExecuting(true)
 			const { app, deviceModel: model } = await Ledger.initialise()
-			setDeviceModel(model)
 			const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
 			setIsExecuting(false)
@@ -135,7 +128,6 @@ export const LedgerHardwareProvider = ({
 		try {
 			setIsExecuting(true)
 			const { app, deviceModel: model } = await Ledger.initialise()
-			setDeviceModel(model)
 			const result = (await Ledger.getAddress(
 				app,
 				accountIndex,
@@ -155,7 +147,7 @@ export const LedgerHardwareProvider = ({
 
 	// Handles errors that occur during device calls
 	const handleErrors = (err: unknown) => {
-		const device = getLedgerDeviceName(deviceModel)
+		const device = getLedgerDeviceName(getDeviceModel())
 
 		// Update feedback and status code state based on error received
 		switch (getLedgerErrorType(String(err))) {
@@ -262,7 +254,7 @@ export const LedgerHardwareProvider = ({
 	return (
 		<LedgerHardwareContext.Provider
 			value={{
-				deviceModel,
+				getDeviceModel,
 				integrityChecked,
 				setIntegrityChecked,
 				checkRuntimeVersion,

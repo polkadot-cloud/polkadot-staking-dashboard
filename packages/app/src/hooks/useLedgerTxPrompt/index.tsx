@@ -11,9 +11,10 @@ import type { UseLedgerTxPromptReturn } from './types'
 
 export const useLedgerTxPrompt = (): UseLedgerTxPromptReturn => {
 	const { t } = useTranslation('app')
-	const { getFeedback, integrityChecked, deviceModel } = useLedgerHardware()
+	const { getFeedback, getDeviceModel, integrityChecked } = useLedgerHardware()
 
 	const feedback = getFeedback()
+	const deviceModel = getDeviceModel()
 
 	let message: string
 	if (feedback?.message) {

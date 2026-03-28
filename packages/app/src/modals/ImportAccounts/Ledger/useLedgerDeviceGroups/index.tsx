@@ -26,7 +26,7 @@ export const useLedgerDeviceGroups = ({
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { removeHardwareAccount } = useHardwareAccounts()
-	const { deviceModel, fetchLedgerAddress, resetStatusCode, setFeedback } =
+	const { fetchLedgerAddress, resetStatusCode, setFeedback } =
 		useLedgerHardware()
 
 	const { ss58 } = getStakingChainData(network)
@@ -72,9 +72,7 @@ export const useLedgerDeviceGroups = ({
 
 	// Derived state for the currently selected device group.
 	const activeAddresses = groupedAddresses[activeGroup] ?? []
-	const activeGroupDeviceModel =
-		groupDeviceModels[activeGroup] ??
-		(activeAddresses.length > 0 ? deviceModel : 'unknown')
+	const activeGroupDeviceModel = groupDeviceModels[activeGroup] ?? 'unknown'
 	const nextAddressIndex =
 		activeAddresses.length > 0
 			? activeAddresses[activeAddresses.length - 1].index + 1
@@ -294,9 +292,7 @@ export const useLedgerDeviceGroups = ({
 		if (!addressGroups.includes(activeGroup)) {
 			setActiveGroup(addressGroups[0])
 		}
-
-		setFeedback(null)
-	}, [addressGroups, activeGroup, setFeedback])
+	}, [addressGroups, activeGroup])
 
 	return {
 		activeAddresses,

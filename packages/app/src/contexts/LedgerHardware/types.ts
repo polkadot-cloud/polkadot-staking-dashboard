@@ -12,7 +12,7 @@ import type {
 } from 'types'
 
 export interface LedgerHardwareContextInterface {
-	deviceModel: LedgerDeviceModel
+	getDeviceModel: () => LedgerDeviceModel
 	integrityChecked: boolean
 	setIntegrityChecked: (checked: boolean) => void
 	checkRuntimeVersion: () => Promise<void>
