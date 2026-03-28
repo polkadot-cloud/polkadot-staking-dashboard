@@ -7,17 +7,22 @@ import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { AnyJson } from 'types'
-import { defaultFeedback } from './defaults'
-import { Ledger } from './static/ledger'
 import type {
+	AnyJson,
 	FeedbackMessage,
 	HandleErrorFeedback,
 	LedgerDeviceAddress,
-	LedgerHardwareContextInterface,
+	LedgerDeviceModel,
 	LedgerResponse,
-} from './types'
-import { getLedgerErrorType } from './Utils'
+} from 'types'
+import { defaultFeedback } from './defaults'
+import { Ledger } from './static/ledger'
+import type { LedgerHardwareContextInterface } from './types'
+import {
+	getLedgerDeviceModel,
+	getLedgerDeviceName,
+	getLedgerErrorType,
+} from './util'
 
 export const [LedgerHardwareContext, useLedgerHardware] =
 	createSafeContext<LedgerHardwareContextInterface>()
@@ -28,6 +33,11 @@ export const LedgerHardwareProvider = ({
 	children: ReactNode
 }) => {
 	const { t } = useTranslation('modals')
+
+	// Resolve the current Ledger model directly from the active transport instead of persisting a
+	// global device selection in React state.
+	const getDeviceModel = (): LedgerDeviceModel =>
+		getLedgerDeviceModel(Ledger.transport?.device?.productName || '')
 
 	// Store whether a Ledger device task is in progress
 	const [isExecuting, setIsExecutingState] = useState<boolean>(false)
@@ -89,7 +99,7 @@ export const LedgerHardwareProvider = ({
 	const handleGetAddress = async (accountIndex: number, ss58Prefix: number) => {
 		try {
 			setIsExecuting(true)
-			const { app, productName } = await Ledger.initialise()
+			const { app, deviceModel: model } = await Ledger.initialise()
 			const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
 			setIsExecuting(false)
@@ -100,7 +110,9 @@ export const LedgerHardwareProvider = ({
 				options: {
 					accountIndex,
 				},
-				device: { productName },
+				device: {
+					deviceModel: model,
+				},
 				body: [result],
 			})
 		} catch (err) {
@@ -115,13 +127,16 @@ export const LedgerHardwareProvider = ({
 	): Promise<LedgerDeviceAddress | null> => {
 		try {
 			setIsExecuting(true)
-			const { app } = await Ledger.initialise()
+			const { app, deviceModel: model } = await Ledger.initialise()
 			const result = (await Ledger.getAddress(
 				app,
 				accountIndex,
 				ss58Prefix,
 			)) as LedgerDeviceAddress
-			return result
+			return {
+				...result,
+				deviceModel: model,
+			}
 		} catch (err) {
 			handleErrors(err)
 			return null
@@ -132,12 +147,14 @@ export const LedgerHardwareProvider = ({
 
 	// Handles errors that occur during device calls
 	const handleErrors = (err: unknown) => {
+		const device = getLedgerDeviceName(getDeviceModel())
+
 		// Update feedback and status code state based on error received
 		switch (getLedgerErrorType(String(err))) {
 			// Occurs when the device does not respond to a request within the timeout period
 			case 'timeout':
 				setStatusFeedback({
-					message: t('ledgerRequestTimeout'),
+					message: t('ledgerRequestTimeout', { device }),
 					helpKey: 'Ledger Request Timeout',
 					code: 'DeviceTimeout',
 				})
@@ -159,7 +176,7 @@ export const LedgerHardwareProvider = ({
 			// Occurs when the device is not connected
 			case 'deviceNotConnected':
 				setStatusFeedback({
-					message: t('connectLedgerToContinue'),
+					message: t('connectLedgerToContinue', { device }),
 					code: 'DeviceNotConnected',
 				})
 				break
@@ -174,21 +191,21 @@ export const LedgerHardwareProvider = ({
 			// Occurs when the device is already in use
 			case 'deviceBusy':
 				setStatusFeedback({
-					message: t('ledgerDeviceBusy'),
+					message: t('ledgerDeviceBusy', { device }),
 					code: 'DeviceBusy',
 				})
 				break
 			// Occurs when the device is locked
 			case 'deviceLocked':
 				setStatusFeedback({
-					message: t('unlockLedgerToContinue'),
+					message: t('unlockLedgerToContinue', { device }),
 					code: 'DeviceLocked',
 				})
 				break
 			// Occurs when the app (e.g. Polkadot) is not open
 			case 'appNotOpen':
 				setStatusFeedback({
-					message: t('openAppOnLedger'),
+					message: t('openAppOnLedger', { device }),
 					helpKey: 'Open App On Ledger',
 					code: 'AppNotOpen',
 				})
@@ -210,7 +227,7 @@ export const LedgerHardwareProvider = ({
 				break
 			// Handle all other errors
 			default:
-				setFeedback(t('openAppOnLedger'), 'Open App On Ledger')
+				setFeedback(t('openAppOnLedger', { device }), 'Open App On Ledger')
 				setStatusCode({ ack: 'failure', statusCode: 'AppNotOpen' })
 		}
 
@@ -219,7 +236,8 @@ export const LedgerHardwareProvider = ({
 		setIsExecuting(false)
 	}
 
-	// Helper to reset ledger state when a task is completed or cancelled
+	// Helper to reset ledger state when a task is completed or cancelled. Device model is
+	// intentionally preserved so subsequent modals can reference the detected device
 	const handleResetLedgerTask = () => {
 		setIsExecuting(false)
 		resetStatusCode()
@@ -236,6 +254,7 @@ export const LedgerHardwareProvider = ({
 	return (
 		<LedgerHardwareContext.Provider
 			value={{
+				getDeviceModel,
 				integrityChecked,
 				setIntegrityChecked,
 				checkRuntimeVersion,

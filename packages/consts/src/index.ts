@@ -51,3 +51,5 @@ export const ActivePagesKey = 'activePages'
 
 export const rpcEndpointKey = (network: string) => `${network}RpcEndpoints`
 export const rpcHealthCacheKey = (network: string) => `${network}RpcHealth`
+export const ledgerDeviceGroupsKey = (network: string) =>
+	`${network}LedgerDeviceGroups`

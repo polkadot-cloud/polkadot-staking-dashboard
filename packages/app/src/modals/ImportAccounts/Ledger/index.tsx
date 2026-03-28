@@ -2,25 +2,24 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
-import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
-import { ellipsisFn, setStateWithRef } from '@w3ux/utils'
+import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useLedgerHardware } from 'contexts/LedgerHardware'
-import type {
-	LedgerAddress,
-	LedgerResponse,
-} from 'contexts/LedgerHardware/types'
+import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
+import { getLedgerDeviceName } from 'contexts/LedgerHardware/util'
 import { useNetwork } from 'contexts/Network'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import type { LedgerAddress, LedgerResponse } from 'types'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 import { Groups } from './Groups'
+import { useLedgerDeviceGroups } from './useLedgerDeviceGroups'
 
 export const Ledger = () => {
 	const { t } = useTranslation()
@@ -40,63 +39,54 @@ export const Ledger = () => {
 		handleUnmount,
 		resetStatusCode,
 		handleGetAddress,
-		fetchLedgerAddress,
 		transportResponse,
 		handleResetLedgerTask,
 	} = useLedgerHardware()
 	const { setModalResize } = useOverlay().modal
-	const { ss58 } = getStakingChainData(network)
 	const source: HardwareAccountSource = 'ledger'
 
 	const initialAddresses = getHardwareAccounts(source, network)
+	const storedLedgerAccounts = getHardwareAccounts(source, network)
 
 	// Store addresses retrieved from Ledger device. Defaults to local addresses
 	const [addresses, setAddresses] =
 		useState<HardwareAccount[]>(initialAddresses)
 	const addressesRef = useRef(addresses)
-	const groupAnchorsRef = useRef<
-		Record<number, { index: number; address: string }>
-	>({})
-	const [activeGroup, setActiveGroup] = useState<number>(1)
-	const [groups, setGroups] = useState<number[]>(() => {
-		const initialGroups = Array.from(
-			new Set(initialAddresses.map((account) => account.group ?? 1)),
-		)
-		return initialGroups.length > 0 ? initialGroups.sort((a, b) => a - b) : [1]
+	const [pendingRename, setPendingRename] = useState<{
+		address: string
+		name: string
+	} | null>(null)
+	const {
+		activeAddresses,
+		activeGroup,
+		activeGroupDeviceModel,
+		addressGroups,
+		canAddGroup,
+		ensureGroupMatchesDevice,
+		nextAddressIndex,
+		onAddGroup,
+		onGroupChange,
+		onImportSuccess,
+		onResetActiveGroup,
+	} = useLedgerDeviceGroups({
+		addresses,
+		addressesRef,
+		setAddresses,
 	})
 
-	const groupedAddresses = useMemo(() => {
-		const grouped: Record<number, HardwareAccount[]> = {}
-		addresses.forEach((account) => {
-			const group = account.group ?? 1
-			if (!grouped[group]) {
-				grouped[group] = []
-			}
-			grouped[group].push(account)
-		})
-		return grouped
-	}, [addresses])
-
-	const addressGroups = useMemo(
-		() => [...groups].sort((a, b) => a - b),
-		[groups],
-	)
-
-	const activeAddresses = groupedAddresses[activeGroup] ?? []
-	const latestGroup = addressGroups[addressGroups.length - 1] ?? 1
-	const latestGroupIsEmpty = (groupedAddresses[latestGroup]?.length ?? 0) === 0
-	const canAddGroup = !latestGroupIsEmpty
-
-	// Handle exist check for a ledger address
+	// Handle exist check for a ledger address. Checks whether the provided address has already been
+	// imported for this source and network combination
 	const handleExists = (address: string) =>
 		hardwareAccountExists(source, network, address)
 
-	// Handle renaming a ledger address
+	// Handle renaming a ledger address for an imported address. Renames the provided address for this
+	// source and network combination
 	const handleRename = (address: string, newName: string) => {
 		renameHardwareAccount(source, network, address, newName)
 	}
 
-	// Handle removing a ledger address
+	// Handle removing a ledger address. Removes provided address from imported accounts and local
+	// state for ui syncing
 	const handleRemove = (address: string) => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
 			removeHardwareAccount(source, network, address)
@@ -108,62 +98,13 @@ export const Ledger = () => {
 		}
 	}
 
-	// Gets the next non-imported ledger address index
-	const getNextAddressIndex = () => {
-		if (!activeAddresses.length) {
-			return 0
-		}
-		return activeAddresses[activeAddresses.length - 1].index + 1
-	}
-
-	const ensureGroupMatchesDevice = async () => {
-		const groupAccounts = groupedAddresses[activeGroup] ?? []
-		const cachedAnchor = groupAnchorsRef.current[activeGroup] ?? null
-
-		if (!cachedAnchor && groupAccounts.length === 0) {
-			const anchorResult = await fetchLedgerAddress(0, ss58)
-			if (!anchorResult?.address) {
-				return false
-			}
-			groupAnchorsRef.current[activeGroup] = {
-				index: 0,
-				address: anchorResult.address,
-			}
-			return true
-		}
-
-		let anchor = cachedAnchor
-		if (!anchor) {
-			const [firstAccount, ...rest] = groupAccounts
-			const anchorAccount = rest.reduce(
-				(min, account) => (account.index < min.index ? account : min),
-				firstAccount,
-			)
-			anchor = {
-				index: anchorAccount.index,
-				address: anchorAccount.address,
-			}
-			groupAnchorsRef.current[activeGroup] = anchor
-		}
-
-		const anchorResult = await fetchLedgerAddress(anchor.index, ss58)
-		if (!anchorResult?.address) {
-			return false
-		}
-		if (anchorResult.address !== anchor.address) {
-			setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
-			return false
-		}
-		return true
-	}
-
 	// Ledger address getter
 	const onGetAddress = async () => {
 		const matchesGroup = await ensureGroupMatchesDevice()
 		if (!matchesGroup) {
 			return
 		}
-		await handleGetAddress(getNextAddressIndex(), ss58)
+		await handleGetAddress(nextAddressIndex, getStakingChainData(network).ss58)
 	}
 
 	// Handle new Ledger status report
@@ -171,10 +112,15 @@ export const Ledger = () => {
 		if (!response) {
 			return
 		}
-		const { ack, statusCode, body, options } = response
+		const { ack, statusCode, body, device, options } = response
 		setStatusCode({ ack, statusCode })
 
 		if (statusCode === 'ReceivedAddress') {
+			const responseDeviceModel = device?.deviceModel ?? 'unknown'
+			const deviceName = getLedgerDeviceName(responseDeviceModel)
+			const accountNumber = activeAddresses.length + 1
+			const defaultName = `${deviceName} ${accountNumber}`
+
 			const existingAddresses = new Set(
 				addressesRef.current.map((account) => account.address),
 			)
@@ -190,7 +136,7 @@ export const Ledger = () => {
 					index: options.accountIndex,
 					pubKey,
 					address,
-					name: ellipsisFn(address),
+					name: defaultName,
 					network,
 					group: activeGroup,
 				}))
@@ -208,25 +154,20 @@ export const Ledger = () => {
 					newAddress[0].address,
 					options.accountIndex,
 				)
-				if (!groupAnchorsRef.current[activeGroup]) {
-					groupAnchorsRef.current[activeGroup] = {
-						index: options.accountIndex,
-						address: newAddress[0].address,
-					}
-				}
+				setPendingRename({
+					address: newAddress[0].address,
+					name: defaultName,
+				})
+				onImportSuccess({
+					accountIndex: options.accountIndex,
+					address: newAddress[0].address,
+					deviceModel: responseDeviceModel,
+				})
 			} else if (body.length > 0) {
 				setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
 			}
 			resetStatusCode()
 		}
-	}
-
-	// Resets ledger accounts
-	const resetLedgerAccounts = () => {
-		addressesRef.current.forEach((account) => {
-			removeHardwareAccount(source, network, account.address)
-		})
-		setStateWithRef([], setAddresses, addressesRef)
 	}
 
 	// Get last saved ledger feedback
@@ -237,70 +178,32 @@ export const Ledger = () => {
 		handleLedgerStatusResponse(transportResponse)
 	}, [transportResponse])
 
-	// Sync group list with any new groups found on addresses
 	useEffect(() => {
-		const derivedGroups = Array.from(
-			new Set(addresses.map((account) => account.group ?? 1)),
+		if (!pendingRename) {
+			return
+		}
+		const importedAccount = storedLedgerAccounts.find(
+			(account) => account.address === pendingRename.address,
 		)
-		if (derivedGroups.length === 0) {
+		if (!importedAccount) {
 			return
 		}
-		setGroups((prev) => {
-			const merged = Array.from(new Set([...prev, ...derivedGroups])).sort(
-				(a, b) => a - b,
+		if (importedAccount.name !== pendingRename.name) {
+			renameHardwareAccount(
+				source,
+				network,
+				pendingRename.address,
+				pendingRename.name,
 			)
-			const unchanged =
-				merged.length === prev.length &&
-				merged.every((value, index) => value === prev[index])
-			return unchanged ? prev : merged
-		})
-	}, [addresses])
-
-	useEffect(() => {
-		Object.entries(groupedAddresses).forEach(([groupKey, accounts]) => {
-			if (accounts.length === 0) {
-				return
-			}
-			const group = Number(groupKey)
-			if (groupAnchorsRef.current[group]) {
-				return
-			}
-			const [firstAccount, ...rest] = accounts
-			const anchorAccount = rest.reduce(
-				(min, account) => (account.index < min.index ? account : min),
-				firstAccount,
-			)
-			groupAnchorsRef.current[group] = {
-				index: anchorAccount.index,
-				address: anchorAccount.address,
-			}
-		})
-	}, [groupedAddresses])
-
-	useEffect(() => {
-		Object.keys(groupAnchorsRef.current).forEach((groupKey) => {
-			const group = Number(groupKey)
-			const count = groupedAddresses[group]?.length ?? 0
-			if (count === 0) {
-				delete groupAnchorsRef.current[group]
-			}
-		})
-	}, [groupedAddresses])
-
-	// Keep the active group aligned with available groups
-	useEffect(() => {
-		if (addressGroups.length === 0) {
-			if (activeGroup !== 1) {
-				setActiveGroup(1)
-			}
-			return
 		}
-		if (!addressGroups.includes(activeGroup)) {
-			setActiveGroup(addressGroups[0])
-		}
-
-		setFeedback(null)
-	}, [addressGroups, activeGroup])
+		setPendingRename(null)
+	}, [
+		network,
+		pendingRename,
+		renameHardwareAccount,
+		source,
+		storedLedgerAccounts,
+	])
 
 	// Tidy up context state when this component is no longer mounted
 	useEffect(
@@ -318,16 +221,8 @@ export const Ledger = () => {
 	const maybeFeedback = feedback?.message
 	const minListHeight = '20rem'
 
-	const handleAddGroup = () => {
-		if (!canAddGroup) {
-			return
-		}
-		setGroups((prev) => {
-			const next = (prev.length ? Math.max(...prev) : 0) + 1
-			setActiveGroup(next)
-			return [...prev, next]
-		})
-	}
+	// Resolve device-specific icon (falls back to generic Ledger logo)
+	const DeviceIcon = getLedgerDeviceIcon(activeGroupDeviceModel)
 
 	return (
 		<>
@@ -337,25 +232,25 @@ export const Ledger = () => {
 					activeGroup={activeGroup}
 					addressGroups={addressGroups}
 					canAddGroup={canAddGroup}
-					onGroupChange={setActiveGroup}
-					onAddGroup={handleAddGroup}
+					onGroupChange={onGroupChange}
+					onAddGroup={onAddGroup}
 				/>
 			)}
 			<AccountImport.Header
-				Logo={<LedgerSquareSVG />}
-				title="Ledger"
+				Logo={<DeviceIcon />}
+				title={getLedgerDeviceName(activeGroupDeviceModel)}
 				websiteText="ledger.com"
 				websiteUrl="https://ledger.com"
 				offsetChildren
 				marginY
 			>
-				{addressesRef.current.length > 0 && (
+				{activeAddresses.length > 0 && (
 					<span>
 						<ButtonText
 							text={t('reset', { ns: 'app' })}
 							onClick={() => {
 								if (confirm(t('areYouSure', { ns: 'app' }))) {
-									resetLedgerAccounts()
+									onResetActiveGroup()
 								}
 							}}
 						/>
