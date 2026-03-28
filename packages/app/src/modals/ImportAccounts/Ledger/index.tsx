@@ -149,6 +149,12 @@ export const Ledger = () => {
 					newAddress[0].address,
 					options.accountIndex,
 				)
+				renameHardwareAccount(
+					source,
+					network,
+					newAddress[0].address,
+					defaultName,
+				)
 				onImportSuccess({
 					accountIndex: options.accountIndex,
 					address: newAddress[0].address,
