@@ -53,6 +53,7 @@ export const Ledger = () => {
 	const [addresses, setAddresses] =
 		useState<HardwareAccount[]>(initialAddresses)
 	const addressesRef = useRef(addresses)
+
 	const groupAnchorsRef = useRef<
 		Record<number, { index: number; address: string }>
 	>({})
@@ -81,21 +82,31 @@ export const Ledger = () => {
 		[groups],
 	)
 
+	// The imported addresses for the currently active group
 	const activeAddresses = groupedAddresses[activeGroup] ?? []
-	const latestGroup = addressGroups[addressGroups.length - 1] ?? 1
-	const latestGroupIsEmpty = (groupedAddresses[latestGroup]?.length ?? 0) === 0
-	const canAddGroup = !latestGroupIsEmpty
 
-	// Handle exist check for a ledger address
+	// Derermine the most recently added group
+	const canAddGroup = useMemo(() => {
+		const latestGroup = addressGroups[addressGroups.length - 1] ?? 1
+
+		const latestGroupIsEmpty =
+			(groupedAddresses[latestGroup]?.length ?? 0) === 0
+		return !latestGroupIsEmpty
+	}, [addressGroups, groupedAddresses])
+
+	// Handle exist check for a ledger address. Checks whether the provided address has already been
+	// imported for this source and network combination
 	const handleExists = (address: string) =>
 		hardwareAccountExists(source, network, address)
 
-	// Handle renaming a ledger address
+	// Handle renaming a ledger address for an imported address. Renames the provided address for this
+	// source and network combination
 	const handleRename = (address: string, newName: string) => {
 		renameHardwareAccount(source, network, address, newName)
 	}
 
-	// Handle removing a ledger address
+	// Handle removing a ledger address. Removes provided address from imported accounts and local
+	// state for ui syncing
 	const handleRemove = (address: string) => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
 			removeHardwareAccount(source, network, address)
