@@ -450,7 +450,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 	{
 		name: 'ParaNodes.io',
 		icon: 'Paranodes',
-		bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stablility of operations.',
+		bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stability of operations.',
 		email: 'support@paranodes.io',
 		x: '@paranodes',
 		website: 'https://paranodes.io/',
