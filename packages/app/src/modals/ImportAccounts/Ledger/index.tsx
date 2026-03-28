@@ -235,12 +235,28 @@ export const Ledger = () => {
 		}
 	}
 
-	// Resets ledger accounts
+	// Resets the currently active ledger group
 	const resetLedgerAccounts = () => {
-		addressesRef.current.forEach((account) => {
+		delete groupAnchorsRef.current[activeGroup]
+		setFeedback(null)
+		resetStatusCode()
+
+		// Drop only the active group's accounts, then derive the groups that still exist
+		const nextAddresses = addressesRef.current.filter(
+			(account) => account.group !== activeGroup,
+		)
+		const remainingGroups = Array.from(
+			new Set(nextAddresses.map((account) => account.group ?? 1)),
+		).sort((a, b) => a - b)
+		const nextGroups = remainingGroups.length > 0 ? remainingGroups : [1]
+
+		// Remove persisted hardware accounts for the active group, then sync the local UI state
+		activeAddresses.forEach((account) => {
 			removeHardwareAccount(source, network, account.address)
 		})
-		setStateWithRef([], setAddresses, addressesRef)
+		setGroups(nextGroups)
+		setActiveGroup(nextGroups[0])
+		setStateWithRef(nextAddresses, setAddresses, addressesRef)
 	}
 
 	// Get last saved ledger feedback
@@ -366,7 +382,7 @@ export const Ledger = () => {
 				offsetChildren
 				marginY
 			>
-				{addressesRef.current.length > 0 && (
+				{activeAddresses.length > 0 && (
 					<span>
 						<ButtonText
 							text={t('reset', { ns: 'app' })}
