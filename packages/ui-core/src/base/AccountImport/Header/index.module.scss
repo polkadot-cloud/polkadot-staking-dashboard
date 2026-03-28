@@ -27,7 +27,7 @@
     &:first-child {
       margin-bottom: 1rem;
 
-      > img {
+      > img, > svg {
         max-width: 5rem;
         max-height: 5rem;
         filter: drop-shadow(0 0.25rem 0.5rem rgb(0 0 0 / 25%));

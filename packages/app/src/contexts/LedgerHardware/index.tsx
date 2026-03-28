@@ -105,7 +105,7 @@ export const LedgerHardwareProvider = ({
 	const handleGetAddress = async (accountIndex: number, ss58Prefix: number) => {
 		try {
 			setIsExecuting(true)
-			const { app, productName, deviceModel: model } = await Ledger.initialise()
+			const { app, deviceModel: model } = await Ledger.initialise()
 			setDeviceModel(model)
 			const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
@@ -117,7 +117,9 @@ export const LedgerHardwareProvider = ({
 				options: {
 					accountIndex,
 				},
-				device: { productName },
+				device: {
+					deviceModel: model,
+				},
 				body: [result],
 			})
 		} catch (err) {
@@ -139,7 +141,10 @@ export const LedgerHardwareProvider = ({
 				accountIndex,
 				ss58Prefix,
 			)) as LedgerDeviceAddress
-			return result
+			return {
+				...result,
+				deviceModel: model,
+			}
 		} catch (err) {
 			handleErrors(err)
 			return null

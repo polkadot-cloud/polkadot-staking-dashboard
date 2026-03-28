@@ -47,6 +47,9 @@ export interface LedgerResponse {
 	ack: string
 	statusCode: LedgerStatusCode
 	body?: AnyJson
+	device?: {
+		deviceModel?: LedgerDeviceModel
+	}
 	options?: AnyJson
 }
 
@@ -65,6 +68,7 @@ export interface LedgerAddress {
 export interface LedgerDeviceAddress {
 	address: string
 	pubKey: string
+	deviceModel?: LedgerDeviceModel
 }
 
 export interface HandleErrorFeedback {
