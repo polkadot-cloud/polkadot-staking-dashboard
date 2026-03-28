@@ -113,7 +113,7 @@ export const Ledger = () => {
 		if (statusCode === 'ReceivedAddress') {
 			const responseDeviceModel = device?.deviceModel ?? 'unknown'
 			const deviceName = getLedgerDeviceName(responseDeviceModel)
-			const accountNumber = addressesRef.current.length + 1
+			const accountNumber = activeAddresses.length + 1
 			const defaultName = `${deviceName} ${accountNumber}`
 
 			const existingAddresses = new Set(
