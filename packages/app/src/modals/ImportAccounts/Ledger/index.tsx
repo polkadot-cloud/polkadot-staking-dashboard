@@ -46,11 +46,16 @@ export const Ledger = () => {
 	const source: HardwareAccountSource = 'ledger'
 
 	const initialAddresses = getHardwareAccounts(source, network)
+	const storedLedgerAccounts = getHardwareAccounts(source, network)
 
 	// Store addresses retrieved from Ledger device. Defaults to local addresses
 	const [addresses, setAddresses] =
 		useState<HardwareAccount[]>(initialAddresses)
 	const addressesRef = useRef(addresses)
+	const [pendingRename, setPendingRename] = useState<{
+		address: string
+		name: string
+	} | null>(null)
 	const {
 		activeAddresses,
 		activeGroup,
@@ -149,12 +154,10 @@ export const Ledger = () => {
 					newAddress[0].address,
 					options.accountIndex,
 				)
-				renameHardwareAccount(
-					source,
-					network,
-					newAddress[0].address,
-					defaultName,
-				)
+				setPendingRename({
+					address: newAddress[0].address,
+					name: defaultName,
+				})
 				onImportSuccess({
 					accountIndex: options.accountIndex,
 					address: newAddress[0].address,
@@ -174,6 +177,33 @@ export const Ledger = () => {
 	useEffectIgnoreInitial(() => {
 		handleLedgerStatusResponse(transportResponse)
 	}, [transportResponse])
+
+	useEffect(() => {
+		if (!pendingRename) {
+			return
+		}
+		const importedAccount = storedLedgerAccounts.find(
+			(account) => account.address === pendingRename.address,
+		)
+		if (!importedAccount) {
+			return
+		}
+		if (importedAccount.name !== pendingRename.name) {
+			renameHardwareAccount(
+				source,
+				network,
+				pendingRename.address,
+				pendingRename.name,
+			)
+		}
+		setPendingRename(null)
+	}, [
+		network,
+		pendingRename,
+		renameHardwareAccount,
+		source,
+		storedLedgerAccounts,
+	])
 
 	// Tidy up context state when this component is no longer mounted
 	useEffect(

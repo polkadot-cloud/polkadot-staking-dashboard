@@ -195,20 +195,15 @@ export const useLedgerDeviceGroups = ({
 		setFeedback(null)
 		resetStatusCode()
 
-		// Rebuild the remaining group list from the accounts that were not removed.
+		// Clear only the active group's accounts and keep the group itself available so the
+		// next import stays scoped to this device slot instead of jumping to another group.
 		const nextAddresses = addressesRef.current.filter(
 			(account) => account.group !== activeGroup,
 		)
-		const remainingGroups = Array.from(
-			new Set(nextAddresses.map((account) => account.group ?? 1)),
-		).sort((a, b) => a - b)
-		const nextGroups = remainingGroups.length > 0 ? remainingGroups : [1]
 
 		activeAddresses.forEach((account) => {
 			removeHardwareAccount(source, network, account.address)
 		})
-		setGroups(nextGroups)
-		setActiveGroup(nextGroups[0])
 		setStateWithRef(nextAddresses, setAddresses, addressesRef)
 	}
 
