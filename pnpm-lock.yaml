@@ -85,8 +85,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.4)
       '@ledgerhq/hw-transport-webhid':
-        specifier: ^6.33.0
-        version: 6.33.0
+        specifier: ^6.34.0
+        version: 6.34.0
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -1297,14 +1297,17 @@ packages:
   '@ledgerhq/devices@8.12.0':
     resolution: {integrity: sha512-E6msvdhwHax6mseoOzuPp/z7+X41KE2PWBzmmmrrJ+pNNp7KIb/FZbGuwNu1Vjeg3ekbExVwQYJXdwQLuGwRKw==}
 
+  '@ledgerhq/devices@8.13.0':
+    resolution: {integrity: sha512-hgGn1kpe/rT0EJ0Qs7rG+1TXA4g6HN2t3dB4DndRTqVqC9aSSbME+ajA0QWLZisxOD3zkwvO4Q0mJ2zARAKyag==}
+
   '@ledgerhq/devices@8.5.0':
     resolution: {integrity: sha512-zDB6Pdk6NYYbYis8cWoLLkL9k/IvjhC3hkuuz2lhpJ2AxIs3/PDMUKoyK4DpjPtRyKk1W1lwsnpc6J1i87r4/Q==}
 
   '@ledgerhq/devices@8.8.0':
     resolution: {integrity: sha512-ZFRAQQaESxIK/8SYrrHyqb7pQjLPO8f62PI6H16SP0/uC9fdZKR8NqOGMvIf7I6K442SkiQATnC/kxUeUTfuHA==}
 
-  '@ledgerhq/errors@6.31.0':
-    resolution: {integrity: sha512-aGyE0HLzM8VwWikWEETfHdOzRyUsHuXHs9n+OCBNj11Tg0LeU05iuRvfL7SiXxYNN2fE45JzPfuMFsI5dp5G7w==}
+  '@ledgerhq/errors@6.32.0':
+    resolution: {integrity: sha512-BjjvhLM6UXYUbhllqAduo9PSneLt9FXZ3TBEUFQ3MMSZOCHt0gAgDySLwul99R8fdYWkXBza4DYQjUNckpN2lg==}
 
   '@ledgerhq/hw-transport-node-hid-noevents@6.33.0':
     resolution: {integrity: sha512-HLdIErIdqaCJzzIxvgNyr4Zl/BKZTwC8hcWUq66P6vd67VWVkL2pgdqoZWU+z8GJ4r1Sr/p7kagFuAvWdPTREQ==}
@@ -1312,8 +1315,8 @@ packages:
   '@ledgerhq/hw-transport-node-hid@6.32.0':
     resolution: {integrity: sha512-UZ1nKEaOfj8P3lT7tc6a7Da+nEymxlNR/zya4+TktL0TSPcs/UDtYo77Yx2KxhXFtBTEX3GJ3EfxVpkzPy90sw==}
 
-  '@ledgerhq/hw-transport-webhid@6.33.0':
-    resolution: {integrity: sha512-+7U3P/iipwLGgsDU/b2GEyv3m3Le4jE05qY7qkY+0C3yauSOHPp4jUvhlDZ0/XhXhAlM7giSaT9ObyrSds5EeQ==}
+  '@ledgerhq/hw-transport-webhid@6.34.0':
+    resolution: {integrity: sha512-SG+UnZXyUzrJBSkZnRYGaaZV+C8yiu+pF69Mzw4AKOX6TG8RZ1tOvly8hhnRQ2/gXSiTgbc07N4T8ne2eFei3A==}
 
   '@ledgerhq/hw-transport@6.31.15':
     resolution: {integrity: sha512-I+hzH9XGFPaYq9K+iw+qWJUyVdhN9fdO00Df9zAkOCzju1W5Gc+cDJxbYnZApmY8oMd8mNoXTstEW3Ih5ikaVg==}
@@ -1323,6 +1326,9 @@ packages:
 
   '@ledgerhq/hw-transport@6.34.0':
     resolution: {integrity: sha512-BHpsf2n0/JnHsGSLGT3x3dEgOk7oLO3QYXYrzrn4RVDdiYAEyXbERYJeS1D4WbINN0/LBmTM0n4M8raRJBxxSg==}
+
+  '@ledgerhq/hw-transport@6.34.1':
+    resolution: {integrity: sha512-Bg9Qk2vtm0m0cZn9prZV2Hbvh3b42KBh4uomO00derh+eiwsdg5AXBBptAJiREkew1RVtETRdWxrKchUJfeWvA==}
 
   '@ledgerhq/logs@6.16.0':
     resolution: {integrity: sha512-v/PLfb1dq1En35kkpbfRWp8jLYgbPUXxGhmd4pmvPSIe0nRGkNTomsZASmWQAv6pRonVGqHIBVlte7j1MBbOww==}
@@ -4862,31 +4868,39 @@ snapshots:
 
   '@ledgerhq/devices@8.12.0':
     dependencies:
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
+      '@ledgerhq/logs': 6.16.0
+      rxjs: 7.8.2
+      semver: 7.7.3
+    optional: true
+
+  '@ledgerhq/devices@8.13.0':
+    dependencies:
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/logs': 6.16.0
       rxjs: 7.8.2
       semver: 7.7.3
 
   '@ledgerhq/devices@8.5.0':
     dependencies:
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/logs': 6.16.0
       rxjs: 7.8.2
       semver: 7.7.4
 
   '@ledgerhq/devices@8.8.0':
     dependencies:
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/logs': 6.16.0
       rxjs: 7.8.2
       semver: 7.7.4
 
-  '@ledgerhq/errors@6.31.0': {}
+  '@ledgerhq/errors@6.32.0': {}
 
   '@ledgerhq/hw-transport-node-hid-noevents@6.33.0':
     dependencies:
       '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/hw-transport': 6.34.0
       '@ledgerhq/logs': 6.16.0
       node-hid: 2.1.2
@@ -4895,7 +4909,7 @@ snapshots:
   '@ledgerhq/hw-transport-node-hid@6.32.0':
     dependencies:
       '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/hw-transport': 6.34.0
       '@ledgerhq/hw-transport-node-hid-noevents': 6.33.0
       '@ledgerhq/logs': 6.16.0
@@ -4904,31 +4918,39 @@ snapshots:
       usb: 2.9.0
     optional: true
 
-  '@ledgerhq/hw-transport-webhid@6.33.0':
+  '@ledgerhq/hw-transport-webhid@6.34.0':
     dependencies:
-      '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.31.0
-      '@ledgerhq/hw-transport': 6.34.0
+      '@ledgerhq/devices': 8.13.0
+      '@ledgerhq/errors': 6.32.0
+      '@ledgerhq/hw-transport': 6.34.1
       '@ledgerhq/logs': 6.16.0
 
   '@ledgerhq/hw-transport@6.31.15':
     dependencies:
       '@ledgerhq/devices': 8.8.0
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/logs': 6.16.0
       events: 3.3.0
 
   '@ledgerhq/hw-transport@6.31.9':
     dependencies:
       '@ledgerhq/devices': 8.5.0
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/logs': 6.16.0
       events: 3.3.0
 
   '@ledgerhq/hw-transport@6.34.0':
     dependencies:
       '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.31.0
+      '@ledgerhq/errors': 6.32.0
+      '@ledgerhq/logs': 6.16.0
+      events: 3.3.0
+    optional: true
+
+  '@ledgerhq/hw-transport@6.34.1':
+    dependencies:
+      '@ledgerhq/devices': 8.13.0
+      '@ledgerhq/errors': 6.32.0
       '@ledgerhq/logs': 6.16.0
       events: 3.3.0
 
