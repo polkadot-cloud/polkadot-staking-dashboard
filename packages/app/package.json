@@ -36,7 +36,6 @@
 		"bignumber.js": "^10.0.2",
 		"buffer": "^6.0.3",
 		"classnames": "^2.5.1",
-		"compare-versions": "^6.1.1",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
 		"dedot": "^1.2.0",
