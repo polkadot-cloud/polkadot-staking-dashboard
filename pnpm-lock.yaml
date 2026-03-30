@@ -301,8 +301,8 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.248.0
-        version: 0.248.0(dedot@1.2.0(typescript@6.0.2))
+        specifier: ^0.249.0
+        version: 0.249.0(dedot@1.2.0(typescript@6.0.2))
       '@w3ux/observables-connect':
         specifier: ^1.0.7
         version: 1.0.7(dedot@1.2.0(typescript@6.0.2))(react@19.2.4)(rxjs@7.8.2)
@@ -456,8 +456,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       '@dedot/chaintypes':
-        specifier: ^0.248.0
-        version: 0.248.0(dedot@1.2.0(typescript@6.0.2))
+        specifier: ^0.249.0
+        version: 0.249.0(dedot@1.2.0(typescript@6.0.2))
       '@polkadot/keyring':
         specifier: ^14.0.3
         version: 14.0.3(@polkadot/util-crypto@14.0.3(@polkadot/util@14.0.3))(@polkadot/util@14.0.3)
@@ -507,8 +507,8 @@ importers:
         version: 1.2.0(typescript@6.0.2)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.248.0
-        version: 0.248.0(dedot@1.2.0(typescript@6.0.2))
+        specifier: ^0.249.0
+        version: 0.249.0(dedot@1.2.0(typescript@6.0.2))
       bignumber.js:
         specifier: ^10.0.2
         version: 10.0.2
@@ -981,8 +981,8 @@ packages:
   '@dedot/chain-specs@0.10.0':
     resolution: {integrity: sha512-v7Q0AJkJTE9cIEXipYFSotI/M4wHYbXJwVRi977DQXtf//BnYOzr7z9Y0gY1QeE0TJk15bQTtLJCC+sf+I9MOA==}
 
-  '@dedot/chaintypes@0.248.0':
-    resolution: {integrity: sha512-IIm8fL45SRmayyw8ONlDcLbGaofka9glx9ZzImtIFf2NAPWXRoo+95PwXIG8hHtOCXdi2xDrbdUg1mFUYjC7iQ==}
+  '@dedot/chaintypes@0.249.0':
+    resolution: {integrity: sha512-ALGFVn6LEdBZA5OhqIzegCDbUyF/CJrfUVPo73KVWw0+3p/Oef6HbyPl1hb73TQNtvyF8+WhOeWE7nz929bSIw==}
     peerDependencies:
       dedot: '>=1.0.1'
 
@@ -4573,7 +4573,7 @@ snapshots:
 
   '@dedot/chain-specs@0.10.0': {}
 
-  '@dedot/chaintypes@0.248.0(dedot@1.2.0(typescript@6.0.2))':
+  '@dedot/chaintypes@0.249.0(dedot@1.2.0(typescript@6.0.2))':
     dependencies:
       dedot: 1.2.0(typescript@6.0.2)
 
