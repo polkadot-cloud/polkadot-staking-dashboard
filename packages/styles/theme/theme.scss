@@ -70,8 +70,8 @@ $shade-lightness-dark: 8;
   /* Shimmer */
   --shimmer-fg: var(--gray-500);
   --shimmer-bg: var(--gray-600);
-  --shimmer-highlight: rgba(255, 255, 255, 0.15);
-  --shimmer-highlight-subtle: rgba(255, 255, 255, 0.08);
+  --shimmer-highlight: rgb(255 255 255 / 15%);
+  --shimmer-highlight-subtle: rgb(255 255 255 / 8%);
 
   /* Grid */
   --grid-primary: var(--gray-500);
@@ -156,8 +156,8 @@ $shade-lightness-dark: 8;
   /* Shimmer */
   --shimmer-bg: var(--gray-400);
   --shimmer-fg: var(--gray-200);
-  --shimmer-highlight: rgba(255, 255, 255, 0.15);
-  --shimmer-highlight-subtle: rgba(255, 255, 255, 0.08);
+  --shimmer-highlight: rgb(255 255 255 / 15%);
+  --shimmer-highlight-subtle: rgb(255 255 255 / 8%);
 
   /* Grid */
   --grid-primary: var(--gray-400);
