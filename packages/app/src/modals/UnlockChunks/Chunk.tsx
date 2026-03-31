@@ -72,10 +72,10 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 		return () => clearInterval(id)
 	}, [isUnlocked])
 
-	// reset timer on account or network change.
+	// reset timer on account, network, or era change.
 	useEffect(() => {
 		setFromNow(dateFrom, dateTo)
-	}, [activeAddress, network])
+	}, [activeAddress, network, activeEra])
 
 	return (
 		<ChunkWrapper>
