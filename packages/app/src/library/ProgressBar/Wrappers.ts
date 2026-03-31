@@ -51,5 +51,9 @@ export const ProgressFill = styled.div<{
 			transparent 100%
 		);
 		animation: ${shimmer} 2.5s ease-in-out infinite;
+
+		@media (prefers-reduced-motion: reduce) {
+			animation: none;
+		}
 	}
 `
