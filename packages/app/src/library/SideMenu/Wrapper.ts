@@ -102,22 +102,25 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   padding-top: 1rem;
   position: relative;
   margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
-  margin-bottom: ${(props) => (props.$advancedMode ? '0' : '0.5rem')};
+  margin-bottom: ${(props) => (props.$advancedMode ? '0.25rem' : '0.75rem')};
   transition: transform 0.25s ease;
 
   > svg  {  
-    margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
+    position: relative;
+    margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0.3rem')};
     width: ${(props) => (props.$minimised ? '2.25rem' : '1.75em')};
     height: ${(props) => (props.$minimised ? '2.25rem' : '1.75rem')};
+    top: ${(props) => (props.$minimised ? '0' : '0.1rem')};
   }
 
   > h3 {
+    font-family: 'DM Serif Display', serif;
     color: var(--gray-1000);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1.6rem;
   }
 
   &:hover {

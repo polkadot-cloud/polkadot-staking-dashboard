@@ -77,9 +77,26 @@
 
           &.row {
             align-items: center;
+            position: relative;
 
             .edit {
               margin-left: 0.4rem;
+            }
+
+            .editHint {
+              position: absolute;
+              right: 0.85rem;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 0.75rem;
+              color: var(--text-tertiary);
+              opacity: 0.4;
+              pointer-events: none;
+              transition: opacity var(--transition-duration);
+            }
+
+            &:hover .editHint {
+              opacity: 0.8;
             }
           }
         }
