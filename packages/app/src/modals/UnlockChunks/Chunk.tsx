@@ -75,11 +75,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 				<div className="chunk-header">
 					<h2>{`${planckToUnitBn(new BigNumber(value), units)} ${unit}`}</h2>
 					{isStaking && (
-						<ButtonSubmit
-							text={t('rebond')}
-							disabled={false}
-							onClick={() => onRebond(chunk)}
-						/>
+						<ButtonSubmit text={t('rebond')} onClick={() => onRebond(chunk)} />
 					)}
 				</div>
 				<div className={isUnlocked ? 'status-line ready' : 'status-line'}>

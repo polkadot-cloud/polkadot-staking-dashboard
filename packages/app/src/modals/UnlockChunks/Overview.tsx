@@ -121,7 +121,6 @@ export const Overview = forwardRef(
 					{hasUnlocked && (
 						<div className="withdraw-action">
 							<ButtonSubmit
-								disabled={false}
 								text={t('withdrawUnlocked')}
 								onClick={() => {
 									setTask('withdraw')
