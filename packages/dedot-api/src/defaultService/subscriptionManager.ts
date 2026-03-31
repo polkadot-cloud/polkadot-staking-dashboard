@@ -41,7 +41,6 @@ import {
 	diffPoolIds,
 	formatAccountAddresses,
 	getAccountKey,
-	keysOf,
 } from '../util'
 import type { AccountBalances } from './types'
 
@@ -99,14 +98,20 @@ export class SubscriptionManager<
 					(c) => c.address === account.address,
 				)
 				if (!addressFound) {
-					this.ids.forEach((id, i) => {
-						this.subAccountBalances[keysOf(this.subAccountBalances)[i]][
-							getAccountKey(id, address)
-						]?.unsubscribe()
+					Object.values(this.subAccountBalances).forEach((balances) => {
+						Object.keys(balances).forEach((key) => {
+							if (key.endsWith(`:${address}`)) {
+								balances[key]?.unsubscribe()
+								delete balances[key]
+							}
+						})
 					})
 					this.subBonded[address]?.unsubscribe()
+					delete this.subBonded[address]
 					this.subProxies?.[address]?.unsubscribe()
+					delete this.subProxies[address]
 					this.subPoolMemberships?.[address]?.unsubscribe()
+					delete this.subPoolMemberships[address]
 				}
 			})
 
