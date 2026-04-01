@@ -7,6 +7,7 @@ import {
 	ProviderTypeKey,
 	rpcEndpointKey,
 	rpcHealthCacheKey,
+	rpcLatencyCacheKey,
 } from 'consts'
 import type { RpcHealthLabels } from 'plugin-staking-api/types'
 import type { NetworkId, ProviderType, RpcEndpoints } from 'types'
@@ -73,6 +74,53 @@ export const getLocalRpcHealthCache = (
 	} catch {
 		// Invalid cache data, remove it
 		localStorage.removeItem(rpcHealthCacheKey(network))
+		return null
+	}
+}
+
+// Latency data: chainId -> { providerLabel: latencyMs }
+export type RpcLatencyData = Record<string, Record<string, number>>
+
+// Cache structure for RPC latency data
+interface RpcLatencyCache {
+	timestamp: number
+	data: RpcLatencyData
+}
+
+// Set cached RPC latency data with timestamp
+export const setLocalRpcLatencyCache = (
+	network: NetworkId,
+	latencyData: RpcLatencyData,
+) => {
+	const cache: RpcLatencyCache = {
+		timestamp: Date.now(),
+		data: latencyData,
+	}
+	localStorage.setItem(rpcLatencyCacheKey(network), JSON.stringify(cache))
+}
+
+// Get cached RPC latency data if it's within 1 hour
+export const getLocalRpcLatencyCache = (
+	network: NetworkId,
+): RpcLatencyData | null => {
+	try {
+		const cached = localStorage.getItem(rpcLatencyCacheKey(network))
+		if (!cached) {
+			return null
+		}
+
+		const cache: RpcLatencyCache = JSON.parse(cached)
+		const now = Date.now()
+		const oneHourInMs = 60 * 60 * 1000
+
+		if (now - cache.timestamp < oneHourInMs) {
+			return cache.data
+		}
+
+		localStorage.removeItem(rpcLatencyCacheKey(network))
+		return null
+	} catch {
+		localStorage.removeItem(rpcLatencyCacheKey(network))
 		return null
 	}
 }
