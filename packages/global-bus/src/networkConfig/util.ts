@@ -22,7 +22,14 @@ import type {
 } from 'types'
 import { pluginEnabled } from '../plugins'
 import { sanitizeEndpoints } from './health'
-import { getLocalRpcHealthCache, setLocalRpcHealthCache } from './local'
+import { measureNetworkLatencies } from './latency'
+import type { RpcLatencyData } from './local'
+import {
+	getLocalRpcHealthCache,
+	getLocalRpcLatencyCache,
+	setLocalRpcHealthCache,
+	setLocalRpcLatencyCache,
+} from './local'
 
 export const getInitialNetwork = () => {
 	// Attempt to get network from URL
@@ -112,17 +119,35 @@ export const getInitialRpcEndpoints = async (
 		}
 	}
 
+	// Measure endpoint latency (cached for 1 hour)
+	let latencyResult: RpcLatencyData | undefined
+	const cachedLatency = getLocalRpcLatencyCache(network)
+
+	if (cachedLatency) {
+		latencyResult = cachedLatency
+	} else {
+		const latencyData = (await withTimeout(
+			5000,
+			measureNetworkLatencies(network),
+		)) as RpcLatencyData | undefined
+
+		if (latencyData) {
+			latencyResult = latencyData
+			setLocalRpcLatencyCache(network, latencyData)
+		}
+	}
+
 	// Return sanitized local endpoints if valid
 	if (local) {
 		if (validateRpcEndpoints(local, fallback)) {
 			return stakingApiEnabled
-				? sanitizeEndpoints(network, local, healthResult)
+				? sanitizeEndpoints(network, local, healthResult, latencyResult)
 				: local
 		}
 	}
 	// Return sanitized fallback endpoints
 	return stakingApiEnabled
-		? sanitizeEndpoints(network, fallback, healthResult)
+		? sanitizeEndpoints(network, fallback, healthResult, latencyResult)
 		: fallback
 }
 
