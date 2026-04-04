@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
-import type { ActiveAccount } from 'types'
+import type { ActiveAccount } from '../../types'
 
 export interface UseLedgerTxSubmitProps {
 	uid: number
@@ -14,10 +14,14 @@ export interface UseLedgerTxSubmitProps {
 	notEnoughFunds: boolean
 	/** When false, all side effects are skipped and idle state is returned */
 	enabled?: boolean
+	/** Callback to trigger modal resize - must be provided by the consuming app */
+	setModalResize: () => void
+	/** Function to check if an account has a signer - must be provided by the consuming app */
+	accountHasSigner: (account: ActiveAccount) => boolean
 }
 
 export interface UseLedgerTxSubmitReturn {
-	/** Text displayed on the submit button */
+	/** Translation code for the submit button text */
 	buttonText: string
 	/** Icon displayed on the submit button */
 	buttonIcon: IconDefinition

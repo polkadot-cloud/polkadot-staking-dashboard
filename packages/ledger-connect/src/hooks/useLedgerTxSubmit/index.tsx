@@ -4,12 +4,9 @@
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import type { LedgerResponse } from 'types'
-import { useOverlay } from 'ui-overlay'
+import { useLedgerHardware } from '../../LedgerHardwareContext'
+import type { LedgerResponse } from '../../types'
 import type { UseLedgerTxSubmitProps, UseLedgerTxSubmitReturn } from './types'
 
 // No-op handler used when the hook is disabled
@@ -24,10 +21,11 @@ export const useLedgerTxSubmit = ({
 	onSubmit,
 	notEnoughFunds,
 	enabled = true,
+	setModalResize,
+	accountHasSigner,
 }: UseLedgerTxSubmitProps): UseLedgerTxSubmitReturn => {
-	const { t } = useTranslation('app')
 	const {
-		setFeedback,
+		setFeedbackCode,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -36,8 +34,6 @@ export const useLedgerTxSubmit = ({
 		transportResponse,
 		checkRuntimeVersion,
 	} = useLedgerHardware()
-	const { setModalResize } = useOverlay().modal
-	const { accountHasSigner } = useImportedAccounts()
 
 	// Handle new Ledger status report
 	const handleLedgerStatusResponse = (response: LedgerResponse) => {
@@ -49,7 +45,7 @@ export const useLedgerTxSubmit = ({
 		if (newStatusCode === 'SignedPayload') {
 			if (uid !== body.uid) {
 				// UIDs do not match, so this is not the transaction we are waiting for
-				setFeedback(t('wrongTransaction'), 'Wrong Transaction')
+				setFeedbackCode('wrongTransaction', 'Wrong Transaction')
 			} else {
 				setStatusCode({ ack, statusCode: newStatusCode })
 			}
@@ -116,14 +112,14 @@ export const useLedgerTxSubmit = ({
 	// Button `onClick` handler depends whether integrityChecked and whether tx has been submitted
 	const buttonOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
 
-	// Determine button text
+	// Determine button text (returns translation codes for internally generated text)
 	const buttonText = !integrityChecked
-		? t('confirm')
+		? 'confirm'
 		: txReady
 			? submitText || ''
 			: isExecuting
-				? t('signing')
-				: t('sign')
+				? 'signing'
+				: 'sign'
 
 	// Button icon
 	const buttonIcon = !integrityChecked ? faUsb : faSquarePen

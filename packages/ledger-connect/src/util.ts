@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { LedgerDeviceFamily, LedgerDeviceModel } from 'types'
 import { errorsByType } from './defaults'
+import type { LedgerDeviceFamily, LedgerDeviceModel } from './types'
 
 /**
  * Maps a WebHID `productName` string to a known `LedgerDeviceModel`.

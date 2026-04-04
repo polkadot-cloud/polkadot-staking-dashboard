@@ -3,14 +3,16 @@
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
-import { useLedgerTxPrompt } from 'hooks/useLedgerTxPrompt'
-import { useLedgerTxSubmit } from 'hooks/useLedgerTxSubmit'
+import { useLedgerTxPrompt, useLedgerTxSubmit } from 'ledger-connect'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
+import { useTranslation } from 'react-i18next'
 import type { ActiveAccount, DisplayFor } from 'types'
+import { useOverlay } from 'ui-overlay'
 
 interface LedgerProps {
 	uid: number
@@ -36,6 +38,10 @@ export const LedgerSubmit = ({
 	onSubmit,
 	notEnoughFunds,
 }: LedgerProps) => {
+	const { t } = useTranslation('app')
+	const { setModalResize } = useOverlay().modal
+	const { accountHasSigner } = useImportedAccounts()
+
 	const { buttonText, buttonIcon, buttonOnClick, buttonDisabled, buttonPulse } =
 		useLedgerTxSubmit({
 			uid,
@@ -45,12 +51,17 @@ export const LedgerSubmit = ({
 			submitAccount,
 			onSubmit,
 			notEnoughFunds,
+			setModalResize,
+			accountHasSigner,
 		})
+
+	// Translate button text codes from ledger-connect
+	const translatedButtonText = buttonText ? t(buttonText) : ''
 
 	return (
 		<SubmitButtonWrapper>
 			<SubmitButton
-				text={buttonText}
+				text={translatedButtonText}
 				icon={buttonIcon}
 				iconTransform="shrink-3"
 				onSubmit={buttonOnClick}
@@ -63,12 +74,18 @@ export const LedgerSubmit = ({
 }
 
 export const LedgerPrompt = ({ valid }: LedgerPromptProps) => {
+	const { t } = useTranslation('app')
 	const { openHelpTooltip } = useHelp()
-	const { feedback, message } = useLedgerTxPrompt()
+	const { feedback, messageCode, messageParams, verified } = useLedgerTxPrompt()
 
 	if (!valid) {
 		return <p className="prompt">...</p>
 	}
+
+	// Translate message codes from ledger-connect
+	const message = verified
+		? `${t('deviceVerified')}. ${t(messageCode, messageParams)}`
+		: t(messageCode, messageParams)
 
 	return (
 		<p className="prompt">

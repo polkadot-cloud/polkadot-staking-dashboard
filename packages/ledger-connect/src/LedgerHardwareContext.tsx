@@ -6,18 +6,17 @@ import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { defaultFeedback } from './defaults'
+import { Ledger } from './static/ledger'
 import type {
-	AnyJson,
+	AnyTransport,
 	FeedbackMessage,
 	HandleErrorFeedback,
 	LedgerDeviceAddress,
 	LedgerDeviceModel,
+	LedgerHardwareContextInterface,
 	LedgerResponse,
-} from 'types'
-import { defaultFeedback } from './defaults'
-import { Ledger } from './static/ledger'
-import type { LedgerHardwareContextInterface } from './types'
+} from './types'
 import {
 	getLedgerDeviceModel,
 	getLedgerDeviceName,
@@ -32,8 +31,6 @@ export const LedgerHardwareProvider = ({
 }: {
 	children: ReactNode
 }) => {
-	const { t } = useTranslation('modals')
-
 	// Resolve the current Ledger model directly from the active transport instead of persisting a
 	// global device selection in React state.
 	const getDeviceModel = (): LedgerDeviceModel =>
@@ -56,9 +53,13 @@ export const LedgerHardwareProvider = ({
 		useState<FeedbackMessage>(defaultFeedback)
 	const feedbackRef = useRef(feedback)
 
-	const getFeedback = () => feedbackRef.current
-	const setFeedback = (message: MaybeString, helpKey: MaybeString = null) =>
-		setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef)
+	const getFeedbackCode = () => feedbackRef.current
+	const setFeedbackCode = (
+		message: MaybeString,
+		helpKey: MaybeString = null,
+		params?: Record<string, string>,
+	) =>
+		setStateWithRef({ message, helpKey, params }, setFeedbackState, feedbackRef)
 	const resetFeedback = () =>
 		setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef)
 
@@ -67,9 +68,10 @@ export const LedgerHardwareProvider = ({
 		code,
 		helpKey,
 		message,
+		params,
 	}: HandleErrorFeedback) => {
 		setStatusCode({ ack: 'failure', statusCode: code })
-		setFeedback(message, helpKey)
+		setFeedbackCode(message, helpKey, params)
 	}
 
 	// Stores whether the Ledger device version has been checked. Used when signing transactions, not
@@ -77,7 +79,7 @@ export const LedgerHardwareProvider = ({
 	const [integrityChecked, setIntegrityChecked] = useState<boolean>(false)
 
 	// Store the latest successful device response
-	const [transportResponse, setTransportResponse] = useState<AnyJson>(null)
+	const [transportResponse, setTransportResponse] = useState<AnyTransport>(null)
 
 	// Checks if the Ledger device is connected
 	const checkRuntimeVersion = async () => {
@@ -103,7 +105,7 @@ export const LedgerHardwareProvider = ({
 			const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
 			setIsExecuting(false)
-			setFeedback(t('successfullyFetchedAddress'))
+			setFeedbackCode('successfullyFetchedAddress')
 			setTransportResponse({
 				ack: 'success',
 				statusCode: 'ReceivedAddress',
@@ -147,43 +149,45 @@ export const LedgerHardwareProvider = ({
 
 	// Handles errors that occur during device calls
 	const handleErrors = (err: unknown) => {
-		const device = getLedgerDeviceName(getDeviceModel())
+		const deviceName = getLedgerDeviceName(getDeviceModel())
 
 		// Update feedback and status code state based on error received
 		switch (getLedgerErrorType(String(err))) {
 			// Occurs when the device does not respond to a request within the timeout period
 			case 'timeout':
 				setStatusFeedback({
-					message: t('ledgerRequestTimeout', { device }),
+					message: 'ledgerRequestTimeout',
 					helpKey: 'Ledger Request Timeout',
 					code: 'DeviceTimeout',
+					params: { device: deviceName },
 				})
 				break
-			// Occurs when a method in a all is not supported by the device
+			// Occurs when a method in a call is not supported by the device
 			case 'methodNotSupported':
 				setStatusFeedback({
-					message: t('methodNotSupported'),
+					message: 'methodNotSupported',
 					code: 'MethodNotSupported',
 				})
 				break
 			// Occurs when one or more of nested calls being signed does not support nesting
 			case 'nestingNotSupported':
 				setStatusFeedback({
-					message: t('missingNesting'),
+					message: 'missingNesting',
 					code: 'NestingNotSupported',
 				})
 				break
 			// Occurs when the device is not connected
 			case 'deviceNotConnected':
 				setStatusFeedback({
-					message: t('connectLedgerToContinue', { device }),
+					message: 'connectLedgerToContinue',
 					code: 'DeviceNotConnected',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when tx was approved outside of active channel
 			case 'outsideActiveChannel':
 				setStatusFeedback({
-					message: t('queuedTransactionRejected'),
+					message: 'queuedTransactionRejected',
 					helpKey: 'Wrong Transaction',
 					code: 'WrongTransaction',
 				})
@@ -191,47 +195,51 @@ export const LedgerHardwareProvider = ({
 			// Occurs when the device is already in use
 			case 'deviceBusy':
 				setStatusFeedback({
-					message: t('ledgerDeviceBusy', { device }),
+					message: 'ledgerDeviceBusy',
 					code: 'DeviceBusy',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when the device is locked
 			case 'deviceLocked':
 				setStatusFeedback({
-					message: t('unlockLedgerToContinue', { device }),
+					message: 'unlockLedgerToContinue',
 					code: 'DeviceLocked',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when the app (e.g. Polkadot) is not open
 			case 'appNotOpen':
 				setStatusFeedback({
-					message: t('openAppOnLedger', { device }),
+					message: 'openAppOnLedger',
 					helpKey: 'Open App On Ledger',
 					code: 'AppNotOpen',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when submitted extrinsic(s) are not supported
 			case 'txVersionNotSupported':
 				setStatusFeedback({
-					message: t('txVersionNotSupported'),
+					message: 'txVersionNotSupported',
 					code: 'TransactionVersionNotSupported',
 				})
 				break
 			// Occurs when a user rejects a transaction
 			case 'transactionRejected':
 				setStatusFeedback({
-					message: t('transactionRejectedPending'),
+					message: 'transactionRejectedPending',
 					helpKey: 'Ledger Rejected Transaction',
 					code: 'TransactionRejected',
 				})
 				break
 			// Handle all other errors
 			default:
-				setFeedback(t('openAppOnLedger', { device }), 'Open App On Ledger')
+				setFeedbackCode('openAppOnLedger', 'Open App On Ledger', {
+					device: deviceName,
+				})
 				setStatusCode({ ack: 'failure', statusCode: 'AppNotOpen' })
 		}
 
-		// Reset refs
 		// Reset state
 		setIsExecuting(false)
 	}
@@ -264,8 +272,8 @@ export const LedgerHardwareProvider = ({
 				statusCode,
 				setStatusCode,
 				resetStatusCode,
-				getFeedback,
-				setFeedback,
+				getFeedbackCode,
+				setFeedbackCode,
 				resetFeedback,
 				handleGetAddress,
 				fetchLedgerAddress,

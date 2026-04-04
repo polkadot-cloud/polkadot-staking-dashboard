@@ -5,11 +5,10 @@ import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
+import type { LedgerDeviceModel } from 'ledger-connect'
+import { useLedgerHardware } from 'ledger-connect'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import type { LedgerDeviceModel } from 'types'
 import { getStoredGroupDeviceModels, setStoredGroupDeviceModels } from './local'
 import type { GroupAnchor, UseLedgerDeviceGroupsProps } from './types'
 
@@ -23,10 +22,9 @@ export const useLedgerDeviceGroups = ({
 	addressesRef,
 	setAddresses,
 }: UseLedgerDeviceGroupsProps) => {
-	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { removeHardwareAccount } = useHardwareAccounts()
-	const { fetchLedgerAddress, resetStatusCode, setFeedback } =
+	const { fetchLedgerAddress, resetStatusCode, setFeedbackCode } =
 		useLedgerHardware()
 
 	const { ss58 } = getStakingChainData(network)
@@ -158,11 +156,7 @@ export const useLedgerDeviceGroups = ({
 			return false
 		}
 		if (anchorResult.address !== anchor.address) {
-			setFeedback(
-				t('accountAlreadyImportedOtherDevice', {
-					ns: 'modals',
-				}),
-			)
+			setFeedbackCode('accountAlreadyImportedOtherDevice')
 			return false
 		}
 		persistGroupDeviceModel(activeGroup, anchorResult.deviceModel)
@@ -192,7 +186,7 @@ export const useLedgerDeviceGroups = ({
 	const onResetActiveGroup = () => {
 		delete groupAnchorsRef.current[activeGroup]
 		clearGroupDeviceModel(activeGroup)
-		setFeedback(null)
+		setFeedbackCode(null)
 		resetStatusCode()
 
 		// Clear only the active group's accounts and keep the group itself available so the

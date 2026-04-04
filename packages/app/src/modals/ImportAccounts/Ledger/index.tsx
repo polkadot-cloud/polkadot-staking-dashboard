@@ -8,17 +8,17 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
-import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
-import { getLedgerDeviceName } from 'contexts/LedgerHardware/util'
 import { useNetwork } from 'contexts/Network'
+import type { LedgerResponse } from 'ledger-connect'
+import { getLedgerDeviceName, useLedgerHardware } from 'ledger-connect'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { LedgerAddress, LedgerResponse } from 'types'
+import type { LedgerAddress } from 'types'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 import { Groups } from './Groups'
+import { getLedgerDeviceIcon } from './icons'
 import { useLedgerDeviceGroups } from './useLedgerDeviceGroups'
 
 export const Ledger = () => {
@@ -32,8 +32,8 @@ export const Ledger = () => {
 		getHardwareAccounts,
 	} = useHardwareAccounts()
 	const {
-		getFeedback,
-		setFeedback,
+		getFeedbackCode,
+		setFeedbackCode,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -164,14 +164,14 @@ export const Ledger = () => {
 					deviceModel: responseDeviceModel,
 				})
 			} else if (body.length > 0) {
-				setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
+				setFeedbackCode('accountAlreadyImportedOtherDevice')
 			}
 			resetStatusCode()
 		}
 	}
 
-	// Get last saved ledger feedback
-	const feedback = getFeedback()
+	// Get last saved ledger feedback code
+	const feedback = getFeedbackCode()
 
 	// Listen for new Ledger status reports
 	useEffectIgnoreInitial(() => {
@@ -276,7 +276,12 @@ export const Ledger = () => {
 			</AccountImport.Header>
 			{!!maybeFeedback && (
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<h3 style={{ padding: '1rem 0 2rem 0' }}>{feedback?.message}</h3>
+					<h3 style={{ padding: '1rem 0 2rem 0' }}>
+						{t(String(feedback?.message), {
+							ns: 'modals',
+							...feedback?.params,
+						})}
+					</h3>
 				</div>
 			)}
 			<div style={{ minHeight: minListHeight }}>
