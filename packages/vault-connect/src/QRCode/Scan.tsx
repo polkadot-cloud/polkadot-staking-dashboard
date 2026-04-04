@@ -1,7 +1,6 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePrompt } from 'contexts/Prompt'
 import { Html5Qrcode } from 'html5-qrcode'
 import type { ReactElement } from 'react'
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
@@ -18,6 +17,7 @@ const QrScanInner = ({
 	onError = DEFAULT_ERROR,
 	onScan,
 	size,
+	onCleanup,
 }: ScanProps): ReactElement<ScanProps> => {
 	const containerStyle = useMemo(() => createImgSize(size), [size])
 
@@ -37,6 +37,7 @@ const QrScanInner = ({
 				fps={10}
 				qrCodeSuccessCallback={onScanCallback}
 				qrCodeErrorCallback={onErrorCallback}
+				onCleanup={onCleanup}
 			/>
 		</ScanWrapper>
 	)
@@ -48,18 +49,17 @@ interface Html5QrScannerProps {
 	fps: number
 	qrCodeSuccessCallback: (data: string | null) => void
 	qrCodeErrorCallback: (error: string) => void
+	onCleanup?: (cleanup: () => void) => void
 }
 
 export const Html5QrCodePlugin = ({
 	fps,
 	qrCodeSuccessCallback,
 	qrCodeErrorCallback,
+	onCleanup,
 }: Html5QrScannerProps) => {
-	const { setOnClosePrompt } = usePrompt()
-
 	const html5QrCodeRef = useRef<Html5Qrcode | null>(null)
 
-	// Reference of the HTML element used to scan the QR code.
 	const ref = useRef<HTMLDivElement | null>(null)
 
 	const handleHtmlQrCode = async (): Promise<void> => {
@@ -78,11 +78,9 @@ export const Html5QrCodePlugin = ({
 						fps,
 					},
 					(decodedText) => {
-						// do something when code is read
 						qrCodeSuccessCallback(decodedText)
 					},
 					(errorMessage) => {
-						// parse error
 						qrCodeErrorCallback(errorMessage)
 					},
 				)
@@ -95,7 +93,7 @@ export const Html5QrCodePlugin = ({
 	useEffect(() => {
 		if (ref.current) {
 			html5QrCodeRef.current = new Html5Qrcode(ref.current.id)
-			setOnClosePrompt(() => {
+			onCleanup?.(() => {
 				html5QrCodeRef.current?.stop()
 			})
 			handleHtmlQrCode()
