@@ -86,8 +86,8 @@ export interface LedgerHardwareContextInterface {
 	statusCode: LedgerResponse | null
 	resetStatusCode: () => void
 	isExecuting: boolean
-	getFeedback: () => FeedbackMessage
-	setFeedback: (s: MaybeString, helpKey?: MaybeString) => void
+	getFeedbackCode: () => FeedbackMessage
+	setFeedbackCode: (s: MaybeString, helpKey?: MaybeString) => void
 	resetFeedback: () => void
 	handleUnmount: () => void
 	handleErrors: (err: unknown) => void

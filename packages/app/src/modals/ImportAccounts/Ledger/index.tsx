@@ -32,8 +32,8 @@ export const Ledger = () => {
 		getHardwareAccounts,
 	} = useHardwareAccounts()
 	const {
-		getFeedback,
-		setFeedback,
+		getFeedbackCode,
+		setFeedbackCode,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -164,14 +164,14 @@ export const Ledger = () => {
 					deviceModel: responseDeviceModel,
 				})
 			} else if (body.length > 0) {
-				setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
+				setFeedbackCode('accountAlreadyImportedOtherDevice')
 			}
 			resetStatusCode()
 		}
 	}
 
-	// Get last saved ledger feedback
-	const feedback = getFeedback()
+	// Get last saved ledger feedback code
+	const feedback = getFeedbackCode()
 
 	// Listen for new Ledger status reports
 	useEffectIgnoreInitial(() => {
@@ -276,7 +276,9 @@ export const Ledger = () => {
 			</AccountImport.Header>
 			{!!maybeFeedback && (
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<h3 style={{ padding: '1rem 0 2rem 0' }}>{feedback?.message}</h3>
+					<h3 style={{ padding: '1rem 0 2rem 0' }}>
+						{t(String(feedback?.message), { ns: 'modals' })}
+					</h3>
 				</div>
 			)}
 			<div style={{ minHeight: minListHeight }}>

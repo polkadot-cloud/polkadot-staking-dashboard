@@ -6,9 +6,10 @@ import { getLedgerDeviceName, isTouchscreenDevice } from '../../util'
 import type { UseLedgerTxPromptReturn } from './types'
 
 export const useLedgerTxPrompt = (): UseLedgerTxPromptReturn => {
-	const { getFeedback, getDeviceModel, integrityChecked } = useLedgerHardware()
+	const { getFeedbackCode, getDeviceModel, integrityChecked } =
+		useLedgerHardware()
 
-	const feedback = getFeedback()
+	const feedback = getFeedbackCode()
 	const deviceModel = getDeviceModel()
 	const deviceName = getLedgerDeviceName(deviceModel)
 

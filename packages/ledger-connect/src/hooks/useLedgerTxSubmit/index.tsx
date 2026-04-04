@@ -25,7 +25,7 @@ export const useLedgerTxSubmit = ({
 	accountHasSigner,
 }: UseLedgerTxSubmitProps): UseLedgerTxSubmitReturn => {
 	const {
-		setFeedback,
+		setFeedbackCode,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -45,7 +45,7 @@ export const useLedgerTxSubmit = ({
 		if (newStatusCode === 'SignedPayload') {
 			if (uid !== body.uid) {
 				// UIDs do not match, so this is not the transaction we are waiting for
-				setFeedback('wrongTransaction', 'Wrong Transaction')
+				setFeedbackCode('wrongTransaction', 'Wrong Transaction')
 			} else {
 				setStatusCode({ ack, statusCode: newStatusCode })
 			}

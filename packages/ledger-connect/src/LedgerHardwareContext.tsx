@@ -49,8 +49,8 @@ export const LedgerHardwareProvider = ({
 		useState<FeedbackMessage>(defaultFeedback)
 	const feedbackRef = useRef(feedback)
 
-	const getFeedback = () => feedbackRef.current
-	const setFeedback = (message: MaybeString, helpKey: MaybeString = null) =>
+	const getFeedbackCode = () => feedbackRef.current
+	const setFeedbackCode = (message: MaybeString, helpKey: MaybeString = null) =>
 		setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef)
 	const resetFeedback = () =>
 		setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef)
@@ -62,7 +62,7 @@ export const LedgerHardwareProvider = ({
 		message,
 	}: HandleErrorFeedback) => {
 		setStatusCode({ ack: 'failure', statusCode: code })
-		setFeedback(message, helpKey)
+		setFeedbackCode(message, helpKey)
 	}
 
 	// Stores whether the Ledger device version has been checked. Used when signing transactions, not
@@ -96,7 +96,7 @@ export const LedgerHardwareProvider = ({
 			const result = await Ledger.getAddress(app, accountIndex, ss58Prefix)
 
 			setIsExecuting(false)
-			setFeedback('successfullyFetchedAddress')
+			setFeedbackCode('successfullyFetchedAddress')
 			setTransportResponse({
 				ack: 'success',
 				statusCode: 'ReceivedAddress',
@@ -218,7 +218,7 @@ export const LedgerHardwareProvider = ({
 				break
 			// Handle all other errors
 			default:
-				setFeedback('openAppOnLedger', 'Open App On Ledger')
+				setFeedbackCode('openAppOnLedger', 'Open App On Ledger')
 				setStatusCode({ ack: 'failure', statusCode: 'AppNotOpen' })
 		}
 
@@ -254,8 +254,8 @@ export const LedgerHardwareProvider = ({
 				statusCode,
 				setStatusCode,
 				resetStatusCode,
-				getFeedback,
-				setFeedback,
+				getFeedbackCode,
+				setFeedbackCode,
 				resetFeedback,
 				handleGetAddress,
 				fetchLedgerAddress,
