@@ -56,7 +56,7 @@ export const useSubmitExtrinsic = ({
 	const { extensionsStatus } = useExtensions()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
-	const { handleResetLedgerTask } = useLedgerHardware()
+	const { handleResetLedgerTask, handleErrors } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 	const { address: fromAddress, source, proxy } = from
@@ -179,22 +179,28 @@ export const useSubmitExtrinsic = ({
 			}
 
 			if (source === 'ledger') {
-				const metadata = await serviceApi.signer.metadata(specName)
-				const result = await signLedgerPayload(
-					specName,
-					submitAccount.address,
-					serviceApi.signer.extraSignedExtension,
-					tx,
-					metadata || '0x',
-					networkInfo,
-					(account as HardwareAccount).index,
-				)
-				if (result) {
-					encodedSig = {
-						address: submitAccount.address,
-						signature: $Signature.tryDecode(result.signature),
-						extra: result.data,
+				try {
+					const metadata = await serviceApi.signer.metadata(specName)
+					const result = await signLedgerPayload(
+						specName,
+						submitAccount.address,
+						serviceApi.signer.extraSignedExtension,
+						tx,
+						metadata || '0x',
+						networkInfo,
+						(account as HardwareAccount).index,
+					)
+					if (result) {
+						encodedSig = {
+							address: submitAccount.address,
+							signature: $Signature.tryDecode(result.signature),
+							extra: result.data,
+						}
 					}
+				} catch (err) {
+					handleErrors(err)
+					setUidSubmitted(uid, false)
+					return
 				}
 			}
 
