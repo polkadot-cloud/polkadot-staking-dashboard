@@ -147,9 +147,6 @@ importers:
       global-bus:
         specifier: workspace:*
         version: link:../global-bus
-      html5-qrcode:
-        specifier: ^2.3.8
-        version: 2.3.8
       i18next-browser-languagedetector:
         specifier: ^8.2.1
         version: 8.2.1
@@ -231,9 +228,9 @@ importers:
       utils:
         specifier: workspace:*
         version: link:../utils
-      xxhash-wasm:
-        specifier: ^1.0.2
-        version: 1.1.0
+      vault-connect:
+        specifier: workspace:*
+        version: link:../vault-connect
     devDependencies:
       types:
         specifier: workspace:*
@@ -510,6 +507,9 @@ importers:
       utils:
         specifier: workspace:*
         version: link:../utils
+      vault-connect:
+        specifier: workspace:*
+        version: link:../vault-connect
     devDependencies:
       types:
         specifier: workspace:*
@@ -779,6 +779,27 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
+
+  packages/vault-connect:
+    dependencies:
+      dedot:
+        specifier: ^1.2.0
+        version: 1.2.0(typescript@6.0.2)
+      html5-qrcode:
+        specifier: ^2.3.8
+        version: 2.3.8
+      qrcode-generator:
+        specifier: 1.5.0
+        version: 1.5.0
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
+      styled-components:
+        specifier: ^6.3.12
+        version: 6.3.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      xxhash-wasm:
+        specifier: ^1.0.2
+        version: 1.1.0
 
 packages:
 
@@ -5964,7 +5985,7 @@ snapshots:
 
   '@scure/bip32@1.7.0':
     dependencies:
-      '@noble/curves': 1.9.1
+      '@noble/curves': 1.9.7
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
 

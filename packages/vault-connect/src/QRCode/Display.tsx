@@ -42,32 +42,26 @@ const Display = ({
 
 	const containerStyle = useMemo(() => createImgSize(size), [size])
 
-	// run on initial load to setup the global timer and provide and unsubscribe
 	useEffect((): (() => void) => {
 		const nextFrame = () =>
 			setFrameState((state): FrameState => {
-				// when we have a single frame, we only ever fire once
 				if (state.frames.length <= 1) {
 					return state
 				}
 
 				let frameIdx = state.frameIdx + 1
 
-				// when we overflow, skip to the first and slightly increase the delay between frames
 				if (frameIdx === state.frames.length) {
 					frameIdx = 0
 					timerRef.current.timerDelay += TIMER_INC
 				}
 
-				// only encode the frames on demand, not above as part of the state derivation - in the case
-				// of large payloads, this should be slightly more responsive on initial load
 				const newState = {
 					...state,
 					frameIdx,
 					image: getDataUrl(state.frames[frameIdx]),
 				}
 
-				// set the new timer last
 				timerRef.current.timerId = setTimeout(
 					nextFrame,
 					timerRef.current.timerDelay,

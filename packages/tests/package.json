@@ -12,7 +12,8 @@
 	"dependencies": {
 		"date-fns": "^4.1.0",
 		"ui-graphs": "workspace:*",
-		"utils": "workspace:*"
+		"utils": "workspace:*",
+		"vault-connect": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

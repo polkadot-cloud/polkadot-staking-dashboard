@@ -47,6 +47,7 @@ export interface ScanProps {
 	onScan: (data: string) => void
 	size?: string | number | undefined
 	style?: CSSProperties | undefined
+	onCleanup?: (cleanup: () => void) => void
 }
 
 export interface ScanSignatureProps {
@@ -55,4 +56,5 @@ export interface ScanSignatureProps {
 	onScan: (scanned: ScanType) => void
 	size?: string | number
 	style?: CSSProperties
+	onCleanup?: (cleanup: () => void) => void
 }

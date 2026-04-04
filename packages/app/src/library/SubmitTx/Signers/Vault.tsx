@@ -3,12 +3,12 @@
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor } from 'types'
+import { useVaultTxSubmit } from 'vault-connect'
 
 interface VaultProps {
 	uid: number
@@ -31,6 +31,8 @@ export const VaultSubmit = ({
 	notEnoughFunds,
 	promptStatus,
 }: VaultProps) => {
+	const { t } = useTranslation('app')
+
 	const { buttonText, buttonDisabled, buttonPulse } = useVaultTxSubmit({
 		submitted,
 		valid,
@@ -49,7 +51,7 @@ export const VaultSubmit = ({
 	return (
 		<SubmitButtonWrapper>
 			<SubmitButton
-				text={buttonText}
+				text={t(buttonText, { defaultValue: buttonText })}
 				iconTransform="shrink-4"
 				onSubmit={onSubmit}
 				disabled={finalDisabled}

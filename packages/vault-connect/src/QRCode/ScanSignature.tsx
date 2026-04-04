@@ -12,6 +12,7 @@ const ScanSignature = ({
 	onScan,
 	size,
 	style,
+	onCleanup,
 }: ScanSignatureProps): ReactElement<ScanSignatureProps> => {
 	const onScanCallback = useCallback(
 		(signature: string | null) =>
@@ -26,6 +27,7 @@ const ScanSignature = ({
 			onScan={onScanCallback}
 			size={size}
 			style={style}
+			onCleanup={onCleanup}
 		/>
 	)
 }
