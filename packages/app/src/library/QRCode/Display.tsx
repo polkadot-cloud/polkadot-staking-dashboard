@@ -111,7 +111,7 @@ const Display = ({
 	return !image ? null : (
 		<DisplayWrapper className={className} style={containerStyle}>
 			<div style={style}>
-				<img src={image} alt="img" />
+				<img src={image} alt="QR Code" />
 			</div>
 		</DisplayWrapper>
 	)

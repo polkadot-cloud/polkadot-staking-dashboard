@@ -123,7 +123,10 @@ export const AccountButton = ({
 						{meta?.source === 'external' && (
 							<div
 								className="label warning"
-								style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+								style={{
+									color: 'var(--status-warning)',
+									paddingLeft: '0.5rem',
+								}}
 							>
 								{t('readOnly')}
 							</div>
