@@ -9,7 +9,6 @@ import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
@@ -28,6 +27,7 @@ import {
 } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
+import { useLedgerHardware } from 'ledger-connect'
 import { QRSignPrompt } from 'library/QRSignPrompt'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { VaultSigner } from 'library/Signers/VaultSigner'
@@ -179,22 +179,27 @@ export const useSubmitExtrinsic = ({
 			}
 
 			if (source === 'ledger') {
-				const metadata = await serviceApi.signer.metadata(specName)
-				const result = await signLedgerPayload(
-					specName,
-					submitAccount.address,
-					serviceApi.signer.extraSignedExtension,
-					tx,
-					metadata || '0x',
-					networkInfo,
-					(account as HardwareAccount).index,
-				)
-				if (result) {
-					encodedSig = {
-						address: submitAccount.address,
-						signature: $Signature.tryDecode(result.signature),
-						extra: result.data,
+				try {
+					const metadata = await serviceApi.signer.metadata(specName)
+					const result = await signLedgerPayload(
+						specName,
+						submitAccount.address,
+						serviceApi.signer.extraSignedExtension,
+						tx,
+						metadata || '0x',
+						networkInfo,
+						(account as HardwareAccount).index,
+					)
+					if (result) {
+						encodedSig = {
+							address: submitAccount.address,
+							signature: $Signature.tryDecode(result.signature),
+							extra: result.data,
+						}
 					}
+				} catch (_) {
+					onError('ledger')
+					return
 				}
 			}
 
@@ -324,6 +329,8 @@ export const useSubmitExtrinsic = ({
 	}
 
 	const onError = (type?: string, details?: string) => {
+		setUidSubmitted(uid, false)
+
 		if (type === 'ledger') {
 			handleResetLedgerTask()
 		}

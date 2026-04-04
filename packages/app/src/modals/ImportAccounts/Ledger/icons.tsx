@@ -5,9 +5,9 @@ import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import LedgerFlexWebP from 'assets/brands/ledgerFlex.webp'
 import LedgerNanoWebP from 'assets/brands/ledgerNano.webp'
 import LedgerStaxWebP from 'assets/brands/ledgerStax.webp'
+import type { LedgerDeviceModel } from 'ledger-connect'
 import type { ComponentType, FunctionComponent, ImgHTMLAttributes } from 'react'
 import { createElement } from 'react'
-import type { LedgerDeviceModel } from 'types'
 
 const createLedgerDeviceImage = (
 	src: string,
