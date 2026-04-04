@@ -21,7 +21,7 @@ export interface UseLedgerTxSubmitProps {
 }
 
 export interface UseLedgerTxSubmitReturn {
-	/** Translation code for the submit button text */
+	/** Ready-to-display submit button text (already translated) */
 	buttonText: string
 	/** Icon displayed on the submit button */
 	buttonIcon: IconDefinition

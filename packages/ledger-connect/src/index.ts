@@ -32,6 +32,7 @@ export type {
 	LedgerResponse,
 	LedgerStatusCode,
 	LedgerTask,
+	LedgerTranslateFn,
 	PairingStatus,
 } from './types'
 // Utilities

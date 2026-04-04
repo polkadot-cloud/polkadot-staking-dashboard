@@ -10,7 +10,6 @@ import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
-import { useTranslation } from 'react-i18next'
 import type { ActiveAccount, DisplayFor } from 'types'
 import { useOverlay } from 'ui-overlay'
 
@@ -38,7 +37,6 @@ export const LedgerSubmit = ({
 	onSubmit,
 	notEnoughFunds,
 }: LedgerProps) => {
-	const { t } = useTranslation('app')
 	const { setModalResize } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
 
@@ -55,13 +53,10 @@ export const LedgerSubmit = ({
 			accountHasSigner,
 		})
 
-	// Translate button text codes from ledger-connect
-	const translatedButtonText = buttonText ? t(buttonText) : ''
-
 	return (
 		<SubmitButtonWrapper>
 			<SubmitButton
-				text={translatedButtonText}
+				text={buttonText}
 				icon={buttonIcon}
 				iconTransform="shrink-3"
 				onSubmit={buttonOnClick}
@@ -74,18 +69,12 @@ export const LedgerSubmit = ({
 }
 
 export const LedgerPrompt = ({ valid }: LedgerPromptProps) => {
-	const { t } = useTranslation('app')
 	const { openHelpTooltip } = useHelp()
-	const { feedback, messageCode, messageParams, verified } = useLedgerTxPrompt()
+	const { feedback, message } = useLedgerTxPrompt()
 
 	if (!valid) {
 		return <p className="prompt">...</p>
 	}
-
-	// Translate message codes from ledger-connect
-	const message = verified
-		? `${t('deviceVerified')}. ${t(messageCode, messageParams)}`
-		: t(messageCode, messageParams)
 
 	return (
 		<p className="prompt">
