@@ -22,7 +22,7 @@
 		"locales": "workspace:*",
 		"motion": "12.23.24",
 		"react": "^19.2.1",
-		"react-i18next": "^16.6.2",
+		"react-i18next": "^17.0.1",
 		"styles": "workspace:*"
 	},
 	"devDependencies": {
