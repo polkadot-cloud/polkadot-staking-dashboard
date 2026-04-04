@@ -179,22 +179,27 @@ export const useSubmitExtrinsic = ({
 			}
 
 			if (source === 'ledger') {
-				const metadata = await serviceApi.signer.metadata(specName)
-				const result = await signLedgerPayload(
-					specName,
-					submitAccount.address,
-					serviceApi.signer.extraSignedExtension,
-					tx,
-					metadata || '0x',
-					networkInfo,
-					(account as HardwareAccount).index,
-				)
-				if (result) {
-					encodedSig = {
-						address: submitAccount.address,
-						signature: $Signature.tryDecode(result.signature),
-						extra: result.data,
+				try {
+					const metadata = await serviceApi.signer.metadata(specName)
+					const result = await signLedgerPayload(
+						specName,
+						submitAccount.address,
+						serviceApi.signer.extraSignedExtension,
+						tx,
+						metadata || '0x',
+						networkInfo,
+						(account as HardwareAccount).index,
+					)
+					if (result) {
+						encodedSig = {
+							address: submitAccount.address,
+							signature: $Signature.tryDecode(result.signature),
+							extra: result.data,
+						}
 					}
+				} catch (_) {
+					onError('ledger')
+					return
 				}
 			}
 
@@ -324,6 +329,8 @@ export const useSubmitExtrinsic = ({
 	}
 
 	const onError = (type?: string, details?: string) => {
+		setUidSubmitted(uid, false)
+
 		if (type === 'ledger') {
 			handleResetLedgerTask()
 		}
