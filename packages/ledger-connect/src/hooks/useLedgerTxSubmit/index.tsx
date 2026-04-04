@@ -5,8 +5,8 @@ import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useEffect } from 'react'
-import type { LedgerResponse } from 'types'
 import { useLedgerHardware } from '../../LedgerHardwareContext'
+import type { LedgerResponse } from '../../types'
 import type { UseLedgerTxSubmitProps, UseLedgerTxSubmitReturn } from './types'
 
 // No-op handler used when the hook is disabled

@@ -16,13 +16,10 @@
 		"@fortawesome/free-solid-svg-icons": "^7.2.0",
 		"@ledgerhq/hw-transport-webhid": "^6.34.0",
 		"@w3ux/hooks": "^2.4.4",
+		"@w3ux/types": "^2.4.2",
 		"@w3ux/utils": "^3.1.1",
 		"@zondax/ledger-substrate": "^2.1.2",
 		"buffer": "^6.0.3",
 		"react": "^19.2.4"
-	},
-	"devDependencies": {
-		"@w3ux/types": "^2.4.2",
-		"types": "workspace:*"
 	}
 }

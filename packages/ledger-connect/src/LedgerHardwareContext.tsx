@@ -6,17 +6,17 @@ import type { MaybeString } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
+import { defaultFeedback } from './defaults'
+import { Ledger } from './static/ledger'
 import type {
 	AnyJson,
 	FeedbackMessage,
 	HandleErrorFeedback,
 	LedgerDeviceAddress,
 	LedgerDeviceModel,
+	LedgerHardwareContextInterface,
 	LedgerResponse,
-} from 'types'
-import { defaultFeedback } from './defaults'
-import { Ledger } from './static/ledger'
-import type { LedgerHardwareContextInterface } from './types'
+} from './types'
 import { getLedgerDeviceModel, getLedgerErrorType } from './util'
 
 export const [LedgerHardwareContext, useLedgerHardware] =

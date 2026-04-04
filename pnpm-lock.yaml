@@ -386,6 +386,9 @@ importers:
       '@w3ux/hooks':
         specifier: ^2.4.4
         version: 2.4.4(react@19.2.4)
+      '@w3ux/types':
+        specifier: ^2.4.2
+        version: 2.4.2
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
@@ -398,13 +401,6 @@ importers:
       react:
         specifier: ^19.2.4
         version: 19.2.4
-    devDependencies:
-      '@w3ux/types':
-        specifier: ^2.4.2
-        version: 2.4.2
-      types:
-        specifier: workspace:*
-        version: link:../types
 
   packages/locale-cli:
     dependencies:

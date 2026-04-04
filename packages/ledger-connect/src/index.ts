@@ -20,7 +20,20 @@ export {
 // Static Ledger class
 export { Ledger } from './static/ledger'
 // Types
-export type { LedgerHardwareContextInterface } from './types'
+export type {
+	ActiveAccount,
+	AnyJson,
+	FeedbackMessage,
+	HandleErrorFeedback,
+	LedgerDeviceAddress,
+	LedgerDeviceFamily,
+	LedgerDeviceModel,
+	LedgerHardwareContextInterface,
+	LedgerResponse,
+	LedgerStatusCode,
+	LedgerTask,
+	PairingStatus,
+} from './types'
 // Utilities
 export {
 	getLedgerDeviceFamily,
