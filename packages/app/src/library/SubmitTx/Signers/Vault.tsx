@@ -8,7 +8,7 @@ import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor } from 'types'
-import { useVaultTxSubmit } from 'vault-connect'
+import { deriveVaultButtonState } from 'vault-connect'
 
 interface VaultProps {
 	uid: number
@@ -33,25 +33,25 @@ export const VaultSubmit = ({
 }: VaultProps) => {
 	const { t } = useTranslation('app')
 
-	const { buttonText, buttonDisabled, buttonPulse } = useVaultTxSubmit({
+	const disabled = submitted || !valid || notEnoughFunds
+	const { buttonText, buttonDisabled, buttonPulse } = deriveVaultButtonState({
 		submitted,
 		valid,
-		submitText,
+		submitText: submitText || '',
+		signText: submitText || t('sign'),
 		promptStatus,
-		disabled: submitted || !valid || notEnoughFunds,
+		disabled,
 	})
 
 	// For card displayFor, override disabled/pulse logic
 	const isCard = displayFor === 'card'
-	const finalDisabled = isCard
-		? submitted || !valid || notEnoughFunds
-		: buttonDisabled
+	const finalDisabled = isCard ? disabled : buttonDisabled
 	const finalPulse = isCard ? !finalDisabled : buttonPulse
 
 	return (
 		<SubmitButtonWrapper>
 			<SubmitButton
-				text={t(buttonText, { defaultValue: buttonText })}
+				text={buttonText}
 				iconTransform="shrink-4"
 				onSubmit={onSubmit}
 				disabled={finalDisabled}
