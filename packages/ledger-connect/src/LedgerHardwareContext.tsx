@@ -9,7 +9,7 @@ import { useRef, useState } from 'react'
 import { defaultFeedback } from './defaults'
 import { Ledger } from './static/ledger'
 import type {
-	AnyJson,
+	AnyTransport,
 	FeedbackMessage,
 	HandleErrorFeedback,
 	LedgerDeviceAddress,
@@ -70,7 +70,7 @@ export const LedgerHardwareProvider = ({
 	const [integrityChecked, setIntegrityChecked] = useState<boolean>(false)
 
 	// Store the latest successful device response
-	const [transportResponse, setTransportResponse] = useState<AnyJson>(null)
+	const [transportResponse, setTransportResponse] = useState<AnyTransport>(null)
 
 	// Checks if the Ledger device is connected
 	const checkRuntimeVersion = async () => {

@@ -22,7 +22,7 @@ export { Ledger } from './static/ledger'
 // Types
 export type {
 	ActiveAccount,
-	AnyJson,
+	AnyTransport,
 	FeedbackMessage,
 	HandleErrorFeedback,
 	LedgerDeviceAddress,

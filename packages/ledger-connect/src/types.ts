@@ -3,8 +3,8 @@
 
 import type { MaybeString } from '@w3ux/types'
 
-// biome-ignore lint/suspicious/noExplicitAny: <>
-export type AnyJson = any
+// biome-ignore lint/suspicious/noExplicitAny: <ledger device transport shape is dynamic and not worth typing>
+export type AnyTransport = any
 
 /**
  * Supported Ledger device models.
@@ -47,11 +47,11 @@ export type LedgerStatusCode =
 export interface LedgerResponse {
 	ack: string
 	statusCode: LedgerStatusCode
-	body?: AnyJson
+	body?: AnyTransport
 	device?: {
 		deviceModel?: LedgerDeviceModel
 	}
-	options?: AnyJson
+	options?: AnyTransport
 }
 
 export type LedgerTask = 'get_address' | 'sign_tx'
@@ -80,7 +80,7 @@ export interface LedgerHardwareContextInterface {
 	integrityChecked: boolean
 	setIntegrityChecked: (checked: boolean) => void
 	checkRuntimeVersion: () => Promise<void>
-	transportResponse: AnyJson
+	transportResponse: AnyTransport
 	setStatusCode: (val: { ack: string; statusCode: LedgerStatusCode }) => void
 	setIsExecuting: (v: boolean) => void
 	statusCode: LedgerResponse | null
