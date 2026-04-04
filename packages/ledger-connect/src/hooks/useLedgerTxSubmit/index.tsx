@@ -25,7 +25,6 @@ export const useLedgerTxSubmit = ({
 	accountHasSigner,
 }: UseLedgerTxSubmitProps): UseLedgerTxSubmitReturn => {
 	const {
-		t,
 		setFeedback,
 		isExecuting,
 		setStatusCode,
@@ -46,7 +45,7 @@ export const useLedgerTxSubmit = ({
 		if (newStatusCode === 'SignedPayload') {
 			if (uid !== body.uid) {
 				// UIDs do not match, so this is not the transaction we are waiting for
-				setFeedback(t('wrongTransaction'), 'Wrong Transaction')
+				setFeedback('wrongTransaction', 'Wrong Transaction')
 			} else {
 				setStatusCode({ ack, statusCode: newStatusCode })
 			}
@@ -113,14 +112,14 @@ export const useLedgerTxSubmit = ({
 	// Button `onClick` handler depends whether integrityChecked and whether tx has been submitted
 	const buttonOnClick = !integrityChecked ? handleCheckRuntimeVersion : onSubmit
 
-	// Determine button text (translated via injected t function)
+	// Determine button text (returns translation codes for internally generated text)
 	const buttonText = !integrityChecked
-		? t('confirm')
+		? 'confirm'
 		: txReady
 			? submitText || ''
 			: isExecuting
-				? t('signing')
-				: t('sign')
+				? 'signing'
+				: 'sign'
 
 	// Button icon
 	const buttonIcon = !integrityChecked ? faUsb : faSquarePen

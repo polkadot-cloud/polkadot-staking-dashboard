@@ -6,29 +6,34 @@ import { getLedgerDeviceName, isTouchscreenDevice } from '../../util'
 import type { UseLedgerTxPromptReturn } from './types'
 
 export const useLedgerTxPrompt = (): UseLedgerTxPromptReturn => {
-	const { t, getFeedback, getDeviceModel, integrityChecked } =
-		useLedgerHardware()
+	const { getFeedback, getDeviceModel, integrityChecked } = useLedgerHardware()
 
 	const feedback = getFeedback()
 	const deviceModel = getDeviceModel()
 	const deviceName = getLedgerDeviceName(deviceModel)
 
-	let message: string
+	let messageCode: string
+	let messageParams: Record<string, string> | undefined
+	let verified = false
+
 	if (feedback?.message) {
-		message = feedback.message
+		messageCode = feedback.message
+		messageParams = { device: deviceName }
 	} else if (!integrityChecked) {
-		message =
+		messageCode =
 			deviceModel !== 'unknown'
-				? t('ledgerConnectAndConfirmDevice', { device: deviceName })
-				: t('ledgerConnectAndConfirm')
+				? 'ledgerConnectAndConfirmDevice'
+				: 'ledgerConnectAndConfirm'
+		messageParams = { device: deviceName }
 	} else {
-		const approvalText = isTouchscreenDevice(deviceModel)
-			? t('ledgerApproveTouchscreen', { device: deviceName })
+		verified = true
+		messageCode = isTouchscreenDevice(deviceModel)
+			? 'ledgerApproveTouchscreen'
 			: deviceModel !== 'unknown'
-				? t('ledgerApproveNano', { device: deviceName })
-				: t('submitTransaction')
-		message = `${t('deviceVerified')}. ${approvalText}`
+				? 'ledgerApproveNano'
+				: 'submitTransaction'
+		messageParams = { device: deviceName }
 	}
 
-	return { feedback, message }
+	return { feedback, messageCode, messageParams, verified }
 }

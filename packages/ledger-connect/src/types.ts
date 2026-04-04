@@ -75,17 +75,7 @@ export type ActiveAccount = {
 	source: string
 } | null
 
-/**
- * Translator function injected by the consuming app. Translates locale keys
- * into the current language.
- */
-export type LedgerTranslateFn = (
-	key: string,
-	options?: Record<string, string>,
-) => string
-
 export interface LedgerHardwareContextInterface {
-	t: LedgerTranslateFn
 	getDeviceModel: () => LedgerDeviceModel
 	integrityChecked: boolean
 	setIntegrityChecked: (checked: boolean) => void

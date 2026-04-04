@@ -43,13 +43,11 @@ import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidato
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { LedgerHardwareProvider } from 'ledger-connect'
 import { Tooltip } from 'radix-ui'
-import { useTranslation } from 'react-i18next'
 import { OverlayProvider } from 'ui-overlay'
 
 export const Providers = () => {
 	const { network } = useNetwork()
 	const { ss58 } = getStakingChainData(network)
-	const { t } = useTranslation(['modals', 'app'])
 
 	return withProviders(
 		// !! Provider order matters.
@@ -58,7 +56,7 @@ export const Providers = () => {
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],
-			[LedgerHardwareProvider, { t }],
+			LedgerHardwareProvider,
 			[
 				ExtensionsProvider,
 
