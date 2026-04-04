@@ -30,14 +30,14 @@ import { useProxySupported } from 'hooks/useProxySupported'
 import { useLedgerHardware } from 'ledger-connect'
 import { QRSignPrompt } from 'library/QRSignPrompt'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
-import { VaultSigner } from 'library/Signers/VaultSigner'
-import type {
-	VaultSignatureResult,
-	VaultSignStatus,
-} from 'library/Signers/VaultSigner/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ActiveAccount } from 'types'
+import {
+	type VaultSignatureResult,
+	VaultSigner,
+	type VaultSignStatus,
+} from 'vault-connect'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
 
 export const useSubmitExtrinsic = ({

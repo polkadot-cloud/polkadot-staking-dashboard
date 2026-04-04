@@ -41,7 +41,6 @@
 		"dedot-api": "workspace:*",
 		"event-tracking": "workspace:*",
 		"global-bus": "workspace:*",
-		"html5-qrcode": "^2.3.8",
 		"i18next-browser-languagedetector": "^8.2.1",
 		"locales": "workspace:*",
 		"motion": "12.23.24",
@@ -68,7 +67,7 @@
 		"ui-tips": "workspace:*",
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*",
-		"xxhash-wasm": "^1.0.2"
+		"vault-connect": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

@@ -3,12 +3,9 @@
 
 import _qrcode from 'qrcode-generator'
 
-// A small hurdle to jump through, just to get the default/default correct (as generated)
 const qrcode: typeof _qrcode = _qrcode
 
-// HACK The default function take string -> number[], the Uint8array is compatible
-// with that signature and the use thereof
-// biome-ignore lint/suspicious/noExplicitAny: <>
+// biome-ignore lint/suspicious/noExplicitAny: <workaround for qrcode-generator types>
 ;(qrcode as any).stringToBytes = (data: Uint8Array): Uint8Array => data
 
 export { qrcode }
