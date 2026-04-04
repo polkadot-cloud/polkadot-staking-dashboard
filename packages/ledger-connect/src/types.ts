@@ -25,6 +25,7 @@ export type LedgerDeviceFamily = 'nano' | 'touchscreen' | 'unknown'
 export interface FeedbackMessage {
 	message: MaybeString
 	helpKey?: MaybeString
+	params?: Record<string, string>
 }
 
 export type LedgerStatusCode =
@@ -68,6 +69,7 @@ export interface HandleErrorFeedback {
 	message: MaybeString
 	helpKey?: MaybeString
 	code: LedgerStatusCode
+	params?: Record<string, string>
 }
 
 export type ActiveAccount = {
@@ -87,7 +89,11 @@ export interface LedgerHardwareContextInterface {
 	resetStatusCode: () => void
 	isExecuting: boolean
 	getFeedbackCode: () => FeedbackMessage
-	setFeedbackCode: (s: MaybeString, helpKey?: MaybeString) => void
+	setFeedbackCode: (
+		s: MaybeString,
+		helpKey?: MaybeString,
+		params?: Record<string, string>,
+	) => void
 	resetFeedback: () => void
 	handleUnmount: () => void
 	handleErrors: (err: unknown) => void

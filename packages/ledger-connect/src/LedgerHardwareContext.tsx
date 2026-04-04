@@ -17,7 +17,11 @@ import type {
 	LedgerHardwareContextInterface,
 	LedgerResponse,
 } from './types'
-import { getLedgerDeviceModel, getLedgerErrorType } from './util'
+import {
+	getLedgerDeviceModel,
+	getLedgerDeviceName,
+	getLedgerErrorType,
+} from './util'
 
 export const [LedgerHardwareContext, useLedgerHardware] =
 	createSafeContext<LedgerHardwareContextInterface>()
@@ -50,8 +54,12 @@ export const LedgerHardwareProvider = ({
 	const feedbackRef = useRef(feedback)
 
 	const getFeedbackCode = () => feedbackRef.current
-	const setFeedbackCode = (message: MaybeString, helpKey: MaybeString = null) =>
-		setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef)
+	const setFeedbackCode = (
+		message: MaybeString,
+		helpKey: MaybeString = null,
+		params?: Record<string, string>,
+	) =>
+		setStateWithRef({ message, helpKey, params }, setFeedbackState, feedbackRef)
 	const resetFeedback = () =>
 		setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef)
 
@@ -60,9 +68,10 @@ export const LedgerHardwareProvider = ({
 		code,
 		helpKey,
 		message,
+		params,
 	}: HandleErrorFeedback) => {
 		setStatusCode({ ack: 'failure', statusCode: code })
-		setFeedbackCode(message, helpKey)
+		setFeedbackCode(message, helpKey, params)
 	}
 
 	// Stores whether the Ledger device version has been checked. Used when signing transactions, not
@@ -140,6 +149,8 @@ export const LedgerHardwareProvider = ({
 
 	// Handles errors that occur during device calls
 	const handleErrors = (err: unknown) => {
+		const deviceName = getLedgerDeviceName(getDeviceModel())
+
 		// Update feedback and status code state based on error received
 		switch (getLedgerErrorType(String(err))) {
 			// Occurs when the device does not respond to a request within the timeout period
@@ -148,6 +159,7 @@ export const LedgerHardwareProvider = ({
 					message: 'ledgerRequestTimeout',
 					helpKey: 'Ledger Request Timeout',
 					code: 'DeviceTimeout',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when a method in a call is not supported by the device
@@ -169,6 +181,7 @@ export const LedgerHardwareProvider = ({
 				setStatusFeedback({
 					message: 'connectLedgerToContinue',
 					code: 'DeviceNotConnected',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when tx was approved outside of active channel
@@ -184,6 +197,7 @@ export const LedgerHardwareProvider = ({
 				setStatusFeedback({
 					message: 'ledgerDeviceBusy',
 					code: 'DeviceBusy',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when the device is locked
@@ -191,6 +205,7 @@ export const LedgerHardwareProvider = ({
 				setStatusFeedback({
 					message: 'unlockLedgerToContinue',
 					code: 'DeviceLocked',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when the app (e.g. Polkadot) is not open
@@ -199,6 +214,7 @@ export const LedgerHardwareProvider = ({
 					message: 'openAppOnLedger',
 					helpKey: 'Open App On Ledger',
 					code: 'AppNotOpen',
+					params: { device: deviceName },
 				})
 				break
 			// Occurs when submitted extrinsic(s) are not supported
@@ -218,7 +234,9 @@ export const LedgerHardwareProvider = ({
 				break
 			// Handle all other errors
 			default:
-				setFeedbackCode('openAppOnLedger', 'Open App On Ledger')
+				setFeedbackCode('openAppOnLedger', 'Open App On Ledger', {
+					device: deviceName,
+				})
 				setStatusCode({ ack: 'failure', statusCode: 'AppNotOpen' })
 		}
 

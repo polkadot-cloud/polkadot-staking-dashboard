@@ -277,7 +277,10 @@ export const Ledger = () => {
 			{!!maybeFeedback && (
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<h3 style={{ padding: '1rem 0 2rem 0' }}>
-						{t(String(feedback?.message), { ns: 'modals' })}
+						{t(String(feedback?.message), {
+							ns: 'modals',
+							...feedback?.params,
+						})}
 					</h3>
 				</div>
 			)}

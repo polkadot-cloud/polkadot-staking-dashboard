@@ -19,7 +19,7 @@ export const useLedgerTxPrompt = (): UseLedgerTxPromptReturn => {
 
 	if (feedback?.message) {
 		messageCode = feedback.message
-		messageParams = { device: deviceName }
+		messageParams = { device: deviceName, ...feedback.params }
 	} else if (!integrityChecked) {
 		messageCode =
 			deviceModel !== 'unknown'
