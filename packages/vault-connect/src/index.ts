@@ -6,10 +6,10 @@ export { useVaultAccounts } from './hooks/useVaultAccounts'
 export type { UseVaultAccountsReturn } from './hooks/useVaultAccounts/types'
 
 // QR Code components
-export { QrDisplay } from './QRCode/Display'
-export { QrDisplayPayload } from './QRCode/DisplayPayload'
-export { QrScan } from './QRCode/Scan'
-export { QrScanSignature } from './QRCode/ScanSignature'
+export { QrDisplay } from './qrcode/Display'
+export { QrDisplayPayload } from './qrcode/DisplayPayload'
+export { QrScan } from './qrcode/Scan'
+export { QrScanSignature } from './qrcode/ScanSignature'
 
 // QR Code types
 export type {
@@ -18,16 +18,15 @@ export type {
 	ScanProps,
 	ScanSignatureProps,
 	ScanType,
-} from './QRCode/types'
-
-// Signers
-export {
-	type DeriveVaultButtonStateInput,
-	type DeriveVaultButtonStateOutput,
-	deriveVaultButtonState,
-} from './signers'
-
-// Vault Signer
+} from './qrcode/types'
+// Utilities
+export { deriveVaultButtonState } from './signers'
+// Types
+export type {
+	DeriveVaultButtonStateInput,
+	DeriveVaultButtonStateOutput,
+} from './types'
+// Signer
 export { VaultSigner } from './VaultSigner'
 export type {
 	VaultPromptHandlers,

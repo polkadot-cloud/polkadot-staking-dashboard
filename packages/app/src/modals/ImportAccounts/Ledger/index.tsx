@@ -11,8 +11,8 @@ import { useNetwork } from 'contexts/Network'
 import type { LedgerResponse } from 'ledger-connect'
 import {
 	getLedgerDeviceName,
+	useLedger,
 	useLedgerAccounts,
-	useLedgerHardware,
 } from 'ledger-connect'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -44,7 +44,7 @@ export const Ledger = () => {
 		handleGetAddress,
 		transportResponse,
 		handleResetLedgerTask,
-	} = useLedgerHardware()
+	} = useLedger()
 	const { setModalResize } = useOverlay().modal
 
 	const initialAddresses = getLedgerAccounts()

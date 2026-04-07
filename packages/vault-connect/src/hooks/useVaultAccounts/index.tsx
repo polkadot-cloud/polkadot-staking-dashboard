@@ -3,6 +3,7 @@
 
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
+import type { UseVaultAccountsReturn } from './types'
 
 const source: HardwareAccountSource = 'vault'
 
@@ -10,7 +11,7 @@ const source: HardwareAccountSource = 'vault'
  * Proxy hook that wraps `useHardwareAccounts` with `source='vault'` pre-bound. All account
  * operations are scoped to the provided network.
  */
-export const useVaultAccounts = (network: string) => {
+export const useVaultAccounts = (network: string): UseVaultAccountsReturn => {
 	const {
 		addHardwareAccount,
 		removeHardwareAccount,

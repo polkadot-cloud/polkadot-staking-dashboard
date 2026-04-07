@@ -6,7 +6,7 @@ import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import type { LedgerDeviceModel } from 'ledger-connect'
-import { useLedgerAccounts, useLedgerHardware } from 'ledger-connect'
+import { useLedger, useLedgerAccounts } from 'ledger-connect'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getStoredGroupDeviceModels, setStoredGroupDeviceModels } from './local'
 import type { GroupAnchor, UseLedgerDeviceGroupsProps } from './types'
@@ -23,8 +23,7 @@ export const useLedgerDeviceGroups = ({
 }: UseLedgerDeviceGroupsProps) => {
 	const { network } = useNetwork()
 	const { removeLedgerAccount } = useLedgerAccounts(network)
-	const { fetchLedgerAddress, resetStatusCode, setFeedbackCode } =
-		useLedgerHardware()
+	const { fetchLedgerAddress, resetStatusCode, setFeedbackCode } = useLedger()
 
 	const { ss58 } = getStakingChainData(network)
 

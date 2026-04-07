@@ -3,6 +3,7 @@
 
 import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
+import type { UseLedgerAccountsReturn } from './types'
 
 const source: HardwareAccountSource = 'ledger'
 
@@ -10,7 +11,7 @@ const source: HardwareAccountSource = 'ledger'
  * Proxy hook that wraps `useHardwareAccounts` with `source='ledger'` pre-bound. All account
  * operations are scoped to the provided network.
  */
-export const useLedgerAccounts = (network: string) => {
+export const useLedgerAccounts = (network: string): UseLedgerAccountsReturn => {
 	const {
 		addHardwareAccount,
 		removeHardwareAccount,
