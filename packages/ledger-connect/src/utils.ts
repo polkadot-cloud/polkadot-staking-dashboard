@@ -84,25 +84,16 @@ export const getLedgerDeviceName = (model: LedgerDeviceModel): string => {
 	}
 }
 
-/*
- * Determine type of error returned by Ledger
+/**
+ * Determine type of error returned by Ledger.
  */
-export const getLedgerErrorType = (err: string) => {
-	let errorType = null
-	Object.entries(errorsByType).every(([type, errors]) => {
-		let found = false
-		errors.every((e) => {
-			if (err.startsWith(e)) {
-				errorType = type
-				found = true
-				return false
+export const getLedgerErrorType = (err: string): string => {
+	for (const [type, patterns] of Object.entries(errorsByType)) {
+		for (const pattern of patterns) {
+			if (err.startsWith(pattern)) {
+				return type
 			}
-			return true
-		})
-		if (found) {
-			return false
 		}
-		return true
-	})
-	return errorType || 'misc'
+	}
+	return 'misc'
 }

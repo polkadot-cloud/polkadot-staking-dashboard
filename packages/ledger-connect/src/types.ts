@@ -77,7 +77,7 @@ export type ActiveAccount = {
 	source: string
 } | null
 
-export interface LedgerHardwareContextInterface {
+export interface LedgerContextInterface {
 	getDeviceModel: () => LedgerDeviceModel
 	integrityChecked: boolean
 	setIntegrityChecked: (checked: boolean) => void

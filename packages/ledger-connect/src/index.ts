@@ -3,32 +3,30 @@
 
 // Defaults
 export { defaultDeviceModel, defaultFeedback, errorsByType } from './defaults'
+// Device
+export { Ledger } from './device/ledger'
+// Hooks
+export { useLedgerAccounts } from './hooks/useLedgerAccounts'
+export type { UseLedgerAccountsReturn } from './hooks/useLedgerAccounts/types'
 export { useLedgerTxPrompt } from './hooks/useLedgerTxPrompt'
 export type { UseLedgerTxPromptReturn } from './hooks/useLedgerTxPrompt/types'
-// Hooks
 export { useLedgerTxSubmit } from './hooks/useLedgerTxSubmit'
 export type {
 	UseLedgerTxSubmitProps,
 	UseLedgerTxSubmitReturn,
 } from './hooks/useLedgerTxSubmit/types'
-// Context
-export {
-	LedgerHardwareContext,
-	LedgerHardwareProvider,
-	useLedgerHardware,
-} from './LedgerHardwareContext'
-// Static Ledger class
-export { Ledger } from './static/ledger'
+// Context & Provider
+export { LedgerContext, LedgerProvider, useLedger } from './LedgerContext'
 // Types
 export type {
 	ActiveAccount,
 	AnyTransport,
 	FeedbackMessage,
 	HandleErrorFeedback,
+	LedgerContextInterface,
 	LedgerDeviceAddress,
 	LedgerDeviceFamily,
 	LedgerDeviceModel,
-	LedgerHardwareContextInterface,
 	LedgerResponse,
 	LedgerStatusCode,
 	LedgerTask,
@@ -41,4 +39,4 @@ export {
 	getLedgerDeviceName,
 	getLedgerErrorType,
 	isTouchscreenDevice,
-} from './util'
+} from './utils'
