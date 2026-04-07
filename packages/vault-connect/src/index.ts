@@ -1,6 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+// Hooks
+export { useVaultAccounts } from './hooks/useVaultAccounts'
+export type { UseVaultAccountsReturn } from './hooks/useVaultAccounts/types'
+
 // QR Code components
 export { QrDisplay } from './QRCode/Display'
 export { QrDisplayPayload } from './QRCode/DisplayPayload'

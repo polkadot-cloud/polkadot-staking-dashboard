@@ -3,9 +3,11 @@
 
 // Defaults
 export { defaultDeviceModel, defaultFeedback, errorsByType } from './defaults'
+// Hooks
+export { useLedgerAccounts } from './hooks/useLedgerAccounts'
+export type { UseLedgerAccountsReturn } from './hooks/useLedgerAccounts/types'
 export { useLedgerTxPrompt } from './hooks/useLedgerTxPrompt'
 export type { UseLedgerTxPromptReturn } from './hooks/useLedgerTxPrompt/types'
-// Hooks
 export { useLedgerTxSubmit } from './hooks/useLedgerTxSubmit'
 export type {
 	UseLedgerTxSubmitProps,

@@ -383,6 +383,9 @@ importers:
       '@w3ux/hooks':
         specifier: ^2.4.4
         version: 2.4.4(react@19.2.4)
+      '@w3ux/react-connect-kit':
+        specifier: ^4.0.4
+        version: 4.0.4(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
       '@w3ux/types':
         specifier: ^2.4.2
         version: 2.4.2
@@ -782,6 +785,12 @@ importers:
 
   packages/vault-connect:
     dependencies:
+      '@w3ux/react-connect-kit':
+        specifier: ^4.0.4
+        version: 4.0.4(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
+      '@w3ux/types':
+        specifier: ^2.4.2
+        version: 2.4.2
       dedot:
         specifier: ^1.2.0
         version: 1.2.0(typescript@6.0.2)

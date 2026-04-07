@@ -1,13 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHardwareAccounts } from '@w3ux/react-connect-kit'
-import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
+import type { HardwareAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import type { LedgerDeviceModel } from 'ledger-connect'
-import { useLedgerHardware } from 'ledger-connect'
+import { useLedgerAccounts, useLedgerHardware } from 'ledger-connect'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getStoredGroupDeviceModels, setStoredGroupDeviceModels } from './local'
 import type { GroupAnchor, UseLedgerDeviceGroupsProps } from './types'
@@ -23,12 +22,11 @@ export const useLedgerDeviceGroups = ({
 	setAddresses,
 }: UseLedgerDeviceGroupsProps) => {
 	const { network } = useNetwork()
-	const { removeHardwareAccount } = useHardwareAccounts()
+	const { removeLedgerAccount } = useLedgerAccounts(network)
 	const { fetchLedgerAddress, resetStatusCode, setFeedbackCode } =
 		useLedgerHardware()
 
 	const { ss58 } = getStakingChainData(network)
-	const source: HardwareAccountSource = 'ledger'
 
 	// Each group keeps a stable "anchor" account so we can verify future device connections against a
 	// known address from that same Ledger.
@@ -196,7 +194,7 @@ export const useLedgerDeviceGroups = ({
 		)
 
 		activeAddresses.forEach((account) => {
-			removeHardwareAccount(source, network, account.address)
+			removeLedgerAccount(account.address)
 		})
 		setStateWithRef(nextAddresses, setAddresses, addressesRef)
 	}
