@@ -240,6 +240,10 @@ export const useSubmitExtrinsic = ({
 					setSubmitting: (val: boolean) => setUidSubmitted(uid, val),
 				}).sign(prefixedPayload)
 
+				if (result === null) {
+					return
+				}
+
 				encodedSig = {
 					address: submitAccount.address,
 					signature: $Signature.tryDecode(result),

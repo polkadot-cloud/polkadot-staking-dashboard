@@ -33,12 +33,12 @@ export class VaultSigner {
 			}, toSign)
 		})
 
-	async sign(payload: Uint8Array): Promise<`0x${string}`> {
+	async sign(payload: Uint8Array): Promise<`0x${string}` | null> {
 		// Start flow to sign QR Code here
 		const signature = await this.#showPrompt(payload)
 
 		if (signature === null) {
-			throw new Error('Invalid signature')
+			return null
 		}
 		return signature
 	}
