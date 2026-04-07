@@ -5,7 +5,7 @@ import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { useEffect } from 'react'
-import { useLedgerHardware } from '../../LedgerHardwareContext'
+import { useLedger } from '../../LedgerContext'
 import type { LedgerResponse } from '../../types'
 import type { UseLedgerTxSubmitProps, UseLedgerTxSubmitReturn } from './types'
 
@@ -33,7 +33,7 @@ export const useLedgerTxSubmit = ({
 		integrityChecked,
 		transportResponse,
 		checkRuntimeVersion,
-	} = useLedgerHardware()
+	} = useLedger()
 
 	// Handle new Ledger status report
 	const handleLedgerStatusResponse = (response: LedgerResponse) => {

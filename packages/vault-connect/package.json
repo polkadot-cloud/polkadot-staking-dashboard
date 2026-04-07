@@ -4,7 +4,8 @@
 	"license": "GPL-3.0-only",
 	"type": "module",
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./signers": "./src/signers.ts"
 	},
 	"scripts": {
 		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
@@ -18,5 +19,9 @@
 		"react": "^19.2.4",
 		"styled-components": "^6.3.12",
 		"xxhash-wasm": "^1.0.2"
+	},
+	"peerDependencies": {
+		"@w3ux/react-connect-kit": "^4.0.4",
+		"@w3ux/types": "^2.4.2"
 	}
 }

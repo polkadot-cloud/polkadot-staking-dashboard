@@ -7,30 +7,26 @@ import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { defaultFeedback } from './defaults'
-import { Ledger } from './static/ledger'
+import { Ledger } from './device/ledger'
 import type {
 	AnyTransport,
 	FeedbackMessage,
 	HandleErrorFeedback,
+	LedgerContextInterface,
 	LedgerDeviceAddress,
 	LedgerDeviceModel,
-	LedgerHardwareContextInterface,
 	LedgerResponse,
 } from './types'
 import {
 	getLedgerDeviceModel,
 	getLedgerDeviceName,
 	getLedgerErrorType,
-} from './util'
+} from './utils'
 
-export const [LedgerHardwareContext, useLedgerHardware] =
-	createSafeContext<LedgerHardwareContextInterface>()
+export const [LedgerContext, useLedger] =
+	createSafeContext<LedgerContextInterface>()
 
-export const LedgerHardwareProvider = ({
-	children,
-}: {
-	children: ReactNode
-}) => {
+export const LedgerProvider = ({ children }: { children: ReactNode }) => {
 	// Resolve the current Ledger model directly from the active transport instead of persisting a
 	// global device selection in React state.
 	const getDeviceModel = (): LedgerDeviceModel =>
@@ -260,7 +256,7 @@ export const LedgerHardwareProvider = ({
 	}
 
 	return (
-		<LedgerHardwareContext.Provider
+		<LedgerContext.Provider
 			value={{
 				getDeviceModel,
 				integrityChecked,
@@ -283,6 +279,6 @@ export const LedgerHardwareProvider = ({
 			}}
 		>
 			{children}
-		</LedgerHardwareContext.Provider>
+		</LedgerContext.Provider>
 	)
 }

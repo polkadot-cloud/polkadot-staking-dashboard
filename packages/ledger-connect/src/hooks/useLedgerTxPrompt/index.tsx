@@ -1,13 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedgerHardware } from '../../LedgerHardwareContext'
-import { getLedgerDeviceName, isTouchscreenDevice } from '../../util'
+import { useLedger } from '../../LedgerContext'
+import { getLedgerDeviceName, isTouchscreenDevice } from '../../utils'
 import type { UseLedgerTxPromptReturn } from './types'
 
 export const useLedgerTxPrompt = (): UseLedgerTxPromptReturn => {
-	const { getFeedbackCode, getDeviceModel, integrityChecked } =
-		useLedgerHardware()
+	const { getFeedbackCode, getDeviceModel, integrityChecked } = useLedger()
 
 	const feedback = getFeedbackCode()
 	const deviceModel = getDeviceModel()

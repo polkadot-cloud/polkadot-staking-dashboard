@@ -3,9 +3,7 @@
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { HardwareAccountSource } from '@w3ux/types'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
@@ -15,39 +13,38 @@ import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert, ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
+import { useVaultAccounts } from 'vault-connect'
 
 export const Vault = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const {
-		getHardwareAccounts,
-		hardwareAccountExists,
-		renameHardwareAccount,
-		removeHardwareAccount,
-	} = useHardwareAccounts()
+		getVaultAccounts,
+		vaultAccountExists,
+		renameVaultAccount,
+		removeVaultAccount,
+	} = useVaultAccounts(network)
 	const { setModalResize } = useOverlay().modal
 	const { ss58 } = getStakingChainData(network)
-	const source: HardwareAccountSource = 'vault'
 
 	// Whether the import account button is active
 	const [importActive, setImportActive] = useState<boolean>(false)
 
 	// Get vault accounts
-	const vaultAccounts = getHardwareAccounts(source, network)
+	const vaultAccounts = getVaultAccounts()
 
 	// Handle exist check for a vault address
-	const handleExists = (address: string) =>
-		hardwareAccountExists(source, network, address)
+	const handleExists = (address: string) => vaultAccountExists(address)
 
 	// Handle renaming a vault address
 	const handleRename = (address: string, newName: string) => {
-		renameHardwareAccount(source, network, address, newName)
+		renameVaultAccount(address, newName)
 	}
 
 	// Handle removing a vault address
 	const handleRemove = (address: string): void => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
-			removeHardwareAccount(source, network, address)
+			removeVaultAccount(address)
 		}
 	}
 

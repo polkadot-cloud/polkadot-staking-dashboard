@@ -27,7 +27,7 @@ import {
 } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
-import { useLedgerHardware } from 'ledger-connect'
+import { useLedger } from 'ledger-connect'
 import { QRSignPrompt } from 'library/QRSignPrompt'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { useEffect, useState } from 'react'
@@ -54,9 +54,9 @@ export const useSubmitExtrinsic = ({
 	const { getTxSubmission } = useTxMeta()
 	const { getAccountBalance } = useBalances()
 	const { extensionsStatus } = useExtensions()
+	const { handleResetLedgerTask } = useLedger()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
-	const { handleResetLedgerTask } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 	const { address: fromAddress, source, proxy } = from
@@ -239,6 +239,10 @@ export const useSubmitExtrinsic = ({
 					closePrompt: () => closePrompt(),
 					setSubmitting: (val: boolean) => setUidSubmitted(uid, val),
 				}).sign(prefixedPayload)
+
+				if (result === null) {
+					return
+				}
 
 				encodedSig = {
 					address: submitAccount.address,
