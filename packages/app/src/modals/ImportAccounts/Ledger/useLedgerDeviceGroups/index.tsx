@@ -1,15 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useHardwareAccounts } from '@w3ux/react-connect-kit'
-import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
+import type { HardwareAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
+import type { LedgerDeviceModel } from 'ledger-connect'
+import { useLedger, useLedgerAccounts } from 'ledger-connect'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import type { LedgerDeviceModel } from 'types'
 import { getStoredGroupDeviceModels, setStoredGroupDeviceModels } from './local'
 import type { GroupAnchor, UseLedgerDeviceGroupsProps } from './types'
 
@@ -23,14 +21,11 @@ export const useLedgerDeviceGroups = ({
 	addressesRef,
 	setAddresses,
 }: UseLedgerDeviceGroupsProps) => {
-	const { t } = useTranslation()
 	const { network } = useNetwork()
-	const { removeHardwareAccount } = useHardwareAccounts()
-	const { fetchLedgerAddress, resetStatusCode, setFeedback } =
-		useLedgerHardware()
+	const { removeLedgerAccount } = useLedgerAccounts(network)
+	const { fetchLedgerAddress, resetStatusCode, setFeedbackCode } = useLedger()
 
 	const { ss58 } = getStakingChainData(network)
-	const source: HardwareAccountSource = 'ledger'
 
 	// Each group keeps a stable "anchor" account so we can verify future device connections against a
 	// known address from that same Ledger.
@@ -158,11 +153,7 @@ export const useLedgerDeviceGroups = ({
 			return false
 		}
 		if (anchorResult.address !== anchor.address) {
-			setFeedback(
-				t('accountAlreadyImportedOtherDevice', {
-					ns: 'modals',
-				}),
-			)
+			setFeedbackCode('accountAlreadyImportedOtherDevice')
 			return false
 		}
 		persistGroupDeviceModel(activeGroup, anchorResult.deviceModel)
@@ -192,7 +183,7 @@ export const useLedgerDeviceGroups = ({
 	const onResetActiveGroup = () => {
 		delete groupAnchorsRef.current[activeGroup]
 		clearGroupDeviceModel(activeGroup)
-		setFeedback(null)
+		setFeedbackCode(null)
 		resetStatusCode()
 
 		// Clear only the active group's accounts and keep the group itself available so the
@@ -202,7 +193,7 @@ export const useLedgerDeviceGroups = ({
 		)
 
 		activeAddresses.forEach((account) => {
-			removeHardwareAccount(source, network, account.address)
+			removeLedgerAccount(account.address)
 		})
 		setStateWithRef(nextAddresses, setAddresses, addressesRef)
 	}
