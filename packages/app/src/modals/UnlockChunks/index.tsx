@@ -4,8 +4,8 @@
 import { setStateWithRef } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useLedger } from 'ledger-connect'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,10 +22,10 @@ export const UnlockChunks = () => {
 		setModalHeight,
 		modalMaxHeight,
 	} = useOverlay().modal
+	const { integrityChecked } = useLedger()
 	const { getStakingLedger } = useBalances()
 	const { getPoolUnlocking } = useActivePool()
 	const { activeAddress } = useActiveAccounts()
-	const { integrityChecked } = useLedgerHardware()
 
 	const { bondFor } = options || {}
 

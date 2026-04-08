@@ -3,37 +3,40 @@
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useHardwareAccounts } from '@w3ux/react-connect-kit'
 import { Polkicon } from '@w3ux/react-polkicon'
-import type { HardwareAccount, HardwareAccountSource } from '@w3ux/types'
+import type { HardwareAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
-import { getLedgerDeviceIcon } from 'contexts/LedgerHardware/icons'
-import { getLedgerDeviceName } from 'contexts/LedgerHardware/util'
 import { useNetwork } from 'contexts/Network'
+import type { LedgerResponse } from 'ledger-connect'
+import {
+	getLedgerDeviceName,
+	useLedger,
+	useLedgerAccounts,
+} from 'ledger-connect'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { LedgerAddress, LedgerResponse } from 'types'
+import type { LedgerAddress } from 'types'
 import { ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
 import { Groups } from './Groups'
+import { getLedgerDeviceIcon } from './icons'
 import { useLedgerDeviceGroups } from './useLedgerDeviceGroups'
 
 export const Ledger = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const {
-		addHardwareAccount,
-		removeHardwareAccount,
-		renameHardwareAccount,
-		hardwareAccountExists,
-		getHardwareAccounts,
-	} = useHardwareAccounts()
+		addLedgerAccount,
+		removeLedgerAccount,
+		renameLedgerAccount,
+		ledgerAccountExists,
+		getLedgerAccounts,
+	} = useLedgerAccounts(network)
 	const {
-		getFeedback,
-		setFeedback,
+		getFeedbackCode,
+		setFeedbackCode,
 		isExecuting,
 		setStatusCode,
 		handleUnmount,
@@ -41,12 +44,11 @@ export const Ledger = () => {
 		handleGetAddress,
 		transportResponse,
 		handleResetLedgerTask,
-	} = useLedgerHardware()
+	} = useLedger()
 	const { setModalResize } = useOverlay().modal
-	const source: HardwareAccountSource = 'ledger'
 
-	const initialAddresses = getHardwareAccounts(source, network)
-	const storedLedgerAccounts = getHardwareAccounts(source, network)
+	const initialAddresses = getLedgerAccounts()
+	const storedLedgerAccounts = getLedgerAccounts()
 
 	// Store addresses retrieved from Ledger device. Defaults to local addresses
 	const [addresses, setAddresses] =
@@ -76,20 +78,19 @@ export const Ledger = () => {
 
 	// Handle exist check for a ledger address. Checks whether the provided address has already been
 	// imported for this source and network combination
-	const handleExists = (address: string) =>
-		hardwareAccountExists(source, network, address)
+	const handleExists = (address: string) => ledgerAccountExists(address)
 
 	// Handle renaming a ledger address for an imported address. Renames the provided address for this
 	// source and network combination
 	const handleRename = (address: string, newName: string) => {
-		renameHardwareAccount(source, network, address, newName)
+		renameLedgerAccount(address, newName)
 	}
 
 	// Handle removing a ledger address. Removes provided address from imported accounts and local
 	// state for ui syncing
 	const handleRemove = (address: string) => {
 		if (confirm(t('areYouSure', { ns: 'app' }))) {
-			removeHardwareAccount(source, network, address)
+			removeLedgerAccount(address)
 			setStateWithRef(
 				[...addressesRef.current.filter((a) => a.address !== address)],
 				setAddresses,
@@ -130,7 +131,7 @@ export const Ledger = () => {
 					if (existingAddresses.has(address)) {
 						return false
 					}
-					return !hardwareAccountExists(source, network, address)
+					return !ledgerAccountExists(address)
 				})
 				.map(({ pubKey, address }: LedgerAddress) => ({
 					index: options.accountIndex,
@@ -147,9 +148,7 @@ export const Ledger = () => {
 					setAddresses,
 					addressesRef,
 				)
-				addHardwareAccount(
-					source,
-					network,
+				addLedgerAccount(
 					activeGroup,
 					newAddress[0].address,
 					options.accountIndex,
@@ -164,14 +163,14 @@ export const Ledger = () => {
 					deviceModel: responseDeviceModel,
 				})
 			} else if (body.length > 0) {
-				setFeedback(t('accountAlreadyImportedOtherDevice', { ns: 'modals' }))
+				setFeedbackCode('accountAlreadyImportedOtherDevice')
 			}
 			resetStatusCode()
 		}
 	}
 
-	// Get last saved ledger feedback
-	const feedback = getFeedback()
+	// Get last saved ledger feedback code
+	const feedback = getFeedbackCode()
 
 	// Listen for new Ledger status reports
 	useEffectIgnoreInitial(() => {
@@ -189,21 +188,10 @@ export const Ledger = () => {
 			return
 		}
 		if (importedAccount.name !== pendingRename.name) {
-			renameHardwareAccount(
-				source,
-				network,
-				pendingRename.address,
-				pendingRename.name,
-			)
+			renameLedgerAccount(pendingRename.address, pendingRename.name)
 		}
 		setPendingRename(null)
-	}, [
-		network,
-		pendingRename,
-		renameHardwareAccount,
-		source,
-		storedLedgerAccounts,
-	])
+	}, [network, pendingRename, renameLedgerAccount, storedLedgerAccounts])
 
 	// Tidy up context state when this component is no longer mounted
 	useEffect(
@@ -276,7 +264,12 @@ export const Ledger = () => {
 			</AccountImport.Header>
 			{!!maybeFeedback && (
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<h3 style={{ padding: '1rem 0 2rem 0' }}>{feedback?.message}</h3>
+					<h3 style={{ padding: '1rem 0 2rem 0' }}>
+						{t(String(feedback?.message), {
+							ns: 'modals',
+							...feedback?.params,
+						})}
+					</h3>
 				</div>
 			)}
 			<div style={{ minHeight: minListHeight }}>

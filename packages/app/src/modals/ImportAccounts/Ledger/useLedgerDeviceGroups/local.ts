@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ledgerDeviceGroupsKey } from 'consts'
-import type { LedgerDeviceModel } from 'types'
+import type { LedgerDeviceModel } from 'ledger-connect'
 
 export const getStoredGroupDeviceModels = (
 	network: string,
