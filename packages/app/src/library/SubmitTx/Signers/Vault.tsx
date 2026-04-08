@@ -3,12 +3,12 @@
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useVaultTxSubmit } from 'hooks/useVaultTxSubmit'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'
 import { SubmitButtonWrapper } from 'library/Tx/Wrapper'
 import { useTranslation } from 'react-i18next'
 import type { DisplayFor } from 'types'
+import { deriveVaultButtonState } from 'vault-connect'
 
 interface VaultProps {
 	uid: number
@@ -31,19 +31,21 @@ export const VaultSubmit = ({
 	notEnoughFunds,
 	promptStatus,
 }: VaultProps) => {
-	const { buttonText, buttonDisabled, buttonPulse } = useVaultTxSubmit({
+	const { t } = useTranslation('app')
+
+	const disabled = submitted || !valid || notEnoughFunds
+	const { buttonText, buttonDisabled, buttonPulse } = deriveVaultButtonState({
 		submitted,
 		valid,
-		submitText,
+		submitText: submitText || '',
+		signText: submitText || t('sign'),
 		promptStatus,
-		disabled: submitted || !valid || notEnoughFunds,
+		disabled,
 	})
 
 	// For card displayFor, override disabled/pulse logic
 	const isCard = displayFor === 'card'
-	const finalDisabled = isCard
-		? submitted || !valid || notEnoughFunds
-		: buttonDisabled
+	const finalDisabled = isCard ? disabled : buttonDisabled
 	const finalPulse = isCard ? !finalDisabled : buttonPulse
 
 	return (

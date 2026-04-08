@@ -20,7 +20,6 @@ import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
 import { InvitesProvider } from 'contexts/Invites'
-import { LedgerHardwareProvider } from 'contexts/LedgerHardware'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { useNetwork } from 'contexts/Network'
@@ -42,6 +41,7 @@ import { TxMetaProvider } from 'contexts/TxMeta'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
+import { LedgerProvider } from 'ledger-connect'
 import { Tooltip } from 'radix-ui'
 import { OverlayProvider } from 'ui-overlay'
 
@@ -56,7 +56,7 @@ export const Providers = () => {
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],
-			LedgerHardwareProvider,
+			LedgerProvider,
 			[
 				ExtensionsProvider,
 
