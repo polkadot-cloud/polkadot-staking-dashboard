@@ -10,33 +10,15 @@ import {
 	faUserGear,
 	faUsers,
 } from '@fortawesome/free-solid-svg-icons'
-import { lazy } from 'react'
+import { Nominate } from 'pages/Nominate'
+import { Operators } from 'pages/Operators'
+import { Overview } from 'pages/Overview'
+import { Pools } from 'pages/Pools'
+import { PoolsList } from 'pages/PoolsList'
+import { Rewards } from 'pages/Rewards'
+import { Stake } from 'pages/Stake'
+import { Validators } from 'pages/Validators'
 import type { PageCategoryItems, PagesConfigItems } from 'types'
-
-const Overview = lazy(() =>
-	import('pages/Overview').then((m) => ({ default: m.Overview })),
-)
-const Stake = lazy(() =>
-	import('pages/Stake').then((m) => ({ default: m.Stake })),
-)
-const Pools = lazy(() =>
-	import('pages/Pools').then((m) => ({ default: m.Pools })),
-)
-const Nominate = lazy(() =>
-	import('pages/Nominate').then((m) => ({ default: m.Nominate })),
-)
-const Rewards = lazy(() =>
-	import('pages/Rewards').then((m) => ({ default: m.Rewards })),
-)
-const Validators = lazy(() =>
-	import('pages/Validators').then((m) => ({ default: m.Validators })),
-)
-const Operators = lazy(() =>
-	import('pages/Operators').then((m) => ({ default: m.Operators })),
-)
-const PoolsList = lazy(() =>
-	import('pages/PoolsList').then((m) => ({ default: m.PoolsList })),
-)
 
 export const PageCategories: PageCategoryItems = [
 	{

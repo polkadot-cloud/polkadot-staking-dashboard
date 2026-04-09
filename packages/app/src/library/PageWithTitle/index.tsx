@@ -1,7 +1,6 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Suspense } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import type { PageItem } from 'types'
@@ -18,9 +17,7 @@ export const PageWithTitle = ({ page }: { page: PageItem }) => {
 					ns: 'app',
 				})}`}</title>
 			</Helmet>
-			<Suspense fallback={<div />}>
-				<Entry page={page} />
-			</Suspense>
+			<Entry page={page} />
 		</Page.Container>
 	)
 }
