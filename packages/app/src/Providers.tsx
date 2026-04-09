@@ -3,10 +3,8 @@
 
 import { ThemedRouter } from 'Themes'
 import { withProviders } from '@w3ux/factories'
-import {
-	ExtensionsProvider,
-	HardwareAccountsProvider,
-} from '@w3ux/react-connect-kit'
+import { LedgerAdaptor } from '@w3ux/ledger-connect'
+import { ConnectProvider } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
@@ -41,7 +39,6 @@ import { TxMetaProvider } from 'contexts/TxMeta'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
-import { LedgerProvider } from 'ledger-connect'
 import { Tooltip } from 'radix-ui'
 import { OverlayProvider } from 'ui-overlay'
 
@@ -56,16 +53,15 @@ export const Providers = () => {
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],
-			LedgerProvider,
 			[
-				ExtensionsProvider,
+				ConnectProvider,
 
 				{
 					dappName: DappName,
 					ss58,
+					adaptors: [LedgerAdaptor],
 				},
 			],
-			HardwareAccountsProvider,
 			ExternalAccountsProvider,
 			ImportedAccountsProvider,
 			ProxiesProvider,

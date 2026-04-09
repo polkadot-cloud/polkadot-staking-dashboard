@@ -4,6 +4,7 @@
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { Polkicon } from '@w3ux/react-polkicon'
+import { useVaultAccounts } from '@w3ux/vault-connect'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { QrReader } from 'library/QrReader'
@@ -13,7 +14,6 @@ import { useTranslation } from 'react-i18next'
 import { ButtonSubmitInvert, ButtonText } from 'ui-buttons'
 import { AccountImport } from 'ui-core/base'
 import { Close, useOverlay } from 'ui-overlay'
-import { useVaultAccounts } from 'vault-connect'
 
 export const Vault = () => {
 	const { t } = useTranslation()
