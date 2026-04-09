@@ -23,7 +23,7 @@
 		"motion": "12.23.24",
 		"react": "^19.2.1",
 		"react-i18next": "^17.0.2",
-		"styles": "workspace:*"
+		"ui-styles": "workspace:*"
 	},
 	"devDependencies": {
 		"@w3ux/types": "^2.4.2",

@@ -6,14 +6,14 @@ import { createRoot } from 'react-dom/client'
 import { version } from '../package.json'
 
 // Network styles
-import 'styles/accents/default.scss'
-import 'styles/accents/paseo.scss'
-import 'styles/accents/westend.scss'
+import 'ui-styles/accents/default.scss'
+import 'ui-styles/accents/paseo.scss'
+import 'ui-styles/accents/westend.scss'
 
 // App styles
-import 'styles/fonts/font.scss'
-import 'styles/theme/index.scss'
-import 'styles/theme/theme.scss'
+import 'ui-styles/fonts/font.scss'
+import 'ui-styles/theme/index.scss'
+import 'ui-styles/theme/theme.scss'
 
 // Package styles
 import '@w3ux/react-odometer/index.css'

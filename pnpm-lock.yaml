@@ -207,9 +207,6 @@ importers:
       styled-components:
         specifier: ^6.3.12
         version: 6.3.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      styles:
-        specifier: workspace:*
-        version: link:../styles
       ui-buttons:
         specifier: workspace:*
         version: link:../ui-buttons
@@ -222,6 +219,9 @@ importers:
       ui-overlay:
         specifier: workspace:*
         version: link:../ui-overlay
+      ui-styles:
+        specifier: workspace:*
+        version: link:../ui-styles
       ui-tips:
         specifier: workspace:*
         version: link:../ui-tips
@@ -439,8 +439,6 @@ importers:
         specifier: ^7.8.2
         version: 7.8.2
 
-  packages/styles: {}
-
   packages/test-smoldot:
     dependencies:
       '@dedot/chain-specs':
@@ -530,12 +528,12 @@ importers:
       react:
         specifier: ^19.2.4
         version: 19.2.4
-      styles:
-        specifier: workspace:*
-        version: link:../styles
       ui-core:
         specifier: workspace:*
         version: link:../ui-core
+      ui-styles:
+        specifier: workspace:*
+        version: link:../ui-styles
     devDependencies:
       '@w3ux/types':
         specifier: ^2.4.2
@@ -591,9 +589,9 @@ importers:
       simplebar-react:
         specifier: 3.3.2
         version: 3.3.2(react@19.2.4)
-      styles:
+      ui-styles:
         specifier: workspace:*
-        version: link:../styles
+        version: link:../ui-styles
     devDependencies:
       types:
         specifier: workspace:*
@@ -679,6 +677,8 @@ importers:
         specifier: workspace:*
         version: link:../types
 
+  packages/ui-styles: {}
+
   packages/ui-tips:
     dependencies:
       '@fortawesome/fontawesome-svg-core':
@@ -711,9 +711,9 @@ importers:
       react-i18next:
         specifier: ^17.0.2
         version: 17.0.2(i18next@26.0.3(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@6.0.2)
-      styles:
+      ui-styles:
         specifier: workspace:*
-        version: link:../styles
+        version: link:../ui-styles
     devDependencies:
       '@w3ux/types':
         specifier: ^2.4.2
