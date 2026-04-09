@@ -266,7 +266,7 @@ export const Ledger = () => {
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<h3 style={{ padding: '1rem 0 2rem 0' }}>
 						{t(String(feedback?.message), {
-							ns: 'modals',
+							ns: 'app',
 							...feedback?.params,
 						})}
 					</h3>
