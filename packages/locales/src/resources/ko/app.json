@@ -347,6 +347,7 @@
 		"startAgain": "다시 시작",
 		"status": "상태",
 		"submitTransaction": "거래를 제출할 준비가 되었습니다.",
+		"successfullyFetchedAddress": "주소를 성공적으로 가져왔습니다",
 		"support": "지원",
 		"supportChannels": "지원 채널",
 		"switchAccount": "계정 전환",
