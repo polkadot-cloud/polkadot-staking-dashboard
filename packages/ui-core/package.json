@@ -32,7 +32,7 @@
 		"react-dom": "^19.2.4",
 		"simplebar": "6.3.3",
 		"simplebar-react": "3.3.2",
-		"styles": "workspace:*"
+		"ui-styles": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*"

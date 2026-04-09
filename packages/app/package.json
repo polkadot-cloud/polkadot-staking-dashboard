@@ -60,11 +60,11 @@
 		"simplebar": "6.3.3",
 		"simplebar-react": "3.3.2",
 		"styled-components": "^6.3.12",
-		"styles": "workspace:*",
 		"ui-buttons": "workspace:*",
 		"ui-core": "workspace:*",
 		"ui-graphs": "workspace:*",
 		"ui-overlay": "workspace:*",
+		"ui-styles": "workspace:*",
 		"ui-tips": "workspace:*",
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*"
