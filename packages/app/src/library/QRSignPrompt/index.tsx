@@ -6,6 +6,7 @@ import {
 	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { QrDisplayPayload, QrScanSignature } from '@w3ux/vault-connect'
 import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -15,7 +16,6 @@ import type { SignerPromptProps } from 'library/SubmitTx/types'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
-import { QrDisplayPayload, QrScanSignature } from 'vault-connect'
 import { Wrapper } from './Wrapper'
 
 export const QRSignPrompt = ({

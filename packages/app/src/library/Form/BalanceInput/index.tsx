@@ -43,8 +43,14 @@ export const BalanceInput = ({
 	// handle value change
 	const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
 		const val = e.target.value
-		if (val !== '' && new BigNumber(val).isNaN()) {
-			return
+		if (val !== '') {
+			try {
+				if (new BigNumber(val).isNaN()) {
+					return
+				}
+			} catch {
+				return
+			}
 		}
 		setLocalValue(val)
 		updateParentState(val)
@@ -54,8 +60,9 @@ export const BalanceInput = ({
 	const updateParentState = (val: string) => {
 		val = val || '0'
 		if (new BigNumber(val).isNaN()) {
-			return
+			val = '0'
 		}
+
 		for (const setter of setters) {
 			setter({
 				value: new BigNumber(val),
