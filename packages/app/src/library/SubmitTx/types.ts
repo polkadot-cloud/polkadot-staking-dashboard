@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
+import type { VaultSignatureResult } from '@w3ux/vault-connect'
 import type {
 	ActiveAccount,
 	ActiveProxy,
 	DisplayFor,
 	MaybeAddress,
 } from 'types'
-import type { VaultSignatureResult } from 'vault-connect'
 
 export interface ProxySwitcherProps {
 	onPreviousSigner?: () => void
