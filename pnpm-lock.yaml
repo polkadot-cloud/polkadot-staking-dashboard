@@ -369,39 +369,6 @@ importers:
         specifier: ^8.0.5
         version: 8.0.5(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.2)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0)
 
-  packages/ledger-connect:
-    dependencies:
-      '@fortawesome/free-brands-svg-icons':
-        specifier: ^7.2.0
-        version: 7.2.0
-      '@fortawesome/free-solid-svg-icons':
-        specifier: ^7.2.0
-        version: 7.2.0
-      '@ledgerhq/hw-transport-webhid':
-        specifier: ^6.34.0
-        version: 6.34.0
-      '@w3ux/hooks':
-        specifier: ^2.4.4
-        version: 2.4.4(react@19.2.4)
-      '@w3ux/react-connect-kit':
-        specifier: ^4.0.4
-        version: 4.0.4(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
-      '@w3ux/types':
-        specifier: ^2.4.2
-        version: 2.4.2
-      '@w3ux/utils':
-        specifier: ^3.1.1
-        version: 3.1.1
-      '@zondax/ledger-substrate':
-        specifier: ^2.1.2
-        version: 2.1.2
-      buffer:
-        specifier: ^6.0.3
-        version: 6.0.3
-      react:
-        specifier: ^19.2.4
-        version: 19.2.4
-
   packages/locale-cli:
     dependencies:
       commander:
@@ -779,33 +746,6 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
-
-  packages/vault-connect:
-    dependencies:
-      '@w3ux/react-connect-kit':
-        specifier: ^4.0.4
-        version: 4.0.4(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)
-      '@w3ux/types':
-        specifier: ^2.4.2
-        version: 2.4.2
-      dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.2)
-      html5-qrcode:
-        specifier: ^2.3.8
-        version: 2.3.8
-      qrcode-generator:
-        specifier: 1.5.0
-        version: 1.5.0
-      react:
-        specifier: ^19.2.4
-        version: 19.2.4
-      styled-components:
-        specifier: ^6.3.12
-        version: 6.3.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      xxhash-wasm:
-        specifier: ^1.0.2
-        version: 1.1.0
 
 packages:
 
@@ -2594,24 +2534,10 @@ packages:
       react: ^19.1.0
       react-dom: ^19.1.0
 
-  '@w3ux/observables-connect@1.0.7':
-    resolution: {integrity: sha512-htwX1ydLkwLCkQPNtPXE9a/14fRprE5ss/tDJtZcGf5miF8A6TRIn9aaPydYr20dO0EhvosTxvaXcpOhvH0Kcw==}
-    peerDependencies:
-      dedot: ^1
-      rxjs: ^7.8.2
-
   '@w3ux/observables-connect@2.0.0':
     resolution: {integrity: sha512-fgokra7zbd+7OsXz5xUXMIekmalVMoh1vlT0mZ3xRmQU7r5DGtxFOCkXM+ojVJmnQpag8exccbBUnjoU7hn9PQ==}
     peerDependencies:
       dedot: ^1
-      rxjs: ^7.8.2
-
-  '@w3ux/react-connect-kit@4.0.4':
-    resolution: {integrity: sha512-cYKocy1ivbQrNOXb6R3Uve1OkZEQrjDnzjhX3tGWJrOkQ3+JehH2IIQnxi2bnoJE1/x9r0gJiUyzPg429MHa2g==}
-    peerDependencies:
-      dedot: ^1
-      react: ^19.1.0
-      react-dom: ^19.1.0
       rxjs: ^7.8.2
 
   '@w3ux/react-connect-kit@5.0.2':
@@ -6246,16 +6172,6 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@w3ux/observables-connect@1.0.7(dedot@1.2.0(typescript@6.0.2))(react@19.2.4)(rxjs@7.8.2)':
-    dependencies:
-      '@w3ux/extension-assets': 2.3.1(react@19.2.4)
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.2))
-      '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.2)
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - react
-
   '@w3ux/observables-connect@2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
       '@w3ux/extension-assets': 2.3.1(react@19.2.4)
@@ -6265,17 +6181,6 @@ snapshots:
       rxjs: 7.8.2
     transitivePeerDependencies:
       - react
-
-  '@w3ux/react-connect-kit@4.0.4(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
-    dependencies:
-      '@w3ux/hooks': 2.4.4(react@19.2.4)
-      '@w3ux/observables-connect': 1.0.7(dedot@1.2.0(typescript@6.0.2))(react@19.2.4)(rxjs@7.8.2)
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.2))
-      '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.2)
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-      rxjs: 7.8.2
 
   '@w3ux/react-connect-kit@5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(rxjs@7.8.2)':
     dependencies:
