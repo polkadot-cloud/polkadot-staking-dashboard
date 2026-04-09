@@ -346,6 +346,7 @@
 		"startAgain": "Start Again",
 		"status": "Status",
 		"submitTransaction": "Ready to submit transaction.",
+		"successfullyFetchedAddress": "Successfully Fetched Address",
 		"support": "Support",
 		"supportChannels": "Support Channels",
 		"switchAccount": "Switch Account",

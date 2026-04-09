@@ -346,6 +346,7 @@
 		"startAgain": "Erneut starten",
 		"status": "Status",
 		"submitTransaction": "Bereit, Transaktion zu senden.",
+		"successfullyFetchedAddress": "Adresse erfolgreich abgerufen",
 		"support": "Unterstützung",
 		"supportChannels": "Hilfemöglichkeiten",
 		"switchAccount": "Konto wechseln",

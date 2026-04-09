@@ -263,7 +263,6 @@
 		"submitLock": "풀 잠금 제출",
 		"submitUnlock": "풀 잠금 해제 제출",
 		"submitting": "제출 중",
-		"successfullyFetchedAddress": "주소를 성공적으로 가져왔습니다",
 		"supportDiscord": "Cloud Staking Discord 채널에 참여하여 당사 팀으로부터 전용 지원을 받고 Polkadot 커뮤니티와 연결하십시오.",
 		"supportEmail": "Cloud Staking 사용자를 위해 전용 이메일 지원을 제공합니다. 저희에게 문의하면 당사 팀이 신속하게 대응하여 도움을 드리겠습니다.",
 		"syncAccounts": "계정 동기화",

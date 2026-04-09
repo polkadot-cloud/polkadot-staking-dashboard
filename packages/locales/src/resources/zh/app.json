@@ -342,6 +342,7 @@
 		"startAgain": "重新开始",
 		"status": "状态",
 		"submitTransaction": "准备提交交易",
+		"successfullyFetchedAddress": "成功获取地址",
 		"support": "支持",
 		"supportChannels": "支持渠道",
 		"switchAccount": "切换账户",
