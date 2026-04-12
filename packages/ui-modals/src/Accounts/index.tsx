@@ -132,7 +132,7 @@ export const Accounts = ({
 		accounts,
 		activeAddress,
 		activeProxy,
-		JSON.stringify(nominating.map((n) => n.address?.toString())),
+		JSON.stringify(nominating.map((n) => n.address.toString())),
 		JSON.stringify(inPool.map((p) => p.address)),
 		JSON.stringify(nominatingAndPool.map((p) => p.address)),
 		JSON.stringify(notStaking.map((p) => p.address)),
