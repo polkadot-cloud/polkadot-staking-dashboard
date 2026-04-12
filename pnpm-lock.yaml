@@ -216,6 +216,9 @@ importers:
       ui-graphs:
         specifier: workspace:*
         version: link:../ui-graphs
+      ui-modals:
+        specifier: workspace:*
+        version: link:../ui-modals
       ui-overlay:
         specifier: workspace:*
         version: link:../ui-overlay
@@ -645,6 +648,39 @@ importers:
       types:
         specifier: workspace:*
         version: link:../types
+
+  packages/ui-modals:
+    dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: ^7.2.0
+        version: 7.2.0
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^7.2.0
+        version: 7.2.0
+      '@fortawesome/react-fontawesome':
+        specifier: ^3.3.0
+        version: 3.3.0(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.4)
+      '@w3ux/extension-assets':
+        specifier: ^2.3.1
+        version: 2.3.1(react@19.2.4)
+      '@w3ux/react-polkicon':
+        specifier: ^4.0.2
+        version: 4.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@w3ux/utils':
+        specifier: ^3.1.1
+        version: 3.1.1
+      bignumber.js:
+        specifier: ^10.0.2
+        version: 10.0.2
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
+      ui-core:
+        specifier: workspace:*
+        version: link:../ui-core
+      ui-overlay:
+        specifier: workspace:*
+        version: link:../ui-overlay
 
   packages/ui-overlay:
     dependencies:

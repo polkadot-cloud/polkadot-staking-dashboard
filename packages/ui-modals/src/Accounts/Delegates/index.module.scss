@@ -1,9 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import styled from 'styled-components'
-
-export const DelegatesWrapper = styled.div`
+.delegatesWrapper {
   border-left: 1px solid var(--gray-500);
   width: 100%;
   display: flex;
@@ -19,4 +17,4 @@ export const DelegatesWrapper = styled.div`
       margin-bottom: 0;
     }
   }
-`
+}

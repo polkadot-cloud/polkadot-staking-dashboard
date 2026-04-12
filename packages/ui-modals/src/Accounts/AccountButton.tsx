@@ -3,22 +3,33 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
-import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
+import LedgerSVG from '@w3ux/extension-assets/LedgerSquare'
+import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
+import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
-import { setActiveProxy } from 'global-bus'
-import { useTranslation } from 'react-i18next'
-import { useOverlay } from 'ui-overlay'
-import type { AccountButtonProps } from './types'
-import { AccountWrapper } from './Wrappers'
+import classes from './index.module.scss'
+import type { AccountButtonProps, AccountsProps } from './types'
+
+type AccountButtonComponentProps = AccountButtonProps &
+	Pick<
+		AccountsProps,
+		| 'activeAccount'
+		| 'activeProxy'
+		| 'activeAddress'
+		| 'activeProxyType'
+		| 'getAccount'
+		| 'setActiveAccount'
+		| 'setActiveProxy'
+		| 'network'
+		| 'unit'
+		| 'units'
+		| 't'
+	> & {
+		closeModal: () => void
+	}
 
 export const AccountButton = ({
 	label,
@@ -28,20 +39,19 @@ export const AccountButton = ({
 	proxyType,
 	noBorder = false,
 	transferableBalance,
-}: AccountButtonProps) => {
-	const { t } = useTranslation('modals')
-	const { network } = useNetwork()
-	const { getAccount } = useImportedAccounts()
-	const { closeModal } = useOverlay().modal
-	const {
-		activeAccount,
-		activeProxy,
-		activeAddress,
-		setActiveAccount,
-		activeProxyType,
-	} = useActiveAccounts()
-	const { unit, units } = getStakingChainData(network)
-
+	activeAccount,
+	activeProxy,
+	activeAddress,
+	activeProxyType,
+	getAccount,
+	setActiveAccount,
+	setActiveProxy,
+	closeModal,
+	network,
+	unit,
+	units,
+	t,
+}: AccountButtonComponentProps) => {
 	// Accumulate account data.
 	const meta = getAccount({ address, source })
 	const name = meta?.name
@@ -94,7 +104,9 @@ export const AccountButton = ({
 	}
 
 	return (
-		<AccountWrapper className={isActive ? 'active' : undefined}>
+		<div
+			className={`${classes.accountWrapper}${isActive ? ` ${classes.active}` : ''}`}
+		>
 			<div className={noBorder ? 'noBorder' : undefined}>
 				<section className="head">
 					<button
@@ -159,6 +171,6 @@ export const AccountButton = ({
 					</span>
 				</section>
 			</div>
-		</AccountWrapper>
+		</div>
 	)
 }

@@ -1,173 +1,76 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { getStakingChainData, isSupportedProxy } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useNetwork } from 'contexts/Network'
 import { useProxies } from 'contexts/Proxies'
-import { ActionItem } from 'library/ActionItem'
-import { useEffect } from 'react'
+import { setActiveProxy } from 'global-bus'
 import { useTranslation } from 'react-i18next'
-import { CustomHeader, Padding } from 'ui-core/modal'
-import { Close, useOverlay } from 'ui-overlay'
-import { AccountItem } from './AccountItem'
-import type {
-	AccountInPoolProps,
-	AccountItemProps,
-	AccountNominatingInPoolProps,
-} from './types'
-import { AccountSeparator, AccountWrapper } from './Wrappers'
+import { Accounts as AccountsModal } from 'ui-modals'
+import { calculateAllBalances } from 'utils'
 
 export const Accounts = () => {
 	const { t } = useTranslation('modals')
+	const { network } = useNetwork()
 	const { getDelegates } = useProxies()
-	const { accounts } = useImportedAccounts()
-	const { activeAddress, activeProxy } = useActiveAccounts()
-	const { getStakingLedger, getPoolMembership } = useBalances()
-	const { status: modalStatus, setModalResize } = useOverlay().modal
+	const { accounts, getAccount } = useImportedAccounts()
+	const { activeEra } = useApi()
+	const {
+		activeAddress,
+		activeAccount,
+		activeProxy: activeProxyState,
+		activeProxyType,
+		setActiveAccount,
+	} = useActiveAccounts()
+	const {
+		getStakingLedger,
+		getPoolMembership,
+		getAccountBalance,
+		getEdReserved,
+		feeReserve,
+	} = useBalances()
+	const { unit, units } = getStakingChainData(network)
 
-	// construct account groupings
-	const nominating: AccountItemProps[] = []
-	const inPool: AccountInPoolProps[] = []
-	const nominatingAndPool: AccountNominatingInPoolProps[] = []
-	const notStaking: AccountItemProps[] = []
-
-	for (const { address, source } of accounts) {
-		const { ledger } = getStakingLedger(address)
+	const getTransferableBalance = (address: string): bigint => {
+		const accountBalance = getAccountBalance(address)
+		const stakingLedger = getStakingLedger(address)
 		const { membership } = getPoolMembership(address)
-
-		let isNominating = false
-		let isInPool = false
-		const delegates = getDelegates(address)
-
-		// Check if nominating
-		if (
-			!!ledger &&
-			nominating.find((a) => a.address === address && a.source === source) ===
-				undefined
-		) {
-			isNominating = true
-		}
-
-		// Check if in pool
-		if (membership) {
-			if (!inPool.find((n) => n.address === address && n.source === source)) {
-				isInPool = true
-			}
-		}
-
-		// If not doing anything, add address to `notStaking`
-		if (
-			!isNominating &&
-			!membership &&
-			!notStaking.find((n) => n.address === address && n.source === source)
-		) {
-			notStaking.push({ address, source, delegates })
-			continue
-		}
-
-		// If both nominating and in pool, add to this list
-		if (
-			isNominating &&
-			isInPool &&
-			membership &&
-			!nominatingAndPool.find(
-				(n) => n.address === address && n.source === source,
-			)
-		) {
-			nominatingAndPool.push({
-				...membership,
-				address,
-				source,
-				delegates,
-			})
-			continue
-		}
-
-		// Nominating only
-		if (isNominating && !isInPool) {
-			nominating.push({ address, source, delegates })
-			continue
-		}
-		// In pool only
-		if (!isNominating && isInPool && membership) {
-			inPool.push({ ...membership, source, delegates })
-		}
+		const edReserved = getEdReserved()
+		const balances = calculateAllBalances(
+			accountBalance,
+			stakingLedger,
+			membership,
+			edReserved,
+			feeReserve,
+			activeEra.index,
+		)
+		return balances.transferableBalance
 	}
 
-	// Resize if modal open upon state changes.
-	useEffect(() => {
-		if (modalStatus === 'open') {
-			setModalResize()
-		}
-	}, [
-		accounts,
-		activeAddress,
-		activeProxy,
-		JSON.stringify(nominating.map((n) => n.address?.toString())),
-		JSON.stringify(inPool.map((p) => p.address)),
-		JSON.stringify(nominatingAndPool.map((p) => p.address)),
-		JSON.stringify(notStaking.map((p) => p.address)),
-	])
-
 	return (
-		<>
-			<Close />
-			<Padding>
-				<CustomHeader>
-					<div>
-						<h1>{t('accounts')}</h1>
-					</div>
-				</CustomHeader>
-				{!activeAddress && !accounts.length && (
-					<AccountWrapper style={{ marginTop: '1.5rem' }}>
-						<div>
-							<div>
-								<h4 style={{ padding: '0.75rem 1rem' }}>
-									{t('noActiveAccount')}
-								</h4>
-							</div>
-							<div />
-						</div>
-					</AccountWrapper>
-				)}
-				{!!nominatingAndPool.length && (
-					<>
-						<AccountSeparator />
-						<ActionItem text={t('nominatingAndInPool')} />
-						{nominatingAndPool.map((item, i) => (
-							<AccountItem key={`acc_nominating_and_pool_${i}`} {...item} />
-						))}
-					</>
-				)}
-				{!!nominating.length && (
-					<>
-						<AccountSeparator />
-						<ActionItem text={t('nominating')} />
-						{nominating.map((item, i) => (
-							<AccountItem key={`acc_nominating_${i}`} {...item} />
-						))}
-					</>
-				)}
-				{!!inPool.length && (
-					<>
-						<AccountSeparator />
-						<ActionItem text={t('inPool')} />
-						{inPool.map((item, i) => (
-							<AccountItem key={`acc_in_pool_${i}`} {...item} />
-						))}
-					</>
-				)}
-				{!!notStaking.length && (
-					<>
-						<AccountSeparator />
-						<ActionItem text={t('notStaking')} />
-						{notStaking.map((item, i) => (
-							<AccountItem key={`acc_not_staking_${i}`} {...item} />
-						))}
-					</>
-				)}
-			</Padding>
-		</>
+		<AccountsModal
+			accounts={accounts}
+			activeAddress={activeAddress ?? null}
+			activeAccount={activeAccount}
+			activeProxy={activeProxyState}
+			activeProxyType={activeProxyType ?? null}
+			setActiveAccount={setActiveAccount}
+			setActiveProxy={(n, proxy) => setActiveProxy(n as typeof network, proxy)}
+			getDelegates={getDelegates}
+			getStakingLedger={getStakingLedger}
+			getPoolMembership={getPoolMembership}
+			getAccount={getAccount}
+			getImportedAccounts={() => accounts}
+			getTransferableBalance={getTransferableBalance}
+			isSupportedProxy={isSupportedProxy}
+			network={network}
+			unit={unit}
+			units={units}
+			t={t}
+		/>
 	)
 }

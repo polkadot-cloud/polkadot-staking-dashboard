@@ -1,24 +1,41 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useAccountBalances } from 'hooks/useAccountBalances'
 import { AccountButton } from '../AccountButton'
+import type { AccountsProps } from '../types'
+
+type DelegateItemProps = Pick<
+	AccountsProps,
+	| 'activeAccount'
+	| 'activeProxy'
+	| 'activeAddress'
+	| 'activeProxyType'
+	| 'getAccount'
+	| 'getImportedAccounts'
+	| 'getTransferableBalance'
+	| 'setActiveAccount'
+	| 'setActiveProxy'
+	| 'network'
+	| 'unit'
+	| 'units'
+	| 't'
+> & {
+	delegator: string
+	proxyType: string
+	delegate: string
+	closeModal: () => void
+}
 
 export const DelegateItem = ({
 	delegator,
 	proxyType,
 	delegate,
-}: {
-	delegator: string
-	proxyType: string
-	source: string
-	delegate: string
-}) => {
-	const { accounts } = useImportedAccounts()
-	const {
-		balances: { transferableBalance },
-	} = useAccountBalances(delegate)
+	getImportedAccounts,
+	getTransferableBalance,
+	...rest
+}: DelegateItemProps) => {
+	const accounts = getImportedAccounts()
+	const transferableBalance = getTransferableBalance(delegate)
 
 	// Use the delegate's actual source rather than the delegator's source. The delegator may be an
 	// external/read-only account, but the delegate (proxy) needs its real source to be recognized
@@ -33,6 +50,7 @@ export const DelegateItem = ({
 			source={delegateSource}
 			delegator={delegator}
 			proxyType={proxyType}
+			{...rest}
 		/>
 	)
 }
