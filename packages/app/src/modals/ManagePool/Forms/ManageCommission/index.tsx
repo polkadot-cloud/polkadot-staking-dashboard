@@ -3,6 +3,7 @@
 
 import { PerbillMultiplier } from 'consts'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -52,11 +53,12 @@ export const ManageCommission = ({
 		isUpdated,
 	} = usePoolCommission()
 	const { newBatchCall } = useBatchCall()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)

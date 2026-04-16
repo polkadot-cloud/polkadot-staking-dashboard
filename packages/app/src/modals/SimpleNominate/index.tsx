@@ -5,6 +5,7 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -30,10 +31,11 @@ export const SimpleNominate = () => {
 	const { serviceApi } = useApi()
 	const { getTxSubmission } = useTxMeta()
 	const { newBatchCall } = useBatchCall()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
-	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const {
 		balances: {
 			nominator: { totalPossibleBond },

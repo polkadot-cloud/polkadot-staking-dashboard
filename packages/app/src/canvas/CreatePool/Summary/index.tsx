@@ -7,6 +7,7 @@ import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -32,11 +33,12 @@ export const Summary = ({ section }: SetupStepProps) => {
 	} = useApi()
 	const { network } = useNetwork()
 	const { newBatchCall } = useBatchCall()
+	const { activeProxy } = useActiveProxy()
 	const { closeCanvas } = useOverlay().canvas
 	const { accountHasSigner } = useImportedAccounts()
 	const { getPoolSetup, removePoolSetup } = usePoolSetups()
 	const { queryBondedPool, addToBondedPools } = useBondedPools()
-	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	const poolId = lastPoolId + 1

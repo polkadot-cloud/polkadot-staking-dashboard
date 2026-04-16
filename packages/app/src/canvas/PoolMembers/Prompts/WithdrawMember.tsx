@@ -6,6 +6,7 @@ import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
@@ -35,9 +36,10 @@ export const WithdrawMember = ({
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { closePrompt } = usePrompt()
+	const { activeProxy } = useActiveProxy()
 	const { getConsts, activeEra } = useApi()
+	const { activeAccount } = useActiveAccounts()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 	const { historyDepth } = getConsts(network)
 	const { unbondingEras } = member

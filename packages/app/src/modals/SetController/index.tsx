@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -19,11 +20,12 @@ export const SetController = () => {
 	const { t } = useTranslation('app')
 	const { serviceApi } = useApi()
 	const { isBonding } = useStaking()
+	const { activeProxy } = useActiveProxy()
 	const { getStakingLedger } = useBalances()
 	const { closeModal } = useOverlay().modal
 	const { syncing, accountSynced } = useSyncing()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
 	const canDeprecateController =
