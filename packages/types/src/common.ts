@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
-import type { FC } from 'react'
+import type { ComponentType } from 'react'
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
 export type AnyJson = any
@@ -24,7 +24,7 @@ export interface PageItem {
 	key: string
 	uri: string
 	hash: string
-	Entry: FC<PageProps>
+	Entry: ComponentType<PageProps>
 	faIcon: IconProp
 	advanced: boolean
 	bullet?: BulletType
