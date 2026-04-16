@@ -151,8 +151,8 @@ export const UnbondFeedback = ({
 
 	return (
 		<>
-			{filteredErrors.map((err, i) => (
-				<Warning key={`unbond_error_${i}`} text={err} />
+			{filteredErrors.map((err) => (
+				<Warning key={`unbond_error_${err}`} text={err} />
 			))}
 			<Spacer />
 			<UnbondInput

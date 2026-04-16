@@ -147,7 +147,7 @@ export const Vault = () => {
 						/>
 						{vaultAccounts.map(({ address, name }, i) => (
 							<AccountImport.Item
-								key={`vault_imported_${i}`}
+								key={`vault_imported_${address}`}
 								address={address}
 								initial={name}
 								last={i === vaultAccounts.length - 1}

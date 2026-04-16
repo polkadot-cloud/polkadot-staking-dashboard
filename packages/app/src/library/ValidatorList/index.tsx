@@ -363,9 +363,9 @@ export const ValidatorListInner = ({
 				{BeforeListNode}
 				<MotionContainer>
 					{listItems.length ? (
-						listItems.map((validator, index) => (
+						listItems.map((validator) => (
 							<motion.div
-								key={`nomination_${index}`}
+								key={`nomination_${validator.address}`}
 								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
 								variants={{
 									hidden: {

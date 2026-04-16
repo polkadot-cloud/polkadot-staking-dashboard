@@ -133,9 +133,9 @@ const RouterInner = () => {
 									{getPagesConfig(network, null, advancedMode, {
 										inPool,
 										isBonding,
-									}).map((page, i) => (
+									}).map((page) => (
 										<Route
-											key={`main_interface_page_${i}`}
+											key={`main_interface_page_${page.key}`}
 											path={page.hash}
 											element={<PageWithTitle page={page} />}
 										/>

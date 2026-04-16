@@ -42,9 +42,9 @@ export const List = ({ network }: { network: ValidatorSupportedNetwork }) => {
 	return (
 		<Page.Row yMargin>
 			<ItemsWrapper variants={container} initial="hidden" animate="show">
-				{entityItems.map((item, index: number) => (
+				{entityItems.map((item) => (
 					<Item
-						key={`operator_item_${index}`}
+						key={`operator_item_${item.name}`}
 						network={network}
 						item={item}
 						actionable

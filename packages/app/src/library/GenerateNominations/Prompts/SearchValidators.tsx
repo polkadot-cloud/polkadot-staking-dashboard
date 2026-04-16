@@ -158,7 +158,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 										message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
 									/>
 								) : filteredSearchResults.length > 0 ? (
-									filteredSearchResults.map((validator: Validator, i) => {
+									filteredSearchResults.map((validator: Validator) => {
 										const inInitial = !!nominations.find(
 											({ address }) => address === validator.address,
 										)
@@ -167,7 +167,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
 										return (
 											<PromptListItem
-												key={`search_result_${i}`}
+												key={`search_result_${validator.address}`}
 												className={
 													disabled && inInitial ? 'inactive' : undefined
 												}
@@ -204,8 +204,8 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
 						{selected.length > 0 ? (
 							<SearchList.SelectedList>
-								{selected.map((validator: Validator, i) => (
-									<PromptListItem key={`selected_${i}`}>
+								{selected.map((validator: Validator) => (
+									<PromptListItem key={`selected_${validator.address}`}>
 										<Checkbox
 											checked={true}
 											onClick={() => {

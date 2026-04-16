@@ -26,8 +26,8 @@ export const NotStaking = () => {
 
 	return (
 		<QuickAction.Container>
-			{actions.map((action, i) => (
-				<QuickAction.Button key={`action-${i}`} {...action} />
+			{actions.map((action) => (
+				<QuickAction.Button key={`action-${action.label}`} {...action} />
 			))}
 		</QuickAction.Container>
 	)
