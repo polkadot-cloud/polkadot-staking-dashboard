@@ -7,7 +7,7 @@
 		"packages/consts": {},
 		"packages/locales": {},
 		"packages/plugin-staking-api": {},
-		"packages/styles": {},
+		"packages/ui-styles": {},
 		"packages/types": {},
 		"packages/ui-buttons": {},
 		"packages/ui-core": {},

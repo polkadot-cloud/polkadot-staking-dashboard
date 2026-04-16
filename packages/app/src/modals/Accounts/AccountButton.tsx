@@ -12,6 +12,7 @@ import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { setActiveProxy } from 'global-bus'
@@ -33,13 +34,8 @@ export const AccountButton = ({
 	const { network } = useNetwork()
 	const { getAccount } = useImportedAccounts()
 	const { closeModal } = useOverlay().modal
-	const {
-		activeAccount,
-		activeProxy,
-		activeAddress,
-		setActiveAccount,
-		activeProxyType,
-	} = useActiveAccounts()
+	const { activeAccount, activeAddress, setActiveAccount } = useActiveAccounts()
+	const { activeProxy, activeProxyType } = useActiveProxy()
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.

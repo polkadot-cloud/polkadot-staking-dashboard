@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -29,11 +30,12 @@ export const RenamePool = ({
 }) => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
+	const { activeAccount } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { bondedPools, poolsMetaData } = useBondedPools()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 
 	const poolId = activePool?.id
 

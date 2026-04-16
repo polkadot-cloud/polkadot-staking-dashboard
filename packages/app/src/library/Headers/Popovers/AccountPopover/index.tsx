@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { setActiveProxy } from 'global-bus'
@@ -27,13 +28,8 @@ export const AccountPopover = ({
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { getAccount } = useImportedAccounts()
-	const {
-		activeAccount,
-		activeAddress,
-		activeProxy,
-		activeProxyType,
-		setActiveAccount,
-	} = useActiveAccounts()
+	const { activeAccount, activeAddress, setActiveAccount } = useActiveAccounts()
+	const { activeProxy, activeProxyType } = useActiveProxy()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 

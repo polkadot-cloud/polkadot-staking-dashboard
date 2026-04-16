@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -24,10 +25,11 @@ export const StopNominations = () => {
 	} = useOverlay().modal
 	const { serviceApi } = useApi()
 	const { getNominations } = useBalances()
+	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { activePoolNominations, isNominator, isOwner, activePool } =
 		useActivePool()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { bondFor } = options
 	const isPool = bondFor === 'pool'

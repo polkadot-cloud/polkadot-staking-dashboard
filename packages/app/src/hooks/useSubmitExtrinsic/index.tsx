@@ -1,8 +1,14 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useLedger } from '@w3ux/ledger-connect'
 import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import type { HardwareAccount } from '@w3ux/types'
+import {
+	type VaultSignatureResult,
+	VaultSigner,
+	type VaultSignStatus,
+} from '@w3ux/vault-connect'
 import { DappName, ManualSigners } from 'consts'
 import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
@@ -27,17 +33,11 @@ import {
 } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
-import { useLedger } from 'ledger-connect'
 import { QRSignPrompt } from 'library/QRSignPrompt'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ActiveAccount } from 'types'
-import {
-	type VaultSignatureResult,
-	VaultSigner,
-	type VaultSignStatus,
-} from 'vault-connect'
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types'
 
 export const useSubmitExtrinsic = ({

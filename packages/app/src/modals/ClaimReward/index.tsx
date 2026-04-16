@@ -4,6 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -30,9 +31,10 @@ export const ClaimReward = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { activePool } = useActivePool()
+	const { activeProxy } = useActiveProxy()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { claimType } = options
 	const { unit, units } = getStakingChainData(network)

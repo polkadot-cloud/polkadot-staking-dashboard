@@ -4,6 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -38,8 +39,9 @@ export const LeavePool = ({
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { closeModal } = useOverlay().modal
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPoolMembership, getPendingPoolRewards } = useBalances()
 

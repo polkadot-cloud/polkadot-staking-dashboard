@@ -5,6 +5,7 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -31,10 +32,11 @@ export const Unbond = () => {
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
 	const { getTxSubmission } = useTxMeta()
+	const { activeProxy } = useActiveProxy()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isDepositor, activePool } = useActivePool()
 	const {

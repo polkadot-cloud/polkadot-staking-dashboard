@@ -4,6 +4,7 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -30,8 +31,9 @@ export const [ProxiesContext, useProxies] =
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
+	const { activeAccount } = useActiveAccounts()
 	const { addExternalAccount } = useExternalAccounts()
-	const { activeProxy, activeAccount } = useActiveAccounts()
 	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 
 	// Store the proxy accounts of each imported account
