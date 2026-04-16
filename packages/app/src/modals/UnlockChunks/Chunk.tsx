@@ -63,6 +63,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 				100,
 				Math.max(0, ((erasCompleted + subEraFraction) / bondDuration) * 100),
 			)
+	const progressRounded = Math.round(progress)
 
 	// reset timer on account, network, or era change.
 	useEffect(() => {
@@ -92,13 +93,13 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 					ariaLabel={
 						isUnlocked
 							? t('readyToWithdraw')
-							: t('unbondingProgress', { percent: Math.round(progress) })
+							: t('unbondingProgress', { percent: progressRounded })
 					}
 				/>
 				{!isUnlocked && (
 					<div className="chunk-bar-labels">
 						<span>{`${t('unlocksInEra')} ${era}`}</span>
-						<span>{`${Math.round(progress)}%`}</span>
+						<span>{`${progressRounded}%`}</span>
 					</div>
 				)}
 			</div>
