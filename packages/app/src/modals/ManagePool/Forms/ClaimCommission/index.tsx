@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -32,9 +33,10 @@ export const ClaimCommission = ({
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
+	const { activeProxy } = useActiveProxy()
+	const { activeAccount } = useActiveAccounts()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 
 	const { unit, units } = getStakingChainData(network)
 	const poolId = activePool?.id

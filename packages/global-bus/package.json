@@ -13,7 +13,7 @@
 		"./util": "./src/util.ts"
 	},
 	"dependencies": {
-		"@w3ux/observables-connect": "^1.0.7",
+		"@w3ux/observables-connect": "^2.0.0",
 		"@w3ux/utils": "^3.1.1",
 		"consts": "workspace:*",
 		"dedot": "^1.2.0",
@@ -24,6 +24,6 @@
 	"devDependencies": {
 		"@w3ux/types": "^2.4.2",
 		"types": "workspace:*",
-		"vite": "^8.0.5"
+		"vite": "^8.0.8"
 	}
 }

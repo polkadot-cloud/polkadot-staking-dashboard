@@ -5,6 +5,7 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
@@ -34,9 +35,10 @@ export const Forms = forwardRef(
 		const { network } = useNetwork()
 		const { serviceApi } = useApi()
 		const { newBatchCall } = useBatchCall()
+		const { activeProxy } = useActiveProxy()
 		const { closeModal } = useOverlay().modal
 		const { getSignerWarnings } = useSignerWarnings()
-		const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+		const { activeAddress, activeAccount } = useActiveAccounts()
 		const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 		const { unit, units } = getStakingChainData(network)
 

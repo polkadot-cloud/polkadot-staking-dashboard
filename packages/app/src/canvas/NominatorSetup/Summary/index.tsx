@@ -7,6 +7,7 @@ import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -31,11 +32,12 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { newBatchCall } = useBatchCall()
+	const { activeProxy } = useActiveProxy()
 	const { getPayeeItems } = usePayeeConfig()
 	const { closeCanvas } = useOverlay().canvas
 	const { accountHasSigner } = useImportedAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 	const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
-	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	const setup = getNominatorSetup(activeAddress)

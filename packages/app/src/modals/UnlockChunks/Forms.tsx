@@ -5,6 +5,7 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -42,11 +43,12 @@ export const Forms = forwardRef(
 		} = useOverlay().modal
 		const { network } = useNetwork()
 		const { activePool } = useActivePool()
+		const { activeProxy } = useActiveProxy()
 		const { getConsts, serviceApi } = useApi()
-		const { removeFromBondedPools } = useBondedPools()
 		const { getSignerWarnings } = useSignerWarnings()
+		const { removeFromBondedPools } = useBondedPools()
+		const { activeAddress, activeAccount } = useActiveAccounts()
 		const { removeFavorite: removeFavoritePool } = useFavoritePools()
-		const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 		const { unit, units } = getStakingChainData(network)
 		const { bondFor, poolClosure } = options || {}

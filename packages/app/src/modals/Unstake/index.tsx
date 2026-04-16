@@ -5,6 +5,7 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -30,11 +31,12 @@ export const Unstake = () => {
 	const { network } = useNetwork()
 	const { newBatchCall } = useBatchCall()
 	const { getNominations } = useBalances()
+	const { activeProxy } = useActiveProxy()
 	const { getConsts, serviceApi } = useApi()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { closeModal, setModalResize } = useOverlay().modal
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { balances } = useAccountBalances(activeAddress)
 	const { bondDuration } = getConsts(network)
