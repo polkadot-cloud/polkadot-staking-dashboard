@@ -4,6 +4,7 @@
 import { getChainRpcEndpoints } from 'consts/util/rpc'
 import type { RpcHealthLabels } from 'plugin-staking-api/types'
 import type { NetworkId, RpcEndpoints } from 'types'
+import type { RpcLatencyData } from './local'
 import { setLocalRpcEndpoints } from './local'
 
 // Gets healthy endpoints for a given chain
@@ -18,12 +19,35 @@ export const endpointIsHealthy = (
 	healthyList: string[],
 ): boolean => !!healthyList?.find((label) => label === key)
 
-// Sanitizes endpoints, replacing any unhealthy endpoints with a healthy one, or a random default if
-// none are available
+// Picks the lowest-latency endpoint from a list, falling back to random
+const pickByLatency = (
+	candidates: string[],
+	chainLatency: Record<string, number> | undefined,
+): string => {
+	if (!chainLatency || candidates.length === 0) {
+		return candidates[Math.floor(Math.random() * candidates.length)]
+	}
+
+	let best = candidates[0]
+	let bestLatency = chainLatency[best] ?? Infinity
+
+	for (let i = 1; i < candidates.length; i++) {
+		const latency = chainLatency[candidates[i]] ?? Infinity
+		if (latency < bestLatency) {
+			best = candidates[i]
+			bestLatency = latency
+		}
+	}
+	return best
+}
+
+// Sanitizes endpoints, replacing any unhealthy endpoints with the lowest-latency healthy one,
+// or a random default if none are available
 export const sanitizeEndpoints = (
 	network: NetworkId,
 	endpoints: RpcEndpoints,
 	health: RpcHealthLabels,
+	latency?: RpcLatencyData,
 ): RpcEndpoints => {
 	const result: RpcEndpoints = {}
 
@@ -36,11 +60,10 @@ export const sanitizeEndpoints = (
 			continue
 		}
 
-		// If not healthy, replace with a random healthy provider
+		// If not healthy, replace with the lowest-latency healthy provider
 		if (healthyRpcs.length > 0) {
-			const newRpc = healthyRpcs[Math.floor(healthyRpcs.length * Math.random())]
+			const newRpc = pickByLatency(healthyRpcs, latency?.[chain])
 
-			// Get rpcKey from the new endpoint
 			const newEndpointKey = Object.keys(getChainRpcEndpoints(chain)).find(
 				(key) => key === newRpc,
 			)
@@ -50,10 +73,9 @@ export const sanitizeEndpoints = (
 			}
 		}
 
-		// No healthy endpoints found, use random endpoint from defaults
+		// No healthy endpoints found, use lowest-latency from defaults
 		const defaultEndpoints = Object.keys(getChainRpcEndpoints(chain))
-		result[chain] =
-			defaultEndpoints[Math.floor(defaultEndpoints.length * Math.random())]
+		result[chain] = pickByLatency(defaultEndpoints, latency?.[chain])
 	}
 
 	// Set sanitized endpoints in local storage
