@@ -37,6 +37,10 @@ export const ProgressFill = styled.div<{
 	position: relative;
 	overflow: hidden;
 
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+	}
+
 	&::after {
 		content: ${({ $status }) => ($status === 'active' ? "''" : 'none')};
 		position: absolute;
