@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useAnimate } from 'motion/react'
-import type { FC } from 'react'
-import { useEffect, useRef } from 'react'
+import type { ComponentType } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Card, Container, Scroll } from 'ui-core/modal'
 import { useOverlay } from './Provider'
@@ -136,7 +136,7 @@ export const Modal = ({
 		setModalHeightRef(heightRef)
 	}, [modalRef?.current, heightRef?.current])
 
-	const ActiveModal: FC | null = modals?.[key] || null
+	const ActiveModal: ComponentType | null = modals?.[key] || null
 
 	return status === 'closed' ? null : status !== 'replacing' ? (
 		<Container
@@ -159,7 +159,9 @@ export const Modal = ({
 			>
 				<Card ref={modalRef} dimmed={dimmed}>
 					<ErrorBoundary FallbackComponent={Fallback || null}>
-						{ActiveModal && <ActiveModal />}
+						<Suspense fallback={null}>
+							{ActiveModal && <ActiveModal />}
+						</Suspense>
 					</ErrorBoundary>
 				</Card>
 			</Scroll>

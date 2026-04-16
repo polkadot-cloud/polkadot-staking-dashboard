@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FC, RefObject } from 'react'
+import type { ComponentType, FC, RefObject } from 'react'
 import type {
 	ActiveOverlayInstance,
 	AnyJson,
@@ -50,12 +50,12 @@ export interface Fallback {
 }
 
 export type CanvasProps = Fallback & {
-	canvas?: Record<string, FC>
+	canvas?: Record<string, ComponentType>
 	externalOverlayStatus: CanvasStatus
 }
 
 export type ModalProps = Fallback & {
-	modals?: Record<string, FC>
+	modals?: Record<string, ComponentType>
 	externalOverlayStatus: CanvasStatus
 }
 export type OverlayProps = ModalProps & CanvasProps

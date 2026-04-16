@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useAnimate } from 'motion/react'
-import type { FC } from 'react'
-import { useEffect } from 'react'
+import type { ComponentType } from 'react'
+import { Suspense, useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Container, Content, Scroll } from 'ui-core/canvas'
 import { useOverlay } from './Provider'
@@ -67,7 +67,7 @@ export const Canvas = ({
 		}
 	}, [status])
 
-	const ActiveCanvas: FC | null = canvas?.[key] || null
+	const ActiveCanvas: ComponentType | null = canvas?.[key] || null
 
 	return status === 'closed' ? null : (
 		<Container
@@ -79,7 +79,9 @@ export const Canvas = ({
 			<Scroll>
 				<Content size={size}>
 					<ErrorBoundary FallbackComponent={Fallback}>
-						{ActiveCanvas && <ActiveCanvas />}
+						<Suspense fallback={null}>
+							{ActiveCanvas && <ActiveCanvas />}
+						</Suspense>
 					</ErrorBoundary>
 				</Content>
 			</Scroll>
