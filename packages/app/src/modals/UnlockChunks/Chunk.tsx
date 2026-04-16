@@ -14,7 +14,7 @@ import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
 import { Countdown } from 'library/Countdown'
 import { ProgressBar } from 'library/ProgressBar'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
 import { formatTimeleft, planckToUnitBn } from 'utils'
@@ -63,14 +63,6 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 				100,
 				Math.max(0, ((erasCompleted + subEraFraction) / bondDuration) * 100),
 			)
-
-	// Tick every 60s so the progress bar advances within the current era.
-	const [, setTick] = useState(0)
-	useEffect(() => {
-		if (isUnlocked) return
-		const id = setInterval(() => setTick((t) => t + 1), 60_000)
-		return () => clearInterval(id)
-	}, [isUnlocked])
 
 	// reset timer on account, network, or era change.
 	useEffect(() => {

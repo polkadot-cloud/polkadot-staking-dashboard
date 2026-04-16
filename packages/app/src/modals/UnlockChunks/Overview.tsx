@@ -13,7 +13,7 @@ import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import type { Dispatch, ForwardedRef, SetStateAction } from 'react'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { BondFor, UnlockChunk } from 'types'
 import { ButtonSubmit } from 'ui-buttons'
@@ -53,6 +53,7 @@ export const Overview = forwardRef(
 
 		let withdrawAvailable = 0n
 		let totalUnbonding = 0n
+		let hasActiveUnbonding = false
 		for (const c of unlocking) {
 			const { era, value } = c
 			const left = era - activeEra.index
@@ -60,10 +61,21 @@ export const Overview = forwardRef(
 			totalUnbonding = totalUnbonding + value
 			if (left <= 0n) {
 				withdrawAvailable = withdrawAvailable + value
+			} else {
+				hasActiveUnbonding = true
 			}
 		}
 
 		const hasUnlocked = withdrawAvailable > 0n
+
+		// Single shared ticker: re-render every 60s while any chunk is actively
+		// unbonding so child progress bars advance within the current era.
+		const [, setTick] = useState(0)
+		useEffect(() => {
+			if (!hasActiveUnbonding) return
+			const id = setInterval(() => setTick((t) => t + 1), 60_000)
+			return () => clearInterval(id)
+		}, [hasActiveUnbonding])
 
 		const onRebondHandler = (chunk: UnlockChunk) => {
 			setTask('rebond')
