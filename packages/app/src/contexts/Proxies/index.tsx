@@ -16,7 +16,7 @@ import {
 	setActiveProxy,
 } from 'global-bus'
 import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { MaybeAddress, Proxies } from 'types'
 import type {
 	Delegates,
@@ -40,7 +40,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 	const [proxies, setProxies] = useState<Record<string, Proxies>>({})
 
 	// Reformats proxies into a list of delegates
-	const formatProxiesToDelegates = () => {
+	const formatProxiesToDelegates = useCallback(() => {
 		// Reformat proxies into a list of delegates
 		const newDelegates: Delegates = {}
 		for (const [delegator, record] of Object.entries(proxies)) {
@@ -62,72 +62,76 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 			}
 		}
 		return newDelegates
-	}
+	}, [proxies])
 
 	// Gets the delegates of the given account
-	const getDelegates = (address: MaybeAddress): Proxy | undefined => {
-		const results = Object.entries(proxies).find(
-			([delegator]) => delegator === address,
-		)
-		if (!results) {
-			return undefined
-		}
-		const config = results[1]
+	const getDelegates = useCallback(
+		(address: MaybeAddress): Proxy | undefined => {
+			const results = Object.entries(proxies).find(
+				([delegator]) => delegator === address,
+			)
+			if (!results) {
+				return undefined
+			}
+			const config = results[1]
 
-		return {
-			address,
-			delegator: address,
-			delegates: Object.values(config.proxies).map(
-				({ delegate, proxyType }) => ({
-					delegate,
-					proxyType,
-				}),
-			),
-			reserved: new BigNumber(config.deposit),
-		}
-	}
+			return {
+				address,
+				delegator: address,
+				delegates: Object.values(config.proxies).map(
+					({ delegate, proxyType }) => ({
+						delegate,
+						proxyType,
+					}),
+				),
+				reserved: new BigNumber(config.deposit),
+			}
+		},
+		[proxies],
+	)
 
 	// Gets delegators and proxy types for the given delegate address
 	// Queries the chain to check if the given delegator & delegate pair is valid proxy. Used when a
 	// proxy account is being manually declared
-	const handleDeclareDelegate = async (
-		delegator: string,
-	): Promise<ProxyDelegate[]> => {
-		const results = await serviceApi.query.proxies(delegator)
+	const handleDeclareDelegate = useCallback(
+		async (delegator: string): Promise<ProxyDelegate[]> => {
+			const results = await serviceApi.query.proxies(delegator)
 
-		let addDelegatorAsExternal = false
-		for (const delegate of results) {
-			if (accounts.find(({ address }) => address === delegate)) {
-				addDelegatorAsExternal = true
+			let addDelegatorAsExternal = false
+			for (const delegate of results) {
+				if (accounts.find(({ address }) => address === delegate)) {
+					addDelegatorAsExternal = true
+				}
 			}
-		}
-		if (addDelegatorAsExternal) {
-			addExternalAccount(delegator, 'system')
-		}
-		return []
-	}
+			if (addDelegatorAsExternal) {
+				addExternalAccount(delegator, 'system')
+			}
+			return []
+		},
+		[accounts, addExternalAccount, serviceApi],
+	)
 
 	// Gets the delegate and proxy type of an account, if any
-	const getProxyDelegate = (
-		delegator: MaybeAddress,
-		delegate: MaybeAddress,
-	): ProxyDelegate | null => {
-		const results = Object.entries(proxies).find(([key]) => key === delegator)
-		if (!results) {
-			return null
-		}
-		const config = results[1]
-		const maybeDelegate = Object.values(config.proxies).find(
-			(d) => d.delegate === delegate,
-		)
-		if (!maybeDelegate) {
-			return null
-		}
-		return {
-			delegate: maybeDelegate.delegate,
-			proxyType: maybeDelegate.proxyType,
-		}
-	}
+	const getProxyDelegate = useCallback(
+		(delegator: MaybeAddress, delegate: MaybeAddress): ProxyDelegate | null => {
+			const results = Object.entries(proxies).find(([key]) => key === delegator)
+			if (!results) {
+				return null
+			}
+			const config = results[1]
+			const maybeDelegate = Object.values(config.proxies).find(
+				(d) => d.delegate === delegate,
+			)
+			if (!maybeDelegate) {
+				return null
+			}
+			return {
+				delegate: maybeDelegate.delegate,
+				proxyType: maybeDelegate.proxyType,
+			}
+		},
+		[proxies],
+	)
 
 	// If active proxy has not yet been set, check local storage `activeProxy` & set it as active
 	// proxy if it is the delegate of `activeAccount`
@@ -169,15 +173,23 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}, [])
 
+	const contextValue = useMemo(
+		() => ({
+			handleDeclareDelegate,
+			getDelegates,
+			getProxyDelegate,
+			formatProxiesToDelegates,
+		}),
+		[
+			handleDeclareDelegate,
+			getDelegates,
+			getProxyDelegate,
+			formatProxiesToDelegates,
+		],
+	)
+
 	return (
-		<ProxiesContext.Provider
-			value={{
-				handleDeclareDelegate,
-				getDelegates,
-				getProxyDelegate,
-				formatProxiesToDelegates,
-			}}
-		>
+		<ProxiesContext.Provider value={contextValue}>
 			{children}
 		</ProxiesContext.Provider>
 	)
