@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
+import { QrScanSignature, useVaultAccounts } from '@w3ux/vault-connect'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { QrScanSignature, useVaultAccounts } from 'vault-connect'
 import type { QrReaderProps } from './types'
 import { Wrapper } from './Wrapper'
 

@@ -3,17 +3,17 @@
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
+import type { LedgerResponse } from '@w3ux/ledger-connect'
+import {
+	getLedgerDeviceName,
+	useLedger,
+	useLedgerAccounts,
+} from '@w3ux/ledger-connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import type { HardwareAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
-import type { LedgerResponse } from 'ledger-connect'
-import {
-	getLedgerDeviceName,
-	useLedger,
-	useLedgerAccounts,
-} from 'ledger-connect'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { LedgerAddress } from 'types'
@@ -266,7 +266,7 @@ export const Ledger = () => {
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<h3 style={{ padding: '1rem 0 2rem 0' }}>
 						{t(String(feedback?.message), {
-							ns: 'modals',
+							ns: 'app',
 							...feedback?.params,
 						})}
 					</h3>
