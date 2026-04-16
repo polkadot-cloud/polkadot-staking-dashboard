@@ -5,6 +5,7 @@ import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -26,8 +27,9 @@ export const Transfer = () => {
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAccount } = useActiveAccounts()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
 
 	// Filter accounts to only show those with signers

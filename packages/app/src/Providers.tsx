@@ -8,6 +8,7 @@ import { ConnectProvider } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
+import { ActiveProxyProvider } from 'contexts/ActiveProxy'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
@@ -50,6 +51,7 @@ export const Providers = () => {
 		// !! Provider order matters.
 		[
 			ActiveAccountsProvider,
+			ActiveProxyProvider,
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],

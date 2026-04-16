@@ -4,6 +4,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { isValidAddress } from '@w3ux/util-dedot'
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import type { PayeeConfig, PayeeOption } from 'contexts/NominatorSetups/types'
@@ -27,11 +28,12 @@ import { useOverlay } from 'ui-overlay'
 export const UpdatePayee = () => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
+	const { closeModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
 	const { getPayeeItems } = usePayeeConfig()
-	const { closeModal } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const payee = getStakingLedger(activeAddress).payee
 

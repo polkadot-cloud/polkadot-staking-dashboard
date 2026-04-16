@@ -3,10 +3,10 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { useNetwork } from 'contexts/Network'
-import { activeProxy$, setActiveAddress } from 'global-bus'
+import { setActiveAddress } from 'global-bus'
 import type { ReactNode } from 'react'
-import { useEffect, useState } from 'react'
-import type { ActiveAccount, ActiveProxy } from 'types'
+import { useState } from 'react'
+import type { ActiveAccount } from 'types'
 import type { ActiveAccountsContextInterface } from './types'
 
 export const [ActiveAccountsContext, useActiveAccounts] =
@@ -21,9 +21,6 @@ export const ActiveAccountsProvider = ({
 
 	// Store the currently active account
 	const [activeAccount, setActiveAccountState] = useState<ActiveAccount>(null)
-
-	// Store the active proxy account
-	const [activeProxy, setActiveProxy] = useState<ActiveProxy | null>(null)
 
 	// Setter for the active account
 	const setActiveAccount = (account: ActiveAccount, updateLocal = true) => {
@@ -43,23 +40,11 @@ export const ActiveAccountsProvider = ({
 		setActiveAccountState(account)
 	}
 
-	// Subscribe to global bus active proxy events
-	useEffect(() => {
-		const unsubActiveProxy = activeProxy$.subscribe((result) => {
-			setActiveProxy(result)
-		})
-		return () => {
-			unsubActiveProxy.unsubscribe()
-		}
-	}, [])
-
 	return (
 		<ActiveAccountsContext.Provider
 			value={{
 				activeAccount,
 				activeAddress: activeAccount?.address || null,
-				activeProxy,
-				activeProxyType: activeProxy?.proxyType || null,
 				setActiveAccount,
 			}}
 		>

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
@@ -21,8 +22,9 @@ import { AccountSeparator, AccountWrapper } from './Wrappers'
 export const Accounts = () => {
 	const { t } = useTranslation('modals')
 	const { getDelegates } = useProxies()
+	const { activeProxy } = useActiveProxy()
 	const { accounts } = useImportedAccounts()
-	const { activeAddress, activeProxy } = useActiveAccounts()
+	const { activeAddress } = useActiveAccounts()
 	const { getStakingLedger, getPoolMembership } = useBalances()
 	const { status: modalStatus, setModalResize } = useOverlay().modal
 

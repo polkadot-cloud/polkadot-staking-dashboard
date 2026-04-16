@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -29,11 +30,12 @@ export const SetClaimPermission = ({
 	onResize: () => void
 }) => {
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
 	const { isOwner, isMember } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccounts()
 
 	const { membership } = getPoolMembership(activeAddress)
 
