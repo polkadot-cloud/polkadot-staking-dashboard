@@ -3,10 +3,10 @@
 
 import {
 	extensionAccounts$,
+	externalAccounts$,
 	hardwareAccounts$,
 } from '@polkadot-cloud/connect-core'
 import { combineLatest, pairwise, startWith } from 'rxjs'
-import { externalAccounts$ } from '../externalAccounts'
 import { _importedAccounts } from './private'
 
 export const importedAccounts$ = combineLatest([

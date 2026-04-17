@@ -11,7 +11,6 @@ import { ActiveProxyProvider } from 'contexts/ActiveProxy'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
-import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
 import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
@@ -62,7 +61,6 @@ export const Providers = () => {
 					adaptors: [LedgerAdaptor],
 				},
 			],
-			ExternalAccountsProvider,
 			ImportedAccountsProvider,
 			ProxiesProvider,
 			HelpProvider,

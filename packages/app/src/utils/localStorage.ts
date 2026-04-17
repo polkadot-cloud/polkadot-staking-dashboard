@@ -15,6 +15,7 @@ export const migrateLocalStorageKeys = (): void => {
 	const staticMigrations = [
 		{ oldKey: 'active_extensions', newKey: 'pc_active_extensions' },
 		{ oldKey: 'hardware_accounts', newKey: 'pc_hardware_accounts' },
+		{ oldKey: 'external_accounts', newKey: 'pc_external_accounts' },
 	]
 
 	staticMigrations.forEach(({ oldKey, newKey }) => {

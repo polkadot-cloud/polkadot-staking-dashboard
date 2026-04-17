@@ -4,6 +4,7 @@
 import {
 	useActiveAccount,
 	useExtensionAccounts,
+	useExternalAccounts,
 	useHardwareAccounts,
 } from '@polkadot-cloud/connect'
 import { getActiveAccountLocal } from '@polkadot-cloud/connect-core'
@@ -20,7 +21,6 @@ import type {
 	ImportedAccount,
 	MaybeAddress,
 } from 'types'
-import { useExternalAccounts } from '../ExternalAccounts'
 import type { ImportedAccountsContextInterface } from './types'
 
 export const [ImportedAccountsContext, useImportedAccounts] =
