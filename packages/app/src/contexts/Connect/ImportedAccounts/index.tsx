@@ -1,11 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import {
 	useExtensionAccounts,
 	useHardwareAccounts,
-} from '@w3ux/react-connect-kit'
+} from '@polkadot-cloud/connect'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { ExtensionAccount, HardwareAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
 import { getStakingChainData } from 'consts/util'

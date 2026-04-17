@@ -4,7 +4,7 @@
 import {
 	extensionAccounts$,
 	hardwareAccounts$,
-} from '@w3ux/observables-connect'
+} from '@polkadot-cloud/connect-core'
 import { combineLatest, pairwise, startWith } from 'rxjs'
 import { externalAccounts$ } from '../externalAccounts'
 import { _importedAccounts } from './private'

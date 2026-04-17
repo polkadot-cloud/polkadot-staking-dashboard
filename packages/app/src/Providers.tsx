@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ThemedRouter } from 'Themes'
+import { ConnectProvider } from '@polkadot-cloud/connect'
+import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
 import { withProviders } from '@w3ux/factories'
-import { LedgerAdaptor } from '@w3ux/ledger-connect'
-import { ConnectProvider } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { reconnectSync$ } from '@w3ux/observables-connect'
+import { reconnectSync$ } from '@polkadot-cloud/connect-core'
 import type { DedotClient } from 'dedot'
 import {
 	activePoolIds$,
