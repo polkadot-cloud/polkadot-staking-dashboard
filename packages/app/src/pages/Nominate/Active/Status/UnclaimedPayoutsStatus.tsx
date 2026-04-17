@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -23,7 +23,7 @@ export const UnclaimedPayoutsStatus = () => {
 		unclaimedRewards: { total },
 	} = usePayouts()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { units } = getStakingChainData(network)
 	return (

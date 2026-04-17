@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -21,7 +21,7 @@ export const RewardsStatus = () => {
 	const { isReady } = useApi()
 	const { activePool, inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPendingPoolRewards } = useBalances()
 	const { syncing } = useSyncing(['active-pools'])
 	const { isReadOnlyAccount } = useImportedAccounts()

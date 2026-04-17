@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -26,7 +26,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
 
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { state } = activePool?.bondedPool || {}
 

@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ export const UnbondInput = ({
 }: UnbondInputProps) => {
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const { unit, units } = getStakingChainData(network)
 	// get the actively bonded amount

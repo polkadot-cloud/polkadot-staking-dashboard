@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
@@ -18,7 +18,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { isReady } = useApi()
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isBonding, isNominating } = useStaking()
 	const { isReadOnlyAccount } = useImportedAccounts()
 

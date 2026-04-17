@@ -1,11 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext } from '@w3ux/hooks'
 import { formatAccountSs58 } from '@w3ux/util-dedot'
 import { ellipsisFn } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import {
 	addExternalAccount as addExternalAccountBus,
@@ -30,7 +30,7 @@ export const ExternalAccountsProvider = ({
 	children: ReactNode
 }) => {
 	const { network } = useNetwork()
-	const { activeAddress, setActiveAccount } = useActiveAccounts()
+	const { activeAddress, setActiveAccount } = useActiveAccount()
 	const { ss58 } = getStakingChainData(network)
 
 	// Store external accounts in state

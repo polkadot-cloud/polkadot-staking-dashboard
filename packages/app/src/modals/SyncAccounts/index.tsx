@@ -6,7 +6,7 @@ import {
 	faQrcode,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { Title } from 'library/Modal/Title'
 import { fetchAccountsToken } from 'plugin-gateway'
@@ -31,7 +31,7 @@ export const SyncAccounts = () => {
 	const { t } = useTranslation()
 	const { setModalResize } = useOverlay().modal
 	const { getAccount, accounts } = useImportedAccounts()
-	const { activeAccount, activeAddress } = useActiveAccounts()
+	const { activeAccount, activeAddress } = useActiveAccount()
 
 	const [token, setToken] = useState<string | null>(null)
 	const [loading, setLoading] = useState(true)

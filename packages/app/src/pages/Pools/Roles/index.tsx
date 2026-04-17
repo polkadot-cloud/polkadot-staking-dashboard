@@ -6,7 +6,7 @@ import {
 	faEdit,
 	faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -35,7 +35,7 @@ export const Roles = ({
 	const { network } = useNetwork()
 	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isOwner, activePool } = useActivePool()
 	const { syncing } = useSyncing(['active-pools'])
 	const { isReadOnlyAccount } = useImportedAccounts()

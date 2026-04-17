@@ -7,12 +7,12 @@ import {
 	faSignOut,
 	faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
@@ -36,7 +36,7 @@ export const BondManager = ({ bondFor, isPreloading }: BondManagerProps) => {
 	const { openHelpTooltip } = useHelp()
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const {

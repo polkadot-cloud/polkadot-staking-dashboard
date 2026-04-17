@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useBalances } from 'contexts/Balances'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -24,7 +24,7 @@ export const Accounts = () => {
 	const { getDelegates } = useProxies()
 	const { activeProxy } = useActiveProxy()
 	const { accounts } = useImportedAccounts()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getStakingLedger, getPoolMembership } = useBalances()
 	const { status: modalStatus, setModalResize } = useOverlay().modal
 

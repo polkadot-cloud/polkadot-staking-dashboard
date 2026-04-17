@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useAccountBalances } from 'hooks/useAccountBalances'
@@ -14,7 +14,7 @@ export const usePoolBondActions = (): UsePoolBondActions => {
 		'era-stakers',
 		'active-pools',
 	])
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isBonding, isMember, isDepositor, activePool } = useActivePool()

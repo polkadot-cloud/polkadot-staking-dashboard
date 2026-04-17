@@ -3,8 +3,8 @@
 
 import { faEnvelopeOpenText, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { ProductionURL } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
@@ -17,7 +17,7 @@ export const Invite = () => {
 	const { network } = useNetwork()
 	const { t } = useTranslation()
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPoolMembership, getNominations } = useBalances()
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))

@@ -16,10 +16,10 @@ import {
 	faUsers,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from 'assets/brands/vault.svg?react'
 import { DiscordSupportURL, PlatformSupportEmail } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { usePayouts } from 'contexts/Payouts'
@@ -35,7 +35,7 @@ export const useQuickActions = () => {
 	const { openModal } = useOverlay().modal
 	const { unclaimedRewards } = usePayouts()
 	const { openCanvas } = useOverlay().canvas
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPendingPoolRewards } = useBalances()
 	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 	const { setNominatorSetup, generateOptimalSetup } = useNominatorSetups()

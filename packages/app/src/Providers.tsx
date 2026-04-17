@@ -7,7 +7,6 @@ import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
 import { withProviders } from '@w3ux/factories'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { ActiveProxyProvider } from 'contexts/ActiveProxy'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
@@ -50,15 +49,14 @@ export const Providers = () => {
 	return withProviders(
 		// !! Provider order matters.
 		[
-			ActiveAccountsProvider,
 			ActiveProxyProvider,
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],
 			[
 				ConnectProvider,
-
 				{
+					network,
 					dappName: DappName,
 					ss58,
 					adaptors: [LedgerAdaptor],

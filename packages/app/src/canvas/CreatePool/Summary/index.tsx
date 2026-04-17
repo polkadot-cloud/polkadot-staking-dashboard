@@ -3,10 +3,10 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
@@ -38,7 +38,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const { accountHasSigner } = useImportedAccounts()
 	const { getPoolSetup, removePoolSetup } = usePoolSetups()
 	const { queryBondedPool, addToBondedPools } = useBondedPools()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { unit, units } = getStakingChainData(network)
 
 	const poolId = lastPoolId + 1

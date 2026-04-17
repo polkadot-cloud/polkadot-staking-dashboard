@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
+	useActiveAccount,
 	useExtensionAccounts,
 	useHardwareAccounts,
 } from '@polkadot-cloud/connect'
+import { getActiveAccountLocal } from '@polkadot-cloud/connect-core'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { ExtensionAccount, HardwareAccount } from '@w3ux/types'
 import { ManualSigners } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useCallback, useState } from 'react'
@@ -20,7 +21,6 @@ import type {
 	MaybeAddress,
 } from 'types'
 import { useExternalAccounts } from '../ExternalAccounts'
-import { getActiveAccountLocal } from '../Utils'
 import type { ImportedAccountsContextInterface } from './types'
 
 export const [ImportedAccountsContext, useImportedAccounts] =
@@ -34,7 +34,7 @@ export const ImportedAccountsProvider = ({
 	const { network } = useNetwork()
 	const { getExternalAccounts } = useExternalAccounts()
 	const { getHardwareAccounts } = useHardwareAccounts()
-	const { setActiveAccount, activeAccount } = useActiveAccounts()
+	const { setActiveAccount, activeAccount } = useActiveAccount()
 	const { getExtensionAccounts, extensionsSynced } = useExtensionAccounts()
 	const { ss58 } = getStakingChainData(network)
 
