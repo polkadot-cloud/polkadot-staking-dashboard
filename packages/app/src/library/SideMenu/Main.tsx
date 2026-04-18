@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { PageCategories } from 'config/pages'
 import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -44,7 +44,7 @@ export const Main = ({
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
 	const { warningMessages, getMostSevereWarningFormat } = useWarnings()

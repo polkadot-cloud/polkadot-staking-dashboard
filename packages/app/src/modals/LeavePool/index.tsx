@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -41,7 +41,7 @@ export const LeavePool = ({
 	const { closeModal } = useOverlay().modal
 	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPoolMembership, getPendingPoolRewards } = useBalances()
 

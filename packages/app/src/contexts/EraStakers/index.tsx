@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { removeSyncing, setSyncing } from 'global-bus'
@@ -31,7 +31,7 @@ export const [EraStakersContext, useEraStakers] =
 export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
 	const { units, ss58 } = getStakingChainData(network)
 

@@ -2,18 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ThemedRouter } from 'Themes'
+import { ConnectProvider } from '@polkadot-cloud/connect'
+import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
 import { withProviders } from '@w3ux/factories'
-import { LedgerAdaptor } from '@w3ux/ledger-connect'
-import { ConnectProvider } from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
 import { ActiveProxyProvider } from 'contexts/ActiveProxy'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
-import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
-import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
@@ -50,22 +47,19 @@ export const Providers = () => {
 	return withProviders(
 		// !! Provider order matters.
 		[
-			ActiveAccountsProvider,
 			ActiveProxyProvider,
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],
 			[
 				ConnectProvider,
-
 				{
+					network,
 					dappName: DappName,
 					ss58,
 					adaptors: [LedgerAdaptor],
 				},
 			],
-			ExternalAccountsProvider,
-			ImportedAccountsProvider,
 			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,

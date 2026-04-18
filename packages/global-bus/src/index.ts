@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './accountBalances'
-export * from './activeAddress'
 export * from './activeEra'
 export * from './activePoolIds'
 export * from './activePools'
@@ -13,8 +12,6 @@ export * from './bonded'
 export * from './chainSpecs'
 export * from './consts'
 export * from './eraRewardPoints'
-export * from './externalAccounts'
-export * from './importedAccounts'
 export * from './networkConfig'
 export * from './notifications'
 export * from './onlineStatus'

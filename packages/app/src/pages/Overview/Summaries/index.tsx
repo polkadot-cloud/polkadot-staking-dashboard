@@ -5,7 +5,7 @@ import {
 	faExclamationTriangle,
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNetwork } from 'contexts/Network'
 import { useSyncing } from 'hooks/useSyncing'
 import { useWarnings } from 'hooks/useWarnings'
@@ -22,7 +22,7 @@ export const Summaries = ({ height }: { height: number }) => {
 	const { network } = useNetwork()
 	const { accountSynced } = useSyncing()
 	const { warningMessages } = useWarnings()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const syncing = !accountSynced(activeAddress)
 

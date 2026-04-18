@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import type { LedgerDeviceModel } from '@polkadot-cloud/connect-ledger'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
-import type { LedgerDeviceModel } from '@w3ux/ledger-connect'
 import LedgerFlexWebP from 'assets/brands/ledgerFlex.webp'
 import LedgerNanoWebP from 'assets/brands/ledgerNano.webp'
 import LedgerStaxWebP from 'assets/brands/ledgerStax.webp'

@@ -84,6 +84,18 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^3.3.0
         version: 3.3.0(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.5)
+      '@polkadot-cloud/connect':
+        specifier: ^1.0.8
+        version: 1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core':
+        specifier: ^1.0.8
+        version: 1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-ledger':
+        specifier: ^1.0.1
+        version: 1.0.1(@polkadot-cloud/connect-core@1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@polkadot-cloud/connect-vault':
+        specifier: ^1.0.1
+        version: 1.0.1(@polkadot-cloud/connect-core@1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -99,12 +111,6 @@ importers:
       '@w3ux/hooks':
         specifier: ^2.4.4
         version: 2.4.4(react@19.2.5)
-      '@w3ux/ledger-connect':
-        specifier: ^1.0.0
-        version: 1.0.0(@w3ux/observables-connect@2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@w3ux/react-connect-kit@5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@w3ux/react-connect-kit':
-        specifier: ^5.0.2
-        version: 5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/react-odometer':
         specifier: 2.4.5
         version: 2.4.5(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -120,9 +126,6 @@ importers:
       '@w3ux/validator-assets':
         specifier: ^1.3.3
         version: 1.3.3(react@19.2.5)
-      '@w3ux/vault-connect':
-        specifier: ^1.0.0
-        version: 1.0.0(@w3ux/observables-connect@2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@w3ux/react-connect-kit@5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(css-to-react-native@3.2.0)(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       assets:
         specifier: workspace:*
         version: link:../assets
@@ -294,9 +297,9 @@ importers:
       '@dedot/chaintypes':
         specifier: ^0.259.0
         version: 0.259.0(dedot@1.2.0(typescript@6.0.2))
-      '@w3ux/observables-connect':
-        specifier: ^2.0.0
-        version: 2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core':
+        specifier: ^1.0.8
+        version: 1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/util-dedot':
         specifier: ^1.0.0
         version: 1.0.0(dedot@1.2.0(typescript@6.0.2))
@@ -337,9 +340,9 @@ importers:
 
   packages/global-bus:
     dependencies:
-      '@w3ux/observables-connect':
-        specifier: ^2.0.0
-        version: 2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core':
+        specifier: ^1.0.8
+        version: 1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
@@ -1266,11 +1269,8 @@ packages:
   '@kurkle/color@0.3.4':
     resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
 
-  '@ledgerhq/devices@8.12.0':
-    resolution: {integrity: sha512-E6msvdhwHax6mseoOzuPp/z7+X41KE2PWBzmmmrrJ+pNNp7KIb/FZbGuwNu1Vjeg3ekbExVwQYJXdwQLuGwRKw==}
-
-  '@ledgerhq/devices@8.13.0':
-    resolution: {integrity: sha512-hgGn1kpe/rT0EJ0Qs7rG+1TXA4g6HN2t3dB4DndRTqVqC9aSSbME+ajA0QWLZisxOD3zkwvO4Q0mJ2zARAKyag==}
+  '@ledgerhq/devices@8.14.0':
+    resolution: {integrity: sha512-eMGOaagkMJrqGtqemYNraPg38FA0I/UUEPrbrC+vOZu1qeoG+Sek3gjuJih6rMK4efUfcI4Zs19w/Hv/58fwkQ==}
 
   '@ledgerhq/devices@8.5.0':
     resolution: {integrity: sha512-zDB6Pdk6NYYbYis8cWoLLkL9k/IvjhC3hkuuz2lhpJ2AxIs3/PDMUKoyK4DpjPtRyKk1W1lwsnpc6J1i87r4/Q==}
@@ -1278,17 +1278,17 @@ packages:
   '@ledgerhq/devices@8.8.0':
     resolution: {integrity: sha512-ZFRAQQaESxIK/8SYrrHyqb7pQjLPO8f62PI6H16SP0/uC9fdZKR8NqOGMvIf7I6K442SkiQATnC/kxUeUTfuHA==}
 
-  '@ledgerhq/errors@6.32.0':
-    resolution: {integrity: sha512-BjjvhLM6UXYUbhllqAduo9PSneLt9FXZ3TBEUFQ3MMSZOCHt0gAgDySLwul99R8fdYWkXBza4DYQjUNckpN2lg==}
+  '@ledgerhq/errors@6.33.0':
+    resolution: {integrity: sha512-9iMdjB0Hfxfd8HGMVM0TDPfxBXhJ4MtGKyFlm8aveSHSXjcTjGtCkcnk4OUZ6ZHopBb69BFR+HC2N/ob9xuNgA==}
 
-  '@ledgerhq/hw-transport-node-hid-noevents@6.33.0':
-    resolution: {integrity: sha512-HLdIErIdqaCJzzIxvgNyr4Zl/BKZTwC8hcWUq66P6vd67VWVkL2pgdqoZWU+z8GJ4r1Sr/p7kagFuAvWdPTREQ==}
+  '@ledgerhq/hw-transport-node-hid-noevents@6.35.0':
+    resolution: {integrity: sha512-5ZPsxoaLOsXmV/mb7kaewmD7f1SXMcsrW+xfMNFUg73S5tC5n+apHerkd9FoQm32QOQ6CQPpW6kz5f5c5pNcug==}
 
-  '@ledgerhq/hw-transport-node-hid@6.32.0':
-    resolution: {integrity: sha512-UZ1nKEaOfj8P3lT7tc6a7Da+nEymxlNR/zya4+TktL0TSPcs/UDtYo77Yx2KxhXFtBTEX3GJ3EfxVpkzPy90sw==}
+  '@ledgerhq/hw-transport-node-hid@6.33.0':
+    resolution: {integrity: sha512-tVNSFkjKFl7Yd2QDq4yDNL1laQD32W630NQSvkRvoEQTnXR2fVpEssrJ+cRStpQximyPulfLleAYS8tjPQZ26Q==}
 
-  '@ledgerhq/hw-transport-webhid@6.34.0':
-    resolution: {integrity: sha512-SG+UnZXyUzrJBSkZnRYGaaZV+C8yiu+pF69Mzw4AKOX6TG8RZ1tOvly8hhnRQ2/gXSiTgbc07N4T8ne2eFei3A==}
+  '@ledgerhq/hw-transport-webhid@6.35.0':
+    resolution: {integrity: sha512-Zo0BFOApGspbcPRyIYmlbrPY9Er6jwfa4YjjSWWIFMQ38t4fOCny/Cu+JKtvTmCrwPASVP9d90PneJ2OSCt8xQ==}
 
   '@ledgerhq/hw-transport@6.31.15':
     resolution: {integrity: sha512-I+hzH9XGFPaYq9K+iw+qWJUyVdhN9fdO00Df9zAkOCzju1W5Gc+cDJxbYnZApmY8oMd8mNoXTstEW3Ih5ikaVg==}
@@ -1296,14 +1296,11 @@ packages:
   '@ledgerhq/hw-transport@6.31.9':
     resolution: {integrity: sha512-HqB2Whl2qbrzyvs9gC/GmLhIy8RO4CWzjqHS4k0bPWDZRqKa8m6H32vjrbXGO//pUL1Mlu87UwvxvLyuICdjwg==}
 
-  '@ledgerhq/hw-transport@6.34.0':
-    resolution: {integrity: sha512-BHpsf2n0/JnHsGSLGT3x3dEgOk7oLO3QYXYrzrn4RVDdiYAEyXbERYJeS1D4WbINN0/LBmTM0n4M8raRJBxxSg==}
+  '@ledgerhq/hw-transport@6.35.0':
+    resolution: {integrity: sha512-BFk4Zr5gfzT40RT6nj0NQTNB25bxWD3QWhdrOA6Mi/CChFTdGomjOuAhWHla2kH50ft8M5UsiiUeHoR+56J69g==}
 
-  '@ledgerhq/hw-transport@6.34.1':
-    resolution: {integrity: sha512-Bg9Qk2vtm0m0cZn9prZV2Hbvh3b42KBh4uomO00derh+eiwsdg5AXBBptAJiREkew1RVtETRdWxrKchUJfeWvA==}
-
-  '@ledgerhq/logs@6.16.0':
-    resolution: {integrity: sha512-v/PLfb1dq1En35kkpbfRWp8jLYgbPUXxGhmd4pmvPSIe0nRGkNTomsZASmWQAv6pRonVGqHIBVlte7j1MBbOww==}
+  '@ledgerhq/logs@6.17.0':
+    resolution: {integrity: sha512-yra33g5q/AU7+PwAws+GaVpQGUuxnDREjVBnviJjcaJLVKuLzI4pnj8Bd3nY3fypM5k1yZEYKEXfUuGFUjP2+w==}
 
   '@napi-rs/wasm-runtime@1.1.3':
     resolution: {integrity: sha512-xK9sGVbJWYb08+mTJt3/YV24WxvxpXcXtP6B172paPZ+Ts69Re9dAr7lKwJoeIx8OoeuimEiRZ7umkiUVClmmQ==}
@@ -1429,6 +1426,37 @@ packages:
   '@parcel/watcher@2.5.6':
     resolution: {integrity: sha512-tmmZ3lQxAe/k/+rNnXQRawJ4NjxO2hqiOLTHvWchtGZULp4RyFeh6aU4XdOYBFe2KE1oShQTv4AblOs2iOrNnQ==}
     engines: {node: '>= 10.0.0'}
+
+  '@polkadot-cloud/connect-core@1.0.8':
+    resolution: {integrity: sha512-dSwLN7lxe8HpSrnU1YJ+Ce4WTMgEdd2F4sSVNwvuiaIFWrsmR03jkoHgp7akZUsKMdyzPcZwPAz8Tk9kWE8shQ==}
+    peerDependencies:
+      dedot: ^1
+      rxjs: ^7.8.2
+
+  '@polkadot-cloud/connect-ledger@1.0.1':
+    resolution: {integrity: sha512-MyMJiYDjjvhuvfegru4omDh+L4MhYZ8+SD+E7Cz02V5fbk10pNPXocEETUNZdPKOMKvqkd8+3AVt+COsSj5rMA==}
+    peerDependencies:
+      '@polkadot-cloud/connect': ^5
+      '@polkadot-cloud/connect-core': ^2
+      react: ^19.1.0
+      react-dom: ^19.1.0
+
+  '@polkadot-cloud/connect-vault@1.0.1':
+    resolution: {integrity: sha512-QLskBLmLE7rB61cRHTCead2xN00BgzrFyZwz5ZTlivDCGMJapWFmjGnF1gFeAG0G8rse2ID/Cca3ItGksNaSfg==}
+    peerDependencies:
+      '@polkadot-cloud/connect': ^5
+      '@polkadot-cloud/connect-core': ^2
+      dedot: ^1
+      react: ^19.1.0
+      react-dom: ^19.1.0
+
+  '@polkadot-cloud/connect@1.0.8':
+    resolution: {integrity: sha512-01DEb5mlJeldnjaGor0r/FUOvdhuRbq973Rfg9EWqyAMUOsnNM/BNKioDyFqPDCfqNLtPSt1P84MqGLESYL4Dg==}
+    peerDependencies:
+      dedot: ^1
+      react: ^19.1.0
+      react-dom: ^19.1.0
+      rxjs: ^7.8.2
 
   '@polkadot/keyring@14.0.3':
     resolution: {integrity: sha512-ozp1dQwaHCjgX/fpTTORmHjxdUNQnyiTVJszpzUaUpvtH/IGZhSU/mSHXMqNETS/g57vQa7NatIDcWfyR9abyA==}
@@ -2457,8 +2485,8 @@ packages:
   '@types/react@19.2.14':
     resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
 
-  '@types/w3c-web-usb@1.0.13':
-    resolution: {integrity: sha512-N2nSl3Xsx8mRHZBvMSdNGtzMyeleTvtlEw+ujujgXalPqOjIA6UtrqcB6OzyUjkTbDm3J7P1RNK1lgoO7jxtsw==}
+  '@types/w3c-web-usb@1.0.14':
+    resolution: {integrity: sha512-Qu3Nn6JFuF4+sHKYl+IcX9vYiI40ogleXzFFSxoE1W94rG98o/kXs8uJ0QSfFzuwBCZWlGfUGpPkgwuuX4PchA==}
 
   '@vitejs/plugin-react@6.0.1':
     resolution: {integrity: sha512-l9X/E3cDb+xY3SWzlG1MOGt2usfEHGMNIaegaUGFsLkb3RCn/k8/TOXBcab+OndDI4TBtktT8/9BwwW8Vi9KUQ==}
@@ -2520,28 +2548,6 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  '@w3ux/ledger-connect@1.0.0':
-    resolution: {integrity: sha512-SrF+gt5q9Y8PctsOBPwlWU7COU7R4PMh4R7f7uQVnb1gPnnFNqFzYwc5Ejh4Id22Y28US3KkvaTgWrprxdhz+w==}
-    peerDependencies:
-      '@w3ux/observables-connect': ^2
-      '@w3ux/react-connect-kit': ^5
-      react: ^19.1.0
-      react-dom: ^19.1.0
-
-  '@w3ux/observables-connect@2.0.0':
-    resolution: {integrity: sha512-fgokra7zbd+7OsXz5xUXMIekmalVMoh1vlT0mZ3xRmQU7r5DGtxFOCkXM+ojVJmnQpag8exccbBUnjoU7hn9PQ==}
-    peerDependencies:
-      dedot: ^1
-      rxjs: ^7.8.2
-
-  '@w3ux/react-connect-kit@5.0.2':
-    resolution: {integrity: sha512-uWRQPA810aZQO49GvESs4lhliVlt4HnLr3n9RxTKf/YwcCRmnjoyHex4S0Q0MYKdBI7C9jESQqxuDMHOrj2M8g==}
-    peerDependencies:
-      dedot: ^1
-      react: ^19.1.0
-      react-dom: ^19.1.0
-      rxjs: ^7.8.2
-
   '@w3ux/react-odometer@2.4.5':
     resolution: {integrity: sha512-dfaSR3Qtqo9FYYmiE2vCPDms+KZp6YZwT2e/1m+gB6l0WzkAJYVJwCxRS+naKCQoM0NUt0fPkZtMgnME30hE8Q==}
     peerDependencies:
@@ -2570,15 +2576,6 @@ packages:
     resolution: {integrity: sha512-vyjv6KX+kY/dQwA3nE72B6S94Yv5zfGqmghPHPoVLoTOudxW5QP3uF6+/IeXkC2xOyyurDJGdaRG9B92loPy+Q==}
     peerDependencies:
       react: ^19.1.0
-
-  '@w3ux/vault-connect@1.0.0':
-    resolution: {integrity: sha512-UKHOQS/IA8hjMtfWbsY+VCbOMmR/K4IIFIB6iF28CfEJwunrfyRskIwmQSP/A2ZW77PID5KEczdf8s/vhQ9lUQ==}
-    peerDependencies:
-      '@w3ux/observables-connect': ^2
-      '@w3ux/react-connect-kit': ^5
-      dedot: ^1
-      react: ^19.1.0
-      react-dom: ^19.1.0
 
   '@wry/caches@1.0.1':
     resolution: {integrity: sha512-bXuaUNLVVkD20wcGBWRyo7j9N3TxePEWFZj2Y+r9OoUzfqmavM84+mFykRicNsBqatba5JLay1t48wxaXaWnlA==}
@@ -2649,8 +2646,8 @@ packages:
   axios@0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
 
-  axios@1.13.6:
-    resolution: {integrity: sha512-ChTCHMouEe2kn713WHbQGcuYrr6fXTBiu460OTwWrWob16g1bXn4vtz07Ope7ewMozJAnEquLk5lWQWtBig9DQ==}
+  axios@1.15.0:
+    resolution: {integrity: sha512-wWyJDlAatxk30ZJer+GeCWS209sA42X+N5jU2jy6oHTp7ufw8uzUTVFBX9+wTfAlhiJXGS0Bq7X6efruWjuK9Q==}
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -2993,6 +2990,15 @@ packages:
 
   follow-redirects@1.15.11:
     resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+
+  follow-redirects@1.16.0:
+    resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -3352,6 +3358,9 @@ packages:
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
+
   log-symbols@7.0.1:
     resolution: {integrity: sha512-ja1E3yCr9i/0hmBVaM0bfwDjnGy8I/s6PP4DFp+yP+a+mrHO4Rm7DtmnqROTUkHIkqffC84YY7AeqX6oFk0WFg==}
     engines: {node: '>=18'}
@@ -3609,8 +3618,9 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  proxy-from-env@1.1.0:
-    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
+  proxy-from-env@2.1.0:
+    resolution: {integrity: sha512-cJ+oHTW1VAEa8cJslgmUZrc+sjRKgAKl3Zyse6+PV38hZe/V6Z14TbCuXcan9F9ghlz4QrFr2c92TNF82UkYHA==}
+    engines: {node: '>=10'}
 
   pump@3.0.4:
     resolution: {integrity: sha512-VS7sjc6KR7e1ukRFhQSY5LM2uBWAUPiOPa/A3mkKmiMwSmRFUITt0xuj+/lesgnCv+dPIEYlkzrcyXgquIHMcA==}
@@ -4837,95 +4847,79 @@ snapshots:
 
   '@kurkle/color@0.3.4': {}
 
-  '@ledgerhq/devices@8.12.0':
+  '@ledgerhq/devices@8.14.0':
     dependencies:
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
-      rxjs: 7.8.2
-      semver: 7.7.3
-    optional: true
-
-  '@ledgerhq/devices@8.13.0':
-    dependencies:
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/logs': 6.17.0
       rxjs: 7.8.2
       semver: 7.7.3
 
   '@ledgerhq/devices@8.5.0':
     dependencies:
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/logs': 6.17.0
       rxjs: 7.8.2
       semver: 7.7.4
 
   '@ledgerhq/devices@8.8.0':
     dependencies:
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/logs': 6.17.0
       rxjs: 7.8.2
       semver: 7.7.4
 
-  '@ledgerhq/errors@6.32.0': {}
+  '@ledgerhq/errors@6.33.0': {}
 
-  '@ledgerhq/hw-transport-node-hid-noevents@6.33.0':
+  '@ledgerhq/hw-transport-node-hid-noevents@6.35.0':
     dependencies:
-      '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/hw-transport': 6.34.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/devices': 8.14.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/hw-transport': 6.35.0
+      '@ledgerhq/logs': 6.17.0
       node-hid: 2.1.2
     optional: true
 
-  '@ledgerhq/hw-transport-node-hid@6.32.0':
+  '@ledgerhq/hw-transport-node-hid@6.33.0':
     dependencies:
-      '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/hw-transport': 6.34.0
-      '@ledgerhq/hw-transport-node-hid-noevents': 6.33.0
-      '@ledgerhq/logs': 6.16.0
-      lodash: 4.17.23
+      '@ledgerhq/devices': 8.14.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/hw-transport': 6.35.0
+      '@ledgerhq/hw-transport-node-hid-noevents': 6.35.0
+      '@ledgerhq/logs': 6.17.0
+      lodash: 4.18.1
       node-hid: 2.1.2
       usb: 2.9.0
     optional: true
 
-  '@ledgerhq/hw-transport-webhid@6.34.0':
+  '@ledgerhq/hw-transport-webhid@6.35.0':
     dependencies:
-      '@ledgerhq/devices': 8.13.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/hw-transport': 6.34.1
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/devices': 8.14.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/hw-transport': 6.35.0
+      '@ledgerhq/logs': 6.17.0
 
   '@ledgerhq/hw-transport@6.31.15':
     dependencies:
       '@ledgerhq/devices': 8.8.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/logs': 6.17.0
       events: 3.3.0
 
   '@ledgerhq/hw-transport@6.31.9':
     dependencies:
       '@ledgerhq/devices': 8.5.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/logs': 6.17.0
       events: 3.3.0
 
-  '@ledgerhq/hw-transport@6.34.0':
+  '@ledgerhq/hw-transport@6.35.0':
     dependencies:
-      '@ledgerhq/devices': 8.12.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
-      events: 3.3.0
-    optional: true
-
-  '@ledgerhq/hw-transport@6.34.1':
-    dependencies:
-      '@ledgerhq/devices': 8.13.0
-      '@ledgerhq/errors': 6.32.0
-      '@ledgerhq/logs': 6.16.0
+      '@ledgerhq/devices': 8.14.0
+      '@ledgerhq/errors': 6.33.0
+      '@ledgerhq/logs': 6.17.0
       events: 3.3.0
 
-  '@ledgerhq/logs@6.16.0': {}
+  '@ledgerhq/logs@6.17.0': {}
 
   '@napi-rs/wasm-runtime@1.1.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)':
     dependencies:
@@ -5020,6 +5014,54 @@ snapshots:
       '@parcel/watcher-win32-ia32': 2.5.6
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
+
+  '@polkadot-cloud/connect-core@1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)':
+    dependencies:
+      '@w3ux/extension-assets': 2.3.1(react@19.2.5)
+      '@w3ux/types': 2.4.2
+      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.2))
+      '@w3ux/utils': 3.1.1
+      dedot: 1.2.0(typescript@6.0.2)
+      rxjs: 7.8.2
+    transitivePeerDependencies:
+      - react
+
+  '@polkadot-cloud/connect-ledger@1.0.1(@polkadot-cloud/connect-core@1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      '@ledgerhq/hw-transport-webhid': 6.35.0
+      '@polkadot-cloud/connect': 1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core': 1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
+      '@w3ux/hooks': 2.4.4(react@19.2.5)
+      '@w3ux/utils': 3.1.1
+      '@zondax/ledger-substrate': 2.1.2
+      buffer: 6.0.3
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+    transitivePeerDependencies:
+      - debug
+
+  '@polkadot-cloud/connect-vault@1.0.1(@polkadot-cloud/connect-core@1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+    dependencies:
+      '@polkadot-cloud/connect': 1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core': 1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
+      dedot: 1.2.0(typescript@6.0.2)
+      html5-qrcode: 2.3.8
+      qrcode-generator: 1.5.0
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+      xxhash-wasm: 1.1.0
+
+  '@polkadot-cloud/connect@1.0.8(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)':
+    dependencies:
+      '@polkadot-cloud/connect-core': 1.0.8(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
+      '@w3ux/hooks': 2.4.4(react@19.2.5)
+      '@w3ux/types': 2.4.2
+      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.2))
+      '@w3ux/utils': 3.1.1
+      dedot: 1.2.0(typescript@6.0.2)
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
+      rxjs: 7.8.2
 
   '@polkadot/keyring@14.0.3(@polkadot/util-crypto@14.0.3(@polkadot/util@14.0.3))(@polkadot/util@14.0.3)':
     dependencies:
@@ -6092,7 +6134,7 @@ snapshots:
     dependencies:
       csstype: 3.2.3
 
-  '@types/w3c-web-usb@1.0.13':
+  '@types/w3c-web-usb@1.0.14':
     optional: true
 
   '@vitejs/plugin-react@6.0.1(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0))':
@@ -6159,41 +6201,6 @@ snapshots:
       date-fns: 4.1.0
       react: 19.2.5
 
-  '@w3ux/ledger-connect@1.0.0(@w3ux/observables-connect@2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@w3ux/react-connect-kit@5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
-    dependencies:
-      '@ledgerhq/hw-transport-webhid': 6.34.0
-      '@w3ux/hooks': 2.4.4(react@19.2.5)
-      '@w3ux/observables-connect': 2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
-      '@w3ux/react-connect-kit': 5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
-      '@w3ux/utils': 3.1.1
-      '@zondax/ledger-substrate': 2.1.2
-      buffer: 6.0.3
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
-    transitivePeerDependencies:
-      - debug
-
-  '@w3ux/observables-connect@2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)':
-    dependencies:
-      '@w3ux/extension-assets': 2.3.1(react@19.2.5)
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.2))
-      '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.2)
-      rxjs: 7.8.2
-    transitivePeerDependencies:
-      - react
-
-  '@w3ux/react-connect-kit@5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)':
-    dependencies:
-      '@w3ux/hooks': 2.4.4(react@19.2.5)
-      '@w3ux/observables-connect': 2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.2))
-      '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.2)
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
-      rxjs: 7.8.2
-
   '@w3ux/react-odometer@2.4.5(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       react: 19.2.5
@@ -6219,21 +6226,6 @@ snapshots:
     dependencies:
       react: 19.2.5
 
-  '@w3ux/vault-connect@1.0.0(@w3ux/observables-connect@2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2))(@w3ux/react-connect-kit@5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(css-to-react-native@3.2.0)(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
-    dependencies:
-      '@w3ux/observables-connect': 2.0.0(dedot@1.2.0(typescript@6.0.2))(react@19.2.5)(rxjs@7.8.2)
-      '@w3ux/react-connect-kit': 5.0.2(dedot@1.2.0(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
-      dedot: 1.2.0(typescript@6.0.2)
-      html5-qrcode: 2.3.8
-      qrcode-generator: 1.5.0
-      react: 19.2.5
-      react-dom: 19.2.5(react@19.2.5)
-      styled-components: 6.4.0(css-to-react-native@3.2.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      xxhash-wasm: 1.1.0
-    transitivePeerDependencies:
-      - css-to-react-native
-      - react-native
-
   '@wry/caches@1.0.1':
     dependencies:
       tslib: 2.8.1
@@ -6258,10 +6250,10 @@ snapshots:
     dependencies:
       '@ledgerhq/hw-transport': 6.31.15
       '@zondax/ledger-js': 1.3.1
-      axios: 1.13.6
+      axios: 1.15.0
       buffer: 6.0.3
     optionalDependencies:
-      '@ledgerhq/hw-transport-node-hid': 6.32.0
+      '@ledgerhq/hw-transport-node-hid': 6.33.0
     transitivePeerDependencies:
       - debug
 
@@ -6302,11 +6294,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.13.6:
+  axios@1.15.0:
     dependencies:
-      follow-redirects: 1.15.11
+      follow-redirects: 1.16.0
       form-data: 4.0.5
-      proxy-from-env: 1.1.0
+      proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
 
@@ -6653,6 +6645,8 @@ snapshots:
 
   follow-redirects@1.15.11: {}
 
+  follow-redirects@1.16.0: {}
+
   form-data@4.0.5:
     dependencies:
       asynckit: 0.4.0
@@ -6937,6 +6931,9 @@ snapshots:
 
   lodash@4.17.23: {}
 
+  lodash@4.18.1:
+    optional: true
+
   log-symbols@7.0.1:
     dependencies:
       is-unicode-supported: 2.1.0
@@ -7180,7 +7177,7 @@ snapshots:
 
   prettier@3.8.2: {}
 
-  proxy-from-env@1.1.0: {}
+  proxy-from-env@2.1.0: {}
 
   pump@3.0.4:
     dependencies:
@@ -7724,7 +7721,7 @@ snapshots:
 
   usb@2.9.0:
     dependencies:
-      '@types/w3c-web-usb': 1.0.13
+      '@types/w3c-web-usb': 1.0.14
       node-addon-api: 6.1.0
       node-gyp-build: 4.8.4
     optional: true

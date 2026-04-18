@@ -3,7 +3,7 @@
 
 import { faBolt, faCog, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +15,7 @@ export const StakingOptions = () => {
 	const { t } = useTranslation()
 	const { openCanvas } = useOverlay().canvas
 	const { openModal, closeModal, config } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setNominatorSetup, removeNominatorSetup, generateOptimalSetup } =
 		useNominatorSetups()
 

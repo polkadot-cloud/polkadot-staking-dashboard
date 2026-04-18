@@ -7,12 +7,12 @@ import {
 	faToggleOn,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -45,7 +45,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 	const { currency } = useCurrency()
 	const { pluginEnabled } = usePlugins()
 	const { avgCommission } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { price: tokenPrice } = useTokenPrices()
 	const { getAverageRewardRate } = useAverageRewardRate()
 	const { averageRewardRate, rewardCalculator } = useRewardOverviewStats()

@@ -1,11 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -38,7 +38,7 @@ export const WithdrawMember = ({
 	const { closePrompt } = usePrompt()
 	const { activeProxy } = useActiveProxy()
 	const { getConsts, activeEra } = useApi()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { unit, units } = getStakingChainData(network)
 	const { historyDepth } = getConsts(network)

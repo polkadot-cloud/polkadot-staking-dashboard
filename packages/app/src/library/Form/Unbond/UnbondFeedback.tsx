@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { maxBigInt, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -30,7 +30,7 @@ export const UnbondFeedback = ({
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { isDepositor } = useActivePool()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const {
 		stakingMetrics: { minNominatorBond },
 		poolsConfig: { minJoinBond, minCreateBond },

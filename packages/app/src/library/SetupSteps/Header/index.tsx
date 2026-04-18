@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ export const Header = ({
 	bondFor,
 }: HeaderProps) => {
 	const { t } = useTranslation('app')
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPoolSetup, setPoolSetupSection } = usePoolSetups()
 	const { getNominatorSetup, setNominatorSetupSection } = useNominatorSetups()
 
