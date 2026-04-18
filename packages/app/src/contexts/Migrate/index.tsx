@@ -38,6 +38,9 @@ export const MigrateProvider = ({ children }: { children: ReactNode }) => {
 				// Update local version to current app version
 				localStorage.setItem('app_version', version)
 				setDone(true)
+
+				// Reload the page to ensure all changes are applied
+				window.location.reload()
 			}
 		}
 	}, [isReady, syncing])
