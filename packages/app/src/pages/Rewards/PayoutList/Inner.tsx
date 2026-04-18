@@ -117,7 +117,7 @@ export const PayoutList = ({
 					<Pagination page={page} total={totalPages} setter={setPage} />
 				)}
 				<MotionContainer>
-					{listPayouts.map((p: NominatorReward | PoolReward) => {
+					{listPayouts.map((p) => {
 						const poolReward = isPoolReward(p)
 						const record = poolReward
 							? (p as PoolReward)
