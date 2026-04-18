@@ -32,7 +32,7 @@ export const Invite = () => {
 	let faIcon = faEnvelopeOpenText
 
 	if (membership) {
-		toCopy = `https://${ProductionURL}/#/overview?n=${network}&i=pool&id=${poolId}`
+		toCopy = `${ProductionURL}/#/overview?n=${network}&i=pool&id=${poolId}`
 		title = t('copyPoolInviteLink', { ns: 'app' })
 		subtitle = toCopy
 	} else if (nominated.length > 0) {
@@ -47,7 +47,10 @@ export const Invite = () => {
 			<Title />
 			<Padding verticalOnly>
 				<Support>
-					<FontAwesomeIcon icon={faIcon} />
+					<FontAwesomeIcon
+						icon={faIcon}
+						style={{ color: 'var(--gray-1000)' }}
+					/>
 					{canCopy ? (
 						<>
 							<ButtonCopy
