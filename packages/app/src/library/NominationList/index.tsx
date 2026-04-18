@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -36,7 +36,7 @@ export const NominationList = ({
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { isReady, activeEra } = useApi()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setModalResize } = useOverlay().modal
 	const { injectValidatorListData } = useValidators()
 	const { getNominationSetStatus, getPoolNominationStatus } =

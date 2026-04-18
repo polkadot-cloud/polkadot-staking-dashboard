@@ -1,8 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -15,7 +14,7 @@ import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus'
 export const Status = ({ height }: { height: number }) => {
 	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	return (

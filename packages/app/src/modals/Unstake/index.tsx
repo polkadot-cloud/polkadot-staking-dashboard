@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -36,7 +36,7 @@ export const Unstake = () => {
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { closeModal, setModalResize } = useOverlay().modal
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 
 	const { balances } = useAccountBalances(activeAddress)
 	const { bondDuration } = getConsts(network)

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -33,7 +33,7 @@ export const SetPoolState = ({
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
 	const { activeProxy } = useActiveProxy()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { isOwner, isBouncer, activePool } = useActivePool()
 	const { updateBondedPools, getBondedPool } = useBondedPools()

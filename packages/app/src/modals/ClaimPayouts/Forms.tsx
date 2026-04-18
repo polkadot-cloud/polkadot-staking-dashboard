@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -38,7 +38,7 @@ export const Forms = forwardRef(
 		const { activeProxy } = useActiveProxy()
 		const { closeModal } = useOverlay().modal
 		const { getSignerWarnings } = useSignerWarnings()
-		const { activeAddress, activeAccount } = useActiveAccounts()
+		const { activeAddress, activeAccount } = useActiveAccount()
 		const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 		const { unit, units } = getStakingChainData(network)
 

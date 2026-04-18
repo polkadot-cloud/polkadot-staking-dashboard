@@ -7,9 +7,9 @@ import {
 	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'

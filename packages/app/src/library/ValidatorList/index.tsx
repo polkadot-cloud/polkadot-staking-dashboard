@@ -3,8 +3,8 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { getPeopleChainId } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
 import { ListProvider, useList } from 'contexts/List'
@@ -70,7 +70,7 @@ export const ValidatorListInner = ({
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setModalResize } = useOverlay().modal
 	const { injectValidatorListData } = useValidators()
 	const { isReady, activeEra, getApiStatus } = useApi()

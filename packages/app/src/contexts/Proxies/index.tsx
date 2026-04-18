@@ -1,13 +1,15 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import {
+	useActiveAccount,
+	useExternalAccounts,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import {
 	getLocalActiveProxy,
@@ -32,7 +34,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { activeProxy } = useActiveProxy()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { addExternalAccount } = useExternalAccounts()
 	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 
@@ -102,7 +104,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 			}
 		}
 		if (addDelegatorAsExternal) {
-			addExternalAccount(delegator, 'system')
+			addExternalAccount(delegator)
 		}
 		return []
 	}
@@ -142,7 +144,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 				const { address, source, proxyType } = localActiveProxy
 				// Add proxy address as external account if not imported
 				if (!accounts.find((a) => a.address === address)) {
-					addExternalAccount(address, 'system')
+					addExternalAccount(address)
 				}
 				const isActive = (
 					Object.entries(proxies).find(

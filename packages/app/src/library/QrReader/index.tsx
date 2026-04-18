@@ -1,8 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import {
+	QrScanSignature,
+	useVaultAccounts,
+} from '@polkadot-cloud/connect-vault'
 import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
-import { QrScanSignature, useVaultAccounts } from '@w3ux/vault-connect'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { QrReaderProps } from './types'
