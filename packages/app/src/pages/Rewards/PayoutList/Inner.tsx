@@ -141,7 +141,7 @@ export const PayoutList = ({
 								(v) => v.address === item.validator,
 							)
 							batchIndex = validator ? getValidators().indexOf(validator) : 0
-							keyId = `nom_${item.validator}_${item.era}`
+							keyId = `nom_${item.validator}_${item.era}_${item.timestamp}`
 						}
 
 						return (
