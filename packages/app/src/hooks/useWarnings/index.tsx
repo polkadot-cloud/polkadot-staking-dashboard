@@ -6,7 +6,7 @@ import {
 	faCircleUp,
 	faTrashCan,
 } from '@fortawesome/free-regular-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { poolWarnings$ } from 'global-bus'
 import type { WarningMessage } from 'pages/Overview/Summaries/types'
 import { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 
 export const useWarnings = () => {
 	const { t } = useTranslation('app')
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const [warningMessages, setWarningMessages] = useState<WarningMessage[]>([])
 
 	useEffect(() => {

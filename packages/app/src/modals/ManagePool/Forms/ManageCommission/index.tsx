@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { PerbillMultiplier } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
@@ -57,7 +57,7 @@ export const ManageCommission = ({
 	const { closeModal } = useOverlay().modal
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
 
 	const poolId = activePool?.id || 0

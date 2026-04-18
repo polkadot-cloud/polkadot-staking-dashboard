@@ -1,20 +1,23 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedger } from '@w3ux/ledger-connect'
-import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
-import type { HardwareAccount } from '@w3ux/types'
+import {
+	useExtensionAccounts,
+	useExtensions,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
+import { useLedger } from '@polkadot-cloud/connect-ledger'
 import {
 	type VaultSignatureResult,
 	VaultSigner,
 	type VaultSignStatus,
-} from '@w3ux/vault-connect'
+} from '@polkadot-cloud/connect-vault'
+import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
 import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { AccountButton } from '../AccountButton'
 
