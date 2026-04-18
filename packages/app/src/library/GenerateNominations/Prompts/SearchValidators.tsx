@@ -158,7 +158,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 										message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
 									/>
 								) : filteredSearchResults.length > 0 ? (
-									filteredSearchResults.map((validator: Validator) => {
+									filteredSearchResults.map((validator) => {
 										const inInitial = !!nominations.find(
 											({ address }) => address === validator.address,
 										)
