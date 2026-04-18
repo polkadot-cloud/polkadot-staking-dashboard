@@ -5,6 +5,7 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { MaybeAddress } from 'types'
 
 export interface StatButtonProps {
+	id?: string
 	title: string
 	large?: boolean
 	icon?: IconProp
