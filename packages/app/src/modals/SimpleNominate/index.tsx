@@ -1,13 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { useTxMeta } from 'contexts/TxMeta'

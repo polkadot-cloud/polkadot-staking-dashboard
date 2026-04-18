@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSyncing } from 'hooks/useSyncing'

@@ -6,8 +6,7 @@ import {
 	faQrcode,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccount } from '@polkadot-cloud/connect'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { Title } from 'library/Modal/Title'
 import { fetchAccountsToken } from 'plugin-gateway'
 import qrcode from 'qrcode-generator'

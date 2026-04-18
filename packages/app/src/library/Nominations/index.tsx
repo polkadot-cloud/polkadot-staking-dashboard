@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'

@@ -8,7 +8,7 @@ import {
 	faWarning,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { useTranslation } from 'react-i18next'
 import type { SignerProps } from './types'
 import { ProxySwitcher, SignerWrapper } from './Wrapper'

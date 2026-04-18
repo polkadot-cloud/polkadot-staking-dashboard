@@ -3,10 +3,10 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
 import { getStakingChainData } from 'consts/util'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { FormEvent } from 'react'
 import { useEffect, useState } from 'react'

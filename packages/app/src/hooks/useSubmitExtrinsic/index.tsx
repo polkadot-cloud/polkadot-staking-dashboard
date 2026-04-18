@@ -1,7 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useExtensionAccounts, useExtensions } from '@polkadot-cloud/connect'
+import {
+	useExtensionAccounts,
+	useExtensions,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
 import { useLedger } from '@polkadot-cloud/connect-ledger'
 import {
 	type VaultSignatureResult,
@@ -14,7 +18,6 @@ import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
