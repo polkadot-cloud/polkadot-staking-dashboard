@@ -31,12 +31,12 @@ export const ProvidersPrompt = () => {
 						network: capitalizeFirstLetter(network),
 					})}
 				</h4>
-				{Object.entries(rpcProviders)?.map(([key, url], i) => {
+				{Object.entries(rpcProviders)?.map(([key, url]) => {
 					const isDisabled = getRpcEndpoint(network) === key
 
 					return (
 						<PromptSelectItem
-							key={`favorite_${i}`}
+							key={`favorite_${key}`}
 							className={isDisabled ? 'inactive' : undefined}
 							onClick={() => {
 								closePrompt()

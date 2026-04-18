@@ -102,8 +102,8 @@ export const NotificationsPopover = ({
 					{t('notification', { count: notifications.length })}
 				</Heading>
 				<List>
-					{notifications.map((n, index) => (
-						<div key={`notification_${index}`}>
+					{notifications.map((n) => (
+						<div key={`notification_${n.title}`}>
 							<h3>
 								<FontAwesomeIcon icon={faPaperPlane} />
 								{n.title}

@@ -168,9 +168,9 @@ export const NominationList = ({
 			<List $flexBasisLarge={'33.33%'}>
 				<MotionContainer>
 					{validators.length ? (
-						validators.map((validator, index) => (
+						validators.map((validator) => (
 							<motion.div
-								key={`nomination_${index}`}
+								key={`nomination_${validator.address}`}
 								className={`item col`}
 								variants={{
 									hidden: {
