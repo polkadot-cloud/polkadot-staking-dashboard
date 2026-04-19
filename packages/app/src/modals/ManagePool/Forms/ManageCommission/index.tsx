@@ -41,7 +41,7 @@ export const ManageCommission = ({
 
 	useEffect(() => {
 		incrementCalculateHeight()
-	}, [view, incrementCalculateHeight])
+	}, [view])
 
 	return (
 		<>
