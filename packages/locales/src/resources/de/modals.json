@@ -156,6 +156,7 @@
 			"commissionBeyondMaxIncreaseWarning": "Die Erhöhung der Provision überschreitet die konfigurierte maximale Erhöhung von {{maxIncrease}}%.",
 			"maxCommissionAboveExistingWarning": "Die maximale Provision darf nicht höher sein als der bestehende On-Chain-Wert ({{existingMax}}%).",
 			"maxCommissionAboveGlobalMaxWarning": "Die maximale Kommission darf nicht höher sein als die globale maximale Kommission des Netzwerks ({{max}}%).",
+			"maxCommissionSubtitle": "Maximale Provision des Pools verwalten",
 			"noChangeRateChangesWarning": "Es gibt keine Änderungen der Wechselkurse zu übermitteln.",
 			"noCommissionChangesWarning": "Es gibt keine Änderungen der Provisionen einzureichen.",
 			"noMaxCommissionChangesWarning": "Es gibt keine Änderungen der maximalen Provision zur Einreichung.",

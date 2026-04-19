@@ -156,6 +156,7 @@
 			"commissionBeyondMaxIncreaseWarning": "수수료 인상이 설정된 최대 인상률 {{maxIncrease}}%를 초과합니다.",
 			"maxCommissionAboveExistingWarning": "최대 수수료는 기존 온체인 값 ({{existingMax}}%)보다 높을 수 없습니다.",
 			"maxCommissionAboveGlobalMaxWarning": "최대 수수료는 네트워크의 전역 최대 수수료 ({{max}}%)를 초과할 수 없습니다.",
+			"maxCommissionSubtitle": "풀의 최대 수수료 관리",
 			"noChangeRateChangesWarning": "변경률 업데이트를 제출할 항목이 없습니다.",
 			"noCommissionChangesWarning": "제출할 커미션 변경 사항이 없습니다.",
 			"noMaxCommissionChangesWarning": "제출할 최대 수수료 변경 사항이 없습니다.",

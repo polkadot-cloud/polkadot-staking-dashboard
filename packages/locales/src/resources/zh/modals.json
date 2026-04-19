@@ -150,6 +150,7 @@
 			"commissionBeyondMaxIncreaseWarning": "佣金增加超过了配置的最大增幅 {{maxIncrease}}%。",
 			"maxCommissionAboveExistingWarning": "最大佣金不能高于现有链上值 ({{existingMax}}%)。",
 			"maxCommissionAboveGlobalMaxWarning": "最大佣金不能高于网络的全局最大佣金（{{max}}%）。",
+			"maxCommissionSubtitle": "管理池的最大佣金",
 			"noChangeRateChangesWarning": "没有需要提交的汇率更新。",
 			"noCommissionChangesWarning": "没有要提交的佣金变更。",
 			"noMaxCommissionChangesWarning": "没有需要提交的最大佣金变更。",

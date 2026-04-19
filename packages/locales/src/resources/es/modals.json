@@ -156,6 +156,7 @@
 			"commissionBeyondMaxIncreaseWarning": "El aumento de la comisión supera el incremento máximo configurado de {{maxIncrease}}%.",
 			"maxCommissionAboveExistingWarning": "La comisión máxima no puede ser mayor que el valor existente en la cadena ({{existingMax}}%).",
 			"maxCommissionAboveGlobalMaxWarning": "La comisión máxima no puede ser superior a la comisión máxima global de la red ({{max}}%).",
+			"maxCommissionSubtitle": "Gestionar la comisión máxima del pool",
 			"noChangeRateChangesWarning": "No hay actualizaciones de la tasa de cambio para enviar.",
 			"noCommissionChangesWarning": "No hay cambios en las comisiones para enviar.",
 			"noMaxCommissionChangesWarning": "No hay cambios en la comisión máxima para enviar.",

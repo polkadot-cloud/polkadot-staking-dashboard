@@ -156,6 +156,7 @@
 			"commissionBeyondMaxIncreaseWarning": "The commission increase exceeds the configured max increase of {{maxIncrease}}%.",
 			"maxCommissionAboveExistingWarning": "Max commission cannot be higher than the existing on-chain value ({{existingMax}}%).",
 			"maxCommissionAboveGlobalMaxWarning": "Max commission cannot be higher than the network global max commission ({{max}}%).",
+			"maxCommissionSubtitle": "Manage pool's max commission",
 			"noChangeRateChangesWarning": "There are no change rate updates to submit.",
 			"noCommissionChangesWarning": "There are no commission changes to submit.",
 			"noMaxCommissionChangesWarning": "There are no max commission changes to submit.",
