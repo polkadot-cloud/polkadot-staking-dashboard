@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { PerbillMultiplier } from 'consts'
+import { useApi } from 'contexts/Api'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'modals/ManagePool/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +16,7 @@ export const MaxCommission = ({
 	maxCommissionAboveGlobal: boolean
 }) => {
 	const { t } = useTranslation('modals')
+	const { globalMaxCommission } = useApi().poolsConfig
 	const { getEnabled, getCurrent, setCommission, setMaxCommission, isUpdated } =
 		usePoolCommission()
 
@@ -22,8 +24,7 @@ export const MaxCommission = ({
 	const commission = getCurrent('commission')
 	const maxCommission = getCurrent('max_commission')
 	const maxCommissionUpdated = isUpdated('max_commission')
-
-	const commissionUnit = commission / PerbillMultiplier
+	const globalMaxCommissionUnit = globalMaxCommission / PerbillMultiplier
 
 	// Determine the max commission feedback to display.
 	const maxCommissionFeedback = (() => {
@@ -59,12 +60,14 @@ export const MaxCommission = ({
 				</div>
 
 				<StyledSlider
+					max={globalMaxCommissionUnit}
 					value={maxCommission}
-					step={0.1}
+					step={0.05}
 					onChange={(val) => {
 						if (typeof val === 'number') {
+							val = Number(val.toFixed(2))
 							setMaxCommission(val)
-							if (val < commissionUnit) {
+							if (val < commission) {
 								setCommission(val)
 							}
 						}

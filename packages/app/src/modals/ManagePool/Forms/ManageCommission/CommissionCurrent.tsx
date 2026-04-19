@@ -34,7 +34,6 @@ export const CommissionCurrent = ({
 	const commission = getCurrent('commission')
 	const payee = getCurrent('payee')
 	const maxCommission = getCurrent('max_commission')
-	const commissionUnit = commission / PerbillMultiplier
 	const globalMaxCommissionUnit = globalMaxCommission / PerbillMultiplier
 
 	// Determine the commission feedback to display.
@@ -70,7 +69,7 @@ export const CommissionCurrent = ({
 		<>
 			<SliderWrapper>
 				<div>
-					<h2>{commissionUnit}% </h2>
+					<h2>{commission}% </h2>
 					<h5 className={commissionFeedback?.label || 'neutral'}>
 						{!!commissionFeedback && commissionFeedback.text} /{' '}
 						{globalMaxCommissionUnit}% {t('max', { ns: 'app' })}
@@ -79,20 +78,15 @@ export const CommissionCurrent = ({
 
 				<StyledSlider
 					max={globalMaxCommissionUnit}
-					value={commissionUnit}
+					value={commission}
 					step={0.05}
 					onChange={(val) => {
 						if (typeof val === 'number') {
 							val = Number(val.toFixed(2))
 
-							setCommission(val * PerbillMultiplier)
+							setCommission(val)
 							if (val > maxCommission && getEnabled('max_commission')) {
-								setMaxCommission(
-									Math.min(
-										getInitial('max_commission') * PerbillMultiplier,
-										val,
-									),
-								)
+								setMaxCommission(Math.min(getInitial('max_commission'), val))
 							}
 						}
 					}}
@@ -111,7 +105,7 @@ export const CommissionCurrent = ({
 				}}
 				disallowAlreadyImported={false}
 				initialValue={payee}
-				inactive={commissionUnit === 0}
+				inactive={commission === 0}
 				border={payee === null}
 			/>
 		</>

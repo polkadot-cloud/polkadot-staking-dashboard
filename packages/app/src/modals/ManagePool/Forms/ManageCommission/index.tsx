@@ -59,6 +59,7 @@ export const ManageCommission = ({
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccount()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
+	const globalMaxCommissionUnit = globalMaxCommission / PerbillMultiplier
 
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)
@@ -84,7 +85,7 @@ export const ManageCommission = ({
 	// Monitor when input items are invalid.
 	const commissionAboveMax: boolean =
 		hasValue('max_commission') && commission > maxCommission
-	const commissionAboveGlobal = commission > globalMaxCommission
+	const commissionAboveGlobal = commission > globalMaxCommissionUnit
 
 	const commissionAboveMaxIncrease: boolean =
 		hasValue('change_rate') &&
@@ -96,7 +97,7 @@ export const ManageCommission = ({
 			(commission !== 0 && payee === null) ||
 			commissionAboveMax ||
 			commissionAboveMaxIncrease ||
-			commission > globalMaxCommission)
+			commission > globalMaxCommissionUnit)
 
 	const invalidMaxCommission: boolean =
 		hasValue('max_commission') &&
@@ -104,7 +105,7 @@ export const ManageCommission = ({
 		maxCommission > getInitial('max_commission')
 
 	const maxCommissionAboveGlobal: boolean =
-		getEnabled('max_commission') && maxCommission > globalMaxCommission
+		getEnabled('max_commission') && maxCommission > globalMaxCommissionUnit
 
 	// Change rate is invalid if updated is not more restrictive than current.
 	const invalidMaxIncrease: boolean =
@@ -119,7 +120,9 @@ export const ManageCommission = ({
 
 	const invalidChangeRate: boolean = invalidMaxIncrease || invalidMinDelay
 
-	const currentCommissionSet: boolean = payee && commission !== 0
+	const currentCommissionSet: boolean = payee !== null && commission !== 0
+	const commissionPerbill = Math.round(commission * PerbillMultiplier)
+	const maxCommissionPerbill = Math.round(maxCommission * PerbillMultiplier)
 
 	// Check there are txs to submit.
 	const txsToSubmit =
@@ -136,15 +139,17 @@ export const ManageCommission = ({
 			txs.push(
 				serviceApi.tx.poolSetCommission(
 					poolId,
-					currentCommissionSet ? [commission, payee] : undefined,
+					currentCommissionSet ? [commissionPerbill, payee] : undefined,
 				),
 			)
 		}
 		if (isUpdated('max_commission') && getEnabled('max_commission')) {
-			txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxCommission))
+			txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxCommissionPerbill))
 		}
 		if (isUpdated('change_rate') && getEnabled('change_rate')) {
-			const maxIncreasePerbill = changeRate.maxIncrease * PerbillMultiplier
+			const maxIncreasePerbill = Math.round(
+				changeRate.maxIncrease * PerbillMultiplier,
+			)
 			txs.push(
 				serviceApi.tx.poolSetCommissionChangeRate(
 					poolId,
@@ -173,18 +178,23 @@ export const ManageCommission = ({
 		callbackInBlock: () => {
 			const pool = getBondedPool(poolId)
 			if (pool) {
+				const changeRatePerbill = Math.round(
+					changeRate.maxIncrease * PerbillMultiplier,
+				)
 				updateBondedPools([
 					{
 						...pool,
 						commission: {
 							...pool.commission,
-							current: currentCommissionSet ? [commission, payee] : undefined,
+							current: currentCommissionSet
+								? [commissionPerbill, payee]
+								: undefined,
 							max: isUpdated('max_commission')
-								? maxCommission
+								? maxCommissionPerbill
 								: pool.commission?.max || undefined,
 							changeRate: isUpdated('change_rate')
 								? {
-										maxIncrease: changeRate.maxIncrease,
+										maxIncrease: changeRatePerbill,
 										minDelay: changeRate.minDelay,
 									}
 								: pool.commission?.changeRate || undefined,

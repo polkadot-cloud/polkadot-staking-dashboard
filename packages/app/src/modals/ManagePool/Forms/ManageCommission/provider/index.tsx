@@ -29,15 +29,17 @@ export const PoolCommissionProvider = ({
 	const bondedPool = getBondedPool(poolId)
 
 	// Get initial commission value from the bonded pool commission config.
-	const initialCommission = bondedPool?.commission?.current?.[0] || 0
+	const initialCommission =
+		Number(bondedPool?.commission?.current?.[0] || 0) / PerbillMultiplier
 
 	// Get initial payee value from the bonded pool commission config.
 	const initialPayee = bondedPool?.commission?.current?.[1] || null
 
 	// Get initial maximum commission value from the bonded pool commission config.
-	const initialMaxCommission = Number(
-		(bondedPool?.commission?.max || '100').toString(),
-	)
+	const initialMaxCommission =
+		Number(
+			(bondedPool?.commission?.max || 100 * PerbillMultiplier).toString(),
+		) / PerbillMultiplier
 
 	// Get initial change rate value from the bonded pool commission config.
 	const initialChangeRate = ((): ChangeRateInput => {
@@ -94,6 +96,7 @@ export const PoolCommissionProvider = ({
 		setCommission(initialCommission)
 		setPayee(initialPayee)
 		setMaxCommission(initialMaxCommission)
+		setChangeRate(initialChangeRate)
 	}
 
 	// Get the initial value of a commission feature.
