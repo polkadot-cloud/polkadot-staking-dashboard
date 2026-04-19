@@ -75,7 +75,7 @@ export const Tasks = forwardRef(
 									}}
 								>
 									<TaskInnerWrapper>
-										<h3>{t('manageCommission')}</h3>
+										<h3>{t('manageCommission.title')}</h3>
 										<p>{t('updatePoolCommission')}</p>
 									</TaskInnerWrapper>
 								</ButtonOption>
