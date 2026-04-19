@@ -12,6 +12,7 @@ import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
 import { ModalBack } from 'library/ModalBack'
 import { SubmitTx } from 'library/SubmitTx'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
@@ -108,6 +109,13 @@ export const ManageChangeRate = ({
 		)
 	}
 
+	const visibleInvalidWarnings = valid ? [] : invalidWarnings
+	const warningContentSignature = `${warnings.join('::')}|${visibleInvalidWarnings.join('::')}`
+
+	useEffect(() => {
+		onResize()
+	}, [onResize, warningContentSignature])
+
 	return (
 		<>
 			<Padding horizontalOnly>
@@ -115,10 +123,9 @@ export const ManageChangeRate = ({
 					{warnings.map((text, i) => (
 						<Warning key={`warning${i}`} text={text} />
 					))}
-					{!valid &&
-						invalidWarnings.map((text, i) => (
-							<Warning key={`invalid-warning${i}`} text={text} />
-						))}
+					{visibleInvalidWarnings.map((text, i) => (
+						<Warning key={`invalid-warning${i}`} text={text} />
+					))}
 				</Warnings>
 				<ChangeRate />
 			</Padding>
