@@ -31,6 +31,7 @@ export interface PoolCommissionContextInterface {
 	hasValue: CommissionFeatureFlags
 	updated: CommissionFeatureFlags & {
 		commission: boolean
+		payee: boolean
 	}
 	resetAll: () => void
 }

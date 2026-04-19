@@ -38,6 +38,7 @@ export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
 	},
 	updated: {
 		commission: false,
+		payee: false,
 		maxCommission: false,
 		changeRate: false,
 	},

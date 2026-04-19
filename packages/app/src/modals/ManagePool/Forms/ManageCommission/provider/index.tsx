@@ -105,6 +105,7 @@ export const PoolCommissionProvider = ({
 
 	const updated = {
 		commission: commission !== initial.commission,
+		payee: payee !== initial.payee,
 		maxCommission:
 			maxCommission !== initial.maxCommission ||
 			(!hasValue.maxCommission && enabled.maxCommission),

@@ -60,7 +60,9 @@ export const ManageCurrentCommission = ({
 		commissionAboveMaxIncrease ||
 		commissionAboveGlobal
 
-	const valid = isOwner() && updated.commission && !invalidCurrentCommission
+	const hasCurrentCommissionUpdates = updated.commission || updated.payee
+	const valid =
+		isOwner() && hasCurrentCommissionUpdates && !invalidCurrentCommission
 	const commissionPerbill = percentToPerbill(commission).toNumber()
 	const currentCommissionConfig: [number, string] | undefined =
 		payee !== null && commission !== 0 ? [commissionPerbill, payee] : undefined
@@ -99,7 +101,7 @@ export const ManageCurrentCommission = ({
 	)
 
 	const invalidWarnings: string[] = []
-	if (!updated.commission) {
+	if (!hasCurrentCommissionUpdates) {
 		invalidWarnings.push(t('manageCommission.noCommissionChangesWarning'))
 	}
 	if (commission === 0 && payee !== null) {
