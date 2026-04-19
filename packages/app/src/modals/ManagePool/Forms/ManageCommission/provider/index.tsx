@@ -1,11 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PerbillMultiplier } from 'consts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { MaybeAddress } from 'types'
+import { perbillToPercent, percentToPerbill } from 'utils'
 import { defaultPoolCommissionContext } from './defaults'
 import type {
 	ChangeRateInput,
@@ -29,24 +29,24 @@ export const PoolCommissionProvider = ({
 	const bondedPool = getBondedPool(poolId)
 
 	// Get initial commission value from the bonded pool commission config.
-	const initialCommission =
-		Number(bondedPool?.commission?.current?.[0] || 0) / PerbillMultiplier
+	const initialCommission = perbillToPercent(
+		bondedPool?.commission?.current?.[0] || 0,
+	).toNumber()
 
 	// Get initial payee value from the bonded pool commission config.
 	const initialPayee = bondedPool?.commission?.current?.[1] || null
 
 	// Get initial maximum commission value from the bonded pool commission config.
-	const initialMaxCommission =
-		Number(
-			(bondedPool?.commission?.max || 100 * PerbillMultiplier).toString(),
-		) / PerbillMultiplier
+	const initialMaxCommission = perbillToPercent(
+		bondedPool?.commission?.max || percentToPerbill(100).toNumber(),
+	).toNumber()
 
 	// Get initial change rate value from the bonded pool commission config.
 	const initialChangeRate = ((): ChangeRateInput => {
 		const raw = bondedPool?.commission?.changeRate
 		return raw
 			? {
-					maxIncrease: Number(raw.maxIncrease / PerbillMultiplier),
+					maxIncrease: perbillToPercent(raw.maxIncrease).toNumber(),
 					minDelay: Number(raw.minDelay),
 				}
 			: {

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { PerbillMultiplier } from 'consts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
@@ -23,6 +22,7 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
+import { perbillToPercent, percentToPerbill } from 'utils'
 import { ChangeRate } from './ChangeRate'
 import { CommissionCurrent } from './CommissionCurrent'
 import { MaxCommission } from './MaxCommission'
@@ -59,7 +59,8 @@ export const ManageCommission = ({
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccount()
 	const { getBondedPool, updateBondedPools } = useBondedPools()
-	const globalMaxCommissionUnit = globalMaxCommission / PerbillMultiplier
+	const globalMaxCommissionUnit =
+		perbillToPercent(globalMaxCommission).toNumber()
 
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)
@@ -121,8 +122,8 @@ export const ManageCommission = ({
 	const invalidChangeRate: boolean = invalidMaxIncrease || invalidMinDelay
 
 	const currentCommissionSet: boolean = payee !== null && commission !== 0
-	const commissionPerbill = Math.round(commission * PerbillMultiplier)
-	const maxCommissionPerbill = Math.round(maxCommission * PerbillMultiplier)
+	const commissionPerbill = percentToPerbill(commission).toNumber()
+	const maxCommissionPerbill = percentToPerbill(maxCommission).toNumber()
 
 	// Check there are txs to submit.
 	const txsToSubmit =
@@ -147,9 +148,9 @@ export const ManageCommission = ({
 			txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxCommissionPerbill))
 		}
 		if (isUpdated('change_rate') && getEnabled('change_rate')) {
-			const maxIncreasePerbill = Math.round(
-				changeRate.maxIncrease * PerbillMultiplier,
-			)
+			const maxIncreasePerbill = percentToPerbill(
+				changeRate.maxIncrease,
+			).toNumber()
 			txs.push(
 				serviceApi.tx.poolSetCommissionChangeRate(
 					poolId,
@@ -178,9 +179,9 @@ export const ManageCommission = ({
 		callbackInBlock: () => {
 			const pool = getBondedPool(poolId)
 			if (pool) {
-				const changeRatePerbill = Math.round(
-					changeRate.maxIncrease * PerbillMultiplier,
-				)
+				const changeRatePerbill = percentToPerbill(
+					changeRate.maxIncrease,
+				).toNumber()
 				updateBondedPools([
 					{
 						...pool,
