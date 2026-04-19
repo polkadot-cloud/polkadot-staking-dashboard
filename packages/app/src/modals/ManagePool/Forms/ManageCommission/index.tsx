@@ -60,7 +60,9 @@ export const ManageCommission = ({
 								<h2>{t('commissionRate', { ns: 'modals' })}</h2>
 								<h3>
 									{current.commission}% ·{' '}
-									{current.payee === null ? 'No payee set' : 'Payee Set'}
+									{current.payee === null
+										? t('manageCommission.payeeNotSetLabel', { ns: 'modals' })
+										: t('manageCommission.payeeSetLabel', { ns: 'modals' })}
 								</h3>
 							</ItemWrapper>
 
@@ -89,7 +91,10 @@ export const ManageCommission = ({
 								<h2>{t('changeRate', { ns: 'modals' })}</h2>
 								<h3>
 									{current.changeRate.maxIncrease}% /{' '}
-									{current.changeRate.minDelay.toLocaleString()} blocks
+									{t('manageCommission.blocksLabel', {
+										ns: 'modals',
+										blocks: current.changeRate.minDelay.toLocaleString(),
+									})}
 								</h3>
 							</ItemWrapper>
 						</ItemsWrapper>

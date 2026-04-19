@@ -8,11 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { perbillToPercent } from 'utils'
 import { usePoolCommission } from './provider'
 
-export const MaxCommission = ({
-	invalidMaxCommission,
-}: {
-	invalidMaxCommission: boolean
-}) => {
+export const MaxCommission = () => {
 	const { t } = useTranslation('modals')
 	const { globalMaxCommission } = useApi().poolsConfig
 	const { enabled, current, updated, setCommission, setMaxCommission } =
@@ -24,22 +20,12 @@ export const MaxCommission = ({
 	const globalMaxCommissionUnit =
 		perbillToPercent(globalMaxCommission).toNumber()
 
-	// Determine the max commission feedback to display.
-	const maxCommissionFeedback = (() => {
-		if (!maxCommissionUpdated) {
-			return undefined
-		}
-		if (invalidMaxCommission) {
-			return {
-				text: t('aboveExisting'),
-				label: 'danger',
+	const maxCommissionFeedback = maxCommissionUpdated
+		? {
+				text: t('updated'),
+				label: 'neutral',
 			}
-		}
-		return {
-			text: t('updated'),
-			label: 'neutral',
-		}
-	})()
+		: undefined
 
 	return (
 		enabled.maxCommission && (

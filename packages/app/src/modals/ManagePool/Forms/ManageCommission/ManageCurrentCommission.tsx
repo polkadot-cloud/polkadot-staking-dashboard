@@ -100,22 +100,34 @@ export const ManageCurrentCommission = ({
 
 	const invalidWarnings: string[] = []
 	if (!updated.commission) {
-		invalidWarnings.push('No commission changes to submit.')
+		invalidWarnings.push(t('manageCommission.noCommissionChangesWarning'))
 	}
 	if (commission === 0 && payee !== null) {
-		invalidWarnings.push('Set payee to none when commission is 0%.')
+		invalidWarnings.push(t('manageCommission.payeeMustBeNoneWarning'))
 	}
 	if (commission !== 0 && payee === null) {
-		invalidWarnings.push('Set a payee account when commission is above 0%.')
+		invalidWarnings.push(t('manageCommission.payeeRequiredWarning'))
 	}
 	if (commissionAboveMax) {
-		invalidWarnings.push(t('aboveMax'))
+		invalidWarnings.push(
+			t('manageCommission.commissionAboveMaxWarning', {
+				max: maxCommission,
+			}),
+		)
 	}
 	if (commissionAboveMaxIncrease) {
-		invalidWarnings.push(t('beyondMaxIncrease'))
+		invalidWarnings.push(
+			t('manageCommission.commissionBeyondMaxIncreaseWarning', {
+				maxIncrease: changeRate.maxIncrease,
+			}),
+		)
 	}
 	if (commissionAboveGlobal) {
-		invalidWarnings.push(t('aboveGlobalMax'))
+		invalidWarnings.push(
+			t('manageCommission.commissionAboveGlobalMaxWarning', {
+				max: globalMaxCommissionUnit,
+			}),
+		)
 	}
 
 	return (
@@ -130,10 +142,7 @@ export const ManageCurrentCommission = ({
 							<Warning key={`invalid-warning${i}`} text={text} />
 						))}
 				</Warnings>
-				<CommissionCurrent
-					commissionAboveMax={commissionAboveMax}
-					commissionAboveGlobal={commissionAboveGlobal}
-				/>
+				<CommissionCurrent />
 			</Padding>
 			<ModalBack onClick={onBack} />
 			<SubmitTx

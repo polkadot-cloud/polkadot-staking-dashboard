@@ -92,13 +92,21 @@ export const ManageMaxCommission = ({
 
 	const invalidWarnings: string[] = []
 	if (!updated.maxCommission) {
-		invalidWarnings.push('No max commission changes to submit.')
+		invalidWarnings.push(t('manageCommission.noMaxCommissionChangesWarning'))
 	}
 	if (invalidMaxCommission) {
-		invalidWarnings.push(t('aboveExisting'))
+		invalidWarnings.push(
+			t('manageCommission.maxCommissionAboveExistingWarning', {
+				existingMax: initial.maxCommission,
+			}),
+		)
 	}
 	if (maxCommissionAboveGlobal) {
-		invalidWarnings.push(t('aboveGlobalMax'))
+		invalidWarnings.push(
+			t('manageCommission.maxCommissionAboveGlobalMaxWarning', {
+				max: globalMaxCommissionUnit,
+			}),
+		)
 	}
 
 	return (
@@ -113,7 +121,7 @@ export const ManageMaxCommission = ({
 							<Warning key={`invalid-warning${i}`} text={text} />
 						))}
 				</Warnings>
-				<MaxCommission invalidMaxCommission={invalidMaxCommission} />
+				<MaxCommission />
 			</Padding>
 			<ModalBack onClick={onBack} />
 			<SubmitTx

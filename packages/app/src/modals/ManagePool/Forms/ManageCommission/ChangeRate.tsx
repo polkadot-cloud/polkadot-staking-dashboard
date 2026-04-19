@@ -13,11 +13,7 @@ import { useTranslation } from 'react-i18next'
 import type { ChangeRateInput } from '../types'
 import { usePoolCommission } from './provider'
 
-export const ChangeRate = ({
-	invalidMinDelay,
-}: {
-	invalidMinDelay: boolean
-}) => {
+export const ChangeRate = () => {
 	const { t } = useTranslation('modals')
 	const { network } = useNetwork()
 	const { initial, current, enabled, setChangeRate } = usePoolCommission()
@@ -101,21 +97,12 @@ export const ChangeRate = ({
 	})()
 
 	// Determine the min delay feedback to display.
-	const minDelayFeedback = (() => {
-		if (!minDelayUpdated) {
-			return undefined
-		}
-		if (invalidMinDelay) {
-			return {
-				text: t('belowExisting'),
-				label: 'danger',
+	const minDelayFeedback = minDelayUpdated
+		? {
+				text: t('updated'),
+				label: 'neutral',
 			}
-		}
-		return {
-			text: t('updated'),
-			label: 'neutral',
-		}
-	})()
+		: undefined
 
 	return (
 		enabled.changeRate && (

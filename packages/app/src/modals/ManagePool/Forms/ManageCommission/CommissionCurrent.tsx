@@ -9,13 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { perbillToPercent } from 'utils'
 import { usePoolCommission } from './provider'
 
-export const CommissionCurrent = ({
-	commissionAboveMax,
-	commissionAboveGlobal,
-}: {
-	commissionAboveMax: boolean
-	commissionAboveGlobal: boolean
-}) => {
+export const CommissionCurrent = () => {
 	const { t } = useTranslation()
 	const {
 		initial,
@@ -33,28 +27,13 @@ export const CommissionCurrent = ({
 	const globalMaxCommissionUnit =
 		perbillToPercent(globalMaxCommission).toNumber()
 
-	// Determine the commission feedback to display.
-	const commissionFeedback = (() => {
-		if (!updated.commission) {
-			return undefined
-		}
-		if (commissionAboveGlobal) {
-			return {
-				text: t('aboveGlobalMax', { ns: 'modals' }),
-				label: 'danger',
+	// Warnings are surfaced above the form, so only show neutral update state here.
+	const commissionFeedback = updated.commission
+		? {
+				text: t('updated', { ns: 'modals' }),
+				label: 'neutral',
 			}
-		}
-		if (commissionAboveMax) {
-			return {
-				text: t('aboveMax', { ns: 'modals' }),
-				label: 'danger',
-			}
-		}
-		return {
-			text: t('updated', { ns: 'modals' }),
-			label: 'neutral',
-		}
-	})()
+		: undefined
 
 	return (
 		<>

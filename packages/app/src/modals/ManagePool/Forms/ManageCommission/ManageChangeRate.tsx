@@ -91,13 +91,21 @@ export const ManageChangeRate = ({
 
 	const invalidWarnings: string[] = []
 	if (!updated.changeRate) {
-		invalidWarnings.push('No change rate updates to submit.')
+		invalidWarnings.push(t('manageCommission.noChangeRateChangesWarning'))
 	}
 	if (invalidMaxIncrease) {
-		invalidWarnings.push(t('aboveExisting'))
+		invalidWarnings.push(
+			t('manageCommission.changeRateAboveExistingWarning', {
+				existingMaxIncrease: initial.changeRate.maxIncrease,
+			}),
+		)
 	}
 	if (invalidMinDelay) {
-		invalidWarnings.push(t('belowExisting'))
+		invalidWarnings.push(
+			t('manageCommission.changeRateBelowExistingWarning', {
+				existingMinDelay: initial.changeRate.minDelay,
+			}),
+		)
 	}
 
 	return (
@@ -112,7 +120,7 @@ export const ManageChangeRate = ({
 							<Warning key={`invalid-warning${i}`} text={text} />
 						))}
 				</Warnings>
-				<ChangeRate invalidMinDelay={invalidMinDelay} />
+				<ChangeRate />
 			</Padding>
 			<ModalBack onClick={onBack} />
 			<SubmitTx
