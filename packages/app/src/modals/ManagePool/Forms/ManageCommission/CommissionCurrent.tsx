@@ -20,26 +20,24 @@ export const CommissionCurrent = ({
 }) => {
 	const { t } = useTranslation()
 	const {
-		getEnabled,
-		getInitial,
-		getCurrent,
+		initial,
+		current,
+		enabled,
+		updated,
 		setPayee,
 		setCommission,
 		setMaxCommission,
-		isUpdated,
 	} = usePoolCommission()
 	const { globalMaxCommission } = useApi().poolsConfig
 
 	// Get the current commission, payee and max commission values.
-	const commission = getCurrent('commission')
-	const payee = getCurrent('payee')
-	const maxCommission = getCurrent('max_commission')
+	const { commission, payee, maxCommission } = current
 	const globalMaxCommissionUnit =
 		perbillToPercent(globalMaxCommission).toNumber()
 
 	// Determine the commission feedback to display.
 	const commissionFeedback = (() => {
-		if (!isUpdated('commission')) {
+		if (!updated.commission) {
 			return undefined
 		}
 		if (commissionAboveMaxIncrease) {
@@ -86,8 +84,8 @@ export const CommissionCurrent = ({
 							val = Number(val.toFixed(2))
 
 							setCommission(val)
-							if (val > maxCommission && getEnabled('max_commission')) {
-								setMaxCommission(Math.min(getInitial('max_commission'), val))
+							if (val > maxCommission && enabled.maxCommission) {
+								setMaxCommission(Math.min(initial.maxCommission, val))
 							}
 						}
 					}}

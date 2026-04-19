@@ -17,13 +17,12 @@ export const MaxCommission = ({
 }) => {
 	const { t } = useTranslation('modals')
 	const { globalMaxCommission } = useApi().poolsConfig
-	const { getEnabled, getCurrent, setCommission, setMaxCommission, isUpdated } =
+	const { enabled, current, updated, setCommission, setMaxCommission } =
 		usePoolCommission()
 
 	// Get the current commission and max commission values.
-	const commission = getCurrent('commission')
-	const maxCommission = getCurrent('max_commission')
-	const maxCommissionUpdated = isUpdated('max_commission')
+	const { commission, maxCommission } = current
+	const maxCommissionUpdated = updated.maxCommission
 	const globalMaxCommissionUnit =
 		perbillToPercent(globalMaxCommission).toNumber()
 
@@ -51,7 +50,7 @@ export const MaxCommission = ({
 	})()
 
 	return (
-		getEnabled('max_commission') && (
+		enabled.maxCommission && (
 			<SliderWrapper>
 				<div>
 					<h2>{maxCommission}% </h2>

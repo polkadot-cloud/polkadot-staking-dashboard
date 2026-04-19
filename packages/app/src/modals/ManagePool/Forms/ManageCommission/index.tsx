@@ -44,13 +44,13 @@ export const ManageCommission = ({
 		poolsConfig: { globalMaxCommission },
 	} = useApi()
 	const {
-		getInitial,
-		getCurrent,
-		getEnabled,
-		setEnabled,
+		initial,
+		current,
+		enabled,
+		setFeatureEnabled,
 		hasValue,
 		resetAll,
-		isUpdated,
+		updated,
 	} = usePoolCommission()
 	const { newBatchCall } = useBatchCall()
 	const { activeProxy } = useActiveProxy()
@@ -66,31 +66,26 @@ export const ManageCommission = ({
 	const bondedPool = getBondedPool(poolId)
 
 	// Get currently set commission values.
-	const commission = getCurrent('commission')
-	const payee = getCurrent('payee')
-	const maxCommission = getCurrent('max_commission')
-	const changeRate = getCurrent('change_rate')
+	const { commission, payee, maxCommission, changeRate } = current
 
 	// Valid to submit transaction
 	const [valid, setValid] = useState<boolean>(false)
 
 	// Monitor when input items change.
-	const commissionUpdated: boolean = commission !== getInitial('commission')
+	const commissionUpdated: boolean = updated.commission
 
 	// Global form change.
 	const noChange: boolean =
-		!commissionUpdated &&
-		!isUpdated('max_commission') &&
-		!isUpdated('change_rate')
+		!commissionUpdated && !updated.maxCommission && !updated.changeRate
 
 	// Monitor when input items are invalid.
 	const commissionAboveMax: boolean =
-		hasValue('max_commission') && commission > maxCommission
+		hasValue.maxCommission && commission > maxCommission
 	const commissionAboveGlobal = commission > globalMaxCommissionUnit
 
 	const commissionAboveMaxIncrease: boolean =
-		hasValue('change_rate') &&
-		commission - getInitial('commission') > changeRate.maxIncrease
+		hasValue.changeRate &&
+		commission - initial.commission > changeRate.maxIncrease
 
 	const invalidCurrentCommission: boolean =
 		commissionUpdated &&
@@ -101,35 +96,37 @@ export const ManageCommission = ({
 			commission > globalMaxCommissionUnit)
 
 	const invalidMaxCommission: boolean =
-		hasValue('max_commission') &&
-		isUpdated('max_commission') &&
-		maxCommission > getInitial('max_commission')
+		hasValue.maxCommission &&
+		updated.maxCommission &&
+		maxCommission > initial.maxCommission
 
 	const maxCommissionAboveGlobal: boolean =
-		getEnabled('max_commission') && maxCommission > globalMaxCommissionUnit
+		enabled.maxCommission && maxCommission > globalMaxCommissionUnit
 
 	// Change rate is invalid if updated is not more restrictive than current.
 	const invalidMaxIncrease: boolean =
-		getEnabled('change_rate') &&
-		isUpdated('change_rate') &&
-		changeRate.maxIncrease > getInitial('change_rate').maxIncrease
+		enabled.changeRate &&
+		updated.changeRate &&
+		changeRate.maxIncrease > initial.changeRate.maxIncrease
 
 	const invalidMinDelay: boolean =
-		getEnabled('change_rate') &&
-		isUpdated('change_rate') &&
-		changeRate.minDelay < getInitial('change_rate').minDelay
+		enabled.changeRate &&
+		updated.changeRate &&
+		changeRate.minDelay < initial.changeRate.minDelay
 
 	const invalidChangeRate: boolean = invalidMaxIncrease || invalidMinDelay
 
 	const currentCommissionSet: boolean = payee !== null && commission !== 0
 	const commissionPerbill = percentToPerbill(commission).toNumber()
 	const maxCommissionPerbill = percentToPerbill(maxCommission).toNumber()
+	const currentCommissionConfig: [number, string] | undefined =
+		payee !== null && commission !== 0 ? [commissionPerbill, payee] : undefined
 
 	// Check there are txs to submit.
 	const txsToSubmit =
 		commissionUpdated ||
-		(isUpdated('max_commission') && getEnabled('max_commission')) ||
-		(isUpdated('change_rate') && getEnabled('change_rate'))
+		(updated.maxCommission && enabled.maxCommission) ||
+		(updated.changeRate && enabled.changeRate)
 
 	const getTx = () => {
 		if (!valid) {
@@ -137,17 +134,12 @@ export const ManageCommission = ({
 		}
 		const txs: (SubmittableExtrinsic | undefined)[] = []
 		if (commissionUpdated) {
-			txs.push(
-				serviceApi.tx.poolSetCommission(
-					poolId,
-					currentCommissionSet ? [commissionPerbill, payee] : undefined,
-				),
-			)
+			txs.push(serviceApi.tx.poolSetCommission(poolId, currentCommissionConfig))
 		}
-		if (isUpdated('max_commission') && getEnabled('max_commission')) {
+		if (updated.maxCommission && enabled.maxCommission) {
 			txs.push(serviceApi.tx.poolSetCommissionMax(poolId, maxCommissionPerbill))
 		}
-		if (isUpdated('change_rate') && getEnabled('change_rate')) {
+		if (updated.changeRate && enabled.changeRate) {
 			const maxIncreasePerbill = percentToPerbill(
 				changeRate.maxIncrease,
 			).toNumber()
@@ -188,12 +180,12 @@ export const ManageCommission = ({
 						commission: {
 							...pool.commission,
 							current: currentCommissionSet
-								? [commissionPerbill, payee]
+								? currentCommissionConfig
 								: undefined,
-							max: isUpdated('max_commission')
+							max: updated.maxCommission
 								? maxCommissionPerbill
 								: pool.commission?.max || undefined,
-							changeRate: isUpdated('change_rate')
+							changeRate: updated.changeRate
 								? {
 										maxIncrease: changeRatePerbill,
 										minDelay: changeRate.minDelay,
@@ -259,7 +251,7 @@ export const ManageCommission = ({
 	// Trigger modal resize when commission options are enabled / disabled.
 	useEffect(() => {
 		incrementCalculateHeight()
-	}, [getEnabled('max_commission'), getEnabled('change_rate')])
+	}, [enabled.maxCommission, enabled.changeRate])
 
 	return (
 		<>
@@ -286,12 +278,12 @@ export const ManageCommission = ({
 				<ActionItem
 					style={{
 						marginTop: '2rem',
-						borderBottomWidth: getEnabled('max_commission') ? '1px' : 0,
+						borderBottomWidth: enabled.maxCommission ? '1px' : 0,
 					}}
 					text={t('maxCommission')}
-					toggled={getEnabled('max_commission')}
-					onToggle={(val) => setEnabled('max_commission', val)}
-					disabled={!!hasValue('max_commission')}
+					toggled={enabled.maxCommission}
+					onToggle={(val) => setFeatureEnabled('maxCommission', val)}
+					disabled={hasValue.maxCommission}
 					inlineButton={
 						<ButtonHelpTooltip
 							definition="Pool Max Commission"
@@ -304,12 +296,12 @@ export const ManageCommission = ({
 				<ActionItem
 					style={{
 						marginTop: '2rem',
-						borderBottomWidth: getEnabled('change_rate') ? '1px' : 0,
+						borderBottomWidth: enabled.changeRate ? '1px' : 0,
 					}}
 					text={t('changeRate')}
-					toggled={getEnabled('change_rate')}
-					onToggle={(val) => setEnabled('change_rate', val)}
-					disabled={!!hasValue('change_rate')}
+					toggled={enabled.changeRate}
+					onToggle={(val) => setFeatureEnabled('changeRate', val)}
+					disabled={hasValue.changeRate}
 					inlineButton={
 						<ButtonHelpTooltip
 							definition="Pool Commission Change Rate"
