@@ -12,11 +12,9 @@ import { usePoolCommission } from './provider'
 export const CommissionCurrent = ({
 	commissionAboveMax,
 	commissionAboveGlobal,
-	commissionAboveMaxIncrease,
 }: {
 	commissionAboveMax: boolean
 	commissionAboveGlobal: boolean
-	commissionAboveMaxIncrease: boolean
 }) => {
 	const { t } = useTranslation()
 	const {
@@ -39,12 +37,6 @@ export const CommissionCurrent = ({
 	const commissionFeedback = (() => {
 		if (!updated.commission) {
 			return undefined
-		}
-		if (commissionAboveMaxIncrease) {
-			return {
-				text: t('beyondMaxIncrease', { ns: 'modals' }),
-				label: 'danger',
-			}
 		}
 		if (commissionAboveGlobal) {
 			return {

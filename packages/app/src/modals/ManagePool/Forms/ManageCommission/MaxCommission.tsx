@@ -10,10 +10,8 @@ import { usePoolCommission } from './provider'
 
 export const MaxCommission = ({
 	invalidMaxCommission,
-	maxCommissionAboveGlobal,
 }: {
 	invalidMaxCommission: boolean
-	maxCommissionAboveGlobal: boolean
 }) => {
 	const { t } = useTranslation('modals')
 	const { globalMaxCommission } = useApi().poolsConfig
@@ -34,12 +32,6 @@ export const MaxCommission = ({
 		if (invalidMaxCommission) {
 			return {
 				text: t('aboveExisting'),
-				label: 'danger',
-			}
-		}
-		if (maxCommissionAboveGlobal) {
-			return {
-				text: t('aboveGlobalMax'),
 				label: 'danger',
 			}
 		}

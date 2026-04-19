@@ -14,10 +14,8 @@ import type { ChangeRateInput } from '../types'
 import { usePoolCommission } from './provider'
 
 export const ChangeRate = ({
-	invalidMaxIncrease,
 	invalidMinDelay,
 }: {
-	invalidMaxIncrease: boolean
 	invalidMinDelay: boolean
 }) => {
 	const { t } = useTranslation('modals')
@@ -95,12 +93,6 @@ export const ChangeRate = ({
 	const maxIncreaseFeedback = (() => {
 		if (!maxIncreaseUpdated) {
 			return undefined
-		}
-		if (invalidMaxIncrease) {
-			return {
-				text: t('aboveExisting'),
-				label: 'danger',
-			}
 		}
 		return {
 			text: t('updated'),
