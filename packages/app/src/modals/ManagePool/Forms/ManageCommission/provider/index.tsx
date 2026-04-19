@@ -1,11 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { MaybeAddress } from 'types'
-import { perbillToPercent, percentToPerbill } from 'utils'
+import { perbillToPercent } from 'utils'
 import { defaultPoolCommissionContext } from './defaults'
 import type {
 	ChangeRateInput,
@@ -22,10 +23,15 @@ export const usePoolCommission = () => useContext(PoolCommissionContext)
 export const PoolCommissionProvider = ({
 	children,
 }: PoolCommissionProviderProps) => {
+	const {
+		poolsConfig: { globalMaxCommission },
+	} = useApi()
 	const { activePool } = useActivePool()
 	const { getBondedPool } = useBondedPools()
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)
+	const globalMaxCommissionUnit =
+		perbillToPercent(globalMaxCommission).toNumber()
 
 	// Get initial commission value from the bonded pool commission config.
 	const initialCommission = perbillToPercent(
@@ -36,9 +42,12 @@ export const PoolCommissionProvider = ({
 	const initialPayee = bondedPool?.commission?.current?.[1] || null
 
 	// Get initial maximum commission value from the bonded pool commission config.
-	const initialMaxCommission = perbillToPercent(
-		bondedPool?.commission?.max || percentToPerbill(100).toNumber(),
-	).toNumber()
+	const initialMaxCommission = Math.min(
+		bondedPool?.commission?.max
+			? perbillToPercent(bondedPool.commission.max).toNumber()
+			: globalMaxCommissionUnit,
+		globalMaxCommissionUnit,
+	)
 
 	// Get initial change rate value from the bonded pool commission config.
 	const initialChangeRate = ((): ChangeRateInput => {
