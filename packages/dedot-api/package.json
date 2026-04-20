@@ -12,7 +12,7 @@
 		".": "./src/index.ts"
 	},
 	"dependencies": {
-		"@dedot/chaintypes": "^0.259.0",
+		"@dedot/chaintypes": "^0.263.0",
 		"@polkadot-cloud/connect-core": "^1.0.8",
 		"@w3ux/util-dedot": "^1.0.0",
 		"@w3ux/utils": "^3.1.1",
