@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
-import { activeProxy$ } from 'global-bus'
+import { activeProxy$ } from 'connect-proxies'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { ActiveProxy } from 'types'

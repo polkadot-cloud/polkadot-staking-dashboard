@@ -6,16 +6,19 @@ import {
 	importedAccounts$,
 	reconnectSync$,
 } from '@polkadot-cloud/connect-core'
+import {
+	getLocalActiveProxy,
+	ProxiesQuery,
+	proxies$,
+	setActiveProxy,
+} from 'connect-proxies'
 import type { DedotClient } from 'dedot'
 import {
 	activePoolIds$,
 	bonded$,
 	fetchAndSetPoolWarnings,
-	getLocalActiveProxy,
 	getSyncing,
-	proxies$,
 	removeSyncing,
-	setActiveProxy,
 } from 'global-bus'
 import { combineLatest, pairwise, type Subscription, startWith } from 'rxjs'
 import type { NetworkId, ServiceInterface, SystemChainId } from 'types'
@@ -24,7 +27,6 @@ import { ActivePoolQuery } from '../subscribe/activePool'
 import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { PoolMembershipQuery } from '../subscribe/poolMembership'
-import { ProxiesQuery } from '../subscribe/proxies'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {

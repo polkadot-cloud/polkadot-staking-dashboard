@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils'
-import { ActiveProxiesKey } from 'consts'
-import type { ActiveProxy, LocalActiveProxies, NetworkId } from 'types'
+import { ActiveProxiesKey } from '../consts'
+import type { ActiveProxy, LocalActiveProxies, NetworkId } from '../types'
 
 export const getLocalActiveProxies = () =>
 	localStorageOrDefault(ActiveProxiesKey, {}, true) as LocalActiveProxies

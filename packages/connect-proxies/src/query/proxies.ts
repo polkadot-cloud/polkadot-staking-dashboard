@@ -4,12 +4,13 @@
 import type { DedotClient } from 'dedot'
 import type { StakingChain } from '../types'
 
-export const proxies = async <T extends StakingChain>(
+// One-shot query returning the delegate addresses for a given delegator. Used by consumers that
+// need a point-in-time check (e.g. manual proxy declaration) without maintaining a live
+// subscription.
+export const queryProxies = async <T extends StakingChain>(
 	api: DedotClient<T>,
 	address: string,
-) => {
+): Promise<string[]> => {
 	const [result] = await api.query.proxy.proxies(address)
-
-	// NOTE: Only returning the delegate accounts of any returned proxies
 	return result.map((r) => r.delegate.address(api.consts.system.ss58Prefix))
 }

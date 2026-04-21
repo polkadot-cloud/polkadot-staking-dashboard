@@ -1,13 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SupportedProxies } from 'connect-proxies'
+import { SupportedProxies } from '../consts'
 
-// Check if proxy type is supported in the dashboard
+// Returns true if the given proxy type is registered in SupportedProxies
 export const isSupportedProxy = (proxy: string) =>
 	Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any'
 
-// Check if proxy call is supported for a given proxy type
+// Returns true if the given pallet/method call is permitted for the proxy type
 export const isSupportedProxyCall = (
 	proxy: string,
 	pallet: string,

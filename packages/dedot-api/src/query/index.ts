@@ -1,6 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { queryProxies as proxies } from 'connect-proxies'
 import { accountBalance } from './accountBalance'
 import { bondedPool } from './bondedPool'
 import { bondedPoolEntries } from './bondedPoolEntries'
@@ -15,7 +16,6 @@ import { identityOfMulti } from './identityOfMulti'
 import { nominatorsMulti } from './nominatorsMulti'
 import { poolMembersMulti } from './poolMembersMulti'
 import { poolMetadataMulti } from './poolMetadataMulti'
-import { proxies } from './proxies'
 import { superOfMulti } from './superOfMulti'
 import { validatorEntries } from './validatorEntries'
 import { validatorsMulti } from './validatorsMulti'

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useImportedAccounts } from '@polkadot-cloud/connect'
-import { isSupportedProxy } from 'consts/util'
+import { isSupportedProxy } from 'connect-proxies'
 import type { ProxyDelegateWithBalance } from 'contexts/Proxies/types'
 import type { DelegatesProps } from '../types'
 import { DelegateItem } from './DelegateItem'

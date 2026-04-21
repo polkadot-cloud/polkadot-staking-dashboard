@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Proxies } from 'types'
-import { _proxies } from './private'
+import type { ProxyRecord } from '../types'
+import { _proxies } from './proxies.private'
 
 export const proxies$ = _proxies.asObservable()
 
@@ -10,12 +10,12 @@ export const resetProxies = () => {
 	_proxies.next({})
 }
 
-export const getProxies = (address: string) =>
-	_proxies.getValue()?.[address] || []
+export const getProxies = (address: string): ProxyRecord | undefined =>
+	_proxies.getValue()?.[address]
 
-export const addProxies = (address: string, proxies: Proxies) => {
+export const addProxies = (address: string, record: ProxyRecord) => {
 	const next = { ..._proxies.getValue() }
-	next[address] = proxies
+	next[address] = record
 	_proxies.next(next)
 }
 

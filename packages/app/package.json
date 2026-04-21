@@ -37,6 +37,7 @@
 		"bignumber.js": "^11.0.0",
 		"buffer": "^6.0.3",
 		"classnames": "^2.5.1",
+		"connect-proxies": "workspace:*",
 		"consts": "workspace:*",
 		"date-fns": "^4.1.0",
 		"dedot": "^1.2.0",

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { BehaviorSubject } from 'rxjs'
-import type { Proxies } from 'types'
+import type { ProxyRecord } from '../types'
 
-type State = Record<string, Proxies>
+type State = Record<string, ProxyRecord>
+
 export const _proxies = new BehaviorSubject<State>({})

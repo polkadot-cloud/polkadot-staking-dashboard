@@ -3,9 +3,8 @@
 
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
-import { addProxies, removeProxies } from 'global-bus'
-import type { Proxies } from 'types'
-import type { StakingChain } from '../types'
+import { addProxies, removeProxies } from '../state/proxies'
+import type { ProxyRecord, StakingChain } from '../types'
 
 export class ProxiesQuery<T extends StakingChain> {
 	#unsub: Unsub | undefined = undefined
@@ -14,7 +13,6 @@ export class ProxiesQuery<T extends StakingChain> {
 		public api: DedotClient<T>,
 		public address: string,
 	) {
-		this.api = api
 		this.subscribe()
 	}
 
@@ -23,11 +21,11 @@ export class ProxiesQuery<T extends StakingChain> {
 			this.address,
 			(result) => {
 				const [proxies, deposit] = result
-				const next: Proxies = {
+				const next: ProxyRecord = {
 					proxies: proxies.map(({ delegate, proxyType, delay }) => ({
 						delegate: delegate.address(this.api.consts.system.ss58Prefix),
-						proxyType,
-						delay,
+						proxyType: String(proxyType),
+						delay: Number(delay),
 					})),
 					deposit,
 				}

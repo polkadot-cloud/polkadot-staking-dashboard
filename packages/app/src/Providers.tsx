@@ -5,6 +5,7 @@ import { ThemedRouter } from 'Themes'
 import { ConnectProvider } from '@polkadot-cloud/connect'
 import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
 import { withProviders } from '@w3ux/factories'
+import { ProxiesProvider as ProxiesAdaptor } from 'connect-proxies'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { ActiveProxyProvider } from 'contexts/ActiveProxy'
@@ -57,7 +58,7 @@ export const Providers = () => {
 					network,
 					dappName: DappName,
 					ss58,
-					adaptors: [LedgerAdaptor],
+					adaptors: [LedgerAdaptor, ProxiesAdaptor],
 				},
 			],
 			ProxiesProvider,

@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ActiveProxy, NetworkId } from 'types'
-import { setLocalActiveProxy } from './local'
-import { _activeProxy } from './private'
+import { setLocalActiveProxy } from '../persistence/activeProxy'
+import type { ActiveProxy, NetworkId } from '../types'
+import { _activeProxy } from './activeProxy.private'
 
 export const activeProxy$ = _activeProxy.asObservable()
 
@@ -20,5 +20,3 @@ export const setActiveProxy = (
 export const resetActiveProxy = () => {
 	_activeProxy.next(null)
 }
-
-export * from './local'

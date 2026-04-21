@@ -15,6 +15,7 @@
 	},
 	"dependencies": {
 		"@dedot/chain-specs": "^0.10.0",
+		"connect-proxies": "workspace:*",
 		"@polkawatch/ddp-client": "^3.0.1",
 		"@substrate/connect-known-chains": "^1.10.2",
 		"assets": "workspace:*"

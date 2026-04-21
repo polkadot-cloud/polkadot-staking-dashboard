@@ -8,15 +8,15 @@ import {
 } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import {
 	getLocalActiveProxy,
 	proxies$,
 	removeLocalActiveProxy,
 	setActiveProxy,
-} from 'global-bus'
+} from 'connect-proxies'
+import { useActiveProxy } from 'contexts/ActiveProxy'
+import { useApi } from 'contexts/Api'
+import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, Proxies } from 'types'
