@@ -44,12 +44,14 @@ export const Label = ({
 			className={`${className ? `${className} ` : ' '}${allClasses}`}
 			style={style}
 		>
-			<span className={classes.polkicon}>
-				<Polkicon
-					background="transparent"
-					address={address}
-					transform="grow-9"
-				/>
+			<span className={classes.iconLeft}>
+				<span className={classes.polkicon}>
+					<Polkicon
+						background="transparent"
+						address={address}
+						transform="grow-9"
+					/>
+				</span>
 			</span>
 			<span className={displayClasses}>{accountDisplay}</span>
 			{label && <span className={classes.label}>/ {label}</span>}

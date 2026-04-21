@@ -8,8 +8,9 @@ SPDX-License-Identifier: GPL-3.0-only */
   transition: all var(--transition-duration);
   height: calc($header-height - 1px);
   display: flex;
+  position: relative;
   align-items: center;
-  padding: 0 0.75rem;
+  padding: 0 1rem;
   font-size: 1.2rem;
 
   .polkicon {
@@ -29,12 +30,28 @@ SPDX-License-Identifier: GPL-3.0-only */
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    margin-left: 1.4rem;
   }
   
+   > .icon {
+    margin-left: 0.95rem;
+  }
+
+  > .iconLeft {
+    margin-right: 1.25rem;
+  }
+
+    > .notSignedIn {
+    color: var(--text-color-primary);
+    margin-right: 0.5rem;
+  }
+
   @media(max-width: $page-width-small-threshold) {
     > .minimize {
       display: none;
+    }
+    
+    > .iconLeft {
+      margin-right: 0;
     }
   }
 
@@ -51,7 +68,7 @@ SPDX-License-Identifier: GPL-3.0-only */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 0.75rem;
+    padding-left: 0.25rem;
     margin-left: 0.2rem;
 
     > svg {
@@ -70,10 +87,18 @@ SPDX-License-Identifier: GPL-3.0-only */
     background: var(--gray-500);
     color: var(--gray-1000);
     
+    &.noHoverBackground {
+      background: none;
+    }
+
     > .arrow {
       svg {
         opacity: 1;
       }
+    }
+
+    > .notSignedIn {
+      color: var(--accent-color-primary);
     }
   }
 }
