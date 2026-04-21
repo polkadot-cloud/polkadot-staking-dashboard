@@ -1,27 +1,21 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ThemedRouter } from 'Themes'
+import { ConnectProvider } from '@polkadot-cloud/connect'
+import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
 import { withProviders } from '@w3ux/factories'
-import {
-	ExtensionsProvider,
-	HardwareAccountsProvider,
-} from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
+import { ActiveProxyProvider } from 'contexts/ActiveProxy'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
-import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
-import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
-import { OtherAccountsProvider } from 'contexts/Connect/OtherAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
 import { InvitesProvider } from 'contexts/Invites'
-import { LedgerHardwareProvider } from 'contexts/LedgerHardware'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { useNetwork } from 'contexts/Network'
@@ -43,7 +37,6 @@ import { TxMetaProvider } from 'contexts/TxMeta'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
-import { WalletConnectProvider } from 'contexts/WalletConnect'
 import { Tooltip } from 'radix-ui'
 import { OverlayProvider } from 'ui-overlay'
 
@@ -54,23 +47,19 @@ export const Providers = () => {
 	return withProviders(
 		// !! Provider order matters.
 		[
-			ActiveAccountsProvider,
+			ActiveProxyProvider,
 			UIProvider,
+			OverlayProvider,
 			[APIProvider, { network }],
-			LedgerHardwareProvider,
 			[
-				ExtensionsProvider,
-
+				ConnectProvider,
 				{
+					network,
 					dappName: DappName,
 					ss58,
+					adaptors: [LedgerAdaptor],
 				},
 			],
-			HardwareAccountsProvider,
-			ExternalAccountsProvider,
-			OtherAccountsProvider,
-			ImportedAccountsProvider,
-			WalletConnectProvider,
 			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,
@@ -92,7 +81,6 @@ export const Providers = () => {
 			MenuProvider,
 			TooltipProvider,
 			TxMetaProvider,
-			OverlayProvider,
 			PromptProvider,
 			MigrateProvider,
 			FiltersProvider,

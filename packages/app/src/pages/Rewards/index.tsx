@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { filterAndSortRewards } from 'ui-graphs/util'
 import { Overview } from './Overview'
-import { RecentPayouts } from './RecentPayouts'
+import { RecentPayouts } from './PayoutList'
 import type { PayoutGraphData } from './types'
 import { Wrapper } from './Wrappers'
 
@@ -25,7 +25,7 @@ export const Rewards = () => {
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	// Store page active tab
 	const [activeTab, setActiveTab] = useState<number>(0)

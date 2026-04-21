@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBan, faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -37,9 +37,9 @@ export const FilterBadges = () => {
 					disabled
 				/>
 				{!hasFilters && <Item label={t('noFilters')} disabled />}
-				{includes?.map((e, i) => (
+				{includes?.map((e) => (
 					<Item
-						key={`validator_include_${i}`}
+						key={`validator_include_${e}`}
 						label={includesToLabels[e]}
 						icon={faCheck}
 						onClick={() => {
@@ -47,9 +47,9 @@ export const FilterBadges = () => {
 						}}
 					/>
 				))}
-				{excludes?.map((e, i) => (
+				{excludes?.map((e) => (
 					<Item
-						key={`validator_exclude_${i}`}
+						key={`validator_exclude_${e}`}
 						label={excludesToLabels[e]}
 						icon={faBan}
 						transform="shrink-2"

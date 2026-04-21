@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -7,9 +7,9 @@ import {
 	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { useProxies } from 'contexts/Proxies'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
@@ -77,11 +77,11 @@ export const Proxies = () => {
 						{Object.entries(importedDelegates).length ? (
 							<div className="accounts">
 								{Object.entries(importedDelegates).map(
-									([delegate, delegators], i) => (
-										<Fragment key={`user_delegate_account_${i}}`}>
-											{delegators.map(({ delegator, proxyType }, j) => (
+									([delegate, delegators]) => (
+										<Fragment key={`user_delegate_account_${delegate}`}>
+											{delegators.map(({ delegator, proxyType }) => (
 												<ManualAccount
-													key={`user_delegate_${i}_delegator_${j}`}
+													key={`user_delegate_${delegate}_delegator_${delegator}_${proxyType}`}
 												>
 													<div>
 														<Polkicon address={delegate} fontSize="2.4rem" />

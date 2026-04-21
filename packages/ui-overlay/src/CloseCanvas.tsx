@@ -1,11 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Close as Wrapper } from 'ui-core/canvas'
 import { useOverlay } from 'ui-overlay'
 
-export const CloseCanvas = ({ sm }: { sm?: boolean }) => {
+export const CloseCanvas = ({ style }: { style?: React.CSSProperties }) => {
 	const { closeCanvas } = useOverlay().canvas
 
-	return <Wrapper sm={sm} onClose={() => closeCanvas()} />
+	return <Wrapper onClose={() => closeCanvas()} style={style} />
 }

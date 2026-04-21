@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxNominations } from 'consts'
@@ -46,7 +46,7 @@ export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
 					</h4>
 				)}
 
-				{favoritesList?.map((favorite: Validator, i) => {
+				{favoritesList?.map((favorite: Validator) => {
 					const inInitial = !!nominations.find(
 						({ address }) => address === favorite.address,
 					)
@@ -54,7 +54,7 @@ export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
 
 					return (
 						<PromptListItem
-							key={`favorite_${i}`}
+							key={`favorite_${favorite.address}`}
 							className={isDisabled && inInitial ? 'inactive' : undefined}
 						>
 							<Checkbox
@@ -67,7 +67,7 @@ export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
 									}
 								}}
 							/>
-							<Identity key={`favorite_${i}`} address={favorite.address} />
+							<Identity address={favorite.address} />
 						</PromptListItem>
 					)
 				})}

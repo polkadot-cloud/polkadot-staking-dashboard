@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext } from '@w3ux/hooks'
 import { setStateWithRef } from '@w3ux/utils'
 import type { ReactNode } from 'react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Theme, ThemeContextInterface } from './types'
 
 export const [ThemeContext, useTheme] =
@@ -35,13 +35,16 @@ export const ThemesProvider = ({ children }: { children: ReactNode }) => {
 	const themeRef = useRef(theme)
 
 	// Automatically change theme on system change
-	window
-		.matchMedia('(prefers-color-scheme: dark)')
-		.addEventListener('change', (event) => {
+	useEffect(() => {
+		const media = window.matchMedia('(prefers-color-scheme: dark)')
+		const handler = (event: MediaQueryListEvent) => {
 			const newTheme = event.matches ? 'dark' : 'light'
 			localStorage.setItem('theme', newTheme)
 			setStateWithRef(newTheme, setTheme, themeRef)
-		})
+		}
+		media.addEventListener('change', handler)
+		return () => media.removeEventListener('change', handler)
+	}, [])
 
 	const toggleTheme = (maybeTheme: Theme | null = null): void => {
 		const newTheme =

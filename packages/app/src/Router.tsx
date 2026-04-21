@@ -1,13 +1,13 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Offline } from 'Offline'
 import { Overlays } from 'Overlays'
 import { StakingApi } from 'StakingApi'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
 import { getPagesConfig } from 'config/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -21,6 +21,8 @@ import {
 } from 'event-tracking'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
+import { usePoolFromUrl } from 'hooks/usePoolFromUrl'
+import { useValidatorFromUrl } from 'hooks/useValidatorFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
 import { HelpTooltip } from 'library/HelpTooltip'
@@ -52,7 +54,7 @@ const RouterInner = () => {
 	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { pathname, search } = useLocation()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setContainerRefs, advancedMode } = useUi()
 
 	// References to outer container
@@ -84,6 +86,13 @@ const RouterInner = () => {
 
 	// Support active account from url
 	useAccountFromUrl()
+
+	// Support opening validator metrics from url
+	useValidatorFromUrl()
+
+	// Support opening pool details from url. NOTE: validator param takes precedence over pool param,
+	// so if both are present, only validator will be processed
+	usePoolFromUrl()
 
 	// Handle automatic navigation on account switch based on staking status
 	useAccountSwitchNavigation()
@@ -124,9 +133,9 @@ const RouterInner = () => {
 									{getPagesConfig(network, null, advancedMode, {
 										inPool,
 										isBonding,
-									}).map((page, i) => (
+									}).map((page) => (
 										<Route
-											key={`main_interface_page_${i}`}
+											key={`main_interface_page_${page.key}`}
 											path={page.hash}
 											element={<PageWithTitle page={page} />}
 										/>

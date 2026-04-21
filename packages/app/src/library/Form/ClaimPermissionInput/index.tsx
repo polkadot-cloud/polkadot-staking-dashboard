@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { TabsWrapper, TabWrapper } from 'library/Filter/Wrappers'
@@ -53,9 +53,9 @@ export const ClaimPermissionInput = ({
 					opacity: !disabled ? 1 : 'var(--opacity-disabled)',
 				}}
 			>
-				{claimPermissionConfig.map(({ label, value }, i) => (
+				{claimPermissionConfig.map(({ label, value }) => (
 					<TabWrapper
-						key={`pools_tab_filter_${i}`}
+						key={`pools_tab_filter_${value}`}
 						$active={value === selected}
 						disabled={value === selected || disabled}
 						onClick={() => {
@@ -74,11 +74,9 @@ export const ClaimPermissionInput = ({
 				}}
 			>
 				{activeTab ? (
-					<h4 style={{ color: 'var(--text-color-secondary)' }}>
-						{activeTab.description}
-					</h4>
+					<h4 style={{ color: 'var(--gray-900)' }}>{activeTab.description}</h4>
 				) : (
-					<h4 style={{ color: 'var(--text-color-secondary)' }}>
+					<h4 style={{ color: 'var(--gray-900)' }}>
 						{t('permissionlessClaimingTurnedOff')}
 					</h4>
 				)}

@@ -1,11 +1,12 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
@@ -35,12 +36,13 @@ export const WithdrawMember = ({
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { closePrompt } = usePrompt()
+	const { activeProxy } = useActiveProxy()
 	const { getConsts, activeEra } = useApi()
+	const { activeAccount } = useActiveAccount()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 	const { historyDepth } = getConsts(network)
-	const { unbondingEras, points } = member
+	const { unbondingEras } = member
 
 	// calculate total for withdraw
 	let totalWithdrawUnit = new BigNumber(0)
@@ -51,7 +53,6 @@ export const WithdrawMember = ({
 		}
 	})
 
-	const bonded = planckToUnitBn(new BigNumber(points), units)
 	const totalWithdraw = planckToUnitBn(new BigNumber(totalWithdrawUnit), units)
 
 	// valid to submit transaction
@@ -86,8 +87,8 @@ export const WithdrawMember = ({
 			<Padding>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}
@@ -100,13 +101,20 @@ export const WithdrawMember = ({
 				<Notes>
 					<p>
 						<p>
-							{t('amountWillBeWithdrawn', { bond: bonded.toString(), unit })}
+							{t('amountWillBeWithdrawn', {
+								bond: totalWithdraw.toString(),
+								unit,
+							})}
 						</p>{' '}
 					</p>
 					<p>{t('withdrawRemoveNote')}</p>
 				</Notes>
 			</Padding>
-			<SubmitTx valid={valid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t('withdraw', { ns: 'modals' })}
+				valid={valid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

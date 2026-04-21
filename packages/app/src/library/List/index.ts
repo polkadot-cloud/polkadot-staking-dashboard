@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -15,8 +15,8 @@ export const Wrapper = styled.div`
 export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   border-bottom: ${(props) =>
 		props.$displayFor === 'canvas'
-			? '1px solid var(--border-secondary-color)'
-			: '1px solid var(--border-primary-color)'};
+			? '1px solid var(--gray-600)'
+			: '1px solid var(--gray-500)'};
 
   display: flex;
   flex-flow: row wrap;
@@ -30,8 +30,8 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
   }
 
   h4 {
-    color: var(--text-color-secondary);
-    font-family: InterSemiBold, sans-serif;
+    color: var(--gray-900);
+    font-family: var(--font-family-semibold);
   }
 
   > div {
@@ -44,7 +44,7 @@ export const Header = styled.div<{ $displayFor?: DisplayFor }>`
     flex: 1;
 
     button {
-      color: var(--text-color-secondary);
+      color: var(--gray-900);
       font-size: 1.1rem;
       margin: 0 0.5rem 0 0.75rem;
       opacity: 0.6;
@@ -78,17 +78,13 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-					props.$next
-						? 'var(--accent-color-primary)'
-						: 'var(--text-color-secondary)'};
+					props.$next ? 'var(--gray-1000)' : 'var(--gray-900)'};
         cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-					props.$prev
-						? 'var(--accent-color-primary)'
-						: 'var(--text-color-secondary)'};
+					props.$prev ? 'var(--gray-1000)' : 'var(--gray-900)'};
         cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$prev ? 1 : 0.4)};
       }
@@ -154,16 +150,16 @@ export const SearchInputWrapper = styled.div`
   width: 100%;
 
   > input {
-    border: 1px solid var(--border-primary-color);
-    color: var(--text-color-secondary);
-    font-family: InterBold, sans-serif;
+    border: 1px solid var(--gray-500);
+    color: var(--gray-900);
+    font-family: var(--font-family-bold);
     border-radius: 1.75rem;
     padding: 0.9rem 1.25rem;
     font-size: 1.15rem;
     width: 100%;
 
     &.secondary {
-      background: var(--background-default);
+      background: var(--bg-body);
       padding: 1.25rem 1.25rem;
       font-size: 1.25rem;
     }
@@ -187,7 +183,7 @@ export const FilterHeaderWrapper = styled.div`
       flex-shrink: 1;
 
       button {
-        color: var(--text-color-secondary);
+        color: var(--gray-900);
         font-size: 1.1rem;
         margin: 0 0.5rem 0 0.75rem;
         opacity: 0.6;

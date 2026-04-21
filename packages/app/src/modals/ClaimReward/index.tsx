@@ -1,9 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -30,9 +31,10 @@ export const ClaimReward = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { activePool } = useActivePool()
+	const { activeProxy } = useActiveProxy()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 
 	const { claimType } = options
 	const { unit, units } = getStakingChainData(network)
@@ -90,8 +92,8 @@ export const ClaimReward = () => {
 				</Title>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}
@@ -107,7 +109,13 @@ export const ClaimReward = () => {
 					<p>{t('claimReward2')}</p>
 				)}
 			</Padding>
-			<SubmitTx valid={valid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t(claimType === 'bond' ? 'compound' : 'claim', {
+					ns: 'modals',
+				})}
+				valid={valid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

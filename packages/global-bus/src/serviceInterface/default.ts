@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ServiceInterface } from 'types'
@@ -22,7 +22,6 @@ export const defaultServiceInterface: ServiceInterface = {
 		poolMembersMulti: async () => [],
 		poolMetadataMulti: async () => [],
 		proxies: async () => [],
-		sessionValidators: async () => [],
 		superOfMulti: async () => [],
 		validatorEntries: async () => [],
 		validatorsMulti: async () => [],

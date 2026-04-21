@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { useApi } from 'contexts/Api'
+import { getRelayChainConsts } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
 import { intervalToDuration } from 'date-fns'
 import { MinDelayInput } from 'library/Form/MinDelayInput'
@@ -13,22 +13,14 @@ import { useTranslation } from 'react-i18next'
 import type { ChangeRateInput } from '../types'
 import { usePoolCommission } from './provider'
 
-export const ChangeRate = ({
-	invalidMaxIncrease,
-	invalidMinDelay,
-}: {
-	invalidMaxIncrease: boolean
-	invalidMinDelay: boolean
-}) => {
+export const ChangeRate = () => {
 	const { t } = useTranslation('modals')
-	const { getConsts } = useApi()
 	const { network } = useNetwork()
-	const { expectedBlockTime } = getConsts(network)
-	const { getEnabled, getInitial, getCurrent, setChangeRate } =
-		usePoolCommission()
+	const { initial, current, enabled, setChangeRate } = usePoolCommission()
+	const { expectedBlockTime } = getRelayChainConsts(network)
 
 	// Get the current change rate value.
-	const changeRate = getCurrent('change_rate')
+	const { changeRate } = current
 
 	// Convert a block number into an estimated change rate duration.
 	const minDelayToInput = (delay: number) => {
@@ -89,21 +81,14 @@ export const ChangeRate = ({
 
 	// Determine whether the change rate values have been updated.
 	const maxIncreaseUpdated =
-		changeRate.maxIncrease !== getInitial('change_rate').maxIncrease
+		changeRate.maxIncrease !== initial.changeRate.maxIncrease
 
-	const minDelayUpdated =
-		changeRate.minDelay !== getInitial('change_rate').minDelay
+	const minDelayUpdated = changeRate.minDelay !== initial.changeRate.minDelay
 
 	// Determine the max increase feedback to display.
 	const maxIncreaseFeedback = (() => {
 		if (!maxIncreaseUpdated) {
 			return undefined
-		}
-		if (invalidMaxIncrease) {
-			return {
-				text: t('aboveExisting'),
-				label: 'danger',
-			}
 		}
 		return {
 			text: t('updated'),
@@ -112,24 +97,15 @@ export const ChangeRate = ({
 	})()
 
 	// Determine the min delay feedback to display.
-	const minDelayFeedback = (() => {
-		if (!minDelayUpdated) {
-			return undefined
-		}
-		if (invalidMinDelay) {
-			return {
-				text: t('belowExisting'),
-				label: 'danger',
+	const minDelayFeedback = minDelayUpdated
+		? {
+				text: t('updated'),
+				label: 'neutral',
 			}
-		}
-		return {
-			text: t('updated'),
-			label: 'neutral',
-		}
-	})()
+		: undefined
 
 	return (
-		getEnabled('change_rate') && (
+		enabled.changeRate && (
 			<SliderWrapper>
 				<div>
 					<h2>{changeRate.maxIncrease}% </h2>

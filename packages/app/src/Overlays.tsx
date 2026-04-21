@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CreatePool } from 'canvas/CreatePool'
@@ -29,8 +29,10 @@ import { SelectCurrency } from 'modals/SelectCurrency'
 import { SelectLanguage } from 'modals/SelectLanguage'
 import { SetController } from 'modals/SetController'
 import { SignIn } from 'modals/SignIn'
+import { SimpleNominate } from 'modals/SimpleNominate'
 import { StakingOptions } from 'modals/StakingOptions'
 import { StopNominations } from 'modals/StopNominations'
+import { SyncAccounts } from 'modals/SyncAccounts'
 import { Transfer } from 'modals/Transfer'
 import { Unbond } from 'modals/Unbond'
 import { UnlockChunks } from 'modals/UnlockChunks'
@@ -67,6 +69,8 @@ export const Overlays = () => {
 				SetController,
 				SignIn,
 				StakingOptions,
+				SimpleNominate,
+				SyncAccounts,
 				Transfer,
 				Plugins,
 				UnlockChunks,

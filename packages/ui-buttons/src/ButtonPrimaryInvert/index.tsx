@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -21,7 +21,6 @@ export const ButtonPrimaryInvert = (
 	props: ButtonPrimaryInvertProps,
 ): JSX.Element => {
 	const {
-		colorSecondary,
 		disabled,
 		grow,
 		iconLeft,
@@ -53,7 +52,6 @@ export const ButtonPrimaryInvert = (
 			[commonClasses.btnMarginX]: marginX,
 			[commonClasses.btnDisabled]: disabled,
 			[commonClasses.btnActiveTransforms]: !disabled,
-			[classes.secondary]: colorSecondary,
 		},
 		className,
 	)

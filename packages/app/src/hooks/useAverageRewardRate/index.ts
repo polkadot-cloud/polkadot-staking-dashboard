@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
@@ -86,7 +86,12 @@ export const useAverageRewardRate = (): UseAverageRewardRate => {
 		return rate
 	}
 
+	const formatRateAsPercent = (rate: number) => {
+		return `${new BigNumber(rate).decimalPlaces(2).toFormat()}%`
+	}
+
 	return {
 		getAverageRewardRate,
+		formatRateAsPercent,
 	}
 }

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ApolloProvider } from '@apollo/client/react'
@@ -6,12 +6,14 @@ import { ApolloProvider } from '@apollo/client/react'
 export * from './Client'
 export * from './queries/eraTotalNominators'
 export * from './queries/getStakerWithNominees'
+export * from './queries/identityCache'
 export * from './queries/nominatorRewardTrend'
 export * from './queries/poolCandidates'
 export * from './queries/poolEraPoints'
 export * from './queries/poolMembers'
 export * from './queries/poolRewards'
 export * from './queries/poolRewardTrend'
+export * from './queries/poolWarnings'
 export * from './queries/rewards'
 export * from './queries/rpcEndpointHealth'
 export * from './queries/searchValidators'

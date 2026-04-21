@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .item {
@@ -6,7 +6,7 @@
   align-items: center;
   padding: 1.5rem 1.6rem 1.5rem 1.35rem;
   position: relative;
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--gray-500);
 
   &.last {
     padding-bottom: 2rem;
@@ -31,13 +31,13 @@
     padding-right: 0;
 
     > button {
-      color: var(--text-color-tertiary);
+      color: var(--text-tertiary);
       width: 100%;
       margin-top: 1.7rem;
       margin-right: 0.75rem;
 
       &:hover {
-        color: var(--accent-color-primary);
+        color: var(--gray-1000);
       }
     }
   }
@@ -66,7 +66,7 @@
         flex-grow: 1;
 
         button {
-          color: var(--accent-color-primary);
+          color: var(--gray-1000);
           margin-left: 0.2rem;
         }
 
@@ -77,9 +77,26 @@
 
           &.row {
             align-items: center;
+            position: relative;
 
             .edit {
               margin-left: 0.4rem;
+            }
+
+            .editHint {
+              position: absolute;
+              right: 0.85rem;
+              top: 50%;
+              transform: translateY(-50%);
+              font-size: 0.75rem;
+              color: var(--text-tertiary);
+              opacity: 0.4;
+              pointer-events: none;
+              transition: opacity var(--transition-duration);
+            }
+
+            &:hover .editHint {
+              opacity: 0.8;
             }
           }
         }
@@ -95,10 +112,10 @@
         }
 
         input {
-          background: var(--button-popover-tab-background);
-          border: 1px solid var(--border-primary-color);
-          color: var(--text-color-primary);
-          font-family: Inter, sans-serif;
+          background: var(--btn-popover-tab-bg);
+          border: 1px solid var(--gray-500);
+          color: var(--gray-1000);
+          font-family: var(--font-family-default);
           padding: 1rem 0.85rem;
           border-radius: 0.65rem;
           letter-spacing: 0.02rem;
@@ -109,7 +126,7 @@
           transition: all var(--transition-duration);
 
           &:focus {
-            border-color: var(--accent-color-primary);
+            border-color: var(--gray-1000);
           }
 
           &:disabled {
@@ -118,7 +135,7 @@
         }
 
         .full {
-          font-family: Inter, sans-serif;
+          font-family: var(--font-family-default);
           position: relative;
           width: 100%;
           line-height: 2rem;
@@ -126,7 +143,7 @@
           margin-bottom: 0.15rem;
 
           > span {
-            color: var(--text-color-tertiary);
+            color: var(--text-tertiary);
             position: absolute;
             top: 0;
             left: 0;
@@ -139,7 +156,7 @@
             max-width: 100%;
 
             > button {
-              color: var(--text-color-tertiary);
+              color: var(--text-tertiary);
               margin-left: 0.25rem;
             }
           }

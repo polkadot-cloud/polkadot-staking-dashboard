@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { NetworkId, Plugin } from 'types'
@@ -21,6 +21,8 @@ export const CompulsoryPluginsProduction: Plugin[] = [
 export const DisabledPluginsPerNetwork: Partial<Record<NetworkId, Plugin[]>> = {
 	// NOTE: Westend is not supported by the staking API plugin
 	westend: ['staking_api'],
+	// NOTE: Paseo is not supported by the staking API plugin
+	paseo: ['staking_api'],
 }
 
 export const PolkawatchConfig = {

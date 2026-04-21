@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .btnModal {
-  color: var(--text-color-primary);
-  background: var(--button-primary-background);
+  color: var(--gray-1000);
+  background: var(--gray-400);
   transition: background-color var(--transition-duration);
   box-sizing: border-box;
   padding: 0.9rem 1rem;
@@ -17,27 +17,35 @@
   margin-bottom: 0.6rem;
 
   &.selected {
-    border-color: var(--accent-color-primary);
+    border-color: var(--gray-1000);
   }
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
+
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--gray-500);
   }
+
   > h3 {
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family-default);
     flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   h5 {
     &.toggle {
       > .on {
-        color: var(--accent-color-primary);
+        color: var(--gray-1000);
       }
+
       > .off {
-        color: var(--text-color-tertiary);
+        color: var(--text-tertiary);
         opacity: 0.75;
       }
     }

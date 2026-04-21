@@ -1,13 +1,13 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { formatAccountSs58, isValidAddress, remToUnit } from '@w3ux/utils'
+import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
+import { remToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
@@ -24,7 +24,7 @@ export const PayeeInput = ({
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { accounts } = useImportedAccounts()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const { ss58 } = getStakingChainData(network)
 	const accountMeta = accounts.find((a) => a.address === activeAddress)

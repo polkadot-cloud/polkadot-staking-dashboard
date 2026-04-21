@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,7 +20,6 @@ import classes from './index.module.scss'
 export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
 	const {
 		className,
-		colorSecondary,
 		disabled,
 		grow,
 		iconLeft,
@@ -52,7 +51,6 @@ export const ButtonPrimary = (props: ButtonPrimaryProps): JSX.Element => {
 			[commonClasses.btnMarginX]: marginX,
 			[commonClasses.btnDisabled]: disabled,
 			[commonClasses.btnActiveTransforms]: !disabled,
-			[classes.btnPrimarySecondaryColor]: colorSecondary,
 		},
 		className,
 	)

@@ -1,12 +1,12 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { BondManager } from 'library/BondManager'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { Page } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
-import { ManageBond } from './ManageBond'
 import { ManagePool } from './ManagePool'
 import { PoolStats } from './PoolStats'
 import { Roles } from './Roles'
@@ -29,7 +29,7 @@ export const PoolOverview = ({
 			<Page.Row>
 				<Page.RowSection secondary vLast>
 					<CardWrapper height={ROW_HEIGHT}>
-						<ManageBond isPreloading={isPreloading} />
+						<BondManager bondFor="pool" isPreloading={isPreloading} />
 					</CardWrapper>
 				</Page.RowSection>
 				<Page.RowSection hLast>

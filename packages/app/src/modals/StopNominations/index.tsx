@@ -1,7 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -24,10 +25,11 @@ export const StopNominations = () => {
 	} = useOverlay().modal
 	const { serviceApi } = useApi()
 	const { getNominations } = useBalances()
+	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { activePoolNominations, isNominator, isOwner, activePool } =
 		useActivePool()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 	const { bondFor } = options
 	const isPool = bondFor === 'pool'
@@ -94,8 +96,8 @@ export const StopNominations = () => {
 				</Title>
 				{warnings.length ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning_${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}
@@ -103,6 +105,7 @@ export const StopNominations = () => {
 			</Padding>
 			<SubmitTx
 				requiresMigratedController={isStaking}
+				submitText={t('stopNominating', { ns: 'modals' })}
 				valid={valid}
 				{...submitExtrinsic}
 			/>

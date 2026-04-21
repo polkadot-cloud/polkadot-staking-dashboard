@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
@@ -75,8 +75,6 @@ export interface AveragePayoutLineProps {
 	height: string
 	background?: string
 	data: GraphPayoutData
-	nominating: boolean
-	inPool: boolean
 	// Theme and translation props
 	getThemeValue: (key: string) => string
 	unit: string
@@ -105,6 +103,13 @@ export interface GeoDonutProps {
 	maxLabelLen?: number
 	// Theme props
 	getThemeValue: (key: string) => string
+}
+
+export interface HalvingLineProps {
+	getThemeValue: (key: string) => string
+	label: string
+	tooltipLabel: (value: number) => string
+	millionUnit: string
 }
 
 export interface PayoutDayCursor {

@@ -1,14 +1,14 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .webUrl {
-  color: var(--text-color-tertiary);
-  font-family: Inter, sans-serif;
+  color: var(--text-tertiary);
+  font-family: var(--font-family-default);
   display: flex;
   align-items: center;
 
   > button {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     font-size: 1.1rem;
     margin-top: 0.2rem;
     text-decoration: none;

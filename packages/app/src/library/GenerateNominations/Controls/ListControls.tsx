@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useList } from 'contexts/List'
@@ -25,14 +25,14 @@ export const ListControls = ({
 	return (
 		<SelectableWrapper>
 			{selected.length > 0 &&
-				Object.entries(selectHandlers).map(([k, a], i: number) => {
+				Object.entries(selectHandlers).map(([k, a]) => {
 					const open = opens[k] || false
 					const Content = a.popover.node
 					const text = a.popover.text
 					return (
 						<Popover
 							open={open}
-							key={`a_selected_${i}`}
+							key={`a_selected_${k}`}
 							portalContainer={themeElementRef.current || undefined}
 							onTriggerClick={() => {
 								setOpens({ ...opens, [k]: true })
@@ -53,10 +53,10 @@ export const ListControls = ({
 						</Popover>
 					)
 				})}
-			{filterHandlers.map((a, i: number) => (
+			{filterHandlers.map((a) => (
 				<ButtonMonoInvert
 					text={a.title}
-					key={`a_all_${i}`}
+					key={`a_all_${a.title}`}
 					disabled={a?.isDisabled ? a.isDisabled() : false}
 					onClick={() => a.onClick(provider)}
 					iconLeft={a.icon ? a.icon : undefined}

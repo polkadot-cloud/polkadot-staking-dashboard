@@ -1,13 +1,12 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useSyncing } from 'hooks/useSyncing'
@@ -15,13 +14,13 @@ import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 
-export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
+export const RewardsStatus = () => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { isReady } = useApi()
-	const { activePool } = useActivePool()
+	const { activePool, inPool } = useActivePool()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPendingPoolRewards } = useBalances()
 	const { syncing } = useSyncing(['active-pools'])
 	const { isReadOnlyAccount } = useImportedAccounts()
@@ -74,7 +73,7 @@ export const RewardsStatus = ({ dimmed }: { dimmed: boolean }) => {
 			helpKey="Pool Rewards"
 			type="odometer"
 			stat={{ value: labelRewards }}
-			dimmed={dimmed}
+			dimmed={!inPool || pendingRewards === 0n}
 			buttons={syncing ? [] : buttonsRewards}
 		/>
 	)

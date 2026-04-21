@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const PromptWrapper = styled.div`
-  background: var(--overlay-background-color);
+  background: var(--overlay-backdrop);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -18,7 +18,7 @@ export const PromptWrapper = styled.div`
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    padding: 2rem 2rem;
+    padding: 2rem;
     animation: fadeScale 0.3s cubic-bezier(0, 1, 0, 1) forwards;
 
     .close {
@@ -69,14 +69,14 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `
 
 export const ContentWrapper = styled.div`
-  background: var(--background-default);
+  background: var(--gray-200);
   width: 100%;
   height: auto;
   overflow: hidden;
   position: relative;
 
   a {
-    color: var(--accent-color-primary);
+    color: var(--gray-1000);
   }
   .header {
     width: 100%;
@@ -86,7 +86,7 @@ export const ContentWrapper = styled.div`
     padding: 1rem 2rem 0 2rem;
   }
   .body {
-    padding: 0.5rem 1.5rem 1.25rem 1.5rem;
+    padding: 1rem 2rem 1.5rem 2rem;
     h4 {
       margin: 1rem 0;
     }
@@ -107,16 +107,16 @@ export const TitleWrapper = styled.div`
     padding: 0 0.5rem;
 
     path {
-      fill: var(--text-color-primary);
+      fill: var(--gray-1000);
     }
 
     &:first-child {
       flex-grow: 1;
 
       > h2 {
+        font-family: var(--font-family-default);
         display: flex;
         align-items: center;
-        font-family: Inter, sans-serif;
         font-size: 1.5rem;
 
         > button {
@@ -142,11 +142,8 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
-    ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--button-primary-background)'};
-  background: var(--button-primary-background);
+    ${(props) => (props.$active ? 'var(--accent-800)' : 'var(--gray-400)')};
+  background: var(--gray-400);
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -158,17 +155,13 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
 
   h4 {
     color: ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--text-color-secondary)'};
+			props.$active ? 'var(--accent-800)' : 'var(--gray-900)'};
     transition: color var(--transition-duration);
   }
 
   svg {
     color: ${(props) =>
-			props.$active
-				? 'var(--accent-color-stroke)'
-				: 'var(--text-color-secondary)'};
+			props.$active ? 'var(--accent-800)' : 'var(--gray-900)'};
     opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
@@ -183,7 +176,7 @@ export const FooterWrapper = styled.div`
 export const PromptListItem = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--gray-500);
 
   &.inactive {
     opacity: var(--opacity-disabled);
@@ -191,7 +184,7 @@ export const PromptListItem = styled.div`
 `
 
 export const PromptSelectItem = styled.button`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--gray-500);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -203,12 +196,12 @@ export const PromptSelectItem = styled.button`
     margin-top: 0.3rem;
   }
   &:hover {
-    background: var(--button-hover-background);
+    background: var(--gray-500);
   }
   &.inactive {
     h3,
     h4 {
-      color: var(--accent-color-primary);
+      color: var(--gray-1000);
     }
   }
 `

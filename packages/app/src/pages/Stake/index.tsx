@@ -1,20 +1,20 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useStakeStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
+import { PageWarnings } from 'library/PageWarnings'
+import { Stats } from 'library/Stats'
 import { Active } from 'pages/Nominate/Active'
-import { AverageRewardRate } from 'pages/Overview/Stats/AverageRewardRate'
-import { NextRewards } from 'pages/Overview/Stats/NextRewards'
 import { PoolOverview } from 'pages/Pools/Overview'
-import { MinJoinBond } from 'pages/Pools/Stats/MinJoinBond'
 import { useTranslation } from 'react-i18next'
 import { Page, Stat } from 'ui-core/base'
 
 export const Stake = () => {
 	const { t } = useTranslation('pages')
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { nominatorBalance } = useAccountBalances(activeAddress)
 	const { syncing, accountSynced } = useSyncing([
 		'initialization',
@@ -28,16 +28,17 @@ export const Stake = () => {
 		isPreloading = syncing
 	}
 
+	const { averageRewardRate, minimumToJoinPool, nextReward } =
+		useStakeStats(isPreloading)
 	const nominating = nominatorBalance.isGreaterThan(0)
 
 	return (
 		<>
 			<Page.Title title={t('stake')} />
+			<PageWarnings />
 			{!nominating && (
 				<Stat.Row>
-					<AverageRewardRate isPreloading={isPreloading} />
-					<MinJoinBond isPreloading={isPreloading} />
-					<NextRewards isPreloading={isPreloading} />
+					<Stats items={[averageRewardRate, minimumToJoinPool, nextReward]} />
 				</Stat.Row>
 			)}
 			{nominating ? (

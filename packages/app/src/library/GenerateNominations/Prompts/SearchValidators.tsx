@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxNominations } from 'consts'
@@ -62,8 +62,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 				} else {
 					setSearchResults([])
 				}
-			} catch (error) {
-				console.error('Error searching validators:', error)
+			} catch {
 				setSearchResults([])
 			} finally {
 				setIsSearching(false)
@@ -128,7 +127,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 							<h5
 								style={{
 									marginBottom: '0.5rem',
-									color: 'var(--text-color-secondary)',
+									color: 'var(--gray-900)',
 								}}
 							>
 								{t('maxCommission', { ns: 'modals' })}: {maxCommission}%
@@ -159,7 +158,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 										message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
 									/>
 								) : filteredSearchResults.length > 0 ? (
-									filteredSearchResults.map((validator: Validator, i) => {
+									filteredSearchResults.map((validator) => {
 										const inInitial = !!nominations.find(
 											({ address }) => address === validator.address,
 										)
@@ -168,7 +167,7 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
 										return (
 											<PromptListItem
-												key={`search_result_${i}`}
+												key={`search_result_${validator.address}`}
 												className={
 													disabled && inInitial ? 'inactive' : undefined
 												}
@@ -197,13 +196,16 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 					{/* Right Column - Selected Validators (1/3 width) */}
 					<SearchList.RightColumn>
 						<SearchList.Header>
-							Selected Validators ({selected.length})
+							{t('validatorSearch.selectedValidators', {
+								ns: 'app',
+								count: selected.length,
+							})}
 						</SearchList.Header>
 
 						{selected.length > 0 ? (
 							<SearchList.SelectedList>
-								{selected.map((validator: Validator, i) => (
-									<PromptListItem key={`selected_${i}`}>
+								{selected.map((validator: Validator) => (
+									<PromptListItem key={`selected_${validator.address}`}>
 										<Checkbox
 											checked={true}
 											onClick={() => {

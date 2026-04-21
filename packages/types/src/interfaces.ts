@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
@@ -60,7 +60,6 @@ export interface ServiceInterface {
 		) => Promise<(PalletNominationPoolsPoolMember | undefined)[]>
 		poolMetadataMulti: (ids: number[]) => Promise<HexString[]>
 		proxies: (address: string) => Promise<string[]>
-		sessionValidators: () => Promise<string[]>
 		superOfMulti: (addresses: string[]) => Promise<SuperOf[]>
 		validatorEntries: () => Promise<[string, PalletStakingValidatorPrefs][]>
 		validatorsMulti: (

@@ -1,14 +1,14 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -32,11 +32,12 @@ export const Summary = ({ section }: SetupStepProps) => {
 	} = useApi()
 	const { network } = useNetwork()
 	const { newBatchCall } = useBatchCall()
+	const { activeProxy } = useActiveProxy()
 	const { closeCanvas } = useOverlay().canvas
 	const { accountHasSigner } = useImportedAccounts()
 	const { getPoolSetup, removePoolSetup } = usePoolSetups()
 	const { queryBondedPool, addToBondedPools } = useBondedPools()
-	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { unit, units } = getStakingChainData(network)
 
 	const poolId = lastPoolId + 1
@@ -109,7 +110,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 							{t('bondAmount')}:
 						</div>
 						<div>
-							{new BigNumber(bond).toFormat()} {unit}
+							{new BigNumber(bond || 0).toFormat()} {unit}
 						</div>
 					</section>
 					<section>
@@ -138,6 +139,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 					<SubmitTx
 						submitText={t('createPool')}
 						valid
+						stacked
 						{...submitExtrinsic}
 						displayFor="canvas" /* Edge case: not canvas, but the larger button sizes suit this UI more. */
 					/>

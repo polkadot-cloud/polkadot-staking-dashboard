@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useLedger } from '@polkadot-cloud/connect-ledger'
 import { setStateWithRef } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
@@ -22,10 +22,10 @@ export const UnlockChunks = () => {
 		setModalHeight,
 		modalMaxHeight,
 	} = useOverlay().modal
+	const { integrityChecked } = useLedger()
 	const { getStakingLedger } = useBalances()
 	const { getPoolUnlocking } = useActivePool()
-	const { activeAddress } = useActiveAccounts()
-	const { integrityChecked } = useLedgerHardware()
+	const { activeAddress } = useActiveAccount()
 
 	const { bondFor } = options || {}
 

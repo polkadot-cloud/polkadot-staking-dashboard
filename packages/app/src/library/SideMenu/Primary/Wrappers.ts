@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -20,7 +20,7 @@ export const Wrapper = styled.span`
   }
   
   .icon {
-    color: var(--text-color-secondary);
+    color: var(--gray-900);
     margin-left: 0.25rem;
     margin-right: 0.65rem;
     transition: transform 0.2s ease;
@@ -41,10 +41,10 @@ export const Wrapper = styled.span`
 
     &.success,
     &.accent {
-      border: 1.5px solid var(--accent-color-pending);
+      border: 1.5px solid var(--gray-700);
     }
     &.warning {
-      border: 1px solid var(--accent-color-secondary);
+      border: 1px solid var(--status-warning);
     }
 
     .icon {
@@ -66,14 +66,14 @@ export const Wrapper = styled.span`
   }
   
   .name {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     margin: 0;
     padding: 0;
     line-height: 1.35rem;
   }
 
   &.active {
-    background: var(--highlight-secondary);
+    background: var(--highlight-alt);
   }
 
   /* Advanced mode styles */
@@ -81,20 +81,20 @@ export const Wrapper = styled.span`
     margin: 0 0 0.35rem 0;
 
     &.active {
-      background: var(--highlight-secondary);
+      background: var(--highlight-alt);
     }
   }
 
   &.inactive:hover {
-    background: var(--highlight-secondary);
+    background: var(--highlight-alt);
   }
 
   &.minimised {
      &.active {
-      background: var(--highlight-solid);
+      background: var(--highlight);
     }
     &.inactive:hover {
-      background: var(--highlight-solid);
+      background: var(--highlight);
     }
   }
 `

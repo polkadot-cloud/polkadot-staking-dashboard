@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
@@ -8,7 +8,7 @@ import commonClasses from '../../common.module.scss'
 import classes from './index.module.scss'
 
 export const Multi = ({ children, style }: ComponentBase) => {
-	const allClasses = classNames(commonClasses.scrollBar, classes.multi)
+	const allClasses = classNames(commonClasses.scroll, classes.multi)
 	return (
 		<motion.div className={allClasses} style={style}>
 			{children}

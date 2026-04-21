@@ -1,15 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { Polkicon } from '@w3ux/react-polkicon'
-import {
-	ellipsisFn,
-	formatAccountSs58,
-	isValidAddress,
-	planckToUnit,
-} from '@w3ux/utils'
+import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
+import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
@@ -20,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import SimpleBar from 'simplebar-react'
 import type { ImportedAccount } from 'types'
 import { AccountInput } from 'ui-core/input'
-import { getTransferrableBalance } from 'utils'
+import { getTransferableBalance } from 'utils'
 import type { AccountDropdownProps } from './types'
 import { getAccountSourceIcon } from './util'
 
@@ -78,7 +74,7 @@ export const AccountDropdown = ({
 	const handleFetchBalance = async (address: string) => {
 		if (!address) return
 		const result = await serviceApi.query.accountBalance.hub(address)
-		const balance = getTransferrableBalance(result?.free || 0n, 0n)
+		const balance = getTransferableBalance(result?.free || 0n, 0n)
 		setTransferableBalance(balance)
 	}
 
@@ -245,6 +241,7 @@ export const AccountDropdown = ({
 					style={{
 						opacity: isInputFocused || !selectedAccount ? 0.25 : 1,
 						transition: 'opacity 0.15s',
+						maxWidth: '2.75rem',
 					}}
 				>
 					<Polkicon
@@ -345,6 +342,7 @@ export const AccountDropdown = ({
 											fontSize="2.25rem"
 											background="transparent"
 										/>
+
 										<AccountInput.InnerLeft>
 											<AccountInput.ListName
 												name={account.name || ellipsisFn(account.address, 6)}

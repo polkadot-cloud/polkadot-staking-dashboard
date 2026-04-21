@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { getStakingChain, getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import {
@@ -32,7 +32,7 @@ export const BalancesProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { getChainSpec } = useApi()
 	const stakingChain = getStakingChain(network)
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { existentialDeposit } = getChainSpec(stakingChain)
 	const { units, defaultFeeReserve } = getStakingChainData(network)
 

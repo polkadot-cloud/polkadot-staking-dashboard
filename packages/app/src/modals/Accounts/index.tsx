@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useProxies } from 'contexts/Proxies'
 import { ActionItem } from 'library/ActionItem'
 import { useEffect } from 'react'
@@ -21,8 +21,9 @@ import { AccountSeparator, AccountWrapper } from './Wrappers'
 export const Accounts = () => {
 	const { t } = useTranslation('modals')
 	const { getDelegates } = useProxies()
+	const { activeProxy } = useActiveProxy()
 	const { accounts } = useImportedAccounts()
-	const { activeAddress, activeProxy } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getStakingLedger, getPoolMembership } = useBalances()
 	const { status: modalStatus, setModalResize } = useOverlay().modal
 
@@ -135,8 +136,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('nominatingAndInPool')} />
-						{nominatingAndPool.map((item, i) => (
-							<AccountItem key={`acc_nominating_and_pool_${i}`} {...item} />
+						{nominatingAndPool.map((item) => (
+							<AccountItem
+								key={`acc_nominating_and_pool_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}
@@ -144,8 +148,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('nominating')} />
-						{nominating.map((item, i) => (
-							<AccountItem key={`acc_nominating_${i}`} {...item} />
+						{nominating.map((item) => (
+							<AccountItem
+								key={`acc_nominating_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}
@@ -153,8 +160,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('inPool')} />
-						{inPool.map((item, i) => (
-							<AccountItem key={`acc_in_pool_${i}`} {...item} />
+						{inPool.map((item) => (
+							<AccountItem
+								key={`acc_in_pool_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}
@@ -162,8 +172,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('notStaking')} />
-						{notStaking.map((item, i) => (
-							<AccountItem key={`acc_not_staking_${i}`} {...item} />
+						{notStaking.map((item) => (
+							<AccountItem
+								key={`acc_not_staking_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}

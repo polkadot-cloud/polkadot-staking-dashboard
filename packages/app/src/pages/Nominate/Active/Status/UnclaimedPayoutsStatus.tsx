@@ -1,12 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCircleDown } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { minDecimalPlaces, planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
 import { usePlugins } from 'contexts/Plugins'
@@ -14,7 +13,7 @@ import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 
-export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
+export const UnclaimedPayoutsStatus = () => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { isReady } = useApi()
@@ -23,7 +22,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
 		unclaimedRewards: { total },
 	} = usePayouts()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { units } = getStakingChainData(network)
 	return (
@@ -37,7 +36,7 @@ export const UnclaimedPayoutsStatus = ({ dimmed }: { dimmed: boolean }) => {
 						? '0.00'
 						: minDecimalPlaces(planckToUnit(total, units), 2),
 			}}
-			dimmed={dimmed}
+			dimmed={total === '0'}
 			buttons={
 				total !== '0' &&
 				pluginEnabled('staking_api') &&

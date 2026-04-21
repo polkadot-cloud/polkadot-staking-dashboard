@@ -1,10 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import type { MaybeAddress } from 'types'
 
 export interface StatButtonProps {
+	id?: string
 	title: string
 	large?: boolean
 	icon?: IconProp
@@ -26,7 +27,7 @@ export interface StatProps {
 	type?: string
 	buttons?: StatButtonProps[]
 	dimmed?: boolean
-	helpKey: string
+	helpKey?: string
 	icon?: IconProp
 	buttonType?: string
 }

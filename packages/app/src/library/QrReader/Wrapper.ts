@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   animation: fadeInScale 0.2s cubic-bezier(0, 1, 0, 1) forwards;
 
   > .qrRegion {
-    background: var(--background-default);
+    background: var(--bg-body);
     border-radius: 0.85rem;
     overflow: hidden;
     width: 250px;
@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       aspect-ratio: 8;
       background: radial-gradient(
           circle closest-side,
-          var(--text-color-primary) 100%,
+          var(--gray-1000) 100%,
           #0000
         )
         0 / calc(100% / 3) 100% space;

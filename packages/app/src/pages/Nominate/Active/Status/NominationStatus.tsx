@@ -1,16 +1,14 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
-import { useActivePool } from '../../../../contexts/Pools/ActivePool'
 
 export const NominationStatus = () => {
 	const { t } = useTranslation('pages')
-	const { inPool } = useActivePool()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getNominationStatus } = useNominationStatus()
 
 	const nominationStatus = getNominationStatus(activeAddress, 'nominator')
@@ -19,7 +17,7 @@ export const NominationStatus = () => {
 		<Stat
 			label={t('status')}
 			helpKey="Nomination Status"
-			stat={inPool ? t('alreadyInPool') : nominationStatus.message}
+			stat={nominationStatus.message}
 		/>
 	)
 }

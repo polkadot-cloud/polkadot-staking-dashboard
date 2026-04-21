@@ -1,12 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { type ReactNode, useState } from 'react'
 import type { MaybeAddress } from 'types'
@@ -24,7 +23,7 @@ export const [PoolSetupsContext, usePoolSetups] =
 
 export const PoolSetupsProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 	const { units } = getStakingChainData(network)
 

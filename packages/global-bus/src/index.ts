@@ -1,8 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 export * from './accountBalances'
-export * from './activeAddress'
 export * from './activeEra'
 export * from './activePoolIds'
 export * from './activePools'
@@ -13,16 +12,15 @@ export * from './bonded'
 export * from './chainSpecs'
 export * from './consts'
 export * from './eraRewardPoints'
-export * from './externalAccounts'
-export * from './importedAccounts'
 export * from './networkConfig'
 export * from './notifications'
 export * from './onlineStatus'
 export * from './plugins'
 export * from './poolMemberships'
+export * from './poolRoleIdentities'
 export * from './poolsConfig'
+export * from './poolWarnings'
 export * from './proxies'
-export * from './relayMetrics'
 export * from './serviceInterface'
 export * from './stakingLedgers'
 export * from './stakingMetrics'

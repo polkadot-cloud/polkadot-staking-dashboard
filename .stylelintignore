@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+.yarn/
+.pnp.*
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Cache
+.cache/
+.vite/
+.turbo/
+
+# IDE
+.vscode/
+.idea/
+
+# Temp files
+*.log
+.DS_Store

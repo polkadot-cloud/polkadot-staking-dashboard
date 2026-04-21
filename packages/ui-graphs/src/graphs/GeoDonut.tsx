@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ellipsisFn } from '@w3ux/utils'
@@ -21,21 +21,18 @@ export const GeoDonut = ({
 	let { data } = series
 	const isZero = data.length === 0
 	const backgroundColor = isZero
-		? getThemeValue('--background-default')
-		: getThemeValue('--accent-color-primary')
+		? getThemeValue('--bg-body')
+		: getThemeValue('--gray-1000')
 
 	const total = data.reduce((acc: number, value: number) => acc + value, 0)
 
 	data = data.map((value: number) => (value / total) * 100)
 
 	const options = {
-		borderColor: getThemeValue('--background-default'),
-		hoverBorderColor: getThemeValue('--background-default'),
+		borderColor: getThemeValue('--bg-body'),
+		hoverBorderColor: getThemeValue('--bg-body'),
 		backgroundColor,
-		hoverBackgroundColor: [
-			backgroundColor,
-			getThemeValue('--background-default'),
-		],
+		hoverBackgroundColor: [backgroundColor, getThemeValue('--bg-body')],
 		responsive: true,
 		maintainAspectRatio: false,
 		spacing: 0,
@@ -81,7 +78,7 @@ export const GeoDonut = ({
 				// We make a gradient of N+2 colors from active to inactive, and we discard both ends N is
 				// the number of datapoints to plot.
 				backgroundColor: chroma
-					.scale([backgroundColor, getThemeValue('--background-default')])
+					.scale([backgroundColor, getThemeValue('--bg-body')])
 					.colors(data.length + 1),
 				borderWidth: 0.5,
 			},

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Odometer } from '@w3ux/react-odometer'
@@ -29,7 +29,7 @@ export const Number = ({
 									.decimalPlaces(decimals || 0)
 									.toFormat()}
 							/>
-							{unit || null}
+							{unit}
 						</Stat.Title>
 						<Stat.Subtitle>
 							{label}

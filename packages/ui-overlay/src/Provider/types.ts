@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { FC, RefObject } from 'react'
@@ -27,6 +27,7 @@ export interface OverlayContextInterface {
 		openCanvas: (config: CanvasConfig) => void
 		closeCanvas: () => void
 		setCanvasStatus: (status: CanvasStatus) => void
+		setCanvasConfig: (config: CanvasConfig) => void
 	}
 	modal: {
 		status: ModalStatus

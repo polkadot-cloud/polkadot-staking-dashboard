@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowUpRightDots } from '@fortawesome/free-solid-svg-icons'
@@ -23,10 +23,10 @@ export const Ticker = ({
 	const { openHelpTooltip } = useHelp()
 	const tickerColor =
 		direction === 'up'
-			? 'var(--status-success-color)'
+			? 'var(--status-success)'
 			: direction === 'down'
-				? 'var(--status-danger-color)'
-				: 'var(--text-color-secondary)'
+				? 'var(--status-danger)'
+				: 'var(--gray-900)'
 
 	return (
 		<Wrapper isPreloading={isPreloading}>
@@ -36,7 +36,7 @@ export const Ticker = ({
 						<FontAwesomeIcon
 							icon={faArrowUpRightDots}
 							transform="grow-8"
-							color="var(--accent-color-primary)"
+							color="var(--gray-1000)"
 						/>
 					</Stat.Graphic>
 					<Stat.Content>

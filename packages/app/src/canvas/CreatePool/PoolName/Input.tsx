@@ -1,7 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ export const Input = ({
 	value = '',
 }: AnyJson) => {
 	const { t } = useTranslation('pages')
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	// the current local bond value
 	const [metadata, setMetadata] = useState<string>(value)
@@ -44,7 +44,7 @@ export const Input = ({
 			<div style={{ margin: '1rem 0' }}>
 				<input
 					className="underline"
-					style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
+					style={{ width: '100%' }}
 					placeholder={t('poolName')}
 					type="text"
 					onChange={(e) => handleChange(e)}

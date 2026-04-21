@@ -1,9 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { isValidAddress } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { isValidAddress } from '@w3ux/util-dedot'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import type { PayeeConfig, PayeeOption } from 'contexts/NominatorSetups/types'
@@ -27,11 +28,12 @@ import { useOverlay } from 'ui-overlay'
 export const UpdatePayee = () => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
+	const { closeModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
 	const { getPayeeItems } = usePayeeConfig()
-	const { closeModal } = useOverlay().modal
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 
 	const payee = getStakingLedger(activeAddress).payee
 
@@ -130,8 +132,8 @@ export const UpdatePayee = () => {
 			<Padding horizontalOnly>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

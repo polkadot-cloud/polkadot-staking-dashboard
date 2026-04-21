@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import type { MinimisedProps } from './types'
 
 export const Wrapper = styled.div<MinimisedProps>`
-  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--background-canvas-card-secondary)' : 'none')};
+  background: ${(props) => (props.$minimised && !props.$advancedMode ? 'var(--bg-min-side-menu)' : 'none')};
   overflow: auto;
   flex-grow: 1;
   display: flex;
@@ -38,7 +38,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   scrollbar-width: none;
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
-    background: var(--gradient-side-menu);
+    background: var(--gradient-menu);
     transition: all var(--transition-duration);
     border-radius: 0.75rem;
   }
@@ -64,19 +64,20 @@ export const Wrapper = styled.div<MinimisedProps>`
 `
 
 export const CategoryHeader = styled.h3`
-  color: var(--accent-color-primary);
-  border-bottom: 1px solid var(--accent-color-primary);
-  font-family: InterSemiBold, sans-serif;
+  color: var(--gray-1000);
+  border-bottom: 1px solid var(--gray-1000);
+  font-family: var(--font-family-semibold);
   margin: 1.12rem 0.75rem 0.75rem 0.25rem;
   padding-bottom: 0.78rem;
   padding-left: 0.55rem;
   width: 100%;
   display: flex;
-  transition: transform 0.2s;
+  transition: all 0.2s;
 
 
   &:hover {
-    transform: scale(1.02);
+    color: var(--accent-800);
+    border-color: var(--accent-800);
   }
   
   > span {
@@ -101,22 +102,25 @@ export const LogoWrapper = styled.div<MinimisedProps>`
   padding-top: 1rem;
   position: relative;
   margin-left: ${(props) => (props.$minimised ? '0.75rem' : '0.75rem')};
-  margin-bottom: ${(props) => (props.$advancedMode ? '0' : '0.5rem')};
+  margin-bottom: ${(props) => (props.$advancedMode ? '0.25rem' : '0.75rem')};
   transition: transform 0.25s ease;
 
   > svg  {  
-    margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0')};
+    position: relative;
+    margin-left: ${(props) => (props.$minimised ? '0.8rem' : '0.3rem')};
     width: ${(props) => (props.$minimised ? '2.25rem' : '1.75em')};
     height: ${(props) => (props.$minimised ? '2.25rem' : '1.75rem')};
+    top: ${(props) => (props.$minimised ? '0' : '0.1rem')};
   }
 
   > h3 {
-    color: var(--accent-color-primary);
+    font-family: 'DM Serif Display', serif;
+    color: var(--gray-1000);
     margin-left: 0.75rem;
     background-clip: text;
     display: flex;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1.6rem;
   }
 
   &:hover {
@@ -139,8 +143,8 @@ export const ToggleWrapper = styled.button`
   }
 
   > .label {
-    background: var(--background-primary);
-    color: var(--text-color-secondary);
+    background: var(--bg-primary);
+    color: var(--gray-900);
     width: 100%;
     height: 100%;
     display: flex;
@@ -151,7 +155,7 @@ export const ToggleWrapper = styled.button`
 `
 
 export const BulletWrapper = styled.div`
-  color: var(--status-success-color);
+  color: var(--status-success);
   display: flex;
   flex: 1;
   font-size: 0.88rem;
@@ -162,12 +166,12 @@ export const BulletWrapper = styled.div`
 
   > span {
     &.success {
-      color: var(--accent-color-primary);
-      border: 1px solid var(--accent-color-primary);
+      color: var(--status-success);
+      border: 1px solid var(--status-success);
     }
     &.warning {
-      color: var(--accent-color-secondary);
-      border: 1px solid var(--accent-color-secondary);
+      color: var(--status-warning);
+      border: 1px solid var(--status-warning);
     }
     border-radius: 0.5rem;
     padding: 0.15rem 0.5rem;
@@ -175,22 +179,22 @@ export const BulletWrapper = styled.div`
 
   &.accent {
     svg {
-      color: var(--accent-color-primary);
+      color: var(--gray-1000);
     }
   }
   &.success {
     svg {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
   }
   &.warning {
     svg {
-      color: var(--status-warning-color);
+      color: var(--status-warning);
     }
   }
   &.danger {
     svg {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
   }
   &.minimised {

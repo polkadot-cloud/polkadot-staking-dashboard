@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
 import { client } from '../Client'
-import type { RewardTrendData } from '../types'
+import type { NominatorRewardTrendData, RewardTrend } from '../types'
 
 const QUERY = gql`
   query NominatorRewardTrend($network: String!, $who: String!, $eras: Int!) {
@@ -18,14 +18,12 @@ const QUERY = gql`
   }
 `
 
-const DEFAULT: RewardTrendData = {
-	rewardTrend: {
-		reward: '0',
-		previous: '0',
-		change: {
-			percent: '0',
-			value: '0',
-		},
+const DEFAULT: RewardTrend = {
+	reward: '0',
+	previous: '0',
+	change: {
+		percent: '0',
+		value: '0',
 	},
 }
 
@@ -33,13 +31,13 @@ export const fetchNominatorRewardTrend = async (
 	network: string,
 	who: string,
 	eras: number,
-): Promise<RewardTrendData> => {
+): Promise<RewardTrend> => {
 	try {
-		const result = await client.query<RewardTrendData>({
+		const result = await client.query<NominatorRewardTrendData>({
 			query: QUERY,
 			variables: { network, who, eras },
 		})
-		return result?.data || DEFAULT
+		return result?.data?.nominatorRewardTrend || DEFAULT
 	} catch {
 		return DEFAULT
 	}

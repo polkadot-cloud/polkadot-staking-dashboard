@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useManageNominations } from 'contexts/ManageNominations'
@@ -24,33 +24,37 @@ export const MenuControls = ({ setters, allowRevert }: MenuControlsProps) => {
 
 	return (
 		<MenuWrapper>
-			{method && (
-				<>
-					<ButtonMenu
-						text={t('startAgain', { ns: 'app' })}
-						onClick={() => resetNominations(setters)}
-					/>
-					{['Active Low Commission', 'Optimal Selection'].includes(method) && (
+			<div className="inner">
+				{method && (
+					<>
 						<ButtonMenu
-							text={t('reGenerate', { ns: 'app' })}
-							onClick={() => revertNominations()}
+							text={t('startAgain', { ns: 'app' })}
+							onClick={() => resetNominations(setters)}
 						/>
-					)}
-				</>
-			)}
-			{allowRevert && (
-				<Revert
-					inMenu
-					disabled={
-						JSON.stringify(nominations) === JSON.stringify(defaultNominations)
-					}
-					onClick={() => {
-						setMethod('manual')
-						updateSetters(setters, defaultNominations)
-						setNominations(defaultNominations)
-					}}
-				/>
-			)}
+						{['Active Low Commission', 'Optimal Selection'].includes(
+							method,
+						) && (
+							<ButtonMenu
+								text={t('reGenerate', { ns: 'app' })}
+								onClick={() => revertNominations()}
+							/>
+						)}
+					</>
+				)}
+				{allowRevert && (
+					<Revert
+						inMenu
+						disabled={
+							JSON.stringify(nominations) === JSON.stringify(defaultNominations)
+						}
+						onClick={() => {
+							setMethod('manual')
+							updateSetters(setters, defaultNominations)
+							setNominations(defaultNominations)
+						}}
+					/>
+				)}
+			</div>
 		</MenuWrapper>
 	)
 }

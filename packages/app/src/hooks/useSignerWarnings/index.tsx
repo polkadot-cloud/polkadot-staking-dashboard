@@ -1,17 +1,17 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useSignerAvailable } from 'hooks/useSignerAvailable'
 import { useTranslation } from 'react-i18next'
 import type { ActiveAccount } from 'types'
 
 export const useSignerWarnings = () => {
 	const { t } = useTranslation('modals')
-	const { activeProxy } = useActiveAccounts()
-	const { accountHasSigner } = useImportedAccounts()
+	const { activeProxy } = useActiveProxy()
 	const { signerAvailable } = useSignerAvailable()
+	const { accountHasSigner } = useImportedAccounts()
 
 	const getSignerWarnings = (
 		account: ActiveAccount,

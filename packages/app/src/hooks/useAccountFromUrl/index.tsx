@@ -1,10 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { extractUrlValue } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { emitNotification } from 'global-bus'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,8 +10,8 @@ import { useTranslation } from 'react-i18next'
 export const useAccountFromUrl = () => {
 	const { t } = useTranslation('app')
 	const { accounts } = useImportedAccounts()
-	const { accountsInitialised } = useOtherAccounts()
-	const { activeAddress, setActiveAccount } = useActiveAccounts()
+	const { accountsInitialised } = useImportedAccounts()
+	const { activeAddress, setActiveAccount } = useActiveAccount()
 
 	// Set active account if url var present and accounts initialised
 	useEffect(() => {

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { onSaEvent } from './util'
@@ -66,4 +66,12 @@ export const onTransactionSubmittedEvent = (
 	txLabel: string,
 ) => {
 	onSaEvent(`${network.toLowerCase()}_tx_submitted_${txLabel}`)
+}
+
+// Node provider type changed
+export const onNodeProviderTypeChangedEvent = (
+	network: string,
+	method: string,
+) => {
+	onSaEvent(`${network.toLowerCase()}_node_provider_type_changed_${method}`)
 }

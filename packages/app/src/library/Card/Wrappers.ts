@@ -1,7 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageWidthMediumThreshold } from 'consts'
+import { PageWidthLargeThreshold, PageWidthMediumThreshold } from 'consts'
 import styled from 'styled-components'
 import type { CardWrapperProps } from './types'
 
@@ -10,8 +10,8 @@ import type { CardWrapperProps } from './types'
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
-  box-shadow: var(--card-shadow);
-  background: var(--background-primary);
+  box-shadow: var(--shadow);
+  background: var(--bg-primary);
   border-radius: 1.1rem;
   display: flex;
   flex-direction: column;
@@ -23,19 +23,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   transition: border 0.2s;
 
   &.canvas {
-    background: var(--background-canvas-card);
+    background: var(--gray-300);
     padding: 1.25rem;
 
     &.secondary {
       padding: 1rem;
-
-      @media (max-width: 1000px) {
-        background: var(--background-canvas-card);
-      }
-
-      @media (min-width: 1001px) {
-        background: var(--background-canvas-card-secondary);
-      }
     }
   }
 
@@ -49,20 +41,28 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   }
 
   &.warning {
-    border: 1px solid var(--accent-color-secondary);
+    border: 1px solid var(--status-warning);
   }
 
   &.prompt {
-    border: 1px solid var(--accent-color-pending);
+    border: 1px solid var(--gray-700);
   }
 
   @media (max-width: ${PageWidthMediumThreshold}px) {
     padding: 1.25rem 1rem;
   }
 
-  @media (min-width: ${PageWidthMediumThreshold + 1}px) {
-    height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
-  }
+  ${(props) =>
+		props.height &&
+		`
+    @media (min-width: ${PageWidthMediumThreshold + 1}px) {
+      max-height: ${props.height}px;
+    }
+
+    @media (min-width: ${PageWidthLargeThreshold + 1}px) {
+      min-height: ${props.height}px;
+    }
+  `}
 
   .inner {
     padding: 1rem;

@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const DelegatesWrapper = styled.div`
-  border-left: 1px solid var(--border-primary-color);
+  border-left: 1px solid var(--gray-500);
   width: 100%;
   display: flex;
   flex-direction: column;

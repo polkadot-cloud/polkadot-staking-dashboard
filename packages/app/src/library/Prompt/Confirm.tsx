@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
@@ -31,7 +31,7 @@ export const Confirm = ({
 			</h4>
 			<PopoverTab.Container position="bottom">
 				<PopoverTab.Button
-					style={{ color: 'var(--status-danger-color)' }}
+					style={{ color: 'var(--status-danger)' }}
 					text={t('cancel')}
 					onClick={() => onClose()}
 				/>

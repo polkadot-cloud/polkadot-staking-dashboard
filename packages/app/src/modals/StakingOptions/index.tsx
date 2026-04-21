@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faCog, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
@@ -14,8 +14,8 @@ import { ItemsWrapper, ItemWrapper } from './Wrappers'
 export const StakingOptions = () => {
 	const { t } = useTranslation()
 	const { openCanvas } = useOverlay().canvas
-	const { closeModal, config } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { openModal, closeModal, config } = useOverlay().modal
+	const { activeAddress } = useActiveAccount()
 	const { setNominatorSetup, removeNominatorSetup, generateOptimalSetup } =
 		useNominatorSetups()
 
@@ -39,13 +39,10 @@ export const StakingOptions = () => {
 						onClick={() => {
 							closeModal()
 							// Set optimal nominator setup here, ready for canvas to display summary
-							setNominatorSetup(generateOptimalSetup(), true, 4)
-							openCanvas({
-								key: 'NominatorSetup',
-								options: {
-									simple: true,
-								},
-								size: 'xl',
+							setNominatorSetup(generateOptimalSetup(), 4)
+							openModal({
+								key: 'SimpleNominate',
+								size: 'xs',
 							})
 						}}
 					>
@@ -60,9 +57,6 @@ export const StakingOptions = () => {
 							removeNominatorSetup(activeAddress)
 							openCanvas({
 								key: 'NominatorSetup',
-								options: {
-									simple: false,
-								},
 								size: 'xl',
 							})
 						}}

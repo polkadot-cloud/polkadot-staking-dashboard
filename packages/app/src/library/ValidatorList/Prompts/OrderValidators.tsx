@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
@@ -20,10 +20,10 @@ export const OrderValidators = () => {
 		<FilterListWrapper>
 			<Title title={t('orderValidators')} />
 			<div className="body">
-				{Object.entries(ordersToLabels).map(([o, l], i: number) => (
+				{Object.entries(ordersToLabels).map(([o, l]) => (
 					<FilterListButton
 						$active={order === o || false}
-						key={`validator_filter_${i}`}
+						key={`validator_filter_${o}`}
 						type="button"
 						onClick={() => setOrder('validators', o)}
 					>

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePlugins } from 'contexts/Plugins'
@@ -17,7 +17,7 @@ export const Nominate = () => {
 
 	const [activeTab, setActiveTab] = useState<number>(0)
 
-	// Go back to the first tab if the Polkawatch plugin is disabled.
+	// Go back to the first tab if the Polkawatch plugin is disabled
 	useEffect(() => {
 		if (!pluginEnabled('polkawatch')) {
 			setActiveTab(0)

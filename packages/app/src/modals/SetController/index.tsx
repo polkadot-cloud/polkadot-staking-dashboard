@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useStaking } from 'contexts/Staking'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -19,11 +19,12 @@ export const SetController = () => {
 	const { t } = useTranslation('app')
 	const { serviceApi } = useApi()
 	const { isBonding } = useStaking()
+	const { activeProxy } = useActiveProxy()
 	const { getStakingLedger } = useBalances()
 	const { closeModal } = useOverlay().modal
 	const { syncing, accountSynced } = useSyncing()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 
 	const canDeprecateController =

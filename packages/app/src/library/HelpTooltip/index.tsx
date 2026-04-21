@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { camelize } from '@w3ux/utils'
 import { HelpNoDocs } from 'config/help'
-import { StakingDocsUrl } from 'consts'
+import { PlatformDocsURL } from 'consts'
 import { useHelp } from 'contexts/Help'
 import { useTheme } from 'contexts/Themes'
 import { useFillVariables } from 'hooks/useFillVariables'
@@ -93,7 +93,7 @@ export const HelpTooltip = () => {
 					</CloseButton>
 					<h4>{title}</h4>
 					{Array.isArray(description) ? (
-						description.map((desc, index) => <p key={index}>{desc}</p>)
+						description.map((desc) => <p key={desc}>{desc}</p>)
 					) : (
 						<p>{description}</p>
 					)}
@@ -104,13 +104,13 @@ export const HelpTooltip = () => {
 							iconTransform="shrink-2"
 							onClick={() => {
 								window.open(
-									`${StakingDocsUrl}/#/${i18n.language}/glossary?a=${docsKey}`,
+									`${PlatformDocsURL}/${i18n.language}/glossary?a=${docsKey}`,
 									'_blank',
 								)
 								closeHelpTooltip()
 							}}
 							style={{
-								color: 'var(--accent-color-primary)',
+								color: 'var(--gray-1000)',
 							}}
 							size="md"
 						/>

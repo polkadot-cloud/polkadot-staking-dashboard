@@ -1,13 +1,13 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useNetwork } from 'contexts/Network'
 import { setActiveProxy } from 'global-bus'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
@@ -27,13 +27,8 @@ export const AccountPopover = ({
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { getAccount } = useImportedAccounts()
-	const {
-		activeAccount,
-		activeAddress,
-		activeProxy,
-		activeProxyType,
-		setActiveAccount,
-	} = useActiveAccounts()
+	const { activeAccount, activeAddress, setActiveAccount } = useActiveAccount()
+	const { activeProxy, activeProxyType } = useActiveProxy()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 

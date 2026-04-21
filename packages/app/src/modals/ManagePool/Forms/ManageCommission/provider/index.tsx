@@ -1,15 +1,15 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PerbillMultiplier } from 'consts'
+import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { MaybeAddress } from 'types'
+import { perbillToPercent } from 'utils'
 import { defaultPoolCommissionContext } from './defaults'
 import type {
 	ChangeRateInput,
-	CommissionFeature,
 	OptionalCommissionFeature,
 	PoolCommissionContextInterface,
 	PoolCommissionProviderProps,
@@ -23,20 +23,30 @@ export const usePoolCommission = () => useContext(PoolCommissionContext)
 export const PoolCommissionProvider = ({
 	children,
 }: PoolCommissionProviderProps) => {
+	const {
+		poolsConfig: { globalMaxCommission },
+	} = useApi()
 	const { activePool } = useActivePool()
 	const { getBondedPool } = useBondedPools()
 	const poolId = activePool?.id || 0
 	const bondedPool = getBondedPool(poolId)
+	const globalMaxCommissionUnit =
+		perbillToPercent(globalMaxCommission).toNumber()
 
 	// Get initial commission value from the bonded pool commission config.
-	const initialCommission = bondedPool?.commission?.current?.[0] || 0
+	const initialCommission = perbillToPercent(
+		bondedPool?.commission?.current?.[0] || 0,
+	).toNumber()
 
 	// Get initial payee value from the bonded pool commission config.
 	const initialPayee = bondedPool?.commission?.current?.[1] || null
 
 	// Get initial maximum commission value from the bonded pool commission config.
-	const initialMaxCommission = Number(
-		(bondedPool?.commission?.max || '100').toString(),
+	const initialMaxCommission = Math.min(
+		bondedPool?.commission?.max
+			? perbillToPercent(bondedPool.commission.max).toNumber()
+			: globalMaxCommissionUnit,
+		globalMaxCommissionUnit,
 	)
 
 	// Get initial change rate value from the bonded pool commission config.
@@ -44,25 +54,17 @@ export const PoolCommissionProvider = ({
 		const raw = bondedPool?.commission?.changeRate
 		return raw
 			? {
-					maxIncrease: Number(raw.maxIncrease / PerbillMultiplier),
+					maxIncrease: perbillToPercent(raw.maxIncrease).toNumber(),
 					minDelay: Number(raw.minDelay),
 				}
 			: {
-					maxIncrease: 100,
+					maxIncrease: 10,
 					minDelay: 0,
 				}
 	})()
-
-	// Get whether a commission feature has been set.
-	const hasValue = (feature: OptionalCommissionFeature): boolean => {
-		switch (feature) {
-			case 'max_commission':
-				return !!bondedPool?.commission?.max
-			case 'change_rate':
-				return !!bondedPool?.commission?.changeRate
-			default:
-				return false
-		}
+	const initialHasValue = {
+		maxCommission: !!bondedPool?.commission?.max,
+		changeRate: !!bondedPool?.commission?.changeRate,
 	}
 
 	// Store the commission payee.
@@ -81,114 +83,69 @@ export const PoolCommissionProvider = ({
 
 	// Whether max commission has been enabled.
 	const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
-		hasValue('max_commission'),
+		initialHasValue.maxCommission,
 	)
 
 	// Whether change rate has been enabled.
 	const [changeRateEnabled, setChangeRateEnabled] = useState<boolean>(
-		hasValue('change_rate'),
+		initialHasValue.changeRate,
 	)
+
+	const initial = {
+		commission: initialCommission,
+		payee: initialPayee,
+		maxCommission: initialMaxCommission,
+		changeRate: initialChangeRate,
+	}
+
+	const current = {
+		commission,
+		payee,
+		maxCommission,
+		changeRate,
+	}
+
+	const enabled = {
+		maxCommission: maxCommissionEnabled,
+		changeRate: changeRateEnabled,
+	}
+
+	const hasValue = initialHasValue
+
+	const updated = {
+		commission: commission !== initial.commission,
+		payee: payee !== initial.payee,
+		maxCommission:
+			maxCommission !== initial.maxCommission ||
+			(!hasValue.maxCommission && enabled.maxCommission),
+		changeRate:
+			changeRate.maxIncrease !== initial.changeRate.maxIncrease ||
+			changeRate.minDelay !== initial.changeRate.minDelay ||
+			(!hasValue.changeRate && enabled.changeRate),
+	}
 
 	// Reset all values to their initial (current) values.
 	const resetAll = (): void => {
-		setCommission(initialCommission)
-		setPayee(initialPayee)
-		setMaxCommission(initialMaxCommission)
+		setCommission(initial.commission)
+		setPayee(initial.payee)
+		setMaxCommission(initial.maxCommission)
+		setChangeRate(initial.changeRate)
+		setMaxCommissionEnabled(initialHasValue.maxCommission)
+		setChangeRateEnabled(initialHasValue.changeRate)
 	}
 
-	// Get the initial value of a commission feature.
-	const getInitial = (feature: CommissionFeature) => {
-		switch (feature) {
-			case 'commission':
-				return initialCommission
-			case 'payee':
-				return initialPayee
-			case 'max_commission':
-				return initialMaxCommission
-			case 'change_rate':
-				return initialChangeRate
-			default:
-				return false
-		}
-	}
-
-	// Get the current value of a commission feayture.
-	const getCurrent = (feature: CommissionFeature) => {
-		switch (feature) {
-			case 'commission':
-				return commission
-			case 'payee':
-				return payee
-			case 'max_commission':
-				return maxCommission
-			case 'change_rate':
-				return changeRate
-			default:
-				return false
-		}
-	}
-
-	// Get whether a commission feature is enabled.
-	const getEnabled = (feature: OptionalCommissionFeature): boolean => {
-		switch (feature) {
-			case 'max_commission':
-				return maxCommissionEnabled
-			case 'change_rate':
-				return changeRateEnabled
-			default:
-				return false
-		}
-	}
-
-	// Set whether a commission feature is enabled.
-	const setEnabled = (
+	const setFeatureEnabled = (
 		feature: OptionalCommissionFeature,
-		enabled: boolean,
+		isEnabled: boolean,
 	): void => {
 		switch (feature) {
-			case 'max_commission':
-				setMaxCommissionEnabled(enabled)
+			case 'maxCommission':
+				setMaxCommissionEnabled(isEnabled)
 				break
-			case 'change_rate':
-				setChangeRateEnabled(enabled)
+			case 'changeRate':
+				setChangeRateEnabled(isEnabled)
 				break
 			default:
-		}
-	}
-
-	// Get whether a feature has been updated from its initial value.
-	const isUpdated = (feature: CommissionFeature): boolean => {
-		switch (feature) {
-			case 'commission':
-				return commission !== initialCommission
-
-			case 'max_commission':
-				return (
-					// no value set and current value is initial.
-					(!hasValue('max_commission') &&
-						maxCommission === getInitial('max_commission')) ||
-					// current value is not initial value.
-					maxCommission !== getInitial('max_commission') ||
-					// no value set and max commission is enabled.
-					(!hasValue('max_commission') && getEnabled('max_commission'))
-				)
-
-			case 'change_rate':
-				return (
-					// no value set and current value equals initial.
-					(!hasValue('change_rate') &&
-						JSON.stringify(changeRate) ===
-							JSON.stringify(getInitial('change_rate'))) ||
-					// has value set and change rate is not initial.
-					(hasValue('change_rate') &&
-						JSON.stringify(changeRate) !==
-							JSON.stringify(getInitial('change_rate'))) ||
-					// no value set and change rate is enabled.
-					(!hasValue('change_rate') && getEnabled('change_rate'))
-				)
-
-			default:
-				return false
 		}
 	}
 
@@ -204,12 +161,12 @@ export const PoolCommissionProvider = ({
 				setPayee,
 				setMaxCommission,
 				setChangeRate,
-				getInitial,
-				getCurrent,
-				getEnabled,
-				setEnabled,
+				setFeatureEnabled,
+				initial,
+				current,
+				enabled,
 				hasValue,
-				isUpdated,
+				updated,
 				resetAll,
 			}}
 		>

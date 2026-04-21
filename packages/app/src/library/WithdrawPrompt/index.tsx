@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -26,7 +26,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
 
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { state } = activePool?.bondedPool || {}
 
@@ -54,7 +54,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-color-primary')}`,
+						border: `1px solid ${getThemeValue('--gray-1000')}`,
 					}}
 				>
 					<div className="content">

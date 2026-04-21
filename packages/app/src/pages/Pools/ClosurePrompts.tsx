@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useAccountBalances } from 'hooks/useAccountBalances'
@@ -17,7 +17,7 @@ export const ClosurePrompts = () => {
 	const { t } = useTranslation('pages')
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { syncing } = useSyncing(['active-pools'])
 	const { balances } = useAccountBalances(activeAddress)
 	const { isBonding, activePool, isDepositor, activePoolNominations } =
@@ -44,7 +44,7 @@ export const ClosurePrompts = () => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-color-secondary')}`,
+						border: `1px solid ${getThemeValue('--status-warning')}`,
 					}}
 				>
 					<div className="content">
@@ -62,14 +62,13 @@ export const ClosurePrompts = () => {
 						<ButtonRow yMargin>
 							<ButtonPrimary
 								marginRight
-								text={t('unbond')}
+								text={t('unstake')}
 								disabled={
 									syncing || (!depositorCanWithdraw && !depositorCanUnbond)
 								}
 								onClick={() =>
 									openModal({
 										key: 'LeavePool',
-										options: { bondFor: 'pool' },
 										size: 'sm',
 									})
 								}

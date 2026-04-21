@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -7,10 +7,11 @@ import {
 	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	useExternalAccounts,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
@@ -31,7 +32,6 @@ export const ReadOnly = () => {
 	const { openHelpTooltip } = useHelp()
 	const { accounts } = useImportedAccounts()
 	const { setModalResize } = useOverlay().modal
-	const { forgetOtherAccounts } = useOtherAccounts()
 	const { forgetExternalAccounts } = useExternalAccounts()
 
 	const [inputOpen, setInputOpen] = useState<boolean>(false)
@@ -46,11 +46,10 @@ export const ReadOnly = () => {
 		({ addedBy }) => addedBy === 'user',
 	)
 
-	const handleForgetExternalAccount = (account: ExternalAccount) => {
-		forgetExternalAccounts([account])
-		// forget the account from state only if it has not replaced by a `system` external account.
+	// Forget the account from state only if it has not been replaced by a `system` external account
+	const handleForgetUserAccount = (account: ExternalAccount) => {
 		if (account.addedBy === 'user') {
-			forgetOtherAccounts([account])
+			forgetExternalAccounts([account])
 		}
 		setModalResize()
 	}
@@ -89,8 +88,8 @@ export const ReadOnly = () => {
 						{inputOpen && <Add />}
 						{externalAccounts.length ? (
 							<div className="accounts">
-								{externalAccounts.map((a, i) => (
-									<ManualAccount key={`user_external_account_${i}`}>
+								{externalAccounts.map((a) => (
+									<ManualAccount key={`user_external_account_${a.address}`}>
 										<div>
 											<Polkicon address={a.address} fontSize="1.9rem" />
 											<div className="text">
@@ -99,7 +98,7 @@ export const ReadOnly = () => {
 										</div>
 										<ButtonSecondary
 											text={t('forget')}
-											onClick={() => handleForgetExternalAccount(a)}
+											onClick={() => handleForgetUserAccount(a)}
 										/>
 									</ManualAccount>
 								))}

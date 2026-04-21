@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactElement, ReactNode, RefObject } from 'react'
@@ -96,7 +96,12 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
 				? children.map((child: ReactNode, i: number) => {
 						if (child !== undefined) {
 							return (
-								<Fragment key={`select_${i}`}>
+								<Fragment
+									key={`select_${
+										// biome-ignore lint/suspicious/noArrayIndexKey: <working with a react node>
+										i
+									}`}
+								>
 									{/* biome-ignore lint/suspicious/noExplicitAny: <> */}
 									{cloneElement(child as ReactElement<any>, {
 										bodyRef: bodyRefs[i],

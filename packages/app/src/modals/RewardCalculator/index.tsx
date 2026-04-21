@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons'
@@ -90,8 +90,8 @@ export const RewardCalculator = () => {
 								icon={showAdjusted ? faToggleOn : faToggleOff}
 								style={{
 									color: showAdjusted
-										? 'var(--accent-color-primary)'
-										: 'var(--text-color-tertiary)',
+										? 'var(--gray-1000)'
+										: 'var(--text-tertiary)',
 									marginRight: '0.8rem',
 								}}
 								transform={'grow-6'}

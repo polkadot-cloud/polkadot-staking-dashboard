@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SectionFullWidthThreshold } from 'consts'
@@ -13,10 +13,10 @@ export const RolesWrapper = styled.div`
   > section {
     flex: 1 1 25%;
     padding: 0 0.5rem;
-    border-right: 1px solid var(--border-primary-color);
+    border-right: 1px solid var(--gray-500);
 
     @media (max-width: ${SectionFullWidthThreshold}px) {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--gray-500);
       flex-basis: 100%;
       border-right: none;
       margin: 0.75rem 0;
@@ -43,7 +43,7 @@ export const RolesWrapper = styled.div`
       }
 
       > h4 {
-        font-family: InterSemiBold, sans-serif;
+        font-family: var(--font-family-semibold);
         display: flex;
         align-items: center;
         margin-top: 1.25rem;

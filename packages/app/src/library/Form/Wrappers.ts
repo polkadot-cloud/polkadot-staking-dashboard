@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmallFontSizeMaxWidth } from 'consts'
@@ -32,7 +32,7 @@ export const InputWrapper = styled.div`
   flex-flow: column nowrap;
 
   h3 {
-    color: var(--text-color-secondary);
+    color: var(--gray-900);
     margin: 0;
     padding: 0 0.25rem;
   }
@@ -52,7 +52,7 @@ export const InputWrapper = styled.div`
       width: 100%;
 
       .input {
-        border: 1px solid var(--border-primary-color);
+        border: 1px solid var(--gray-500);
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
@@ -66,7 +66,7 @@ export const InputWrapper = styled.div`
           }
 
           &:last-child {
-            color: var(--text-color-secondary);
+            color: var(--gray-900);
             padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
@@ -78,7 +78,7 @@ export const InputWrapper = styled.div`
             }
 
             p {
-              font-family: InterSemiBold, sans-serif;
+              font-family: var(--font-family-semibold);
               position: absolute;
               top: 0;
               left: 0;
@@ -92,7 +92,7 @@ export const InputWrapper = styled.div`
             }
           }
           > input {
-            font-family: InterBold, sans-serif;
+            font-family: var(--font-family-bold);
             border: none;
             padding: 0;
             width: 100%;
@@ -108,7 +108,7 @@ export const InputWrapper = styled.div`
     @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
       display: none;
     }
-    color: var(--text-color-secondary);
+    color: var(--gray-900);
     opacity: 0.5;
     padding: 0 0.5rem;
     margin-top: 0;

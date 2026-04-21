@@ -1,6 +1,6 @@
 {
 	"name": "plugin-staking-api",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"license": "GPL-3.0-only",
 	"type": "module",
 	"scripts": {
@@ -13,8 +13,8 @@
 		"./types": "./src/types.ts"
 	},
 	"dependencies": {
-		"@apollo/client": "^4.0.11",
-		"graphql": "^16.11.0",
+		"@apollo/client": "^4.1.7",
+		"graphql": "^16.13.1",
 		"rxjs": "^7.8.2"
 	}
 }

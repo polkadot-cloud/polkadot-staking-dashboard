@@ -1,11 +1,12 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePoolSetups } from 'contexts/PoolSetups'
@@ -47,8 +48,9 @@ export const JoinForm = ({
 	} = useOverlay().canvas
 	const { newBatchCall } = useBatchCall()
 	const { setPoolSetup } = usePoolSetups()
+	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const {
 		balances: {
 			pool: { totalPossibleBond },
@@ -134,11 +136,15 @@ export const JoinForm = ({
 		submitExtrinsic.proxySupported,
 	)
 
+	// In dev mode, allow choosing a new pool even if a poolId is provided
+	const choosePoolEnabled =
+		import.meta.env.MODE === 'development' || providedPoolId === null
+
 	return (
 		<JoinFormWrapper>
 			<div className="head">
 				<h2>{t('joinPool', { ns: 'pages' })}</h2>
-				{providedPoolId === null && (
+				{choosePoolEnabled && (
 					<ButtonPrimaryInvert
 						text={t('chooseAnotherPool', { ns: 'app' })}
 						iconLeft={faArrowsRotate}
@@ -177,11 +183,11 @@ export const JoinForm = ({
 			/>
 			<div className="submit">
 				<SubmitTx
-					displayFor="card"
 					submitText={t('joinPool', { ns: 'pages' })}
 					valid={formValid}
 					{...submitExtrinsic}
 					noMargin
+					stacked
 				/>
 			</div>
 		</JoinFormWrapper>

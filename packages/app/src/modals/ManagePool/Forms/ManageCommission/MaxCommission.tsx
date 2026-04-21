@@ -1,55 +1,34 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PerbillMultiplier } from 'consts'
+import { useApi } from 'contexts/Api'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'modals/ManagePool/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { perbillToPercent } from 'utils'
 import { usePoolCommission } from './provider'
 
-export const MaxCommission = ({
-	invalidMaxCommission,
-	maxCommissionAboveGlobal,
-}: {
-	invalidMaxCommission: boolean
-	maxCommissionAboveGlobal: boolean
-}) => {
+export const MaxCommission = () => {
 	const { t } = useTranslation('modals')
-	const { getEnabled, getCurrent, setCommission, setMaxCommission, isUpdated } =
+	const { globalMaxCommission } = useApi().poolsConfig
+	const { enabled, current, updated, setCommission, setMaxCommission } =
 		usePoolCommission()
 
 	// Get the current commission and max commission values.
-	const commission = getCurrent('commission')
-	const maxCommission = getCurrent('max_commission')
-	const maxCommissionUpdated = isUpdated('max_commission')
+	const { commission, maxCommission } = current
+	const maxCommissionUpdated = updated.maxCommission
+	const globalMaxCommissionUnit =
+		perbillToPercent(globalMaxCommission).toNumber()
 
-	const commissionUnit = commission / PerbillMultiplier
-
-	// Determine the max commission feedback to display.
-	const maxCommissionFeedback = (() => {
-		if (!maxCommissionUpdated) {
-			return undefined
-		}
-		if (invalidMaxCommission) {
-			return {
-				text: t('aboveExisting'),
-				label: 'danger',
+	const maxCommissionFeedback = maxCommissionUpdated
+		? {
+				text: t('updated'),
+				label: 'neutral',
 			}
-		}
-		if (maxCommissionAboveGlobal) {
-			return {
-				text: t('aboveGlobalMax'),
-				label: 'danger',
-			}
-		}
-		return {
-			text: t('updated'),
-			label: 'neutral',
-		}
-	})()
+		: undefined
 
 	return (
-		getEnabled('max_commission') && (
+		enabled.maxCommission && (
 			<SliderWrapper>
 				<div>
 					<h2>{maxCommission}% </h2>
@@ -59,12 +38,14 @@ export const MaxCommission = ({
 				</div>
 
 				<StyledSlider
+					max={globalMaxCommissionUnit}
 					value={maxCommission}
-					step={0.1}
+					step={0.05}
 					onChange={(val) => {
 						if (typeof val === 'number') {
+							val = Number(val.toFixed(2))
 							setMaxCommission(val)
-							if (val < commissionUnit) {
+							if (val < commission) {
 								setCommission(val)
 							}
 						}

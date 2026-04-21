@@ -6,25 +6,30 @@
 	"scripts": {
 		"clear": "pnpm -r --if-present clear && rm -rf build dist tsconfig.tsbuildinfo node_modules",
 		"dev": "cd packages/app && pnpm dev",
-		"check": "pnpm -r --if-present run check",
-		"lint": "pnpm -r --if-present run lint",
+		"check": "pnpm -r --if-present run check && stylelint '**/*.{css,scss}' --allow-empty-input",
+		"lint": "pnpm -r --if-present run lint && stylelint '**/*.{css,scss}' --fix --allow-empty-input",
 		"test": "pnpm -r --if-present test",
 		"license:headers": "npx @kt3k/license-checker -q"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.10",
+		"@biomejs/biome": "^2.4.12",
 		"@kt3k/license-checker": "3.2.2",
 		"@types/chroma-js": "^3.1.2",
-		"@types/react": "^19.2.7",
+		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@types/react-helmet": "^6.1.11",
-		"@vitejs/plugin-react-swc": "^4.2.2",
-		"@w3ux/types": "^2.4.1",
-		"globals": "^16.2.0",
-		"prettier": "^3.7.4",
+		"@vitejs/plugin-react": "^6.0.1",
+		"@w3ux/types": "^2.4.2",
+		"globals": "^17.5.0",
+		"postcss": "^8.5.10",
+		"postcss-scss": "^4.0.9",
+		"prettier": "^3.8.3",
 		"prettier-plugin-organize-imports": "^4.1.0",
-		"sass": "^1.97.1",
-		"typescript": "^5.7.2"
+		"sass": "^1.99.0",
+		"stylelint": "^17.8.0",
+		"stylelint-config-standard-scss": "^17.0.0",
+		"stylelint-order": "^8.1.1",
+		"typescript": "^6.0.3"
 	},
 	"pnpm": {
 		"overrides": {
@@ -35,15 +40,16 @@
 			"unrs-resolver"
 		],
 		"onlyBuiltDependencies": [
-			"@reown/appkit",
-			"@swc/core",
+			"@parcel/watcher",
 			"bufferutil",
 			"esbuild",
 			"keccak",
+			"node-hid",
 			"sharp",
 			"unrs-resolver",
+			"usb",
 			"utf-8-validate"
 		]
 	},
-	"packageManager": "pnpm@10.25.0"
+	"packageManager": "pnpm@10.29.3"
 }

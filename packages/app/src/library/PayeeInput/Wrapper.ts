@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -10,14 +10,12 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
     flex-flow: column nowrap;
     border-bottom: 1.5px solid
       ${(props) =>
-				props.$activeInput
-					? 'var(--accent-color-primary)'
-					: 'var(--border-primary-color)'};
+				props.$activeInput ? 'var(--gray-1000)' : 'var(--gray-500)'};
     padding: 0rem 0 0.4rem 0;
     transition: border var(--transition-duration);
 
     > h4 {
-      color: var(--text-color-secondary);
+      color: var(--gray-900);
       margin-top: 1.25rem;
       margin-bottom: 0.5rem;
     }
@@ -30,14 +28,14 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
       margin-top: 0.2rem;
 
       > .emptyIcon {
-        background: var(--background-list-item);
+        background: var(--bg-list);
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;
       }
 
       > .input {
-        color: var(--text-color-secondary);
+        color: var(--gray-900);
         display: flex;
         flex-flow: column nowrap;
         margin-left: 0.75rem;
@@ -45,7 +43,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
         max-width: 100%;
 
         > input {
-          color: var(--text-color-secondary);
+          color: var(--gray-900);
           font-size: 1.25rem;
           z-index: 1;
           opacity: 1;
@@ -76,7 +74,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
     font-size: 0.85rem;
 
     h5 {
-      color: var(--text-color-secondary);
+      color: var(--gray-900);
       position: absolute;
       top: 0;
       left: 0;

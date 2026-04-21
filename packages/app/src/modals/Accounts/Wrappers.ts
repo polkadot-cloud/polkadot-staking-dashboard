@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -10,7 +10,7 @@ export const AccountWrapper = styled.div`
 
   &.active {
     > div {
-      border: 1px solid var(--accent-color-primary);
+      border: 1px solid var(--gray-1000);
     }
   }
 
@@ -19,9 +19,9 @@ export const AccountWrapper = styled.div`
   }
 
   > div {
-    background: var(--button-primary-background);
-    color: var(--text-color-primary);
-    font-family: InterSemiBold, sans-serif;
+    background: var(--gray-400);
+    color: var(--gray-1000);
+    font-family: var(--font-family-semibold);
     border: 1px solid transparent;
     display: flex;
     align-items: flex-start;
@@ -42,10 +42,8 @@ export const AccountWrapper = styled.div`
 
       /* Top half of the button, account information */
       &.head {
-        background: var(--button-tertiary-background);
-
         > button {
-          color: var(--text-color-primary);
+          color: var(--gray-1000);
           display: flex;
           align-items: center;
           justify-content: flex-start;
@@ -57,7 +55,7 @@ export const AccountWrapper = styled.div`
 
           &:hover {
             .name {
-              color: var(--accent-color-primary);
+              color: var(--gray-1000);
             }
           }
 
@@ -70,7 +68,7 @@ export const AccountWrapper = styled.div`
           overflow: hidden;
           .name {
             transition: color var(--transition-duration);
-            font-family: InterSemiBold, sans-serif;
+            font-family: var(--font-family-semibold);
             max-width: 100%;
             margin: 0 0.5rem;
             overflow: hidden;
@@ -87,8 +85,8 @@ export const AccountWrapper = styled.div`
           }
 
           .badge {
-            background-color: var(--background-floating-card);
-            color: var(--text-color-secondary);
+            background-color: var(--bg-card-floating);
+            color: var(--gray-900);
             margin-left: 1rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.45rem;
@@ -111,10 +109,10 @@ export const AccountWrapper = styled.div`
           /* svg theming */
           svg {
             .light {
-              fill: var(--text-color-invert);
+              fill: var(--gray-100);
             }
             .dark {
-              fill: var(--text-color-secondary);
+              fill: var(--gray-900);
             }
           }
 
@@ -125,13 +123,13 @@ export const AccountWrapper = styled.div`
 
             &.neutral {
               h5 {
-                color: var(--text-color-secondary);
+                color: var(--gray-900);
                 opacity: 0.75;
               }
             }
             &.danger {
               h5 {
-                color: var(--status-danger-color);
+                color: var(--status-danger);
               }
             }
             .icon {
@@ -150,11 +148,11 @@ export const AccountWrapper = styled.div`
 
       /* Bottom half of the button, account metadata */
       &.foot {
-        border-top: 1px solid var(--border-primary-color);
+        border-top: 1px solid var(--gray-500);
         padding: 0.7rem 1rem;
 
         > .balance {
-          color: var(--text-color-secondary);
+          color: var(--gray-900);
           font-size: 0.9rem;
           opacity: 0.6;
         }

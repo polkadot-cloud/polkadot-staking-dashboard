@@ -1,11 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -16,10 +16,10 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
+import { ModalBack } from 'library/ModalBack'
 import { SubmitTx } from 'library/SubmitTx'
 import { type ForwardedRef, forwardRef, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 import type { FormsProps } from './types'
@@ -43,11 +43,12 @@ export const Forms = forwardRef(
 		} = useOverlay().modal
 		const { network } = useNetwork()
 		const { activePool } = useActivePool()
+		const { activeProxy } = useActiveProxy()
 		const { getConsts, serviceApi } = useApi()
-		const { removeFromBondedPools } = useBondedPools()
 		const { getSignerWarnings } = useSignerWarnings()
+		const { removeFromBondedPools } = useBondedPools()
+		const { activeAddress, activeAccount } = useActiveAccount()
 		const { removeFavorite: removeFavoritePool } = useFavoritePools()
-		const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
 
 		const { unit, units } = getStakingChainData(network)
 		const { bondFor, poolClosure } = options || {}
@@ -118,8 +119,8 @@ export const Forms = forwardRef(
 					<Padding horizontalOnly>
 						{warnings.length > 0 ? (
 							<Warnings>
-								{warnings.map((text, i) => (
-									<Warning key={`warning${i}`} text={text} />
+								{warnings.map((text) => (
+									<Warning key={`warning_${text}`} text={text} />
 								))}
 							</Warnings>
 						) : null}
@@ -146,18 +147,14 @@ export const Forms = forwardRef(
 							)}
 						</div>
 					</Padding>
+					<ModalBack onClick={() => setSection(0)} />
 					<SubmitTx
+						noMargin
+						submitText={t(task === 'rebond' ? 'rebond' : 'withdraw', {
+							ns: 'modals',
+						})}
 						requiresMigratedController={isStaking}
 						valid={valid}
-						buttons={[
-							<ButtonSubmitInvert
-								key="button_back"
-								text={t('back')}
-								iconLeft={faChevronLeft}
-								iconTransform="shrink-1"
-								onClick={() => setSection(0)}
-							/>,
-						]}
 						{...submitExtrinsic}
 						onResize={onResize}
 					/>

@@ -1,9 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ListProvider } from 'contexts/List'
 import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
@@ -15,9 +14,14 @@ import { Member } from './Member'
 import type { MembersListProps } from './types'
 
 export const MembersListInner = ({
+	bondedPool,
 	pagination,
 	memberCount,
 	itemsPerPage,
+	isDepositor,
+	isRoot,
+	isOwner,
+	isBouncer,
 }: MembersListProps) => {
 	const { t } = useTranslation('pages')
 	const {
@@ -27,7 +31,8 @@ export const MembersListInner = ({
 		setFetchedPoolMembersApi,
 	} = usePoolMembers()
 	const { network } = useNetwork()
-	const { activePool } = useActivePool()
+
+	const poolId = bondedPool.id
 
 	// current page
 	const [page, setPage] = useState<number>(1)
@@ -42,7 +47,6 @@ export const MembersListInner = ({
 
 	const syncMemberList = async () => {
 		try {
-			const poolId = activePool?.id || 0
 			if (poolId > 0 && !fetchingMemberList.current) {
 				fetchingMemberList.current = true
 				// Calculate offset based on page number (1-indexed)
@@ -85,7 +89,7 @@ export const MembersListInner = ({
 	useEffect(() => {
 		setFetchedPoolMembersApi('unsynced')
 		syncMemberList()
-	}, [activePool, page])
+	}, [poolId, page])
 
 	return (
 		<ListWrapper>
@@ -104,8 +108,16 @@ export const MembersListInner = ({
 					</ListStatusHeader>
 				) : (
 					<MotionContainer>
-						{listMembers.map((member, index) => (
-							<Member key={`nomination_${index}`} member={member} />
+						{listMembers.map((member) => (
+							<Member
+								key={`pool_member_${member.address}`}
+								member={member}
+								bondedPool={bondedPool}
+								isDepositor={isDepositor}
+								isRoot={isRoot}
+								isOwner={isOwner}
+								isBouncer={isBouncer}
+							/>
 						))}
 					</MotionContainer>
 				)}

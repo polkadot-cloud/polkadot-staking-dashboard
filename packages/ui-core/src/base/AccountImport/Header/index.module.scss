@@ -1,20 +1,23 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 .header {
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--gray-500);
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 16rem;
-  margin-bottom: 2rem;
   background: linear-gradient(
-    0,
-    var(--background-default) 0%,
-    var(--background-primary) 100%
-  );
+    to top,
+    var(--bg-body) 0%,
+    var(--bg-primary) 100%
+    );
+    
+  &.marginY {
+    margin-bottom: 2rem;
+  }
 
   > div {
     display: flex;
@@ -23,23 +26,36 @@
 
     &:first-child {
       margin-bottom: 1rem;
-      > svg {
-        width: 5rem;
+
+      > img, > svg {
+        max-width: 5rem;
+        max-height: 5rem;
+        filter: drop-shadow(0 0.25rem 0.5rem rgb(0 0 0 / 25%));
       }
     }
+
     &:nth-child(2) {
       > h4 > a {
-        color: var(--text-color-tertiary);
-        font-family: Inter, sans-serif;
+        color: var(--text-tertiary);
+        font-family: var(--font-family-default);
+
         &:hover {
-          color: var(--text-color-secondary);
+          color: var(--gray-900);
         }
       }
     }
+
     &:last-child {
-      position: absolute;
-      bottom: -1.5rem;
-      left: 0;
+      position: relative;
+      bottom: -1.25rem;
+      margin: 0.4rem 0;
+
+      &.offset {
+        position: absolute;
+        bottom: -1.5rem;
+        margin: 0;
+      }
+
       width: 100%;
       display: flex;
       flex-direction: row;
@@ -47,8 +63,8 @@
 
       > span,
       > div {
-        border: 1px solid var(--border-secondary-color);
-        background: var(--background-primary);
+        border: 1px solid var(--gray-600);
+        background: var(--bg-primary);
         padding: 0.25rem 0.5rem;
         border-radius: 0.5rem;
         margin: 0 0.25rem;

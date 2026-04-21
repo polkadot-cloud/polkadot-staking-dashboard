@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
@@ -133,9 +133,9 @@ export const Overview = forwardRef(
 						</div>
 					)}
 
-					{unlocking.map((chunk, i: number) => (
+					{unlocking.map((chunk) => (
 						<Chunk
-							key={`unlock_chunk_${i}`}
+							key={`unlock_chunk_${chunk.era}`}
 							chunk={chunk}
 							bondFor={bondFor}
 							onRebond={onRebondHandler}

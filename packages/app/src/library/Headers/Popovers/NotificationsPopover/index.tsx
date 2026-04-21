@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useOutsideAlerter } from '@w3ux/hooks'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useInvites } from 'contexts/Invites'
 import type { PoolInvite } from 'contexts/Invites/types'
@@ -24,7 +24,7 @@ export const NotificationsPopover = ({
 	const { isBonding } = useStaking()
 	const { openCanvas } = useOverlay().canvas
 	const { getPoolMembership } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { inviteConfig, dismissInvite } = useInvites()
 
 	const { membership } = getPoolMembership(activeAddress)
@@ -93,7 +93,7 @@ export const NotificationsPopover = ({
 		<div
 			ref={popoverRef}
 			style={{
-				background: 'var(--button-popover-tab-background)',
+				background: 'var(--btn-popover-tab-bg)',
 				borderRadius: '0.75rem',
 			}}
 		>
@@ -102,8 +102,8 @@ export const NotificationsPopover = ({
 					{t('notification', { count: notifications.length })}
 				</Heading>
 				<List>
-					{notifications.map((n, index) => (
-						<div key={`notification_${index}`}>
+					{notifications.map((n) => (
+						<div key={`notification_${n.title}`}>
 							<h3>
 								<FontAwesomeIcon icon={faPaperPlane} />
 								{n.title}

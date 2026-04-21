@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -11,12 +11,12 @@ import { formatIdentityValue } from 'utils'
 import type { OverviewSectionProps } from '../types'
 import { AddressesWrapper } from '../Wrappers'
 
-export const Roles = ({
-	bondedPool,
-	roleIdentities: { identities, supers },
-}: OverviewSectionProps) => {
+export const Roles = ({ bondedPool, roleIdentities }: OverviewSectionProps) => {
 	const { t } = useTranslation('pages')
 	const iconSize = '3rem'
+
+	const identities = roleIdentities?.identities || {}
+	const supers = roleIdentities?.supers || {}
 
 	const rootAddress = bondedPool?.roles?.root || ''
 	const nominatorAddress = bondedPool?.roles?.nominator || ''

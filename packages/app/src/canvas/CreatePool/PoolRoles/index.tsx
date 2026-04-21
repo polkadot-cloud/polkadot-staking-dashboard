@@ -1,7 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import type { PoolProgress } from 'contexts/PoolSetups/types'
 import { Footer } from 'library/SetupSteps/Footer'
@@ -15,7 +15,7 @@ import type { PoolRoles as PoolRolesInterface } from 'types'
 
 export const PoolRoles = ({ section }: SetupStepProps) => {
 	const { t } = useTranslation('pages')
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPoolSetup, setPoolSetup } = usePoolSetups()
 	const setup = getPoolSetup(activeAddress)
 	const { progress } = setup

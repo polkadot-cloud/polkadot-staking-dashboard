@@ -1,8 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
+import { useExternalAccounts } from '@polkadot-cloud/connect'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,19 +11,14 @@ import { Padding } from 'ui-core/modal'
 
 export const Add = () => {
 	const { t } = useTranslation('modals')
-	const { addExternalAccount } = useExternalAccounts()
-	const { addOrReplaceOtherAccount } = useOtherAccounts()
+	const { addReadOnlyAccount } = useExternalAccounts()
 
 	const [selectedAccount, setSelectedAccount] =
 		useState<ImportedAccount | null>(null)
 
 	const handleSubmit = async () => {
 		if (selectedAccount) {
-			const result = addExternalAccount(selectedAccount.address, 'user')
-			if (result) {
-				addOrReplaceOtherAccount(result.account, result.type)
-			}
-
+			const result = addReadOnlyAccount(selectedAccount.address)
 			// Reset state on successful import
 			if (result) {
 				setSelectedAccount(null)

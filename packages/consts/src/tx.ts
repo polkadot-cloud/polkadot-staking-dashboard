@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 // Map error details to specific translation keys
@@ -20,9 +20,6 @@ export const TxErrorKeyMap: Record<string, string> = {
 	device_disconnected: 'errors.technicalErrorDeviceDisconnected',
 	app_not_open: 'errors.technicalErrorAppNotOpen',
 	hardware_error: 'errors.technicalErrorDeviceDisconnected',
-	wc_session_disconnected: 'errors.technicalErrorWcSessionDisconnected',
-	wc_timeout: 'errors.technicalErrorWcTimeout',
-	wallet_connect_error: 'errors.technicalErrorWcSessionDisconnected',
 	qr_scan_error: 'errors.technicalErrorQrScanError',
 	qr_invalid: 'errors.technicalErrorQrInvalid',
 	vault_error: 'errors.technicalErrorQrScanError',

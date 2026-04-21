@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useAccountBalances } from 'hooks/useAccountBalances'
@@ -20,7 +20,7 @@ export const UnstakePrompts = () => {
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { active, totalUnlockChunks, totalUnlocked, totalUnlocking } =
 		balances.nominator
@@ -40,7 +40,7 @@ export const UnstakePrompts = () => {
 			<Page.Row>
 				<CardWrapper
 					style={{
-						border: `1px solid ${getThemeValue('--accent-color-primary')}`,
+						border: `1px solid ${getThemeValue('--gray-1000')}`,
 					}}
 				>
 					<div className="content">

@@ -53,7 +53,7 @@
 			"decentralizationAnalyticsPeriod": [
 				"Decentralization Analytics Period",
 				[
-					"The decentralization of your nomination is calculated by analysing the rewards payed out in the last 30 days. Depending on the network, this will translate into a number of Eras.",
+					"The decentralization of your nomination is calculated by analysing the rewards paid out in the last 30 days. Depending on the network, this will translate into a number of Eras.",
 					"30 days provides enough information for the aggregation to be meaningful, and is also short enough for changes in nominations to start impacting this analysis after a few days."
 				]
 			],
@@ -83,7 +83,13 @@
 					"Each nominated validator runs at a given data center that can be geolocated by its IP address.",
 					"The table displays the last region, country and network where each nominated validator was geolocated.",
 					"When the validator has been located at more than one location during the analytic period a ++ sign will be displayed.",
-					"The percentage shown is the proportion of rewards payed out to you by this validator in the analytic period."
+					"The percentage shown is the proportion of rewards paid out to you by this validator in the analytic period."
+				]
+			],
+			"halving": [
+				"Halving",
+				[
+					"A halving is an event that reduces the staking rewards earned by nominators and validators by 50%. Halvings occur every 2 years on Polkadot to control inflation and ensure the long-term sustainability of the network."
 				]
 			],
 			"idealStaked": [
@@ -162,7 +168,7 @@
 				"Nomination Payout Distribution",
 				[
 					"The decentralization of your nomination.",
-					"The following charts display the distribution of rewards aggregated by the region, country and IP network of the validator the payed out the reward."
+					"The following charts display the distribution of rewards aggregated by the region, country and IP network of the validator that paid out the reward."
 				]
 			],
 			"nominationPools": [
@@ -309,7 +315,7 @@
 			"totalPayoutsAnalysed": [
 				"Total Payouts Analysed",
 				[
-					"The aggregated {NETWORK_UNIT} rewards payed out by nominated validators in the last 30 days.",
+					"The aggregated {NETWORK_UNIT} rewards paid out by nominated validators in the last 30 days.",
 					"These payouts were used to calculate the decentralization of your nomination."
 				]
 			],

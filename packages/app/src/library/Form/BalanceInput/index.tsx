@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ export const BalanceInput = ({
 }: BalanceInputProps) => {
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { unit } = getStakingChainData(network)
 
 	// the current local token value
@@ -43,8 +43,14 @@ export const BalanceInput = ({
 	// handle value change
 	const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
 		const val = e.target.value
-		if (val !== '' && new BigNumber(val).isNaN()) {
-			return
+		if (val !== '') {
+			try {
+				if (new BigNumber(val).isNaN()) {
+					return
+				}
+			} catch {
+				return
+			}
 		}
 		setLocalValue(val)
 		updateParentState(val)
@@ -54,8 +60,9 @@ export const BalanceInput = ({
 	const updateParentState = (val: string) => {
 		val = val || '0'
 		if (new BigNumber(val).isNaN()) {
-			return
+			val = '0'
 		}
+
 		for (const setter of setters) {
 			setter({
 				value: new BigNumber(val),

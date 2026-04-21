@@ -1,24 +1,29 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { useTokenPrices } from 'contexts/TokenPrice'
+import { useMemo } from 'react'
 
 export const TokenPrice = () => {
 	const { network } = useNetwork()
 	const { currency } = useCurrency()
 	const { price, change } = useTokenPrices()
 	const { unit } = getStakingChainData(network)
+	const priceFormatter = useMemo(
+		() =>
+			new Intl.NumberFormat('en-US', {
+				style: 'currency',
+				currency,
+			}),
+		[currency],
+	)
 	return (
 		<>
 			<div className="stat">
-				1 {unit} /{' '}
-				{new Intl.NumberFormat('en-US', {
-					style: 'currency',
-					currency,
-				}).format(price)}
+				1 {unit} / {priceFormatter.format(price)}
 			</div>
 			<div className="stat">
 				<span

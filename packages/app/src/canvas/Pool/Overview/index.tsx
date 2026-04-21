@@ -1,9 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useStaking } from 'contexts/Staking'
 import { GraphContainer, Interface } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
 import { Addresses } from './Addresses'
@@ -14,13 +13,11 @@ import { Stats } from './Stats'
 
 export const Overview = (props: OverviewSectionProps) => {
 	const { inPool } = useActivePool()
-	const { isBonding } = useStaking()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const {
 		bondedPool: { state },
 	} = props
-	const showJoinForm =
-		activeAddress !== null && state === 'Open' && !inPool && !isBonding
+	const showJoinForm = activeAddress !== null && state === 'Open' && !inPool
 
 	return (
 		<Interface

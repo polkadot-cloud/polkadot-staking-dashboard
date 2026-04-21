@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
@@ -23,14 +23,17 @@ export const PageTabs = ({
 			<div className={classes.scroll}>
 				<div className={classes.inner}>
 					{tabs.map(
-						(
-							{ active, onClick, title, badge, disabled }: PageTitleTabProps,
-							i: number,
-						) => (
+						({
+							active,
+							onClick,
+							title,
+							badge,
+							disabled,
+						}: PageTitleTabProps) => (
 							<ButtonTab
 								className={tabClassName}
 								active={!!active}
-								key={`page_tab_${i}`}
+								key={`page_tab_${title}`}
 								onClick={() => onClick()}
 								title={title}
 								colorSecondary={colorSecondary}

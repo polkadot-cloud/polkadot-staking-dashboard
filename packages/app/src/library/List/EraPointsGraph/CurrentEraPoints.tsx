@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -29,7 +29,7 @@ export const CurrentEraPoints = ({
 
 	// Get an era high value from era individuals data
 	const getEraHigh = (individual: [string, number][]) =>
-		Object.values(individual).sort((a, b) => b[1] - a[1])[0]?.[1] || 0
+		individual.reduce((high, [, points]) => (points > high ? points : high), 0)
 
 	// Store era reward points for the current address
 	const [eraPoints, setEraPoints] = useState<BigNumber>(

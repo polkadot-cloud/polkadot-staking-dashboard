@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Title } from 'library/Modal/Title'
@@ -18,9 +18,9 @@ export const SelectLanguage = () => {
 			<Title title={t('selectLanguage')} />
 			<Padding horizontalOnly style={{ marginTop: '1rem' }}>
 				<ButtonList>
-					{Object.entries(locales).map(([code, { label }], i) => (
+					{Object.entries(locales).map(([code, { label }]) => (
 						<ButtonModal
-							key={`${code}_${i}`}
+							key={code}
 							selected={i18n.resolvedLanguage === code}
 							onClick={() => {
 								changeLanguage(code, i18n)

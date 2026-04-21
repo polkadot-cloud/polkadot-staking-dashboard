@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-graphs-v1.2.0...ui-graphs-v1.3.0) (2026-01-12)
+
+
+### Features
+
+* Lazy people api connection, query queuing implementation ([#3039](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3039)) ([d08f80e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d08f80ebf610153c7145965dd2ff40d3af245f87))
+* **refactor:** linting with `@biomejs/biome` ([#2933](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/2933)) ([b95da17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b95da17d4fa0d60cfdc3cd44a0de537cae461bf5))
+* **refactor:** mv modal header to ui-core/modal ([#3098](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3098)) ([8f24eaa](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8f24eaa83abc369bf7d66293750a9d1addb37df8))
+
 ## [1.2.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-graphs-v1.1.0...ui-graphs-v1.2.0) (2025-06-17)
 
 

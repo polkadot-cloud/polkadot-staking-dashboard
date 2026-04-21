@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
@@ -7,8 +7,8 @@ import {
 	faPlugCircleXmark,
 	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
+import { useExtensionAccounts, useExtensions } from '@polkadot-cloud/connect'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
-import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
 import { useNetwork } from 'contexts/Network'
 import { onExtensionConnectedEvent } from 'event-tracking'
@@ -88,9 +88,7 @@ export const Extension = ({ extension, last, setOpen }: ExtensionProps) => {
 				</div>
 				<div>
 					<ButtonMonoInvert
-						style={
-							connected ? { color: 'var(--status-danger-color)' } : undefined
-						}
+						style={connected ? { color: 'var(--status-danger)' } : undefined}
 						text={
 							connected
 								? t('disconnect', { ns: 'modals' })

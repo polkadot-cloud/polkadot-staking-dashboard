@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
@@ -22,10 +22,10 @@ export const FilterValidators = () => {
 			<Title title={t('filterValidators')} />
 			<div className="body">
 				<h4>{t('include')}:</h4>
-				{Object.entries(includesToLabels).map(([f, l], i) => (
+				{Object.entries(includesToLabels).map(([f, l]) => (
 					<FilterListButton
 						$active={includes?.includes(f) ?? false}
-						key={`validator_include_${i}`}
+						key={`validator_include_${f}`}
 						type="button"
 						onClick={() => {
 							toggleFilter('include', 'validators', f)
@@ -40,10 +40,10 @@ export const FilterValidators = () => {
 				))}
 
 				<h4>{t('exclude')}:</h4>
-				{Object.entries(excludesToLabels).map(([f, l], i) => (
+				{Object.entries(excludesToLabels).map(([f, l]) => (
 					<FilterListButton
 						$active={excludes?.includes(f) ?? false}
-						key={`validator_exclude_${i}`}
+						key={`validator_exclude_${f}`}
 						type="button"
 						onClick={() => {
 							toggleFilter('exclude', 'validators', f)

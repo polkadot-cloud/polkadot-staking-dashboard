@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import classNames from 'classnames'
@@ -35,8 +35,8 @@ export const Popover = ({
 }) => {
 	width = width || '310px'
 
-	const contentClasses = classNames(classes.Content, {
-		[classes.Transparent]: !!transparent,
+	const contentClasses = classNames(classes.content, {
+		[classes.transparent]: !!transparent,
 	})
 
 	return (
@@ -57,10 +57,8 @@ export const Popover = ({
 					side={side}
 					align={align}
 				>
-					<div style={{ display: 'flex', flexDirection: 'column' }}>
-						{content}
-					</div>
-					{arrow && <RadixPopover.Arrow className={classes.Arrow} />}
+					<div className={classes.contentBody}>{content}</div>
+					{arrow && <RadixPopover.Arrow className={classes.arrow} />}
 				</RadixPopover.Content>
 			</RadixPopover.Portal>
 		</RadixPopover.Root>

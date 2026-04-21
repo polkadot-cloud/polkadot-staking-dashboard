@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ReactNode } from 'react'
@@ -11,7 +11,6 @@ import type {
 	NetworkId,
 	PoolsConfig,
 	ProviderType,
-	RelayMetrics,
 	ServiceInterface,
 	StakingMetrics,
 } from 'types'
@@ -29,7 +28,6 @@ export interface APIContextInterface {
 	isReady: boolean
 	providerType: ProviderType
 	autoRpc: boolean
-	relayMetrics: RelayMetrics
 	activeEra: ActiveEra
 	poolsConfig: PoolsConfig
 	stakingMetrics: StakingMetrics

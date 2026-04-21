@@ -1,7 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Ledger } from 'contexts/LedgerHardware/static/ledger'
+import { Ledger } from '@polkadot-cloud/connect-ledger'
 import type { ExtraSignedExtension, SubmittableExtrinsic } from 'dedot'
 import { MerkleizedMetadata } from 'dedot/merkleized-metadata'
 import type { PayloadOptions } from 'dedot/types'

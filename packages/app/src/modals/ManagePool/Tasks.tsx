@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
@@ -75,7 +75,7 @@ export const Tasks = forwardRef(
 									}}
 								>
 									<TaskInnerWrapper>
-										<h3>{t('manageCommission')}</h3>
+										<h3>{t('manageCommission.title')}</h3>
 										<p>{t('updatePoolCommission')}</p>
 									</TaskInnerWrapper>
 								</ButtonOption>

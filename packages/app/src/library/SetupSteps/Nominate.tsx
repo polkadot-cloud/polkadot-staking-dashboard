@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxNominations } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import {
 	ManageNominationsProvider,
 	useManageNominations,
@@ -23,7 +23,7 @@ import type { NominationsProps } from './types'
 
 export const Inner = ({ bondFor, section }: NominationsProps) => {
 	const { t } = useTranslation('app')
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setNominations } = useManageNominations()
 	const { getPoolSetup, setPoolSetup } = usePoolSetups()
 	const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
@@ -87,7 +87,7 @@ export const Inner = ({ bondFor, section }: NominationsProps) => {
 
 export const Nominate = (props: NominationsProps) => {
 	const { getPoolSetup } = usePoolSetups()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getNominatorSetup } = useNominatorSetups()
 	const setup =
 		props.bondFor === 'nominator'

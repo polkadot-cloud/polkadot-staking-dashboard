@@ -1,12 +1,13 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { capitalizeFirstLetter, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { PerbillMultiplier } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePoolSetups } from 'contexts/PoolSetups'
@@ -45,8 +46,9 @@ export const Form = ({
 	const { newBatchCall } = useBatchCall()
 	const { serviceApi, isReady } = useApi()
 	const { setPoolSetup } = usePoolSetups()
+	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const {
 		balances: {
 			pool: { totalPossibleBond },
@@ -56,12 +58,12 @@ export const Form = ({
 	const { unit, units } = getStakingChainData(network)
 	const largestTxFee = useBondGreatestFee({ bondFor: 'pool' })
 
-	// Bond amount to join pool with.
+	// Bond amount to join pool with
 	const [bond, setBond] = useState<{ bond: string }>({
 		bond: planckToUnit(totalPossibleBond, units),
 	})
 
-	// Whether the bond amount is valid.
+	// Whether the bond amount is valid
 	const [bondValid, setBondValid] = useState<boolean>(false)
 
 	// feedback errors to trigger modal resize
@@ -70,12 +72,12 @@ export const Form = ({
 	// Store the pool balance
 	const [poolBalance, setPoolBalance] = useState<BigNumber | null>(null)
 
-	// Handler to set bond on input change.
+	// Handler to set bond on input change
 	const handleSetBond = ({ value }: { value: BigNumber }) => {
 		setBond({ bond: value.toString() })
 	}
 
-	// Whether the form is ready to submit.
+	// Whether the form is ready to submit
 	const formValid = bondValid && feedbackErrors.length === 0
 
 	const getTx = () => {
@@ -209,13 +211,14 @@ export const Form = ({
 					</div>
 				</JoinFormWrapper>
 			</Padding>
-			<div className="submit">
+			<div>
 				<SubmitTx
 					displayFor="card"
 					submitText={t('joinPool', { ns: 'pages' })}
 					valid={formValid}
 					{...submitExtrinsic}
 					noMargin
+					stacked
 				/>
 			</div>
 		</>

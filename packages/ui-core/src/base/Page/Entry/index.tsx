@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ForwardedRef } from 'react'
@@ -9,6 +9,7 @@ import classes from './index.module.scss'
 export type EntryProps = ComponentBase & {
 	mode: 'light' | 'dark'
 	theme: string
+	language: string
 }
 
 /**
@@ -17,15 +18,19 @@ export type EntryProps = ComponentBase & {
  */
 export const Entry = forwardRef(
 	(
-		{ children, style, mode, theme }: EntryProps,
+		{ children, style, mode, theme, language }: EntryProps,
 		ref: ForwardedRef<HTMLDivElement>,
-	) => (
-		<div
-			ref={ref}
-			className={`${classes.entry} theme-${mode} theme-${theme}`}
-			style={style}
-		>
-			{children}
-		</div>
-	),
+	) => {
+		const langClass = `${language.toLowerCase()}Lang`
+
+		return (
+			<div
+				ref={ref}
+				className={`${classes.entry} ${mode} ${theme} ${langClass}`}
+				style={style}
+			>
+				{children}
+			</div>
+		)
+	},
 )

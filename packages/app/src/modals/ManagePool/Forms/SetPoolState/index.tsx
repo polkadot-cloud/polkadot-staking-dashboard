@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
@@ -12,11 +12,11 @@ import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { ActionItem } from 'library/ActionItem'
 import { Warning } from 'library/Form/Warning'
+import { ModalBack } from 'library/ModalBack'
 import { SubmitTx } from 'library/SubmitTx'
 import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ButtonSubmitInvert } from 'ui-buttons'
 import { Padding, Warnings } from 'ui-core/modal'
 import { useOverlay } from 'ui-overlay'
 
@@ -32,8 +32,9 @@ export const SetPoolState = ({
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
 	const { closeModal } = useOverlay().modal
+	const { activeProxy } = useActiveProxy()
+	const { activeAccount } = useActiveAccount()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAccount, activeProxy } = useActiveAccounts()
 	const { isOwner, isBouncer, activePool } = useActivePool()
 	const { updateBondedPools, getBondedPool } = useBondedPools()
 
@@ -138,25 +139,26 @@ export const SetPoolState = ({
 			<Padding horizontalOnly>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}
 				{content.title}
 				{content.message}
 			</Padding>
+			<ModalBack onClick={() => setSection(0)} />
 			<SubmitTx
+				noMargin
+				submitText={t(
+					task === 'destroy_pool'
+						? 'destroyPool'
+						: task === 'lock_pool'
+							? 'lockPool'
+							: 'unlockPool',
+					{ ns: 'modals' },
+				)}
 				valid={valid}
-				buttons={[
-					<ButtonSubmitInvert
-						key="button_back"
-						text={t('back')}
-						iconLeft={faChevronLeft}
-						iconTransform="shrink-1"
-						onClick={() => setSection(0)}
-					/>,
-				]}
 				onResize={onResize}
 				{...submitExtrinsic}
 			/>

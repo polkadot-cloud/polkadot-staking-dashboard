@@ -1,13 +1,15 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import {
+	useActiveAccount,
+	useExternalAccounts,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts'
 import { useNetwork } from 'contexts/Network'
 import {
 	getLocalActiveProxy,
@@ -31,9 +33,9 @@ export const [ProxiesContext, useProxies] =
 export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
+	const { activeAccount } = useActiveAccount()
 	const { addExternalAccount } = useExternalAccounts()
-	const { addOrReplaceOtherAccount } = useOtherAccounts()
-	const { activeProxy, activeAccount } = useActiveAccounts()
 	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 
 	// Store the proxy accounts of each imported account
@@ -63,8 +65,6 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 		}
 		return newDelegates
 	}
-
-	const delegates = formatProxiesToDelegates()
 
 	// Gets the delegates of the given account
 	const getDelegates = (address: MaybeAddress): Proxy | undefined => {
@@ -99,18 +99,12 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 
 		let addDelegatorAsExternal = false
 		for (const delegate of results) {
-			if (
-				accounts.find(({ address }) => address === delegate) &&
-				!delegates[delegate]
-			) {
+			if (accounts.find(({ address }) => address === delegate)) {
 				addDelegatorAsExternal = true
 			}
 		}
 		if (addDelegatorAsExternal) {
-			const importResult = addExternalAccount(delegator, 'system')
-			if (importResult) {
-				addOrReplaceOtherAccount(importResult.account, importResult.type)
-			}
+			addExternalAccount(delegator)
 		}
 		return []
 	}
@@ -150,10 +144,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 				const { address, source, proxyType } = localActiveProxy
 				// Add proxy address as external account if not imported
 				if (!accounts.find((a) => a.address === address)) {
-					const importResult = addExternalAccount(address, 'system')
-					if (importResult) {
-						addOrReplaceOtherAccount(importResult.account, importResult.type)
-					}
+					addExternalAccount(address)
 				}
 				const isActive = (
 					Object.entries(proxies).find(

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -7,25 +7,24 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
   width: 100%;
   padding: 0.15rem 0.25rem;
   h4 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
 
     > .btn {
-      color: var(--text-color-secondary);
-      background: var(--background-primary);
+      color: var(--gray-900);
+      background: var(--bg-primary);
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
       align-items: center;
-      border-radius: 2rem;
       width: 1.5rem;
       height: 1.5rem;
       margin-left: 0.65rem;
       transition: color var(--transition-duration);
       &:hover {
-        color: var(--accent-color-primary);
+        color: var(--gray-1000);
       }
     }
   }
@@ -44,8 +43,8 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.$isAddress ? '3rem' : 0)};
-      font-family: InterBold, sans-serif;
-      color: var(--text-color-primary);
+      font-family: var(--font-family-bold);
+      color: var(--gray-1000);
       position: absolute;
       left: 0;
       top: 0;
@@ -61,7 +60,7 @@ export const Wrapper = styled.div<{ $isAddress?: boolean }>`
       overflow: hidden;
 
       h2 {
-        font-family: InterBold, sans-serif;
+        font-family: var(--font-family-mono);
         display: flex;
         align-items: center;
         text-overflow: ellipsis;

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -27,8 +27,8 @@ export const HeaderWrapper = styled.div`
 
 
     > span {
-      color: var(--text-color-tertiary);
-      border: 1px solid var(--border-primary-color);
+      color: var(--text-tertiary);
+      border: 1px solid var(--gray-500);
       border-radius: 0.45rem;
       padding: 0.35rem 0.75rem;
       margin: 0.25rem;
@@ -52,18 +52,18 @@ export const JoinFormWrapper = styled.div`
     display: flex;
     align-items: center;
     &.note {
-      color: var(--text-color-secondary);
-      font-family: Inter, sans-serif;
+      color: var(--gray-900);
+      font-family: var(--font-family-default);
     }
   }
 
   > h4 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     margin: 1.75rem 0 0.0 0;
     padding-left: 0.4rem;
 
     &.underline {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--gray-500);
       padding-bottom: 0.5rem;
       margin: 2rem 0 1rem 0;
     }

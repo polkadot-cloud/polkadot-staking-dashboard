@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { ChainProperties } from 'dedot/types/json-rpc'
@@ -9,17 +9,21 @@ export type ChainId = NetworkId | SystemChainId
 
 export type NetworkId = DefaultServiceNetworkId
 
-export type DefaultServiceNetworkId = 'polkadot' | 'kusama' | 'westend'
-
-export type OperatorsSupportedNetwork = 'polkadot' | 'kusama' | 'westend'
+export type DefaultServiceNetworkId =
+	| 'polkadot'
+	| 'kusama'
+	| 'westend'
+	| 'paseo'
 
 export type SystemChainId =
 	| 'people-polkadot'
 	| 'people-kusama'
 	| 'people-westend'
+	| 'people-paseo'
 	| 'statemint'
 	| 'statemine'
 	| 'westmint'
+	| 'paseomint'
 
 export type ProviderType = 'ws' | 'sc'
 
@@ -57,8 +61,6 @@ export interface ChainConsts {
 	sessionsPerEra: number
 	maxExposurePageSize: number
 	historyDepth: number
-	epochDuration: bigint
-	expectedBlockTime: bigint
 	poolsPalletId: Uint8Array
 }
 
@@ -111,6 +113,10 @@ export interface Network {
 	units: number
 	ss58: number
 	defaultFeeReserve: bigint
+	consts: {
+		expectedBlockTime: bigint
+		epochDuration: bigint
+	}
 	meta: {
 		hubChain: ChainId
 		peopleChain: ChainId

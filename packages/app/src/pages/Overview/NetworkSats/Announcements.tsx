@@ -1,22 +1,19 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { capitalizeFirstLetter, planckToUnit, sortWithNull } from '@w3ux/utils'
+import { planckToUnit, sortWithNull } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { Item } from 'library/Announcements/Wrappers'
-import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement'
-import { motion } from 'motion/react'
+import { AnnouncementsList } from 'library/Announcements/AnnouncementsList'
+import type { AnnouncementItem } from 'library/Announcements/types'
 import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 
-export const Announcements = () => {
+export const Announcements = ({ items }: { items: AnnouncementItem[] }) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { bondedPools } = useBondedPools()
@@ -33,95 +30,86 @@ export const Announcements = () => {
 	})
 	const totalPoolPointsUnit = planckToUnitBn(totalPoolPoints, units)
 
-	const container = {
-		hidden: { opacity: 0 },
-		show: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.25,
-			},
-		},
-	}
-
-	const listItem = {
-		hidden: {
-			opacity: 0,
-		},
-		show: {
-			opacity: 1,
-		},
-	}
-
-	const announcements = []
+	const announcements: Array<
+		(AnnouncementItem & { category?: string }) | null
+	> = [
+		...items.map(({ label, value, category, button, helpKey }) => {
+			if (!value || value === '0' || value === '0%') {
+				return null
+			}
+			return { label, value, category, button, helpKey }
+		}),
+	]
 
 	// Total staked on the network
 	if (totalStaked > 0n) {
-		announcements.push({
-			class: 'neutral',
-			title: t('networkCurrentlyStaked', {
-				total: new BigNumber(planckToUnit(totalStaked, units))
-					.integerValue()
-					.toFormat(),
-				unit,
-				network: capitalizeFirstLetter(network),
-			}),
-			subtitle: t('networkCurrentlyStakedSubtitle', {
-				unit,
-			}),
-		})
+		const totalStakedValue = new BigNumber(planckToUnit(totalStaked, units))
+			.integerValue()
+			.toFormat()
+		announcements.push(
+			totalStakedValue === '0'
+				? null
+				: {
+						value: `${totalStakedValue} ${unit}`,
+						label: t('totalStaked'),
+						category: t('participation'),
+					},
+		)
 	} else {
 		announcements.push(null)
 	}
 
 	// Total locked in pools
 	if (bondedPools.length) {
-		announcements.push({
-			class: 'neutral',
-			title: `${totalPoolPointsUnit.integerValue().toFormat()} ${unit} ${t(
-				'inPools',
-			)}`,
-			subtitle: `${t('bondedInPools', { networkUnit: unit })}`,
-		})
+		const totalPoolPointsValue = totalPoolPointsUnit.integerValue().toFormat()
+		announcements.push(
+			totalPoolPointsValue === '0'
+				? null
+				: {
+						value: `${totalPoolPointsValue} ${unit}`,
+						label: t('bondedInPools', { networkUnit: unit }),
+						category: t('pools'),
+					},
+		)
 	} else {
 		announcements.push(null)
 	}
 
 	// Last era payout
 	if (lastRewardUnit.isGreaterThan(0)) {
-		announcements.push({
-			class: 'neutral',
-			title: `${lastRewardUnit.integerValue().toFormat()} ${unit} ${t('paidOutLastEraTitle')}`,
-			subtitle: `${t('paidOutLastEraSubtitle')}`,
-		})
+		const lastRewardValue = lastRewardUnit.integerValue().toFormat()
+		announcements.push(
+			lastRewardValue === '0'
+				? null
+				: {
+						value: `${lastRewardValue} ${unit}`,
+						label: t('lastEraPayout'),
+						category: t('participation'),
+					},
+		)
 	} else {
 		announcements.push(null)
 	}
 
 	announcements.sort(sortWithNull(true))
 
-	return (
-		<motion.div
-			variants={container}
-			initial="hidden"
-			animate="show"
-			style={{ width: '100%' }}
-		>
-			{announcements.map((item, index) =>
-				item === null ? (
-					<AnnouncementLoader key={`announcement_${index}`} />
-				) : (
-					<Item key={`announcement_${index}`} variants={listItem}>
-						<h4 className={item.class}>
-							<FontAwesomeIcon
-								icon={faBack}
-								style={{ marginRight: '0.6rem' }}
-							/>
-							{item.title}
-						</h4>
-						<p>{item.subtitle}</p>
-					</Item>
-				),
-			)}
-		</motion.div>
-	)
+	// Group announcements by category
+	const grouped: Record<string, Array<AnnouncementItem | null>> = {}
+	for (const announcement of announcements) {
+		if (announcement !== null) {
+			const cat = announcement.category || ''
+			if (!grouped[cat]) {
+				grouped[cat] = []
+			}
+			grouped[cat].push(announcement)
+		} else {
+			const firstKey = Object.keys(grouped)[0] || ''
+			if (!grouped[firstKey]) {
+				grouped[firstKey] = []
+			}
+			grouped[firstKey].push(null)
+		}
+	}
+
+	return <AnnouncementsList grouped={grouped} />
 }

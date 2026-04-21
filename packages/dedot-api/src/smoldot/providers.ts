@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SmoldotProvider } from 'dedot'
@@ -37,11 +37,10 @@ export const newSystemChainSmProvider = async (
 	relayChain: Awaited<ReturnType<Client['addChain']>>,
 	systemChainData: SystemChain,
 ) => {
-	const { chainSpec: paraChainSpec } =
-		await systemChainData.endpoints.getLightClient()
+	const { chainSpec } = await systemChainData.endpoints.getLightClient()
 
 	const chain = await client.addChain({
-		chainSpec: paraChainSpec,
+		chainSpec,
 		potentialRelayChains: [relayChain],
 	})
 	return new SmoldotProvider(chain)

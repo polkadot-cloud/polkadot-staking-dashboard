@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -25,18 +25,14 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > .inner {
-    background: var(--background-list-item);
-    border: var(--item-border-width) solid var(--background-list-item);
+    background: var(--bg-list);
+    border: var(--item-border-width) solid var(--bg-list);
 
-    &.modal {
-      background: var(--background-modal-card);
-      border: var(--item-border-width) solid var(--background-modal-card);
-    }
     &.canvas {
-      background: var(--background-canvas-card);
-      border: var(--item-border-width) solid var(--background-canvas-card);
+      background: var(--gray-300);
+      border: var(--item-border-width) solid var(--gray-400)
     }
-    &.modal,
+
     &.canvas {
       box-shadow: none;
     }
@@ -55,7 +51,7 @@ export const Wrapper = styled.div`
     transition: border var(--transition-duration) ease;
 
     &.selected {
-      border-color: var(--accent-color-primary);
+      border-color: var(--gray-1000);
     }
 
     .row {
@@ -111,9 +107,7 @@ export const ValidatorStatusWrapper = styled.div<{
 
   h5 {
     color: ${(props) =>
-			props.$status === 'active'
-				? 'var(--status-success-color)'
-				: 'var(--text-color-secondary)'};
+			props.$status === 'active' ? 'var(--status-success)' : 'var(--gray-900)'};
     opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
@@ -133,7 +127,7 @@ export const PoolStatusWrapper = styled.div<{
     white-space: nowrap;
   }
   h4 {
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
     font-size: 1rem;
 
     padding-top: ${(props) =>
@@ -142,14 +136,12 @@ export const PoolStatusWrapper = styled.div<{
     > span {
       color: ${(props) =>
 				props.$status === 'active'
-					? 'var(--status-success-color)'
-					: 'var(--text-color-tertiary)'};
+					? 'var(--status-success)'
+					: 'var(--text-tertiary)'};
 
       border: 0.75px solid
         ${(props) =>
-					props.$status === 'active'
-						? 'var(--status-success-color)'
-						: 'transparent'};
+					props.$status === 'active' ? 'var(--status-success)' : 'transparent'};
 
       padding: ${(props) => (props.$status === 'active' ? '0 0.5rem' : '0')};
       border-radius: 0.3rem;

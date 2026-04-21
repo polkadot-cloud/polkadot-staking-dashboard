@@ -1,14 +1,14 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const JoinFormWrapper = styled.div`
-  background: var(--background-canvas-card);
-  border: 0.75px solid var(--border-primary-color);
-  box-shadow: var(--card-shadow);
+  background: var(--gray-300);
+  border: 0.75px solid var(--gray-500);
+  box-shadow: var(--shadow);
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 0;
   width: 100%;
 
   .head {
@@ -19,7 +19,7 @@ export const JoinFormWrapper = styled.div`
     width: 100%;
 
     > h2 {
-      color: var(--text-color-secondary);
+      color: var(--gray-900);
       margin: 0.25rem 0;
       width: auto;
     }
@@ -38,24 +38,24 @@ export const JoinFormWrapper = styled.div`
     display: flex;
     align-items: center;
     &.note {
-      color: var(--text-color-secondary);
-      font-family: Inter, sans-serif;
+      color: var(--gray-900);
+      font-family: var(--font-family-default);
     }
   }
 
   > h4 {
     margin: 1.5rem 0 0.5rem 0;
-    color: var(--text-color-tertiary);
+    color: var(--text-tertiary);
 
     &.underline {
-      border-bottom: 1px solid var(--border-primary-color);
+      border-bottom: 1px solid var(--gray-500);
       padding-bottom: 0.5rem;
       margin: 2rem 0 1rem 0;
     }
   }
 
   > .input {
-    border-bottom: 1px solid var(--border-primary-color);
+    border-bottom: 1px solid var(--gray-500);
     padding: 0 0.25rem;
     display: flex;
     align-items: flex-end;
@@ -114,12 +114,12 @@ export const InviteHeader = styled.div`
   h2 {
     font-size: 1.8rem;
     margin-bottom: 0.75rem;
-    font-family: InterBold, sans-serif;
-    color: var(--text-color-primary);
+    font-family: var(--font-family-bold);
+    color: var(--gray-1000);
   }
 
   h4 {
-    color: var(--text-color-secondary);
+    color: var(--gray-900);
     max-width: 40rem;
     margin: 0 auto;
   }

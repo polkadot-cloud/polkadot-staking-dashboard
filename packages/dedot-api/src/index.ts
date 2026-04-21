@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -43,25 +43,24 @@ export const initDedotService = async () => {
 			const { network, ...rest } = cur
 			// Type narrow services and apis
 			if (network === 'westend') {
-				const { Service, apis, ids, providerPeople } = await getDefaultService(
-					network,
-					rest,
-				)
-				service = new Service(cur, ids, ...apis, providerPeople)
+				const { Service, apis, ids, providerRelay, providerPeople } =
+					await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis, providerRelay, providerPeople)
 			}
 			if (network === 'kusama') {
-				const { Service, apis, ids, providerPeople } = await getDefaultService(
-					network,
-					rest,
-				)
-				service = new Service(cur, ids, ...apis, providerPeople)
+				const { Service, apis, ids, providerRelay, providerPeople } =
+					await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis, providerRelay, providerPeople)
 			}
 			if (network === 'polkadot') {
-				const { Service, apis, ids, providerPeople } = await getDefaultService(
-					network,
-					rest,
-				)
-				service = new Service(cur, ids, ...apis, providerPeople)
+				const { Service, apis, ids, providerRelay, providerPeople } =
+					await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis, providerRelay, providerPeople)
+			}
+			if (network === 'paseo') {
+				const { Service, apis, ids, providerRelay, providerPeople } =
+					await getDefaultService(network, rest)
+				service = new Service(cur, ids, ...apis, providerRelay, providerPeople)
 			}
 
 			// Expose service interface

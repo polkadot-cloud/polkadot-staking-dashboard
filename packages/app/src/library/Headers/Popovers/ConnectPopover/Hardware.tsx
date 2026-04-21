@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -12,6 +12,7 @@ export const Hardware = ({
 	title,
 	websiteUrl,
 	websiteText,
+	last,
 }: {
 	active: boolean
 	onClick: () => void
@@ -19,10 +20,11 @@ export const Hardware = ({
 	title: string
 	websiteUrl: string
 	websiteText: string
+	last?: boolean
 }) => (
 	<ConnectItem.Item
 		asButton
-		last={active}
+		last={last}
 		onClick={() => {
 			onClick()
 		}}

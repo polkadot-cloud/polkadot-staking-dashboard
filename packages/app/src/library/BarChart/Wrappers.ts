@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -26,20 +26,24 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     }
   }
   .d1 {
-    background: var(--accent-color-primary);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--gray-1000);
+    color: var(--gray-100);
+
+    ::selection {
+      background-color: var(--accent-900);
+    }
   }
   .d2 {
-    background: var(--accent-color-secondary);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--gray-900);
+    color: var(--gray-100);
   }
   .d3 {
-    background: var(--text-color-secondary);
-    color: rgba(255, 255, 255, 0.95);
+    background: var(--gray-800);
+    color: var(--gray-100);
   }
   .d4 {
-    background: var(--button-tertiary-background);
-    color: var(--text-color-secondary);
+    background: var(--gray-400);
+    color: var(--gray-900);
   }
 `
 
@@ -60,7 +64,7 @@ export const Legend = styled.div`
   }
 
   > h4 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     display: flex;
     align-items: center;
     font-size: 1.1rem;
@@ -80,7 +84,7 @@ export const Legend = styled.div`
 `
 
 export const Bar = styled.div`
-  background: var(--button-secondary-background);
+  background: var(--gray-300);
   border-radius: 0.65rem;
   display: flex;
   overflow: hidden;
@@ -95,7 +99,7 @@ export const Bar = styled.div`
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
-      font-family: InterSemiBold, sans-serif;
+      font-family: var(--font-family-semibold);
       position: absolute;
       left: 0;
       text-overflow: ellipsis;

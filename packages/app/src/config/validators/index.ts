@@ -1,18 +1,7 @@
 /* @license Copyright 2024 w3ux authors & contributors
 SPDX-License-Identifier: GPL-3.0-only */
 
-export type ValidatorSupportedChains = 'polkadot' | 'kusama' | 'westend'
-
-export interface ValidatorEntry {
-	name: string
-	icon: string
-	bio: string
-	email?: string
-	x?: string
-	website?: string
-	// NOTE: must have at least one active validator on at least one network.
-	validators: Partial<Record<ValidatorSupportedChains, string[]>>
-}
+import type { ValidatorEntry } from '@w3ux/validator-assets'
 
 export const ValidatorCommunity: ValidatorEntry[] = [
 	{
@@ -91,7 +80,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 	{
 		name: 'bLd Nodes | ChadStakeKing',
 		icon: 'bLdNodes',
-		bio: 'Independant validator, professionnal Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
+		bio: 'Independent validator, professional Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
 		email: 'gm@bldnodes.org',
 		website: 'https://bldnodes.org',
 		validators: {
@@ -102,7 +91,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 	{
 		name: 'Blockseeker.io',
 		icon: 'Blockseeker',
-		bio: 'Independant validator, software engineer and web3 enthusiast, focusing on providing tools and building for web3 running bare metal/dedicated nodes to help decentralize the network. Only charges a small fee to help maintain nodes and effort in running them.',
+		bio: 'Independent validator, software engineer and web3 enthusiast, focusing on providing tools and building for web3 running bare metal/dedicated nodes to help decentralize the network. Only charges a small fee to help maintain nodes and effort in running them.',
 		email: 'dev@blockseeker.io',
 		x: '@blockseeker_io',
 		website: 'https://blockseeker.io',
@@ -461,7 +450,7 @@ export const ValidatorCommunity: ValidatorEntry[] = [
 	{
 		name: 'ParaNodes.io',
 		icon: 'Paranodes',
-		bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stablility of operations.',
+		bio: 'ParaNodes offers nominators high returns through low commissions and high reliability.  ParaNodes is a team of three (3) individuals over two timezones to ensure adequate coverage.  We take a knowledge and process based approach to ensuring security and stability of operations.',
 		email: 'support@paranodes.io',
 		x: '@paranodes',
 		website: 'https://paranodes.io/',

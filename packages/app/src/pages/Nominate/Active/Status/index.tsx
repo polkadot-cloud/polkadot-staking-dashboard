@@ -1,9 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { usePlugins } from 'contexts/Plugins'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -16,8 +14,7 @@ import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus'
 export const Status = ({ height }: { height: number }) => {
 	const { syncing } = useSyncing()
 	const { isBonding } = useStaking()
-	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	return (
@@ -27,9 +24,7 @@ export const Status = ({ height }: { height: number }) => {
 		>
 			<NominationStatus />
 			<Separator />
-			<UnclaimedPayoutsStatus
-				dimmed={!isBonding || !pluginEnabled('staking_api')}
-			/>
+			<UnclaimedPayoutsStatus />
 
 			{!syncing ? (
 				isBonding ? (
@@ -38,12 +33,18 @@ export const Status = ({ height }: { height: number }) => {
 						<PayoutDestinationStatus />
 					</>
 				) : (
-					!isReadOnlyAccount(activeAddress) && (
-						<NewNominator syncing={syncing} />
-					)
+					<>
+						<Separator transparent />
+						{!isReadOnlyAccount(activeAddress) && (
+							<NewNominator syncing={syncing} />
+						)}
+					</>
 				)
 			) : (
-				<NewNominator syncing={syncing} />
+				<>
+					<Separator transparent />
+					<NewNominator syncing={syncing} />
+				</>
 			)}
 		</CardWrapper>
 	)

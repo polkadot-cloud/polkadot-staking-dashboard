@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { maxBigInt } from '@w3ux/utils'
@@ -37,7 +37,7 @@ export const getFreeBalance = (
 }
 
 // Calculate transferable balance (free minus fees, unlocking, and unlocked amounts)
-export const getTransferrableBalance = (
+export const getTransferableBalance = (
 	freeBalance: bigint,
 	feeReserve: bigint,
 ): bigint => maxBigInt(freeBalance - feeReserve, 0n)
@@ -142,7 +142,7 @@ export const calculateAllBalances = (
 	const balanceTxFees = balanceForTxFees(accountBalance, edReserved)
 
 	// Calculate transferable balance
-	const transferableBalance = getTransferrableBalance(freeBalance, feeReserve)
+	const transferableBalance = getTransferableBalance(freeBalance, feeReserve)
 
 	// Calculate detailed balances
 	const nominator = nominatorBalances(

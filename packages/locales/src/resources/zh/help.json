@@ -71,7 +71,7 @@
 			"eraPoints": [
 				"Era 点数",
 				[
-					"Era Points are a measure of how well a validator has performed in the current era. The more Era Points a validator has, the more rewards they will receive at the end of the era."
+					"时代积分衡量验证者在当前时代的表现。验证者拥有的时代积分越多，在时代结束时获得的奖励就越多."
 				]
 			],
 			"geolocationOfEachNomination": [
@@ -81,6 +81,12 @@
 					"表格显示了每个被提名验证人在上次分析期间被地理定位的地区、国家和网络.",
 					"如果在分析期间验证人被定位在多个位置, 则会显示++符号.",
 					"显示的百分比是该验证人在分析期间向您支付的奖励比例."
+				]
+			],
+			"halving": [
+				"Halving",
+				[
+					"减半是指将提名者和验证者获得的质押奖励减少 50% 的事件。Polkadot 每两年进行一次减半，以控制通货膨胀并确保网络的长期可持续性。"
 				]
 			],
 			"idealStaked": ["最优比例", ["理想网络条件下的抵押占发行量的百分比."]],

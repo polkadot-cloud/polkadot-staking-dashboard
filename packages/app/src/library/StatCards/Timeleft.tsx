@@ -1,10 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
-import { Countdown as CountdownWrapper, Stat } from 'ui-core/base'
+import { Badge, Stat } from 'ui-core/base'
 import { Pie } from 'ui-graphs'
 import type { TimeleftProps } from './types'
 import { Wrapper } from './Wrapper'
@@ -31,9 +31,9 @@ export const Timeleft = ({
 						</label>
 					)}
 					<Stat.Content>
-						<CountdownWrapper>
+						<Badge.Inner>
 							<Countdown timeleft={timeleft} />
-						</CountdownWrapper>
+						</Badge.Inner>
 						<Stat.Subtitle>
 							{label}{' '}
 							{helpKey !== undefined ? (

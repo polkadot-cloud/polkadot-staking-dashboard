@@ -1,15 +1,15 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import type { ActiveAccount } from 'types'
 
 export const useSignerAvailable = () => {
+	const { activeProxy } = useActiveProxy()
 	const { getStakingLedger } = useBalances()
 	const { accountHasSigner } = useImportedAccounts()
-	const { activeProxy } = useActiveAccounts()
 
 	const signerAvailable = (who: ActiveAccount, proxySupported: boolean) => {
 		const { controllerUnmigrated } = getStakingLedger(who?.address || null)

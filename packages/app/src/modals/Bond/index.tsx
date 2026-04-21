@@ -1,10 +1,11 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
@@ -34,8 +35,9 @@ export const Bond = () => {
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
 	const { isBonding } = useStaking()
+	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
 
@@ -174,7 +176,11 @@ export const Bond = () => {
 				/>
 				<p>{t('newlyBondedFunds')}</p>
 			</Padding>
-			<SubmitTx valid={bondValid} {...submitExtrinsic} />
+			<SubmitTx
+				submitText={t('bond', { ns: 'modals' })}
+				valid={bondValid}
+				{...submitExtrinsic}
+			/>
 		</>
 	)
 }

@@ -1,20 +1,14 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { determinePoolDisplay } from 'contexts/Pools/util'
-import { useStaking } from 'contexts/Staking'
-import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import type { MembershipStatusProps } from './types'
-import { useStatusButtons } from './useStatusButtons'
 
 export const MembershipStatus = ({
 	showButtons = true,
@@ -22,49 +16,28 @@ export const MembershipStatus = ({
 }: MembershipStatusProps) => {
 	const { t } = useTranslation('pages')
 	const { isReady } = useApi()
-	const { isBonding } = useStaking()
-	const { label } = useStatusButtons()
 	const { openModal } = useOverlay().modal
-	const { poolsMetaData } = useBondedPools()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
-	const { balances } = useAccountBalances(activeAddress)
-	const { activePool, isOwner, isBouncer, isMember } = useActivePool()
-
-	const { active } = balances.pool
-	const poolState = activePool?.bondedPool?.state ?? null
+	const { inPool, canManage, activePool, membershipDisplay, label } =
+		useActiveAccountPool()
 
 	const membershipButtons = []
-	let membershipDisplay = t('notInPool')
 
-	if (activePool) {
-		// Determine pool membership display.
-		membershipDisplay = determinePoolDisplay(
-			activePool.addresses.stash,
-			poolsMetaData[Number(activePool.id)],
-		)
-
-		// Display manage button if active account is pool owner or bouncer.
-		// Or display manage button if active account is a pool member.
-		if (
-			(poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
-			(isMember() && active > 0n)
-		) {
-			// Display manage button if active account is not a read-only account.
-			if (!isReadOnlyAccount(activeAddress)) {
-				membershipButtons.push({
-					title: t('manage'),
-					icon: faCog,
-					disabled: !isReady,
-					small: true,
-					onClick: () =>
-						openModal({
-							key: 'ManagePool',
-							options: { disableWindowResize: true, disableScroll: true },
-							size: 'sm',
-						}),
-				})
-			}
+	if (inPool && canManage) {
+		if (!isReadOnlyAccount(activeAddress)) {
+			membershipButtons.push({
+				title: t('manage'),
+				icon: faCog,
+				disabled: !isReady,
+				small: true,
+				onClick: () =>
+					openModal({
+						key: 'ManagePool',
+						options: { disableWindowResize: true, disableScroll: true },
+						size: 'sm',
+					}),
+			})
 		}
 	}
 
@@ -83,7 +56,7 @@ export const MembershipStatus = ({
 		<Stat
 			label={t('poolMembership')}
 			helpKey="Pool Membership"
-			stat={isBonding ? t('alreadyNominating') : t('notInPool')}
+			stat={t('notInPool')}
 			buttonType={buttonType}
 		/>
 	)

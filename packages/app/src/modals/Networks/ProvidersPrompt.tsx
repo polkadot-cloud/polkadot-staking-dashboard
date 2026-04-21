@@ -1,8 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
-import { NetworkList } from 'consts/networks'
+import { SystemChainList } from 'consts/networks'
+import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
@@ -17,7 +18,9 @@ export const ProvidersPrompt = () => {
 	const { closePrompt } = usePrompt()
 	const { getRpcEndpoint } = useApi()
 
-	const rpcProviders = NetworkList[network].endpoints.rpc
+	const { name } = getStakingChainData(network)
+	const rpcProviders = SystemChainList[name].endpoints.rpc
+
 	return (
 		<>
 			<Title title={t('rpcProviders', { ns: 'modals' })} />
@@ -28,19 +31,19 @@ export const ProvidersPrompt = () => {
 						network: capitalizeFirstLetter(network),
 					})}
 				</h4>
-				{Object.entries(rpcProviders)?.map(([key, url], i) => {
+				{Object.entries(rpcProviders)?.map(([key, url]) => {
 					const isDisabled = getRpcEndpoint(network) === key
 
 					return (
 						<PromptSelectItem
-							key={`favorite_${i}`}
+							key={`favorite_${key}`}
 							className={isDisabled ? 'inactive' : undefined}
 							onClick={() => {
 								closePrompt()
 								// NOTE: Currently, we can only update the relay chain RPC endpoint
 								setRpcEndpoints(network, {
 									...getRpcEndpoints(),
-									[network]: key,
+									[name]: key,
 								})
 							}}
 						>

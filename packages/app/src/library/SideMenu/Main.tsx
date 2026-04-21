@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { PageCategories } from 'config/pages'
 import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -12,6 +12,7 @@ import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useSyncing } from 'hooks/useSyncing'
+import { useWarnings } from 'hooks/useWarnings'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -43,9 +44,10 @@ export const Main = ({
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
+	const { warningMessages, getMostSevereWarningFormat } = useWarnings()
 	const { controllerUnmigrated } = getStakingLedger(activeAddress)
 	const { balances, nominatorBalance } = useAccountBalances(activeAddress)
 	const { totalUnlockChunks } = balances.nominator
@@ -91,12 +93,20 @@ export const Main = ({
 			}
 			if (uri === `${import.meta.env.BASE_URL}pool`) {
 				if (inPool) {
+					if (warningMessages.length > 0) {
+						pages[i].bullet = getMostSevereWarningFormat()
+						return true
+					}
 					pages[i].bullet = 'accent'
 					return true
 				}
 			}
 			if (uri === `${import.meta.env.BASE_URL}stake`) {
 				if (inPool || nominatorBalance.isGreaterThan(0)) {
+					if (warningMessages.length > 0) {
+						pages[i].bullet = getMostSevereWarningFormat()
+						return true
+					}
 					pages[i].bullet = 'accent'
 					return true
 				}

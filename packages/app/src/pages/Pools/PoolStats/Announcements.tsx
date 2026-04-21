@@ -1,20 +1,17 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BigNumber from 'bignumber.js'
 import { getStakingChain, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
-import { Item } from 'library/Announcements/Wrappers'
-import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement'
-import { motion } from 'motion/react'
+import { AnnouncementsList } from 'library/Announcements/AnnouncementsList'
+import type { AnnouncementItem } from 'library/Announcements/types'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 
-export const Announcements = () => {
+export const Announcements = ({ items }: { items: AnnouncementItem[] }) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { getChainSpec } = useApi()
@@ -38,66 +35,36 @@ export const Announcements = () => {
 		units,
 	)
 
-	const container = {
-		hidden: { opacity: 0 },
-		show: {
-			opacity: 1,
-			transition: {
-				staggerChildren: 0.25,
-			},
-		},
-	}
+	const announcements: Array<AnnouncementItem | null> = [
+		...items.map(({ label, value, button, helpKey }) => {
+			if (!value || value === '0' || value === '0%') {
+				return null
+			}
+			return { label, value, button, helpKey }
+		}),
+	]
 
-	const listItem = {
-		hidden: {
-			opacity: 0,
-		},
-		show: {
-			opacity: 1,
-		},
-	}
-
-	const announcements = []
-
-	announcements.push({
-		class: 'neutral',
-		title: `${rewardsClaimed.decimalPlaces(3).toFormat()} ${unit} ${t(
-			'beenClaimed',
-		)}`,
-		subtitle: `${t('beenClaimedBy', { unit })}`,
-	})
-
-	announcements.push({
-		class: 'neutral',
-		title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
-			'outstandingReward',
-		)}`,
-		subtitle: `${t('availableToClaim', { unit })}`,
-	})
-
-	return (
-		<motion.div
-			variants={container}
-			initial="hidden"
-			animate="show"
-			style={{ width: '100%' }}
-		>
-			{announcements.map((item, index) =>
-				item === null ? (
-					<AnnouncementLoader key={`announcement_${index}`} />
-				) : (
-					<Item key={`announcement_${index}`} variants={listItem}>
-						<h4 className={item.class}>
-							<FontAwesomeIcon
-								icon={faBack}
-								style={{ marginRight: '0.6rem' }}
-							/>
-							{item.title}
-						</h4>
-						<p>{item.subtitle}</p>
-					</Item>
-				),
-			)}
-		</motion.div>
+	// Total rewards claimed
+	const rewardsClaimedValue = rewardsClaimed.decimalPlaces(3).toFormat()
+	announcements.push(
+		rewardsClaimedValue === '0'
+			? null
+			: {
+					label: t('totalClaimed'),
+					value: `${rewardsClaimedValue} ${unit}`,
+				},
 	)
+
+	// Available to claim
+	const rewardBalanceValue = rewardBalance.decimalPlaces(3).toFormat()
+	announcements.push(
+		rewardBalanceValue === '0'
+			? null
+			: {
+					label: t('availableToClaim', { unit }),
+					value: `${rewardBalanceValue} ${unit}`,
+				},
+	)
+
+	return <AnnouncementsList items={announcements} />
 }

@@ -1,9 +1,9 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { useMenu } from 'contexts/Menu'
-import { useEffect, useRef } from 'react'
+import { isValidElement, useEffect, useRef } from 'react'
 import { Wrapper } from './Wrappers'
 
 export const Menu = () => {
@@ -43,10 +43,15 @@ export const Menu = () => {
 		}
 	}, [])
 
+	const isSecondarybg =
+		isValidElement<{ secondaryBg?: boolean }>(inner) &&
+		inner.props?.secondaryBg === true
+
 	return (
 		open && (
 			<Wrapper
 				ref={menuRef}
+				$secondaryBg={isSecondarybg}
 				style={{
 					position: 'absolute',
 					left: `${x}px`,

@@ -1,7 +1,7 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedgerHardware } from 'contexts/LedgerHardware'
+import { useLedger } from '@polkadot-cloud/connect-ledger'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
@@ -14,7 +14,7 @@ import { Tasks } from './Tasks'
 export const ManagePool = () => {
 	const { t } = useTranslation('modals')
 	const { activePool } = useActivePool()
-	const { integrityChecked } = useLedgerHardware()
+	const { integrityChecked } = useLedger()
 	const { setModalHeight, modalMaxHeight } = useOverlay().modal
 
 	// modal task

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
@@ -100,14 +100,11 @@ export const PoolList = ({
 		const newValue = e.currentTarget.value
 
 		let filteredPools: BondedPool[] = [...poolsDefault]
+		// Apply filters first, then search, to avoid unnecessary search computations on pools that are
+		// already filtered out
 		filteredPools = applyFilter(includes, excludes, filteredPools)
 		filteredPools = poolSearchFilter(filteredPools, newValue)
 
-		// ensure no duplicates
-		filteredPools = filteredPools.filter(
-			(value, index: number, self) =>
-				index === self.findIndex((i) => i.id === value.id),
-		)
 		setPage(1)
 		setListPools(filteredPools)
 		setSearchTerm('pools', newValue)
@@ -185,7 +182,7 @@ export const PoolList = ({
 										icon={faBars}
 										color={
 											listFormat === 'row'
-												? getThemeValue('--accent-color-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
@@ -195,7 +192,7 @@ export const PoolList = ({
 										icon={faGripVertical}
 										color={
 											listFormat === 'col'
-												? getThemeValue('--accent-color-primary')
+												? getThemeValue('--gray-1000')
 												: 'inherit'
 										}
 									/>
@@ -210,10 +207,10 @@ export const PoolList = ({
 				)}
 				<MotionContainer>
 					{poolsToDisplay.length ? (
-						poolsToDisplay.map((pool, index: number) => (
+						poolsToDisplay.map((pool) => (
 							<motion.div
 								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-								key={`nomination_${index}`}
+								key={`nomination_${pool.id}`}
 								variants={{
 									hidden: {
 										y: 15,

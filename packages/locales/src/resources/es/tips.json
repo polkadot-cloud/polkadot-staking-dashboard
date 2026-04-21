@@ -48,7 +48,6 @@
 		"module": {
 			"cancel": "Cancelar",
 			"close": "Cerrar",
-			"more": "Más",
 			"of": "de",
 			"oneMoment": "Un momento por favor",
 			"syncingWith": "Sincronizando con {{network}}",
@@ -84,6 +83,14 @@
 			[
 				"Revisar regularmente tus pagos es una buena manera de medir qué tan bien están funcionando tus nominaciones.",
 				"Ve a la página de Pagos para obtener un desglose detallado de cada pago que recibes, y de qué validador (o Pool) provino el pago."
+			]
+		],
+		"switchPool": [
+			"Cambiar de Pool",
+			"Cambia a un nuevo Pool para evitar advertencias de Pool.",
+			[
+				"Tu Pool actual tiene problemas que pueden afectar tus recompensas.",
+				"Considera dejar tu Pool actual y unirte a uno diferente para maximizar tus recompensas de staking."
 			]
 		],
 		"understandingValidatorPerformance": [

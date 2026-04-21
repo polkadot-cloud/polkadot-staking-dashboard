@@ -1,7 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -14,8 +15,9 @@ import { Close, useOverlay } from 'ui-overlay'
 export const ChangePoolRoles = () => {
 	const { t } = useTranslation('modals')
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
 	const { replacePoolRoles } = useBondedPools()
-	const { activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const {
 		closeModal,
 		config: { options },

@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import {
@@ -70,9 +70,9 @@ export const Methods = ({
 
 	return (
 		<SelectItems layout="three-col">
-			{methods.map((m, i) => (
+			{methods.map((m) => (
 				<SelectItem
-					key={`gen_method_${i}`}
+					key={`gen_method_${m.title}`}
 					title={m.title}
 					subtitle={m.subtitle}
 					icon={<FontAwesomeIcon icon={m.icon} />}

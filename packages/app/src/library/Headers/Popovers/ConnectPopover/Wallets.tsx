@@ -1,10 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import extensions from '@w3ux/extension-assets'
 import LedgerSquareSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
-import WalletConnectSVG from '@w3ux/extension-assets/WalletConnect.svg?react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import { Extension } from './Extension'
@@ -64,50 +62,22 @@ export const Wallets = ({
 					websiteText="ledger.com"
 				/>
 			</section>
-			<section>
-				<Hardware
-					active={selectedSection === 'wallet_connect'}
-					onClick={() => {
-						openModal({
-							key: 'ImportAccounts',
-							size: 'sm',
-							options: { source: 'wallet_connect' },
-						})
-						setOpen(false)
-					}}
-					Svg={WalletConnectSVG}
-					title="Wallet Connect"
-					websiteUrl="https://reown.com"
-					websiteText="reown.com"
-				/>
-			</section>
 			<h4>{t('webExtensions', { ns: 'app' })}</h4>
 			{otherExtensions.map((extension, i) => (
 				<section key={`extension_item_${extension.id}`}>
 					<Extension
 						extension={extension}
-						last={i === extensionItems.length - 1}
+						last={i === otherExtensions.length - 1}
 						setOpen={setOpen}
 					/>
 				</section>
 			))}
-			<h4>Multisig</h4>
-			<section>
-				<Extension
-					extension={{
-						id: 'mimir',
-						...extensions.mimir,
-					}}
-					last={true}
-					setOpen={setOpen}
-				/>
-			</section>
 			<h4>{t('developerTools', { ns: 'modals' })}</h4>
 			{devTools.map((extension, i) => (
 				<section key={`extension_item_${extension.id}`}>
 					<Extension
 						extension={extension}
-						last={i === extensionItems.length - 1}
+						last={i === devTools.length - 1}
 						setOpen={setOpen}
 					/>
 				</section>

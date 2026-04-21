@@ -1,12 +1,12 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
 
 export const ActionWithButton = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
+  border-bottom: 1px solid var(--gray-500);
   width: 100%;
-  color: var(--text-color-primary);
+  color: var(--gray-1000);
   display: flex;
   align-items: center;
   margin: 1.25rem 0 0;
@@ -17,19 +17,19 @@ export const ActionWithButton = styled.div`
       display: flex;
       align-items: center;
       flex-grow: 1;
-      font-family: InterSemiBold, sans-serif;
+      font-family: var(--font-family-semibold);
       > svg {
         margin-right: 0.5rem;
       }
     }
     &:last-child {
-      font-family: InterSemiBold, sans-serif;
+      font-family: var(--font-family-semibold);
     }
   }
 `
 
 export const ManualAccountsWrapper = styled.div`
-  color: var(--text-color-primary);
+  color: var(--gray-1000);
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -59,7 +59,7 @@ export const ManualAccountsWrapper = styled.div`
 `
 
 export const ManualAccount = styled.div`
-  background: var(--button-primary-background);
+  background: var(--gray-400);
   width: 100%;
   border-radius: 1rem;
   margin-bottom: 1rem;
@@ -70,7 +70,7 @@ export const ManualAccount = styled.div`
   transition: border 0.1s;
 
   > div {
-    color: var(--text-color-secondary);
+    color: var(--gray-900);
     transition: opacity var(--transition-duration);
 
     &:first-child {
@@ -88,7 +88,7 @@ export const ManualAccount = styled.div`
         h4 {
           margin: 0;
           &.title {
-            font-family: InterSemiBold, sans-serif;
+            font-family: var(--font-family-semibold);
             > svg {
               margin: 0 0.6rem;
             }
@@ -99,7 +99,7 @@ export const ManualAccount = styled.div`
 
           &.title > span,
           &.subtitle > span {
-            color: var(--text-color-secondary);
+            color: var(--gray-900);
             opacity: 0.65;
             margin-right: 0.65rem;
           }

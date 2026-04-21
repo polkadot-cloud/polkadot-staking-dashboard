@@ -1,9 +1,10 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import {
 	faBookOpen,
+	faCloud,
 	faCog,
 	faDollarSign,
 	faExternalLinkAlt,
@@ -11,19 +12,25 @@ import {
 	faInfo,
 	faMoon,
 	faPuzzlePiece,
+	faQrcode,
 	faShare,
 	faToggleOff,
 	faToggleOn,
 	faWifi,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
 import EnvelopeSVG from 'assets/icons/envelope.svg?react'
-import { GitHubURl, StakingDocsUrl } from 'consts'
+import {
+	DappOrganisation,
+	PlatformDocsURL,
+	PlatformGitHubURL,
+	PlatformURL,
+} from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -49,7 +56,7 @@ export const MenuPopover = ({
 	const { mode, toggleTheme } = useTheme()
 	const { openModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { advancedMode, setAdvancedMode, showHelp, setShowHelp } = useUi()
 
 	const { name } = getRelayChainData(network)
@@ -121,6 +128,16 @@ export const MenuPopover = ({
 					</div>
 				</button>
 			</MenuItem>
+			{network === 'polkadot' && (
+				<DefaultButton
+					text={t('syncAccounts', { ns: 'app' })}
+					iconLeft={faQrcode}
+					onClick={() => {
+						setOpen(false)
+						openModal({ key: 'SyncAccounts', size: 'sm' })
+					}}
+				/>
+			)}
 			<MenuItemButton onClick={() => setAdvancedMode(!advancedMode)}>
 				<div>
 					<FontAwesomeIcon icon={faCog} transform="shrink-2" />
@@ -132,11 +149,7 @@ export const MenuPopover = ({
 					<div>
 						<FontAwesomeIcon
 							icon={advancedMode ? faToggleOn : faToggleOff}
-							color={
-								advancedMode
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
+							color={advancedMode ? 'var(--gray-1000)' : 'var(--text-tertiary)'}
 							transform="grow-8"
 						/>
 					</div>
@@ -154,9 +167,7 @@ export const MenuPopover = ({
 						<FontAwesomeIcon
 							icon={mode === 'dark' ? faToggleOn : faToggleOff}
 							color={
-								mode === 'dark'
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
+								mode === 'dark' ? 'var(--gray-1000)' : 'var(--text-tertiary)'
 							}
 							transform="grow-8"
 						/>
@@ -174,11 +185,7 @@ export const MenuPopover = ({
 					<div>
 						<FontAwesomeIcon
 							icon={showHelp ? faToggleOn : faToggleOff}
-							color={
-								showHelp
-									? 'var(--accent-color-primary)'
-									: 'var(--text-color-tertiary)'
-							}
+							color={showHelp ? 'var(--gray-1000)' : 'var(--text-tertiary)'}
 							transform="grow-8"
 						/>
 					</div>
@@ -235,12 +242,12 @@ export const MenuPopover = ({
 				</button>
 			</MenuItem>
 			<DefaultButton
-				text={t('documentation', { ns: 'app' })}
+				text={t('docs', { ns: 'app' })}
 				iconLeft={faBookOpen}
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(`${StakingDocsUrl}/#/${i18n.language}`, '_blank')
+					window.open(`${PlatformDocsURL}/${i18n.language}`, '_blank')
 				}}
 			/>
 			<DefaultButton
@@ -249,7 +256,17 @@ export const MenuPopover = ({
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(GitHubURl, '_blank')
+					window.open(PlatformGitHubURL, '_blank')
+				}}
+			/>
+			<DefaultButton
+				text={DappOrganisation}
+				iconLeft={faCloud}
+				iconRight={faExternalLinkAlt}
+				accent
+				onClick={() => {
+					setOpen(false)
+					window.open(PlatformURL, '_blank')
 				}}
 			/>
 		</div>

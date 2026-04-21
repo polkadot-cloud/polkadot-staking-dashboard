@@ -1,19 +1,20 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import { getEnabledNetworks } from 'consts/util'
+import { getEnabledNetworks, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
+import { onNodeProviderTypeChangedEvent } from 'event-tracking'
 import { setAutoRpc, setProviderType } from 'global-bus'
 import { Title } from 'library/Modal/Title'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { NetworkId } from 'types'
+import type { ChainId, NetworkId } from 'types'
 import { ButtonTertiary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
 import { Padding } from 'ui-core/modal'
@@ -34,6 +35,7 @@ export const Networks = () => {
 	const { providerType, autoRpc, getRpcEndpoint } = useApi()
 	const { closeModal, setModalResize } = useOverlay().modal
 	const networkKey = network
+	const { name } = getStakingChainData(network)
 
 	const isLightClient = providerType === 'sc'
 
@@ -47,37 +49,35 @@ export const Networks = () => {
 				<ContentWrapper>
 					<h4>{t('selectNetwork')}</h4>
 					<div className="items">
-						{Object.entries(getEnabledNetworks()).map(
-							([key, item], index: number) => {
-								const inline = getChainIcons(key as NetworkId).inline
-								const Svg = inline.svg
-								const rpcDisabled = networkKey === key
+						{Object.entries(getEnabledNetworks()).map(([key, item]) => {
+							const inline = getChainIcons(key as NetworkId).inline
+							const Svg = inline.svg
+							const rpcDisabled = networkKey === key
 
-								return (
-									<NetworkButton
-										$connected={networkKey === key}
-										disabled={rpcDisabled}
-										key={`network_switch_${index}`}
-										type="button"
-										onClick={() => {
-											if (networkKey !== key) {
-												switchNetwork(key as NetworkId)
-												closeModal()
-											}
-										}}
-									>
-										<div style={{ width: '1.75rem' }}>
-											<Svg width={inline.size} height={inline.size} />
-										</div>
-										<h3>{capitalizeFirstLetter(item.name)}</h3>
-										{networkKey === key && (
-											<h4 className="selected">{t('selected')}</h4>
-										)}
-										<div></div>
-									</NetworkButton>
-								)
-							},
-						)}
+							return (
+								<NetworkButton
+									$connected={networkKey === key}
+									disabled={rpcDisabled}
+									key={`network_switch_${key}`}
+									type="button"
+									onClick={() => {
+										if (networkKey !== key) {
+											switchNetwork(key as NetworkId)
+											closeModal()
+										}
+									}}
+								>
+									<div style={{ width: '1.75rem' }}>
+										<Svg width={inline.size} height={inline.size} />
+									</div>
+									<h3>{capitalizeFirstLetter(item.name)}</h3>
+									{networkKey === key && (
+										<h4 className="selected">{t('selected')}</h4>
+									)}
+									<div></div>
+								</NetworkButton>
+							)
+						})}
 					</div>
 					<h4>{t('providerType')}</h4>
 					<ConnectionsWrapper>
@@ -89,6 +89,7 @@ export const Networks = () => {
 								onClick={() => {
 									setProviderType('sc')
 									switchNetwork(networkKey as NetworkId)
+									onNodeProviderTypeChangedEvent(networkKey, 'light_client')
 									closeModal()
 								}}
 							>
@@ -104,6 +105,7 @@ export const Networks = () => {
 								onClick={() => {
 									setProviderType('ws')
 									switchNetwork(networkKey as NetworkId)
+									onNodeProviderTypeChangedEvent(networkKey, 'rpc')
 									closeModal()
 								}}
 							>
@@ -127,7 +129,7 @@ export const Networks = () => {
 								<div className="provider">
 									<p>{t('provider')}:</p>
 									<ButtonTertiary
-										text={getRpcEndpoint(network)}
+										text={getRpcEndpoint(name as ChainId)}
 										onClick={() => openPromptWith(<ProvidersPrompt />)}
 										marginLeft
 										disabled={autoRpc}

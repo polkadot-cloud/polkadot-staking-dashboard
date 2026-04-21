@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { isSupportedProxy } from 'consts/util'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import type { ProxyDelegateWithBalance } from 'contexts/Proxies/types'
 import type { DelegatesProps } from '../types'
 import { DelegateItem } from './DelegateItem'
@@ -23,9 +23,9 @@ export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
 
 	return delegatesList.length ? (
 		<DelegatesWrapper>
-			{delegatesList.map(({ delegate, proxyType }, i) => (
+			{delegatesList.map(({ delegate, proxyType }) => (
 				<DelegateItem
-					key={`_del_${i}`}
+					key={`_del_${delegate}_${proxyType}`}
 					delegator={delegator}
 					proxyType={proxyType}
 					source={source}

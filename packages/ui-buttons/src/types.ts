@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type {
@@ -105,7 +105,6 @@ export type ButtonOptionProps = ComponentBaseWithClassName &
 export type ButtonPrimaryProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		size?: ButtonSize
 		text: string
 		asLabel?: boolean
@@ -114,7 +113,6 @@ export type ButtonPrimaryProps = ComponentBaseWithClassName &
 export type ButtonPrimaryInvertProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		lg?: boolean
 		text: string
 		asLabel?: boolean
@@ -125,16 +123,37 @@ export type ButtonSecondaryProps = ComponentBaseWithClassName &
 	ButtonCommonProps & {
 		size?: ButtonSize
 		text: string
+		variant?: 'warning' | 'danger'
+		active?: boolean
+		asTab?: boolean
 	}
 
 export type ButtonSubmitProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {
-		colorSecondary?: boolean
 		text: string
 		lg?: boolean
 		pulse?: boolean
 	}
+
+export type ButtonSubmitLargeProps = ComponentBaseWithClassName & {
+	submitText: string
+	onSubmit: () => void
+	icon?: IconProp | IconDefinition
+	iconTransform?: string
+	disabled?: boolean
+	pulse?: boolean
+}
+
+export type ButtonSubmitWithFeeProps = ComponentBaseWithClassName & {
+	submitText: string
+	onSubmit: () => void
+	icon?: IconProp | IconDefinition
+	iconTransform?: string
+	disabled?: boolean
+	pulse?: boolean
+	fee?: React.ReactNode
+}
 
 export type ButtonSubmitInvertProps = ComponentBaseWithClassName &
 	ButtonIconProps &
@@ -233,3 +252,10 @@ export type ButtonPopoverTabProps = ComponentBaseWithClassName &
 		disabled?: boolean
 		grow?: boolean
 	}
+
+export interface QuickActionFooterButtonProps
+	extends ComponentBaseWithClassName {
+	icon: IconDefinition
+	label: string
+	onClick: () => void
+}

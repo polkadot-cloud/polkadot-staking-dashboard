@@ -1,8 +1,8 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useNetwork } from 'contexts/Network'
 import { activePools$, removeSyncing } from 'global-bus'
@@ -19,7 +19,7 @@ export const ActivePoolProvider = ({ children }: { children: ReactNode }) => {
 	const { isReady } = useApi()
 	const { network } = useNetwork()
 	const { getPoolMembership } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { membership } = getPoolMembership(activeAddress)
 
 	// Store active pools state

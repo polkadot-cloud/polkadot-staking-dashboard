@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
@@ -19,12 +19,12 @@ export const Overview = forwardRef(
 		return (
 			<ContentWrapper>
 				<Padding horizontalOnly ref={ref}>
-					{unclaimedRewards.entries.map(({ era, reward, validators }, i) =>
+					{unclaimedRewards.entries.map(({ era, reward, validators }) =>
 						new BigNumber(reward).isZero() ? (
-							<Fragment key={`unclaimed_payout_${i}`} />
+							<Fragment key={`unclaimed_payout_${era}`} />
 						) : (
 							<Item
-								key={`unclaimed_payout_${i}`}
+								key={`unclaimed_payout_${era}`}
 								era={String(era)}
 								validators={validators}
 								setPayouts={setPayouts}

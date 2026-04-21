@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components'
@@ -23,7 +23,7 @@ export const ContentWrapper = styled.div`
     }
 
     .arrow {
-      color: var(--text-color-primary);
+      color: var(--gray-1000);
     }
   }
 `
@@ -34,7 +34,7 @@ export const SliderWrapper = styled.div`
   padding: 0 0.5rem 0 0.5rem;
 
   h5 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     margin: 0;
     margin-left: 0.75rem;
 
@@ -43,16 +43,16 @@ export const SliderWrapper = styled.div`
     }
     &.neutral,
     .neutral {
-      color: var(--accent-color-primary);
+      color: var(--gray-1000);
       opacity: 0.8;
     }
     &.danger,
     .danger {
-      color: var(--status-danger-color);
+      color: var(--status-danger);
     }
     &.success,
     .success {
-      color: var(--status-success-color);
+      color: var(--status-success);
     }
   }
 
@@ -63,7 +63,7 @@ export const SliderWrapper = styled.div`
 
     h2 {
       margin: 0;
-      font-family: InterBold, sans-serif;
+      font-family: var(--font-family-bold);
     }
   }
 
@@ -85,7 +85,7 @@ export const SliderWrapper = styled.div`
       }
 
       .rc-slider-handle-dragging {
-        box-shadow: 0 0 0 5px var(--accent-color-transparent) !important;
+        box-shadow: 0 !important;
       }
     }
   }
@@ -96,8 +96,8 @@ export const SliderWrapper = styled.div`
     align-items: flex-start;
     margin-top: 1rem;
     h2 {
-      border-bottom: 1px solid var(--border-primary-color);
-      font-family: InterBold, sans-serif;
+      border-bottom: 1px solid var(--gray-500);
+      font-family: var(--font-family-bold);
       margin-top: 0rem;
       padding-bottom: 1rem;
     }
@@ -129,12 +129,12 @@ export const TaskInnerWrapper = styled.div`
   }
 
   h3 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: var(--font-family-semibold);
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: var(--text-color-primary);
+    color: var(--gray-1000);
     font-size: 1rem;
   }
 `

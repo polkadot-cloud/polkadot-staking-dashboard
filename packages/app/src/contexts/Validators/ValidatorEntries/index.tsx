@@ -1,4 +1,4 @@
-// Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
@@ -15,7 +15,7 @@ import {
 	getValidatorRanks,
 } from 'global-bus'
 import { useErasPerDay } from 'hooks/useErasPerDay'
-import { fetchValidatorStats } from 'plugin-staking-api'
+import { fetchIdentityCache, fetchValidatorStats } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
@@ -27,7 +27,9 @@ import type {
 } from 'types'
 import {
 	formatIdentities,
+	formatIdentitiesFromCache,
 	formatSuperIdentities,
+	formatSuperIdentitiesFromCache,
 	perbillToPercent,
 } from 'utils'
 import type {
@@ -76,12 +78,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	const [validatorSupers, setValidatorSupers] = useState<
 		Record<string, SuperIdentity>
 	>({})
-
-	// Stores the currently active validator set
-	//
-	// NOTE: This is only used in filtering validator search, and this can be done via the Staking
-	// API.
-	const [sessionValidators, setSessionValidators] = useState<string[]>([])
 
 	// Stores the average network commission rate
 	const [avgCommission, setAvgCommission] = useState<number>(0)
@@ -168,21 +164,21 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 
 		const addresses = validatorEntries.map(({ address }) => address)
 
-		const [identities, supers] = await Promise.all([
-			serviceApi.query.identityOfMulti(addresses),
-			serviceApi.query.superOfMulti(addresses),
-		])
-		setValidatorIdentities({ ...formatIdentities(addresses, identities) })
-		setValidatorSupers({ ...formatSuperIdentities(supers) })
-	}
-
-	// Subscribe to active session validators
-	const fetchSessionValidators = async () => {
-		if (!isReady) {
-			return
+		// Fetch identities - use GraphQL if staking API is enabled, otherwise use dedot API
+		if (pluginEnabled('staking_api')) {
+			const { identityCache } = await fetchIdentityCache(network, addresses)
+			setValidatorIdentities({
+				...formatIdentitiesFromCache(addresses, identityCache),
+			})
+			setValidatorSupers({ ...formatSuperIdentitiesFromCache(identityCache) })
+		} else {
+			const [identities, supers] = await Promise.all([
+				serviceApi.query.identityOfMulti(addresses),
+				serviceApi.query.superOfMulti(addresses),
+			])
+			setValidatorIdentities({ ...formatIdentities(addresses, identities) })
+			setValidatorSupers({ ...formatSuperIdentities(supers) })
 		}
-		const result = await serviceApi.query.sessionValidators()
-		setSessionValidators(result)
 	}
 
 	// Fetches prefs for a list of validators
@@ -354,7 +350,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 			status: 'unsynced',
 			validators: [],
 		})
-		setSessionValidators([])
 		setAvgCommission(0)
 		setValidatorIdentities({})
 		setValidatorSupers({})
@@ -385,10 +380,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 			if (validators.status === 'synced') {
 				setValidatorsFetched('unsynced')
 			}
-
-			// NOTE: Once validator list can be synced via staking api, fetch session validators only if
-			// staking api is disabled
-			fetchSessionValidators()
 			if (!pluginEnabled('staking_api')) {
 				getAverageEraValidatorReward()
 			}
@@ -404,7 +395,6 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 				validatorIdentities,
 				validatorSupers,
 				avgCommission,
-				sessionValidators,
 				validatorsFetched: validators.status,
 				avgRewardRate,
 				averageEraValidatorReward,
