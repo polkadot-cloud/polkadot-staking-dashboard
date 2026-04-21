@@ -3,18 +3,18 @@
 
 import { localStorageOrDefault } from '@w3ux/utils'
 import { ActiveProxiesKey } from '../consts'
-import type { ActiveProxy, LocalActiveProxies, NetworkId } from '../types'
+import type { ActiveProxy, LocalActiveProxies } from '../types'
 
 export const getLocalActiveProxies = () =>
 	localStorageOrDefault(ActiveProxiesKey, {}, true) as LocalActiveProxies
 
-export const getLocalActiveProxy = (network: NetworkId): ActiveProxy | null => {
+export const getLocalActiveProxy = (network: string): ActiveProxy | null => {
 	const proxies = getLocalActiveProxies()
 	return proxies[network] || null
 }
 
 export const setLocalActiveProxy = (
-	network: NetworkId,
+	network: string,
 	proxy: ActiveProxy | null,
 ) => {
 	if (!proxy) {
@@ -26,7 +26,7 @@ export const setLocalActiveProxy = (
 	}
 }
 
-export const removeLocalActiveProxy = (network: NetworkId) => {
+export const removeLocalActiveProxy = (network: string) => {
 	const proxies = { ...getLocalActiveProxies() }
 	delete proxies[network]
 	localStorage.setItem(ActiveProxiesKey, JSON.stringify(proxies))

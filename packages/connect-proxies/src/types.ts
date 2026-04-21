@@ -1,20 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { KusamaAssetHubApi } from '@dedot/chaintypes/kusama-asset-hub'
-import type { PaseoAssetHubApi } from '@dedot/chaintypes/paseo-asset-hub'
-import type { PolkadotAssetHubApi } from '@dedot/chaintypes/polkadot-asset-hub'
-import type { WestendAssetHubApi } from '@dedot/chaintypes/westend-asset-hub'
+import type { PalletProxyProxyDefinition } from '@dedot/chaintypes/substrate'
 
-// Chains that support the proxy pallet and staking queries
-export type StakingChain =
-	| PolkadotAssetHubApi
-	| KusamaAssetHubApi
-	| WestendAssetHubApi
-	| PaseoAssetHubApi
+export type { PalletProxyProxyDefinition }
 
-// Supported relay network identifiers
-export type NetworkId = 'polkadot' | 'kusama' | 'westend' | 'paseo'
+// Proxy storage query result tuple: [proxyDefinitions, deposit].
+export type ProxyStateTuple = [PalletProxyProxyDefinition[], bigint]
 
 // On-chain proxy data for a single delegator address
 export type ProxyRecord = {

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { DedotClient } from 'dedot'
-import type { Unsub } from 'dedot/types'
+import type { GenericSubstrateApi, Unsub } from 'dedot/types'
 import { addProxies, removeProxies } from '../state/proxies'
-import type { ProxyRecord, StakingChain } from '../types'
+import type { ProxyRecord, ProxyStateTuple } from '../types'
 
-export class ProxiesQuery<T extends StakingChain> {
+export class ProxiesQuery<T extends GenericSubstrateApi> {
 	#unsub: Unsub | undefined = undefined
 
 	constructor(
@@ -17,13 +17,14 @@ export class ProxiesQuery<T extends StakingChain> {
 	}
 
 	async subscribe() {
-		this.#unsub = (await this.api.query.proxy.proxies(
+		const ss58Prefix: number = this.api.consts.system.ss58Prefix
+
+		this.#unsub = await this.api.query.proxy.proxies(
 			this.address,
-			(result) => {
-				const [proxies, deposit] = result
+			([proxies, deposit]: ProxyStateTuple) => {
 				const next: ProxyRecord = {
 					proxies: proxies.map(({ delegate, proxyType, delay }) => ({
-						delegate: delegate.address(this.api.consts.system.ss58Prefix),
+						delegate: delegate.address(ss58Prefix),
 						proxyType: String(proxyType),
 						delay: Number(delay),
 					})),
@@ -31,7 +32,7 @@ export class ProxiesQuery<T extends StakingChain> {
 				}
 				addProxies(this.address, next)
 			},
-		)) as Unsub
+		)
 	}
 
 	unsubscribe() {

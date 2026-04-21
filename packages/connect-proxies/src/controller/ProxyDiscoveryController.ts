@@ -3,23 +3,23 @@
 
 import { importedAccounts$ } from '@polkadot-cloud/connect-core'
 import type { DedotClient } from 'dedot'
+import type { GenericSubstrateApi } from 'dedot/types'
 import { pairwise, type Subscription, startWith } from 'rxjs'
 import { resetProxies } from '../state/proxies'
 import { ProxiesQuery } from '../subscribe/ProxiesQuery'
-import type { StakingChain } from '../types'
 
-// Manages the lifecycle of per-account proxy chain subscriptions. Accepts a consumer-provided
-// DedotClient at runtime (lazy — not at provider mount). Subscriptions start on first start() call,
-// are ref-counted, and are torn down when the last consumer calls stop() or when the client
-// changes.
+// Manages the lifecycle of per-account proxy chain subscriptions. Accepts any
+// consumer-provided DedotClient at runtime (lazy — not at provider mount).
+// Subscriptions start on first start() call, are ref-counted, and are torn
+// down when the last consumer calls stop() or when the client changes.
 export class ProxyDiscoveryController {
-	#api: DedotClient<StakingChain> | null = null
-	#subscriptions: Record<string, ProxiesQuery<StakingChain>> = {}
+	#api: DedotClient<GenericSubstrateApi> | null = null
+	#subscriptions: Record<string, ProxiesQuery<GenericSubstrateApi>> = {}
 	#accountSub: Subscription | null = null
 	#refCount = 0
 
-	start<T extends StakingChain>(api: DedotClient<T>): void {
-		const castApi = api as unknown as DedotClient<StakingChain>
+	start<T extends GenericSubstrateApi>(api: DedotClient<T>): void {
+		const castApi = api as unknown as DedotClient<GenericSubstrateApi>
 		this.#refCount++
 
 		if (this.#api === castApi) {

@@ -40,9 +40,7 @@ export { ProxiesQuery } from './subscribe/ProxiesQuery'
 export type {
 	ActiveProxy,
 	LocalActiveProxies,
-	NetworkId,
 	ProxyRecord,
-	StakingChain,
 } from './types'
 // Utility predicates
 export { isSupportedProxy, isSupportedProxyCall } from './utils/proxies'

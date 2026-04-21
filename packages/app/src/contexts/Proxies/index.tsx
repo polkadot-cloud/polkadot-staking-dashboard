@@ -8,6 +8,7 @@ import {
 } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
+import type { ProxyRecord } from 'connect-proxies'
 import {
 	getLocalActiveProxy,
 	proxies$,
@@ -19,7 +20,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
-import type { MaybeAddress, Proxies } from 'types'
+import type { MaybeAddress } from 'types'
 import type {
 	Delegates,
 	ProxiesContextInterface,
@@ -39,7 +40,7 @@ export const ProxiesProvider = ({ children }: { children: ReactNode }) => {
 	const { accounts, stringifiedAccountsKey } = useImportedAccounts()
 
 	// Store the proxy accounts of each imported account
-	const [proxies, setProxies] = useState<Record<string, Proxies>>({})
+	const [proxies, setProxies] = useState<Record<string, ProxyRecord>>({})
 
 	// Reformats proxies into a list of delegates
 	const formatProxiesToDelegates = () => {
