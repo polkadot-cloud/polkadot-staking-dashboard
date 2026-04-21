@@ -17,22 +17,26 @@ export class ProxiesQuery<T extends GenericSubstrateApi> {
 	}
 
 	async subscribe() {
-		const ss58Prefix: number = this.api.consts.system.ss58Prefix
+		try {
+			const ss58Prefix: number = this.api.consts.system.ss58Prefix
 
-		this.#unsub = await this.api.query.proxy.proxies(
-			this.address,
-			([proxies, deposit]: ProxyStateTuple) => {
-				const next: ProxyRecord = {
-					proxies: proxies.map(({ delegate, proxyType, delay }) => ({
-						delegate: delegate.address(ss58Prefix),
-						proxyType: String(proxyType),
-						delay: Number(delay),
-					})),
-					deposit,
-				}
-				addProxies(this.address, next)
-			},
-		)
+			this.#unsub = await this.api.query.proxy.proxies(
+				this.address,
+				([proxies, deposit]: ProxyStateTuple) => {
+					const next: ProxyRecord = {
+						proxies: proxies.map(({ delegate, proxyType, delay }) => ({
+							delegate: delegate.address(ss58Prefix),
+							proxyType: String(proxyType),
+							delay: Number(delay),
+						})),
+						deposit,
+					}
+					addProxies(this.address, next)
+				},
+			)
+		} catch {
+			// Proxy pallet absent or response in unexpected format — leave state empty for this address.
+		}
 	}
 
 	unsubscribe() {

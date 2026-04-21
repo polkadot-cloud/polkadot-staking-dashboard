@@ -12,9 +12,14 @@ export const queryProxies = async <T extends GenericSubstrateApi>(
 	api: DedotClient<T>,
 	address: string,
 ): Promise<string[]> => {
-	const [proxies]: ProxyStateTuple = await api.query.proxy.proxies(address)
-	const ss58Prefix: number = api.consts.system.ss58Prefix
-	return (proxies as PalletProxyProxyDefinition[]).map((r) =>
-		r.delegate.address(ss58Prefix),
-	)
+	try {
+		const [proxies]: ProxyStateTuple = await api.query.proxy.proxies(address)
+		const ss58Prefix: number = api.consts.system.ss58Prefix
+		return (proxies as PalletProxyProxyDefinition[]).map((r) =>
+			r.delegate.address(ss58Prefix),
+		)
+	} catch {
+		// Proxy pallet absent or response in unexpected format — treat as no proxies.
+		return []
+	}
 }
