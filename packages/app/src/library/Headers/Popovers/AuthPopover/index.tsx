@@ -3,10 +3,10 @@
 
 import { faChevronRight, faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
@@ -21,8 +21,8 @@ export const AuthPopover = ({
 }) => {
 	const { t } = useTranslation()
 	const { getAccount } = useImportedAccounts()
-	const { activeAccount, activeAddress, activeProxy, activeProxyType } =
-		useActiveAccounts()
+	const { activeProxy, activeProxyType } = useActiveProxy()
+	const { activeAccount, activeAddress } = useActiveAccount()
 
 	const popoverRef = useRef<HTMLDivElement>(null)
 

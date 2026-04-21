@@ -9,6 +9,7 @@
 		"lint": "biome check --write ."
 	},
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./types": "./src/types.ts"
 	}
 }

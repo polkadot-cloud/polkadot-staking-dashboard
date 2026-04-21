@@ -1,16 +1,16 @@
 // Copyright 2025 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useImportedAccounts } from '@polkadot-cloud/connect'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import CloudSVG from 'assets/icons/cloud.svg?react'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useAuthChallenge } from 'hooks/useAuthChallenge'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { Warning } from 'library/Form/Warning'
-import { ButtonSubmitLarge } from 'library/SubmitTx/ButtonSubmitLarge'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ImportedAccount } from 'types'
+import { ButtonSubmitLarge } from 'ui-buttons'
 import { Padding, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { ContentWrapper, TitleWrapper } from './Wrappers'
