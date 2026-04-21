@@ -319,8 +319,8 @@ importers:
         specifier: ^7.8.2
         version: 7.8.2
       smoldot:
-        specifier: ^2.0.40
-        version: 2.0.40
+        specifier: ^3.1.0
+        version: 3.1.0
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -460,8 +460,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(typescript@6.0.3)
       smoldot:
-        specifier: ^2.0.40
-        version: 2.0.40
+        specifier: ^3.1.0
+        version: 3.1.0
     devDependencies:
       tsx:
         specifier: ^4.7.0
@@ -3892,6 +3892,9 @@ packages:
 
   smoldot@2.0.40:
     resolution: {integrity: sha512-h6XC/kKDLdZBBTI0X8y4ZxmaZ2KYVVB0+5isCQm6j26ljeNjHZUDOV+hf8VyoE23+jg00wrxNJ2IVcIAURxwtg==}
+
+  smoldot@3.1.0:
+    resolution: {integrity: sha512-LZcex0BnfY1ORmuj0rKEF1aw7/gdFq6e5bBsLWd6x/fTt63mpAORhxf6fTsQcce0yLtbzkll8J+YKwhJLYATdw==}
 
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
@@ -7499,6 +7502,13 @@ snapshots:
       is-fullwidth-code-point: 3.0.0
 
   smoldot@2.0.40:
+    dependencies:
+      ws: 8.20.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
+  smoldot@3.1.0:
     dependencies:
       ws: 8.20.0
     transitivePeerDependencies:
