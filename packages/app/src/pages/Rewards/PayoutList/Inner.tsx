@@ -117,7 +117,7 @@ export const PayoutList = ({
 					<Pagination page={page} total={totalPages} setter={setPage} />
 				)}
 				<MotionContainer>
-					{listPayouts.map((p: NominatorReward | PoolReward, index: number) => {
+					{listPayouts.map((p) => {
 						const poolReward = isPoolReward(p)
 						const record = poolReward
 							? (p as PoolReward)
@@ -129,22 +129,25 @@ export const PayoutList = ({
 
 						let batchIndex
 						let pool: BondedPool | undefined
+						let keyId: string
 						if (poolReward) {
 							const item = p as PoolReward
 							pool = bondedPools.find(({ id }) => id === item.poolId)
 							batchIndex = pool ? bondedPools.indexOf(pool) : 0
+							keyId = `pool_${item.poolId}_${item.timestamp}`
 						} else {
 							const item = p as NominatorReward
 							const validator = getValidators().find(
 								(v) => v.address === item.validator,
 							)
 							batchIndex = validator ? getValidators().indexOf(validator) : 0
+							keyId = `nom_${item.validator}_${item.era}_${item.timestamp}`
 						}
 
 						return (
 							<motion.div
 								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-								key={`nomination_${index}`}
+								key={keyId}
 								variants={{
 									hidden: {
 										y: 15,

@@ -108,9 +108,9 @@ export const MembersListInner = ({
 					</ListStatusHeader>
 				) : (
 					<MotionContainer>
-						{listMembers.map((member, index) => (
+						{listMembers.map((member) => (
 							<Member
-								key={`nomination_${index}`}
+								key={`pool_member_${member.address}`}
 								member={member}
 								bondedPool={bondedPool}
 								isDepositor={isDepositor}

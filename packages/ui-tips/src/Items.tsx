@@ -35,7 +35,7 @@ export const Items = ({ items, page }: TipItemsProps) => {
 		>
 			{items.map((item, index: number) => (
 				<Item
-					key={`tip_${index}_${page}`}
+					key={`tip_${item.id}_${page}`}
 					index={index}
 					{...item}
 					initial={initial}
