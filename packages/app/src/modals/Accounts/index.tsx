@@ -136,8 +136,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('nominatingAndInPool')} />
-						{nominatingAndPool.map((item, i) => (
-							<AccountItem key={`acc_nominating_and_pool_${i}`} {...item} />
+						{nominatingAndPool.map((item) => (
+							<AccountItem
+								key={`acc_nominating_and_pool_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}
@@ -145,8 +148,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('nominating')} />
-						{nominating.map((item, i) => (
-							<AccountItem key={`acc_nominating_${i}`} {...item} />
+						{nominating.map((item) => (
+							<AccountItem
+								key={`acc_nominating_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}
@@ -154,8 +160,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('inPool')} />
-						{inPool.map((item, i) => (
-							<AccountItem key={`acc_in_pool_${i}`} {...item} />
+						{inPool.map((item) => (
+							<AccountItem
+								key={`acc_in_pool_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}
@@ -163,8 +172,11 @@ export const Accounts = () => {
 					<>
 						<AccountSeparator />
 						<ActionItem text={t('notStaking')} />
-						{notStaking.map((item, i) => (
-							<AccountItem key={`acc_not_staking_${i}`} {...item} />
+						{notStaking.map((item) => (
+							<AccountItem
+								key={`acc_not_staking_${item.address}_${item.source}`}
+								{...item}
+							/>
 						))}
 					</>
 				)}

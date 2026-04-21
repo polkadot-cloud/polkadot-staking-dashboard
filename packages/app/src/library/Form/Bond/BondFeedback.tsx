@@ -175,8 +175,8 @@ export const BondFeedback = ({
 
 	return (
 		<>
-			{filteredErrors.map((err, i) => (
-				<Warning key={`setup_error_${i}`} text={err} />
+			{filteredErrors.map((err) => (
+				<Warning key={`setup_error_${err}`} text={err} />
 			))}
 			<div
 				style={{

@@ -62,13 +62,13 @@ export const Inner = ({
 			version="1.1"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			{lineCoords.map(({ x1 }, index) => {
+			{lineCoords.map(({ x1, y1, x2, y2 }, index) => {
 				if (index === 0 || index === lineCoords.length - 1) {
-					return <Fragment key={`grid_y_coord_${index}`} />
+					return <Fragment key={`grid_y_coord_${x1}`} />
 				}
 				return (
 					<line
-						key={`grid_coord_${index}`}
+						key={`grid_coord_${x1}_${y1}_${x2}_${y2}`}
 						strokeWidth={4}
 						stroke={
 							displayFor === 'canvas'
@@ -83,25 +83,22 @@ export const Inner = ({
 				)
 			})}
 
-			{!syncing &&
-				[{ y1: vbHeight * 0.5, y2: vbHeight * 0.5 }].map(
-					({ y1, y2 }, index) => (
-						<line
-							key={`grid_coord_${index}`}
-							strokeWidth={4}
-							stroke={
-								displayFor === 'canvas'
-									? 'var(--grid-secondary)'
-									: 'var(--grid-primary)'
-							}
-							x1={0}
-							y1={y1}
-							x2={vbWidth}
-							y2={y2}
-							opacity={0.5}
-						/>
-					),
-				)}
+			{!syncing && (
+				<line
+					key="grid_coord_mid"
+					strokeWidth={4}
+					stroke={
+						displayFor === 'canvas'
+							? 'var(--grid-secondary)'
+							: 'var(--grid-primary)'
+					}
+					x1={0}
+					y1={vbHeight * 0.5}
+					x2={vbWidth}
+					y2={vbHeight * 0.5}
+					opacity={0.5}
+				/>
+			)}
 
 			{!syncing &&
 				lineCoords.map(({ x1, y1, x2, y2, zero }, index) => {
@@ -109,7 +106,7 @@ export const Inner = ({
 					const opacity = startOrEnd ? 0.25 : zero ? 0.5 : 1
 					return (
 						<line
-							key={`line_coord_${index}`}
+							key={`line_coord_${x1}_${y1}_${x2}_${y2}`}
 							strokeWidth={5.5}
 							opacity={opacity}
 							stroke={zero ? 'var(--text-tertiary)' : 'var(--gray-1000)'}

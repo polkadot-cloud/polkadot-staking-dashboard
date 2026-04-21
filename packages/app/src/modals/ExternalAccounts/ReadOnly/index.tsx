@@ -88,8 +88,8 @@ export const ReadOnly = () => {
 						{inputOpen && <Add />}
 						{externalAccounts.length ? (
 							<div className="accounts">
-								{externalAccounts.map((a, i) => (
-									<ManualAccount key={`user_external_account_${i}`}>
+								{externalAccounts.map((a) => (
+									<ManualAccount key={`user_external_account_${a.address}`}>
 										<div>
 											<Polkicon address={a.address} fontSize="1.9rem" />
 											<div className="text">

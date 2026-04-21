@@ -77,11 +77,11 @@ export const Proxies = () => {
 						{Object.entries(importedDelegates).length ? (
 							<div className="accounts">
 								{Object.entries(importedDelegates).map(
-									([delegate, delegators], i) => (
-										<Fragment key={`user_delegate_account_${i}}`}>
-											{delegators.map(({ delegator, proxyType }, j) => (
+									([delegate, delegators]) => (
+										<Fragment key={`user_delegate_account_${delegate}`}>
+											{delegators.map(({ delegator, proxyType }) => (
 												<ManualAccount
-													key={`user_delegate_${i}_delegator_${j}`}
+													key={`user_delegate_${delegate}_delegator_${delegator}_${proxyType}`}
 												>
 													<div>
 														<Polkicon address={delegate} fontSize="2.4rem" />

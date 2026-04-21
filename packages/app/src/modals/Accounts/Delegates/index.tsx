@@ -23,9 +23,9 @@ export const Delegates = ({ delegates, source, delegator }: DelegatesProps) => {
 
 	return delegatesList.length ? (
 		<DelegatesWrapper>
-			{delegatesList.map(({ delegate, proxyType }, i) => (
+			{delegatesList.map(({ delegate, proxyType }) => (
 				<DelegateItem
-					key={`_del_${i}`}
+					key={`_del_${delegate}_${proxyType}`}
 					delegator={delegator}
 					proxyType={proxyType}
 					source={source}

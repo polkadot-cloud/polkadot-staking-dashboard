@@ -96,8 +96,8 @@ export const StopNominations = () => {
 				</Title>
 				{warnings.length ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning_${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}
