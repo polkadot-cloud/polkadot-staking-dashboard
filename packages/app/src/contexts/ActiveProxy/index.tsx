@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { activeProxy$ } from '@polkadot-cloud/connect-proxies'
 import { createSafeContext } from '@w3ux/hooks'
-import { activeProxy$ } from 'connect-proxies'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { ActiveProxy } from 'types'

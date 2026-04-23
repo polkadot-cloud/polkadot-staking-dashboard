@@ -6,15 +6,15 @@ import {
 	useExternalAccounts,
 	useImportedAccounts,
 } from '@polkadot-cloud/connect'
-import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import BigNumber from 'bignumber.js'
-import type { ProxyRecord } from 'connect-proxies'
+import type { ProxyRecord } from '@polkadot-cloud/connect-proxies'
 import {
 	getLocalActiveProxy,
 	proxies$,
 	removeLocalActiveProxy,
 	setActiveProxy,
-} from 'connect-proxies'
+} from '@polkadot-cloud/connect-proxies'
+import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
+import BigNumber from 'bignumber.js'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'

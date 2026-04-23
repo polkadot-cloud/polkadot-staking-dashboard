@@ -11,7 +11,7 @@ import {
 	ProxiesQuery,
 	proxies$,
 	setActiveProxy,
-} from 'connect-proxies'
+} from '@polkadot-cloud/connect-proxies'
 import type { DedotClient } from 'dedot'
 import {
 	activePoolIds$,

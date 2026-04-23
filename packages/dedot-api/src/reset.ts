@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { resetActiveProxy, resetProxies } from 'connect-proxies'
+import { resetActiveProxy, resetProxies } from '@polkadot-cloud/connect-proxies'
 import {
 	resetAccountBalances,
 	resetActiveEra,
