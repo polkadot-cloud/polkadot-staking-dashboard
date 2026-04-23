@@ -1,10 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { isSupportedProxyCall } from '@polkadot-cloud/connect-proxies'
+import {
+	isSupportedProxyCall,
+	useProxies,
+} from '@polkadot-cloud/connect-proxies'
 import { UnsupportedIfUniqueController } from 'consts/proxies'
 import { useBalances } from 'contexts/Balances'
-import { useProxies } from 'contexts/Proxies'
 import type { SubmittableExtrinsic } from 'dedot'
 import type { ActiveProxy, MaybeAddress } from 'types'
 

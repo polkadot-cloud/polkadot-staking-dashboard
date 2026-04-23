@@ -30,7 +30,6 @@ import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
 import { PromptProvider } from 'contexts/Prompt'
-import { ProxiesProvider } from 'contexts/Proxies'
 import { StakingProvider } from 'contexts/Staking'
 import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
@@ -61,7 +60,6 @@ export const Providers = () => {
 					adaptors: [LedgerAdaptor, createProxiesAdaptor(network)],
 				},
 			],
-			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,
 			CurrencyProvider,

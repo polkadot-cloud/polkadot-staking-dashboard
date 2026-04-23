@@ -79,7 +79,10 @@ export class WestendService
 					await query.poolMembersMulti(this.apiHub, addresses),
 				poolMetadataMulti: async (poolIds) =>
 					await query.poolMetadataMulti(this.apiHub, poolIds),
-				proxies: async (address) => await query.proxies(this.apiHub, address),
+				proxies: async (address) =>
+					(await query.proxies(this.apiHub, address)).map(
+						({ delegate }) => delegate,
+					),
 				identityOfMulti: async (addresses) =>
 					await this.identityManager.identityOfMulti(addresses),
 				superOfMulti: async (addresses) =>

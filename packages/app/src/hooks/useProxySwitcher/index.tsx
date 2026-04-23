@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useImportedAccounts } from '@polkadot-cloud/connect'
-import { useProxies } from 'contexts/Proxies'
+import { useProxiesContext as useProxies } from '@polkadot-cloud/connect-proxies'
 import { useEffect, useMemo, useState } from 'react'
 import type { ActiveProxy, MaybeAddress } from 'types'
 import type { SignerOption, UseProxySwitcher } from './types'
