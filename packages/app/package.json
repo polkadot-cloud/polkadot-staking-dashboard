@@ -22,7 +22,7 @@
 		"@polkadot-cloud/connect": "^1.0.8",
 		"@polkadot-cloud/connect-core": "^1.0.8",
 		"@polkadot-cloud/connect-ledger": "^1.0.1",
-		"@polkadot-cloud/connect-proxies": "^0.2.1",
+		"@polkadot-cloud/connect-proxies": "^0.2.2",
 		"@polkadot-cloud/connect-vault": "^1.0.1",
 		"@polkawatch/ddp-client": "^3.0.1",
 		"@tanstack/react-query": "^5.99.2",

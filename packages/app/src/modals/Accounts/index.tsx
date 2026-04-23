@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useProxiesContext as useProxies } from '@polkadot-cloud/connect-proxies'
+import { useProxies } from '@polkadot-cloud/connect-proxies'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useBalances } from 'contexts/Balances'
 import { ActionItem } from 'library/ActionItem'

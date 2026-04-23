@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useProxiesContext as useProxies } from '@polkadot-cloud/connect-proxies'
+import { useProxies } from '@polkadot-cloud/connect-proxies'
 import { AccountDropdown } from 'library/AccountDropdown'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
