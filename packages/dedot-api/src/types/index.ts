@@ -15,7 +15,6 @@ import type { PolkadotAssetHubApi } from '@dedot/chaintypes/polkadot-asset-hub'
 import type { PolkadotPeopleApi } from '@dedot/chaintypes/polkadot-people'
 import type { WestendAssetHubApi } from '@dedot/chaintypes/westend-asset-hub'
 import type { WestendPeopleApi } from '@dedot/chaintypes/westend-people'
-import type { ProxiesQuery } from '@polkadot-cloud/connect-proxies'
 import type { ServiceInterface } from 'types'
 import type { KusamaService } from '../services/kusama'
 import type { PaseoService } from '../services/paseo'
@@ -116,10 +115,4 @@ export type ActivePools<StakingApi extends StakingChain> = Record<
 export type PoolMemberships<StakingApi extends StakingChain> = Record<
 	string,
 	PoolMembershipQuery<StakingApi>
->
-
-// Proxies record
-export type Proxies<StakingApi extends StakingChain> = Record<
-	string,
-	ProxiesQuery<StakingApi>
 >
