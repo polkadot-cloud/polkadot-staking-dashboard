@@ -1,6 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { createProxiesLifecycle } from '@polkadot-cloud/connect-proxies'
 import {
 	networkConfig$,
 	setNetworkConfig,
@@ -11,9 +12,13 @@ import { pairwise, startWith } from 'rxjs'
 import { onNetworkReset } from './reset'
 import { getDefaultService } from './start'
 import type { ServiceClass } from './types'
+import { hasApiHub } from './util'
 
 // The active service
 let service: ServiceClass
+
+// Handles proxies discovery subscriptions for the active asset hub api and network.
+const proxiesLifecycle = createProxiesLifecycle()
 
 // Start service for the current network
 export const initDedotService = async () => {
@@ -36,6 +41,7 @@ export const initDedotService = async () => {
 				prev.providerType !== cur.providerType ||
 				prev.autoRpc !== cur.autoRpc
 			) {
+				proxiesLifecycle.dispose()
 				await service?.unsubscribe()
 				onNetworkReset()
 			}
@@ -65,6 +71,10 @@ export const initDedotService = async () => {
 
 			// Expose service interface
 			setServiceInterface(service.interface)
+
+			if (hasApiHub(service)) {
+				proxiesLifecycle.update(service.apiHub, network)
+			}
 
 			// Start the service
 			await service.start()
