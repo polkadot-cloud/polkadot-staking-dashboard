@@ -8,6 +8,7 @@
  * Migrations:
  * - active_extensions -> pc_active_extensions
  * - hardware_accounts -> pc_hardware_accounts
+ * - activeProxies -> pc_activeProxies
  * - {network}_active_account -> pc_{network}_active_account
  */
 export const migrateLocalStorageKeys = (): void => {
@@ -16,6 +17,7 @@ export const migrateLocalStorageKeys = (): void => {
 		{ oldKey: 'active_extensions', newKey: 'pc_active_extensions' },
 		{ oldKey: 'hardware_accounts', newKey: 'pc_hardware_accounts' },
 		{ oldKey: 'external_accounts', newKey: 'pc_external_accounts' },
+		{ oldKey: 'activeProxies', newKey: 'pc_activeProxies' },
 	]
 
 	staticMigrations.forEach(({ oldKey, newKey }) => {
