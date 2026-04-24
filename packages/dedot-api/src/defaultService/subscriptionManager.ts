@@ -6,16 +6,18 @@ import {
 	importedAccounts$,
 	reconnectSync$,
 } from '@polkadot-cloud/connect-core'
+import {
+	getLocalActiveProxy,
+	proxies$,
+	setActiveProxy,
+} from '@polkadot-cloud/connect-proxies'
 import type { DedotClient } from 'dedot'
 import {
 	activePoolIds$,
 	bonded$,
 	fetchAndSetPoolWarnings,
-	getLocalActiveProxy,
 	getSyncing,
-	proxies$,
 	removeSyncing,
-	setActiveProxy,
 } from 'global-bus'
 import { combineLatest, pairwise, type Subscription, startWith } from 'rxjs'
 import type { NetworkId, ServiceInterface, SystemChainId } from 'types'
@@ -24,7 +26,6 @@ import { ActivePoolQuery } from '../subscribe/activePool'
 import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { PoolMembershipQuery } from '../subscribe/poolMembership'
-import { ProxiesQuery } from '../subscribe/proxies'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {
@@ -33,7 +34,6 @@ import type {
 	BondedAccounts,
 	PeopleChain,
 	PoolMemberships,
-	Proxies,
 	StakingChain,
 	StakingLedgers,
 } from '../types'
@@ -64,7 +64,6 @@ export class SubscriptionManager<
 	subActivePoolIds: Subscription
 	subActivePools: ActivePools<StakingApi> = {}
 	subPoolMemberships: PoolMemberships<StakingApi> = {}
-	subProxies: Proxies<StakingApi> = {}
 	subActiveProxies: Subscription
 	subActiveBonded: Subscription
 
@@ -112,8 +111,6 @@ export class SubscriptionManager<
 						})
 						this.subBonded[address]?.unsubscribe()
 						delete this.subBonded[address]
-						this.subProxies?.[address]?.unsubscribe()
-						delete this.subProxies[address]
 						this.subPoolMemberships?.[address]?.unsubscribe()
 						delete this.subPoolMemberships[address]
 					}
@@ -135,10 +132,6 @@ export class SubscriptionManager<
 
 						this.subBonded[address] = new BondedQuery(this.stakingApi, address)
 						this.subPoolMemberships[address] = new PoolMembershipQuery(
-							this.stakingApi,
-							address,
-						)
-						this.subProxies[address] = new ProxiesQuery(
 							this.stakingApi,
 							address,
 						)
@@ -259,9 +252,6 @@ export class SubscriptionManager<
 			sub?.unsubscribe()
 		}
 		for (const sub of Object.values(this.subPoolMemberships)) {
-			sub?.unsubscribe()
-		}
-		for (const sub of Object.values(this.subProxies)) {
 			sub?.unsubscribe()
 		}
 		this.subActiveEra?.unsubscribe()

@@ -121,7 +121,7 @@ export const ManageMaxCommission = ({
 		<>
 			<Padding horizontalOnly>
 				<Warnings>
-					{warnings.map((text, i) => (
+					{warnings.map((text) => (
 						<Warning key={`warning${text}`} text={text} />
 					))}
 					{visibleInvalidWarnings.map((text) => (

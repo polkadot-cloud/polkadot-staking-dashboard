@@ -4,6 +4,7 @@
 import { ThemedRouter } from 'Themes'
 import { ConnectProvider } from '@polkadot-cloud/connect'
 import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
+import { createProxiesAdaptor } from '@polkadot-cloud/connect-proxies'
 import { withProviders } from '@w3ux/factories'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
@@ -29,7 +30,6 @@ import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
 import { PromptProvider } from 'contexts/Prompt'
-import { ProxiesProvider } from 'contexts/Proxies'
 import { StakingProvider } from 'contexts/Staking'
 import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
@@ -57,10 +57,9 @@ export const Providers = () => {
 					network,
 					dappName: DappName,
 					ss58,
-					adaptors: [LedgerAdaptor],
+					adaptors: [LedgerAdaptor, createProxiesAdaptor(network)],
 				},
 			],
-			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,
 			CurrencyProvider,
