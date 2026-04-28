@@ -86,19 +86,19 @@ importers:
         version: 3.3.1(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.5)
       '@polkadot-cloud/connect':
         specifier: ^1.0.9
-        version: 1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+        version: 1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
       '@polkadot-cloud/connect-core':
         specifier: ^1.0.9
-        version: 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+        version: 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
       '@polkadot-cloud/connect-ledger':
         specifier: ^1.0.2
-        version: 1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@polkadot-cloud/connect-proxies':
         specifier: ^0.2.3
-        version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)
+        version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)
       '@polkadot-cloud/connect-vault':
         specifier: ^1.0.2
-        version: 1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -119,10 +119,10 @@ importers:
         version: 2.4.5(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@w3ux/react-polkicon':
         specifier: ^4.0.2
-        version: 4.0.2(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 4.0.2(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@w3ux/util-dedot':
         specifier: ^1.0.0
-        version: 1.0.0(dedot@1.2.0(typescript@6.0.3))
+        version: 1.0.0(dedot@1.3.0(typescript@6.0.3))
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
@@ -148,8 +148,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
       dedot-api:
         specifier: workspace:*
         version: link:../dedot-api
@@ -280,7 +280,7 @@ importers:
         version: 0.10.0
       '@polkadot-cloud/connect-proxies':
         specifier: ^0.2.3
-        version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)
+        version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)
       '@polkawatch/ddp-client':
         specifier: ^3.0.1
         version: 3.0.5
@@ -301,17 +301,17 @@ importers:
   packages/dedot-api:
     dependencies:
       '@dedot/chaintypes':
-        specifier: ^0.263.0
-        version: 0.263.0(dedot@1.2.0(typescript@6.0.3))
+        specifier: ^0.269.0
+        version: 0.269.0(dedot@1.3.0(typescript@6.0.3))
       '@polkadot-cloud/connect-core':
         specifier: ^1.0.9
-        version: 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+        version: 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
       '@polkadot-cloud/connect-proxies':
         specifier: ^0.2.3
-        version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)
+        version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)
       '@w3ux/util-dedot':
         specifier: ^1.0.0
-        version: 1.0.0(dedot@1.2.0(typescript@6.0.3))
+        version: 1.0.0(dedot@1.3.0(typescript@6.0.3))
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
@@ -319,8 +319,8 @@ importers:
         specifier: workspace:*
         version: link:../consts
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
       global-bus:
         specifier: workspace:*
         version: link:../global-bus
@@ -351,7 +351,7 @@ importers:
     dependencies:
       '@polkadot-cloud/connect-core':
         specifier: ^1.0.9
-        version: 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+        version: 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
@@ -359,8 +359,8 @@ importers:
         specifier: workspace:*
         version: link:../consts
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
       event-tracking:
         specifier: workspace:*
         version: link:../event-tracking
@@ -457,8 +457,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
       '@dedot/chaintypes':
-        specifier: ^0.263.0
-        version: 0.263.0(dedot@1.2.0(typescript@6.0.3))
+        specifier: ^0.269.0
+        version: 0.269.0(dedot@1.3.0(typescript@6.0.3))
       '@polkadot/keyring':
         specifier: ^14.0.3
         version: 14.0.3(@polkadot/util-crypto@14.0.3(@polkadot/util@14.0.3))(@polkadot/util@14.0.3)
@@ -466,8 +466,8 @@ importers:
         specifier: ^14.0.3
         version: 14.0.3(@polkadot/util@14.0.3)
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
       smoldot:
         specifier: ^3.1.0
         version: 3.1.0
@@ -504,12 +504,12 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
     devDependencies:
       '@dedot/chaintypes':
-        specifier: ^0.263.0
-        version: 0.263.0(dedot@1.2.0(typescript@6.0.3))
+        specifier: ^0.269.0
+        version: 0.269.0(dedot@1.3.0(typescript@6.0.3))
       bignumber.js:
         specifier: ^11.0.0
         version: 11.0.0
@@ -530,7 +530,7 @@ importers:
         version: 3.3.1(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.5)
       '@w3ux/react-polkicon':
         specifier: ^4.0.2
-        version: 4.0.2(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 4.0.2(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@w3ux/utils':
         specifier: 3.1.1
         version: 3.1.1
@@ -551,8 +551,8 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
       types:
         specifier: workspace:*
         version: link:../types
@@ -573,7 +573,7 @@ importers:
         version: 2.4.4(react@19.2.5)
       '@w3ux/react-polkicon':
         specifier: ^4.0.2
-        version: 4.0.2(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        version: 4.0.2(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@w3ux/utils':
         specifier: 3.1.1
         version: 3.1.1
@@ -582,7 +582,7 @@ importers:
         version: 2.5.1
       dedot:
         specifier: ^1
-        version: 1.2.0(typescript@6.0.3)
+        version: 1.3.0(typescript@6.0.3)
       motion:
         specifier: 12.23.24
         version: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -749,8 +749,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       dedot:
-        specifier: ^1.2.0
-        version: 1.2.0(typescript@6.0.3)
+        specifier: ^1.3.0
+        version: 1.3.0(typescript@6.0.3)
       i18next:
         specifier: ^26.0.6
         version: 26.0.6(typescript@6.0.3)
@@ -961,8 +961,8 @@ packages:
     peerDependencies:
       postcss-selector-parser: ^7.1.1
 
-  '@dedot/api@1.2.0':
-    resolution: {integrity: sha512-PaHWtQl3qMyAyLS+ZvlRylNP70abRNS/sJKfqkR4NEyjWmg56AAiRrswh8DNe94OOejVYh9Qa/6bBFSoTwYdqA==}
+  '@dedot/api@1.3.0':
+    resolution: {integrity: sha512-KkbfM561xVnaAoIG2PFgtcFVRUr3KDx6edd1LyW5k6ujPu5fDkdXzNP4hV8inJ52WNThgnnFLc7D4URbITIf9w==}
     engines: {node: '>=18'}
 
   '@dedot/chain-specs@0.10.0':
@@ -973,53 +973,58 @@ packages:
     peerDependencies:
       dedot: '>=1.0.1'
 
-  '@dedot/cli@1.2.0':
-    resolution: {integrity: sha512-wVGTV/7/atuFw6FK4ffngaQPXXjPcGTlKtJtzn7Uxgizbltsx1SAOHUf4g+lFrxeiIInd/TPdqg3W3oWyAkClQ==}
+  '@dedot/chaintypes@0.269.0':
+    resolution: {integrity: sha512-tuUT8tE20Kec7WO4Fwha60USpgU51Mj0Wfl+77rxIlk5EHmiYqyzlG7U+1MdhNAzbxFef+ILUnsMus3ckp009A==}
+    peerDependencies:
+      dedot: '>=1.0.1'
+
+  '@dedot/cli@1.3.0':
+    resolution: {integrity: sha512-QsWnlTWk98JS+yBtHMu+v+tXzyRIVdezK+pdwdCHY/qVM4U7RYTnn/Uc8N11beoQzK08zAGdby9F3pLInEI07w==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@dedot/codecs@1.2.0':
-    resolution: {integrity: sha512-gWQodbeHhSFJ5CC7pYVWWWf2jDSRyBflXj/3NkK58QuLGpBmLXS0jtpkoPzQl8s9RoW6/ZfX9xnmime8Eppvfw==}
+  '@dedot/codecs@1.3.0':
+    resolution: {integrity: sha512-7MYw5n4lNNFsDuI9Rb/Rt3Y6RLxT/rJdY30qt5pNnxiRlXKq1ExmXlRrG9yNdSH1YeAwd6l9v8ukNTaTLxf27Q==}
     engines: {node: '>=18'}
 
-  '@dedot/codegen@1.2.0':
-    resolution: {integrity: sha512-jnk2g65tnRxUu0dxjcz5NH75GASnydJZAUWe/84g8yOsaz3oV6xi1t6ql6pksf6ZBszCkiTEz630G3TwrW18dg==}
+  '@dedot/codegen@1.3.0':
+    resolution: {integrity: sha512-EAbtDKhMbRAk+HKvy/WhPPecFnYhnGDOw7O4nJdnrUcJnAFB4VQL2zanZRV8HlRidcut1+zl9Yw8a79zHzYbxw==}
     engines: {node: '>=18'}
 
-  '@dedot/contracts@1.2.0':
-    resolution: {integrity: sha512-cAKuV9cKi/CDoS7T3pVP7lRq/LVbbP1W1kUrxjutYMeYPQwFoo0BKah/IOhtcGBqb92BRY5irPPwc+4SaCBPDQ==}
+  '@dedot/contracts@1.3.0':
+    resolution: {integrity: sha512-qtsKasfQF5t4kLYE564I5qTNhhgngAc86QKHic5u1TOGVHavxZjfhwufVHaPUD6x7aU0EInfg4Kdy8PqV27exA==}
     engines: {node: '>=18'}
 
-  '@dedot/merkleized-metadata@1.2.0':
-    resolution: {integrity: sha512-7TsghJNgZmhgYRrsKwvR5for88+xOiDfzyhy9FoVAJnsaAteAfH865s+7uY6JSsqk+gv6v48kY48GanIYt17Gw==}
+  '@dedot/merkleized-metadata@1.3.0':
+    resolution: {integrity: sha512-OV0O2O2A2iwAnJoO+01ELEriqtC38RmNdFusOKrFMO5ZDG93FAr1hqGes4+Qk62xOMN5fXopPeypbFMwRLAqAA==}
     engines: {node: '>=18'}
 
-  '@dedot/providers@1.2.0':
-    resolution: {integrity: sha512-sLaiX+iscGcV1mprDC8Lw8l5npLeoZWWpDl5ZN2BhiGpzI6aMMsv5Aw7d+37pJTozO/llQ6+8TGG/xG7ZMZvog==}
+  '@dedot/providers@1.3.0':
+    resolution: {integrity: sha512-XWdQ8kF8f5Quz2AMz/t8aGlN2a1Av879p2n5xdRkJPam+/XVbCYRd2awpYUjQOxrlVxmm75Uz5yWbHGWVm99Pg==}
     engines: {node: '>=18'}
 
-  '@dedot/runtime-specs@1.2.0':
-    resolution: {integrity: sha512-fOd8ya5B+wh4dNiGo8PS6GxaYFI8JGr/R1dxM0mO1KZJa50+YZMd2xXZvxK7yTmM+SrbfvNqPs3ZMc6PqxLetw==}
+  '@dedot/runtime-specs@1.3.0':
+    resolution: {integrity: sha512-2Z30+nNi9WXvi8NoIQ7Ecx1cbwNs7H/Fgt98CG1nsCIqyzRejzpZ4ux4veWnvc3kSsxn4J4cQD3SEadLWndY0A==}
     engines: {node: '>=18'}
 
-  '@dedot/shape@1.2.0':
-    resolution: {integrity: sha512-rBF82SKKAA3+IgNHX++sSTPQoDdzjss//Z1cStmdYKHI3oohIp3dSq+G9QXZH5YYnr8EAnWO0xMJRDU9XsXLvQ==}
+  '@dedot/shape@1.3.0':
+    resolution: {integrity: sha512-HOjXfi3nQtKuNif9l1lEUB9FXCgMwx3+wS0OmgiEBgon8JZf+c7sIz7OfGzfepKLW2lI90NSKS/ZI6f5HI390A==}
     engines: {node: '>=18'}
 
-  '@dedot/smoldot@1.2.0':
-    resolution: {integrity: sha512-mhuy+0HFwj5lZUQ9qRteEaR0oRLQDP48gKpHKadP5aqZXEMChMkWs9HdgCWF7moNrcQJhbxoiUN9DGybZ/blyA==}
+  '@dedot/smoldot@1.3.0':
+    resolution: {integrity: sha512-jHM03dUMJ63nKFRw2bDfAK9Nh5CdPou6IInd3iejHrg0yPLbPoCIu+h+GnSAur4oK2vdAIDGRToLj6lUWfFZyw==}
     engines: {node: '>=18'}
 
-  '@dedot/storage@1.2.0':
-    resolution: {integrity: sha512-4Hl5IAhEGrqOcWgUfXdmV3AlzJ0xk8c6pXsdKxtSmGik6pLhzW+bje9gOAC455+HFBoW+sfJ+18kkaqeTMNOEg==}
+  '@dedot/storage@1.3.0':
+    resolution: {integrity: sha512-ToBwWmRrnxrbO/vz0UOaCDJmqel8TRxkSHbMShmHPpetPice2P3/aAlFKRnGu4wFlreL5FGe56FPmc1vBc5dsA==}
     engines: {node: '>=18'}
 
-  '@dedot/types@1.2.0':
-    resolution: {integrity: sha512-vMUqf6bm2h3zxMZ49BvJMIm/C6DwsfVUpyKqcHG3ffNX2FPhapA6956rbLUFEuAeWdWd+dhwWy5ngp6hvFEiPw==}
+  '@dedot/types@1.3.0':
+    resolution: {integrity: sha512-O8nJmCghOsKOScxO9fK/CFn97YFE9On5vBLrJTgEtjfE6LD66UD/R6HeifpXOICHLWzP62Rdnmz+mKWXvyQmLA==}
     engines: {node: '>=18'}
 
-  '@dedot/utils@1.2.0':
-    resolution: {integrity: sha512-Yf+ms0qoSX6m4ok3RtNK4+azuPh6FKREN7T+CTrO6Sv4t28WKmS13evil9erXgoRzPRNSmMYvPbViN+8ssvZMw==}
+  '@dedot/utils@1.3.0':
+    resolution: {integrity: sha512-FPJA+q4D0NlbHNDeNgklZ9/PSRPT1QLKq0PnPECIq+FmIxbNdjKaDLFcuwiBDPDYLwnT7XwK1rErVhxEsoxsiw==}
     engines: {node: '>=18'}
 
   '@dedot/wasm@0.1.0':
@@ -2853,8 +2858,8 @@ packages:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
 
-  dedot@1.2.0:
-    resolution: {integrity: sha512-vKiKgV9bG4zEsJjs4RHVzLgL8pGe4Fjie8aatRay4vc39oloSIPFnThP6kopYUcSH4X96QqC9EIB6QhK3cJ3mg==}
+  dedot@1.3.0:
+    resolution: {integrity: sha512-Ba6BkLb1ARG3ncJKXInbU8UqxFGecgWK2Jx6m00hOKmJLDg2qKnS8pMIE1LYUCQ/yrz61SUnpFQwKbtxAdialA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3122,8 +3127,8 @@ packages:
     resolution: {integrity: sha512-5bJ+nf/UCpAjHM8i06fl7eLyVC9iuNAjm9qzkiu2ZGhM0VscSvS6WDPfAwkdkBuoXGM9FJSbKl6wylMwP9Ktig==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
-  handlebars@4.7.8:
-    resolution: {integrity: sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ==}
+  handlebars@4.7.9:
+    resolution: {integrity: sha512-4E71E0rpOaQuJR2A3xDZ+GM1HyWYv1clR58tC8emQNeQe3RH7MAzSbat+V0wG78LQBo6m6bzSG/L4pBuCsgnUQ==}
     engines: {node: '>=0.4.7'}
     hasBin: true
 
@@ -3541,12 +3546,12 @@ packages:
   optimism@0.18.1:
     resolution: {integrity: sha512-mLXNwWPa9dgFyDqkNi54sjDyNJ9/fTI6WGBLgnXku1vdKY/jovHfZT5r+aiVeFFLOz+foPNOm5YJ4mqgld2GBQ==}
 
-  ora@9.3.0:
-    resolution: {integrity: sha512-lBX72MWFduWEf7v7uWf5DHp9Jn5BI8bNPGuFgtXMmr2uDz2Gz2749y3am3agSDdkhHPHYmmxEGSKH85ZLGzgXw==}
+  ora@9.4.0:
+    resolution: {integrity: sha512-84cglkRILFxdtA8hAvLNdMrtBpPNBTrQ9/ulg0FA7xLMnD6mifv+enAIeRmvtv+WgdCE+LPGOfQmtJRrVaIVhQ==}
     engines: {node: '>=20'}
 
-  ox@0.14.7:
-    resolution: {integrity: sha512-zSQ/cfBdolj7U4++NAvH7sI+VG0T3pEohITCgcQj8KlawvTDY4vGVhDT64Atsm0d6adWfIYHDpu88iUBMMp+AQ==}
+  ox@0.14.20:
+    resolution: {integrity: sha512-rby38C3nDn8eQkf29Zgw4hkCZJ64Qqi0zRPWL8ENUQ7JVuoITqrVtwWQgM/He19SCMUEc7hS/Sjw0jIOSLJhOw==}
     peerDependencies:
       typescript: '>=5.4.0'
     peerDependenciesMeta:
@@ -3934,8 +3939,8 @@ packages:
   std-env@4.0.0:
     resolution: {integrity: sha512-zUMPtQ/HBY3/50VbpkupYHbRroTRZJPRLvreamgErJVys0ceuzMkD44J/QjqhHjOzK42GQ3QZIeFG1OYfOtKqQ==}
 
-  stdin-discarder@0.3.1:
-    resolution: {integrity: sha512-reExS1kSGoElkextOcPkel4NE99S0BWxjUHQeDFnR8S993JxpPX7KU4MNmO19NXhlJp+8dmdCbKQVNgLJh2teA==}
+  stdin-discarder@0.3.2:
+    resolution: {integrity: sha512-eCPu1qRxPVkl5605OTWF8Wz40b4Mf45NY5LQmVPQ599knfs5QhASUm9GbJ5BDMDOXgrnh0wyEdvzmL//YMlw0A==}
     engines: {node: '>=18'}
 
   string-width@4.2.3:
@@ -3944,6 +3949,10 @@ packages:
 
   string-width@8.2.0:
     resolution: {integrity: sha512-6hJPQ8N0V0P3SNmP6h2J99RLuzrWz2gvT7VnK5tKvrNqJoyS9W4/Fb8mo31UiPvy00z7DQXkP2hnKBVav76thw==}
+    engines: {node: '>=20'}
+
+  string-width@8.2.1:
+    resolution: {integrity: sha512-IIaP0g3iy9Cyy18w3M9YcaDudujEAVHKt3a3QJg1+sr/oX96TbaGUubG0hJyCjCBThFH+tFpcIyoUHUn1ogaLA==}
     engines: {node: '>=20'}
 
   string_decoder@1.3.0:
@@ -4160,8 +4169,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  viem@2.47.6:
-    resolution: {integrity: sha512-zExmbI99NGvMdYa7fmqSTLgkwh48dmhgEqFrUgkpL4kfG4XkVefZ8dZqIKVUhZo6Uhf0FrrEXOsHm9LUyIvI2Q==}
+  viem@2.48.4:
+    resolution: {integrity: sha512-mReP/rgY2P+WeeRSG4sUvccCLKfyAW1C73Y3KkobAqgzYmVna9qyUMNE44xIUkDtfvRuC33r24UhF4baBYovsg==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -4576,33 +4585,37 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.1
 
-  '@dedot/api@1.2.0':
+  '@dedot/api@1.3.0':
     dependencies:
-      '@dedot/codecs': 1.2.0
-      '@dedot/providers': 1.2.0
-      '@dedot/runtime-specs': 1.2.0
-      '@dedot/shape': 1.2.0
-      '@dedot/storage': 1.2.0
-      '@dedot/types': 1.2.0
-      '@dedot/utils': 1.2.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/providers': 1.3.0
+      '@dedot/runtime-specs': 1.3.0
+      '@dedot/shape': 1.3.0
+      '@dedot/storage': 1.3.0
+      '@dedot/types': 1.3.0
+      '@dedot/utils': 1.3.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
   '@dedot/chain-specs@0.10.0': {}
 
-  '@dedot/chaintypes@0.263.0(dedot@1.2.0(typescript@6.0.3))':
+  '@dedot/chaintypes@0.263.0(dedot@1.3.0(typescript@6.0.3))':
     dependencies:
-      dedot: 1.2.0(typescript@6.0.3)
+      dedot: 1.3.0(typescript@6.0.3)
 
-  '@dedot/cli@1.2.0(typescript@6.0.3)':
+  '@dedot/chaintypes@0.269.0(dedot@1.3.0(typescript@6.0.3))':
     dependencies:
-      '@dedot/api': 1.2.0
-      '@dedot/codecs': 1.2.0
-      '@dedot/codegen': 1.2.0(typescript@6.0.3)
+      dedot: 1.3.0(typescript@6.0.3)
+
+  '@dedot/cli@1.3.0(typescript@6.0.3)':
+    dependencies:
+      '@dedot/api': 1.3.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/codegen': 1.3.0(typescript@6.0.3)
       '@dedot/wasm': 0.1.0
       '@polkadot/types-support': 16.5.6
-      ora: 9.3.0
+      ora: 9.4.0
       yargs: 17.7.2
     transitivePeerDependencies:
       - bufferutil
@@ -4610,22 +4623,22 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@dedot/codecs@1.2.0':
+  '@dedot/codecs@1.3.0':
     dependencies:
-      '@dedot/shape': 1.2.0
-      '@dedot/utils': 1.2.0
+      '@dedot/shape': 1.3.0
+      '@dedot/utils': 1.3.0
 
-  '@dedot/codegen@1.2.0(typescript@6.0.3)':
+  '@dedot/codegen@1.3.0(typescript@6.0.3)':
     dependencies:
-      '@dedot/api': 1.2.0
-      '@dedot/codecs': 1.2.0
-      '@dedot/contracts': 1.2.0(typescript@6.0.3)
-      '@dedot/providers': 1.2.0
-      '@dedot/runtime-specs': 1.2.0
-      '@dedot/shape': 1.2.0
-      '@dedot/types': 1.2.0
-      '@dedot/utils': 1.2.0
-      handlebars: 4.7.8
+      '@dedot/api': 1.3.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/contracts': 1.3.0(typescript@6.0.3)
+      '@dedot/providers': 1.3.0
+      '@dedot/runtime-specs': 1.3.0
+      '@dedot/shape': 1.3.0
+      '@dedot/types': 1.3.0
+      '@dedot/utils': 1.3.0
+      handlebars: 4.7.9
       prettier: 3.8.3
     transitivePeerDependencies:
       - bufferutil
@@ -4633,60 +4646,60 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@dedot/contracts@1.2.0(typescript@6.0.3)':
+  '@dedot/contracts@1.3.0(typescript@6.0.3)':
     dependencies:
-      '@dedot/api': 1.2.0
-      '@dedot/codecs': 1.2.0
-      '@dedot/types': 1.2.0
-      '@dedot/utils': 1.2.0
-      viem: 2.47.6(typescript@6.0.3)
+      '@dedot/api': 1.3.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/types': 1.3.0
+      '@dedot/utils': 1.3.0
+      viem: 2.48.4(typescript@6.0.3)
     transitivePeerDependencies:
       - bufferutil
       - typescript
       - utf-8-validate
       - zod
 
-  '@dedot/merkleized-metadata@1.2.0':
+  '@dedot/merkleized-metadata@1.3.0':
     dependencies:
-      '@dedot/codecs': 1.2.0
-      '@dedot/shape': 1.2.0
-      '@dedot/utils': 1.2.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/shape': 1.3.0
+      '@dedot/utils': 1.3.0
 
-  '@dedot/providers@1.2.0':
+  '@dedot/providers@1.3.0':
     dependencies:
-      '@dedot/utils': 1.2.0
+      '@dedot/utils': 1.3.0
       '@polkadot/x-ws': 14.0.3
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/runtime-specs@1.2.0':
+  '@dedot/runtime-specs@1.3.0':
     dependencies:
-      '@dedot/codecs': 1.2.0
-      '@dedot/shape': 1.2.0
-      '@dedot/types': 1.2.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/shape': 1.3.0
+      '@dedot/types': 1.3.0
 
-  '@dedot/shape@1.2.0':
+  '@dedot/shape@1.3.0':
     dependencies:
-      '@dedot/utils': 1.2.0
+      '@dedot/utils': 1.3.0
       deshape: 0.1.0
 
-  '@dedot/smoldot@1.2.0':
+  '@dedot/smoldot@1.3.0':
     dependencies:
       smoldot: 2.0.40
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@dedot/storage@1.2.0': {}
+  '@dedot/storage@1.3.0': {}
 
-  '@dedot/types@1.2.0':
+  '@dedot/types@1.3.0':
     dependencies:
-      '@dedot/codecs': 1.2.0
-      '@dedot/shape': 1.2.0
-      '@dedot/utils': 1.2.0
+      '@dedot/codecs': 1.3.0
+      '@dedot/shape': 1.3.0
+      '@dedot/utils': 1.3.0
 
-  '@dedot/utils@1.2.0':
+  '@dedot/utils@1.3.0':
     dependencies:
       '@noble/hashes': 1.8.0
       '@scure/base': 1.2.6
@@ -5044,22 +5057,22 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
     optional: true
 
-  '@polkadot-cloud/connect-core@1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)':
+  '@polkadot-cloud/connect-core@1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)':
     dependencies:
       '@w3ux/extension-assets': 2.3.1(react@19.2.5)
       '@w3ux/types': 2.4.2
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.3))
+      '@w3ux/util-dedot': 1.0.0(dedot@1.3.0(typescript@6.0.3))
       '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.3)
+      dedot: 1.3.0(typescript@6.0.3)
       rxjs: 7.8.2
     transitivePeerDependencies:
       - react
 
-  '@polkadot-cloud/connect-ledger@1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@polkadot-cloud/connect-ledger@1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@ledgerhq/hw-transport-webhid': 6.35.0
-      '@polkadot-cloud/connect': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
-      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/hooks': 2.4.4(react@19.2.5)
       '@w3ux/utils': 3.1.1
       '@zondax/ledger-substrate': 2.1.2
@@ -5069,14 +5082,14 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@polkadot-cloud/connect-proxies@0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)':
+  '@polkadot-cloud/connect-proxies@0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)(typescript@6.0.3)':
     dependencies:
-      '@dedot/chaintypes': 0.263.0(dedot@1.2.0(typescript@6.0.3))
-      '@polkadot-cloud/connect': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
-      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+      '@dedot/chaintypes': 0.263.0(dedot@1.3.0(typescript@6.0.3))
+      '@polkadot-cloud/connect': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/hooks': 2.4.4(react@19.2.5)
       '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.3)
+      dedot: 1.3.0(typescript@6.0.3)
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
       rxjs: 7.8.2
@@ -5086,25 +5099,25 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@polkadot-cloud/connect-vault@1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@polkadot-cloud/connect-vault@1.0.2(@polkadot-cloud/connect-core@1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2))(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2))(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
-      '@polkadot-cloud/connect': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
-      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
-      dedot: 1.2.0(typescript@6.0.3)
+      '@polkadot-cloud/connect': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+      dedot: 1.3.0(typescript@6.0.3)
       html5-qrcode: 2.3.8
       qrcode-generator: 1.5.0
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
       xxhash-wasm: 1.1.0
 
-  '@polkadot-cloud/connect@1.0.9(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)':
+  '@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(rxjs@7.8.2)':
     dependencies:
-      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.2.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
+      '@polkadot-cloud/connect-core': 1.0.9(dedot@1.3.0(typescript@6.0.3))(react@19.2.5)(rxjs@7.8.2)
       '@w3ux/hooks': 2.4.4(react@19.2.5)
       '@w3ux/types': 2.4.2
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.3))
+      '@w3ux/util-dedot': 1.0.0(dedot@1.3.0(typescript@6.0.3))
       '@w3ux/utils': 3.1.1
-      dedot: 1.2.0(typescript@6.0.3)
+      dedot: 1.3.0(typescript@6.0.3)
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
       rxjs: 7.8.2
@@ -6252,19 +6265,19 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@w3ux/react-polkicon@4.0.2(dedot@1.2.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@w3ux/react-polkicon@4.0.2(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@w3ux/crypto': 1.2.1
-      '@w3ux/util-dedot': 1.0.0(dedot@1.2.0(typescript@6.0.3))
-      dedot: 1.2.0(typescript@6.0.3)
+      '@w3ux/util-dedot': 1.0.0(dedot@1.3.0(typescript@6.0.3))
+      dedot: 1.3.0(typescript@6.0.3)
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
   '@w3ux/types@2.4.2': {}
 
-  '@w3ux/util-dedot@1.0.0(dedot@1.2.0(typescript@6.0.3))':
+  '@w3ux/util-dedot@1.0.0(dedot@1.3.0(typescript@6.0.3))':
     dependencies:
-      dedot: 1.2.0(typescript@6.0.3)
+      dedot: 1.3.0(typescript@6.0.3)
 
   '@w3ux/utils@3.1.1': {}
 
@@ -6520,19 +6533,19 @@ snapshots:
       mimic-response: 3.1.0
     optional: true
 
-  dedot@1.2.0(typescript@6.0.3):
+  dedot@1.3.0(typescript@6.0.3):
     dependencies:
-      '@dedot/api': 1.2.0
-      '@dedot/cli': 1.2.0(typescript@6.0.3)
-      '@dedot/codecs': 1.2.0
-      '@dedot/contracts': 1.2.0(typescript@6.0.3)
-      '@dedot/merkleized-metadata': 1.2.0
-      '@dedot/providers': 1.2.0
-      '@dedot/runtime-specs': 1.2.0
-      '@dedot/shape': 1.2.0
-      '@dedot/smoldot': 1.2.0
-      '@dedot/types': 1.2.0
-      '@dedot/utils': 1.2.0
+      '@dedot/api': 1.3.0
+      '@dedot/cli': 1.3.0(typescript@6.0.3)
+      '@dedot/codecs': 1.3.0
+      '@dedot/contracts': 1.3.0(typescript@6.0.3)
+      '@dedot/merkleized-metadata': 1.3.0
+      '@dedot/providers': 1.3.0
+      '@dedot/runtime-specs': 1.3.0
+      '@dedot/shape': 1.3.0
+      '@dedot/smoldot': 1.3.0
+      '@dedot/types': 1.3.0
+      '@dedot/utils': 1.3.0
       smoldot: 2.0.40
     transitivePeerDependencies:
       - bufferutil
@@ -6790,7 +6803,7 @@ snapshots:
 
   graphql@16.13.2: {}
 
-  handlebars@4.7.8:
+  handlebars@4.7.9:
     dependencies:
       minimist: 1.2.8
       neo-async: 2.6.2
@@ -7124,7 +7137,7 @@ snapshots:
       '@wry/trie': 0.5.0
       tslib: 2.8.1
 
-  ora@9.3.0:
+  ora@9.4.0:
     dependencies:
       chalk: 5.6.2
       cli-cursor: 5.0.0
@@ -7132,10 +7145,10 @@ snapshots:
       is-interactive: 2.0.0
       is-unicode-supported: 2.1.0
       log-symbols: 7.0.1
-      stdin-discarder: 0.3.1
-      string-width: 8.2.0
+      stdin-discarder: 0.3.2
+      string-width: 8.2.1
 
-  ox@0.14.7(typescript@6.0.3):
+  ox@0.14.20(typescript@6.0.3):
     dependencies:
       '@adraffy/ens-normalize': 1.11.1
       '@noble/ciphers': 1.3.0
@@ -7564,7 +7577,7 @@ snapshots:
 
   std-env@4.0.0: {}
 
-  stdin-discarder@0.3.1: {}
+  stdin-discarder@0.3.2: {}
 
   string-width@4.2.3:
     dependencies:
@@ -7573,6 +7586,11 @@ snapshots:
       strip-ansi: 6.0.1
 
   string-width@8.2.0:
+    dependencies:
+      get-east-asian-width: 1.5.0
+      strip-ansi: 7.2.0
+
+  string-width@8.2.1:
     dependencies:
       get-east-asian-width: 1.5.0
       strip-ansi: 7.2.0
@@ -7812,7 +7830,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  viem@2.47.6(typescript@6.0.3):
+  viem@2.48.4(typescript@6.0.3):
     dependencies:
       '@noble/curves': 1.9.1
       '@noble/hashes': 1.8.0
@@ -7820,7 +7838,7 @@ snapshots:
       '@scure/bip39': 1.6.0
       abitype: 1.2.3(typescript@6.0.3)
       isows: 1.0.7(ws@8.18.3)
-      ox: 0.14.7(typescript@6.0.3)
+      ox: 0.14.20(typescript@6.0.3)
       ws: 8.18.3
     optionalDependencies:
       typescript: 6.0.3
