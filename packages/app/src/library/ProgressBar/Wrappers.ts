@@ -32,7 +32,7 @@ export const ProgressFill = styled.div<{
 	background: ${({ $status }) =>
 		$status === 'complete'
 			? 'var(--status-success)'
-			: 'linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-primary) 85%, var(--shimmer-highlight-subtle) 100%)'};
+			: 'linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-primary) 85%, var(--shade-100) 100%)'};
 	transition: width 1.5s ease-out;
 	position: relative;
 	overflow: hidden;
@@ -51,7 +51,7 @@ export const ProgressFill = styled.div<{
 		background: linear-gradient(
 			90deg,
 			transparent 0%,
-			var(--shimmer-highlight) 50%,
+			var(--shade-200) 50%,
 			transparent 100%
 		);
 		animation: ${shimmer} 2.5s ease-in-out infinite;
