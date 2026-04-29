@@ -1,19 +1,23 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { reconnectSync$ } from '@w3ux/observables-connect'
+import {
+	getActiveAddress,
+	importedAccounts$,
+	reconnectSync$,
+} from '@polkadot-cloud/connect-core'
+import {
+	getLocalActiveProxy,
+	proxies$,
+	setActiveProxy,
+} from '@polkadot-cloud/connect-proxies'
 import type { DedotClient } from 'dedot'
 import {
 	activePoolIds$,
 	bonded$,
 	fetchAndSetPoolWarnings,
-	getActiveAddress,
-	getLocalActiveProxy,
 	getSyncing,
-	importedAccounts$,
-	proxies$,
 	removeSyncing,
-	setActiveProxy,
 } from 'global-bus'
 import { combineLatest, pairwise, type Subscription, startWith } from 'rxjs'
 import type { NetworkId, ServiceInterface, SystemChainId } from 'types'
@@ -22,7 +26,6 @@ import { ActivePoolQuery } from '../subscribe/activePool'
 import { BondedQuery } from '../subscribe/bonded'
 import { EraRewardPointsQuery } from '../subscribe/eraRewardPoints'
 import { PoolMembershipQuery } from '../subscribe/poolMembership'
-import { ProxiesQuery } from '../subscribe/proxies'
 import { StakingLedgerQuery } from '../subscribe/stakingLedger'
 import { StakingMetricsQuery } from '../subscribe/stakingMetrics'
 import type {
@@ -31,7 +34,6 @@ import type {
 	BondedAccounts,
 	PeopleChain,
 	PoolMemberships,
-	Proxies,
 	StakingChain,
 	StakingLedgers,
 } from '../types'
@@ -62,7 +64,6 @@ export class SubscriptionManager<
 	subActivePoolIds: Subscription
 	subActivePools: ActivePools<StakingApi> = {}
 	subPoolMemberships: PoolMemberships<StakingApi> = {}
-	subProxies: Proxies<StakingApi> = {}
 	subActiveProxies: Subscription
 	subActiveBonded: Subscription
 
@@ -81,69 +82,68 @@ export class SubscriptionManager<
 	// Initialize default service subscriptions
 	initialize() {
 		// Imported accounts subscription - manages account balances and related subscriptions
-		this.subImportedAccounts = importedAccounts$.subscribe(([prev, cur]) => {
-			const ss58 = this.apiHub.consts.system.ss58Prefix
-			const formattedCur = formatAccountAddresses(cur.flat(), ss58)
-			const { added, removed, remaining } = diffImportedAccounts(
-				prev.flat(),
-				formattedCur,
-			)
-
-			removed.forEach((account) => {
-				const address = account.address
-
-				// Only unsubscribe from address subscriptions if no other imported account with same
-				// address exists
-				const addressFound = formattedCur.find(
-					(c) => c.address === account.address,
+		this.subImportedAccounts = importedAccounts$
+			.pipe(startWith([], [], []), pairwise())
+			.subscribe(([prev, cur]) => {
+				const ss58 = this.apiHub.consts.system.ss58Prefix
+				const formattedCur = formatAccountAddresses(cur.flat(), ss58)
+				const { added, removed, remaining } = diffImportedAccounts(
+					prev.flat(),
+					formattedCur,
 				)
-				if (!addressFound) {
-					Object.values(this.subAccountBalances).forEach((balances) => {
-						Object.keys(balances).forEach((key) => {
-							if (key.endsWith(`:${address}`)) {
-								balances[key]?.unsubscribe()
-								delete balances[key]
-							}
+
+				removed.forEach((account) => {
+					const address = account.address
+
+					// Only unsubscribe from address subscriptions if no other imported account with same
+					// address exists
+					const addressFound = formattedCur.find(
+						(c) => c.address === account.address,
+					)
+					if (!addressFound) {
+						Object.values(this.subAccountBalances).forEach((balances) => {
+							Object.keys(balances).forEach((key) => {
+								if (key.endsWith(`:${address}`)) {
+									balances[key]?.unsubscribe()
+									delete balances[key]
+								}
+							})
 						})
-					})
-					this.subBonded[address]?.unsubscribe()
-					delete this.subBonded[address]
-					this.subProxies?.[address]?.unsubscribe()
-					delete this.subProxies[address]
-					this.subPoolMemberships?.[address]?.unsubscribe()
-					delete this.subPoolMemberships[address]
+						this.subBonded[address]?.unsubscribe()
+						delete this.subBonded[address]
+						this.subPoolMemberships?.[address]?.unsubscribe()
+						delete this.subPoolMemberships[address]
+					}
+				})
+
+				const addedAddresses: string[] = []
+				for (const account of added) {
+					const address = account.address
+
+					// Address individuality checks
+					const addressAlreadyAdded = addedAddresses.some((a) => a === address)
+					const addressAlreadyPresent = remaining.some(
+						(a) => a?.address === address,
+					)
+					// Only subscribe to address subscriptions if no other occurrence of the address exists
+					if (!addressAlreadyAdded && !addressAlreadyPresent) {
+						this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
+							new AccountBalanceQuery(this.apiHub, this.ids[2], address)
+
+						this.subBonded[address] = new BondedQuery(this.stakingApi, address)
+						this.subPoolMemberships[address] = new PoolMembershipQuery(
+							this.stakingApi,
+							address,
+						)
+					}
+					addedAddresses.push(address)
+				}
+
+				// Fetch pool warnings for added addresses
+				if (addedAddresses.length > 0) {
+					fetchAndSetPoolWarnings(this.ids[0], addedAddresses)
 				}
 			})
-
-			const addedAddresses: string[] = []
-			for (const account of added) {
-				const address = account.address
-
-				// Address individuality checks
-				const addressAlreadyAdded = addedAddresses.some((a) => a === address)
-				const addressAlreadyPresent = remaining.some(
-					(a) => a?.address === address,
-				)
-				// Only subscribe to address subscriptions if no other occurrence of the address exists
-				if (!addressAlreadyAdded && !addressAlreadyPresent) {
-					this.subAccountBalances.hub[getAccountKey(this.ids[2], address)] =
-						new AccountBalanceQuery(this.apiHub, this.ids[2], address)
-
-					this.subBonded[address] = new BondedQuery(this.stakingApi, address)
-					this.subPoolMemberships[address] = new PoolMembershipQuery(
-						this.stakingApi,
-						address,
-					)
-					this.subProxies[address] = new ProxiesQuery(this.stakingApi, address)
-				}
-				addedAddresses.push(address)
-			}
-
-			// Fetch pool warnings for added addresses
-			if (addedAddresses.length > 0) {
-				fetchAndSetPoolWarnings(this.ids[0], addedAddresses)
-			}
-		})
 
 		// Active bonded subscription - manages staking ledgers
 		this.subActiveBonded = bonded$
@@ -252,9 +252,6 @@ export class SubscriptionManager<
 			sub?.unsubscribe()
 		}
 		for (const sub of Object.values(this.subPoolMemberships)) {
-			sub?.unsubscribe()
-		}
-		for (const sub of Object.values(this.subProxies)) {
 			sub?.unsubscribe()
 		}
 		this.subActiveEra?.unsubscribe()

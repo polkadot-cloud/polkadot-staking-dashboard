@@ -70,9 +70,9 @@ export const Methods = ({
 
 	return (
 		<SelectItems layout="three-col">
-			{methods.map((m, i) => (
+			{methods.map((m) => (
 				<SelectItem
-					key={`gen_method_${i}`}
+					key={`gen_method_${m.title}`}
 					title={m.title}
 					subtitle={m.subtitle}
 					icon={<FontAwesomeIcon icon={m.icon} />}

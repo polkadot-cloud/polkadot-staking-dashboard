@@ -1,12 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util/chains'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useFetchMethods } from 'hooks/useFetchMethods'
@@ -33,7 +32,7 @@ export const NominatorSetupsProvider = ({
 }) => {
 	const { network } = useNetwork()
 	const { fetch } = useFetchMethods()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const {
 		balances: {
 			nominator: { totalPossibleBond },

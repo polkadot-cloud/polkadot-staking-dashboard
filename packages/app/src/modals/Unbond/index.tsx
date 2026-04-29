@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
@@ -36,7 +36,7 @@ export const Unbond = () => {
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isDepositor, activePool } = useActivePool()
 	const {
@@ -187,8 +187,8 @@ export const Unbond = () => {
 				<Title>{t('removeBond')}</Title>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

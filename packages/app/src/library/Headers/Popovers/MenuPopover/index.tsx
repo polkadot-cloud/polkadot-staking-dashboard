@@ -19,6 +19,7 @@ import {
 	faWifi,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import DiscordSVG from 'assets/brands/discord.svg?react'
@@ -30,7 +31,6 @@ import {
 	PlatformURL,
 } from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -56,7 +56,7 @@ export const MenuPopover = ({
 	const { mode, toggleTheme } = useTheme()
 	const { openModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { advancedMode, setAdvancedMode, showHelp, setShowHelp } = useUi()
 
 	const { name } = getRelayChainData(network)

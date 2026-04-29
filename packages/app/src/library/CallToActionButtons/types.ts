@@ -8,6 +8,7 @@ import type {
 import type { CSSProperties, ReactNode } from 'react'
 
 export type CallToActionButton = {
+	id?: string
 	label: ReactNode
 	onClick: () => void
 	disabled?: boolean
@@ -20,6 +21,7 @@ export type CallToActionButton = {
 }
 
 export type CallToActionSection = {
+	id?: string
 	className?: string
 	buttons: CallToActionButton[]
 }

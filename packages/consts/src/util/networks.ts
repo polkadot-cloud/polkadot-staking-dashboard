@@ -4,15 +4,13 @@
 import type { NetworkId, Networks } from 'types'
 import { NetworkList, ProductionDisabledNetworks } from '../networks'
 
+const isProd =
+	(import.meta as ImportMeta & { env?: { PROD?: boolean } }).env?.PROD === true
+
 // Gets enabled networks depending on environment
 export const getEnabledNetworks = (): Networks =>
 	Object.entries(NetworkList).reduce((acc: Networks, [key, item]) => {
-		if (
-			!(
-				import.meta.env.PROD &&
-				ProductionDisabledNetworks.includes(key as NetworkId)
-			)
-		) {
+		if (!(isProd && ProductionDisabledNetworks.includes(key as NetworkId))) {
 			acc[key] = item
 		}
 		return acc

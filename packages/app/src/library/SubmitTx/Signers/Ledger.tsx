@@ -3,8 +3,11 @@
 
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useLedgerTxPrompt, useLedgerTxSubmit } from '@w3ux/ledger-connect'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
+import {
+	useLedgerTxPrompt,
+	useLedgerTxSubmit,
+} from '@polkadot-cloud/connect-ledger'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'

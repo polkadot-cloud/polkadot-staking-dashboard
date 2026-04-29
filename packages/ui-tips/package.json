@@ -15,14 +15,14 @@
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^7.2.0",
 		"@fortawesome/free-solid-svg-icons": "^7.2.0",
-		"@fortawesome/react-fontawesome": "^3.3.0",
+		"@fortawesome/react-fontawesome": "^3.3.1",
 		"@w3ux/hooks": "^2.4.4",
 		"@w3ux/utils": "^3.1.1",
 		"consts": "workspace:*",
 		"locales": "workspace:*",
 		"motion": "12.23.24",
 		"react": "^19.2.5",
-		"react-i18next": "^17.0.2",
+		"react-i18next": "^17.0.6",
 		"ui-styles": "workspace:*"
 	},
 	"devDependencies": {

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { Proxy } from 'contexts/Proxies/types'
+import type { Proxy } from '@polkadot-cloud/connect-proxies'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { Fragment } from 'react/jsx-runtime'
 import { AccountButton } from './AccountButton'

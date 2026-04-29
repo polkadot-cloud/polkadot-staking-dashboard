@@ -26,7 +26,6 @@ import type {
 	BondedAccounts,
 	PeopleChain,
 	PoolMemberships,
-	Proxies,
 	Service,
 	ServiceType,
 	StakingChain,
@@ -70,7 +69,6 @@ export abstract class DefaultServiceClass<
 	subActivePoolIds: Subscription
 	subActivePools: ActivePools<StakingApi>
 	subPoolMemberships: PoolMemberships<StakingApi>
-	subProxies: Proxies<StakingApi>
 	subActiveProxies: Subscription
 
 	abstract interface: ServiceInterface
