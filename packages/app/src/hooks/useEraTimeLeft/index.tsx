@@ -31,8 +31,8 @@ export const useEraTimeLeft = () => {
 
 		// Percentage of eraDuration
 		const percentage = eraDuration / 100
-		const percentRemaining = timeleft === 0 ? 100 : timeleft / percentage
-		const percentSurpassed = timeleft === 0 ? 0 : 100 - percentRemaining
+		const percentRemaining = timeleft === 0 ? 0 : timeleft / percentage
+		const percentSurpassed = timeleft === 0 ? 100 : 100 - percentRemaining
 
 		return { timeleft, end, percentSurpassed, percentRemaining }
 	}
