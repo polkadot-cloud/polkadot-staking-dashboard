@@ -3,7 +3,7 @@
 
 import { useAnimate } from 'motion/react'
 import type { ComponentType } from 'react'
-import { Suspense, useEffect, useRef } from 'react'
+import { Suspense, useEffect, useLayoutEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Card, Container, Scroll } from 'ui-core/modal'
 import { useOverlay } from './Provider'
@@ -80,6 +80,20 @@ export const Modal = ({
 		setModalHeight(modalRef.current?.clientHeight || 0)
 	}
 
+	const openWhenMeasured = () => {
+		if (status !== 'opening') {
+			return false
+		}
+
+		const height = modalRef.current?.clientHeight || 0
+		if (height > 0) {
+			setModalHeight(height, false)
+			setModalStatus('open')
+			return true
+		}
+		return false
+	}
+
 	// Control on modal status change
 	useEffect(() => {
 		if (activeOverlayInstance === 'modal' && status === 'open') {
@@ -135,6 +149,43 @@ export const Modal = ({
 		setModalRef(modalRef)
 		setModalHeightRef(heightRef)
 	}, [modalRef?.current, heightRef?.current])
+
+	// Lazy modal content renders after the opening status is already set. Watch
+	// for the first measurable height so the modal can transition to open.
+	useLayoutEffect(() => {
+		if (status !== 'opening' || !modalRef.current) {
+			return
+		}
+
+		if (openWhenMeasured()) {
+			return
+		}
+
+		let frame: number | undefined
+		let observer: ResizeObserver | undefined
+		const measure = () => {
+			if (openWhenMeasured()) {
+				observer?.disconnect()
+				if (frame) {
+					window.cancelAnimationFrame(frame)
+				}
+			}
+		}
+
+		if (typeof ResizeObserver === 'undefined') {
+			frame = window.requestAnimationFrame(measure)
+		} else {
+			observer = new ResizeObserver(measure)
+			observer.observe(modalRef.current)
+		}
+
+		return () => {
+			observer?.disconnect()
+			if (frame) {
+				window.cancelAnimationFrame(frame)
+			}
+		}
+	}, [key, status])
 
 	const ActiveModal: ComponentType | null = modals?.[key] || null
 
