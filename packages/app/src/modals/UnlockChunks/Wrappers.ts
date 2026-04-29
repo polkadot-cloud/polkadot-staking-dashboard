@@ -34,7 +34,6 @@ export const ChunkWrapper = styled.div`
   margin-top: 1.25rem;
 
   > div {
-    background: var(--btn-bg);
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
@@ -53,7 +52,7 @@ export const ChunkWrapper = styled.div`
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      color: var(--text-secondary);
+      color: var(--gray-900);
       font-size: 0.85rem;
       margin-top: 0.35rem;
 
@@ -72,7 +71,7 @@ export const ChunkWrapper = styled.div`
 
       > span {
         font-size: 0.85rem;
-        color: var(--text-secondary);
+        color: var(--gray-900);
       }
     }
   }

@@ -30,9 +30,7 @@ export const ProgressFill = styled.div<{
 	height: 100%;
 	width: ${({ $progress }) => $progress}%;
 	background: ${({ $status }) =>
-		$status === 'complete'
-			? 'var(--status-success)'
-			: 'linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-primary) 85%, var(--shade-100) 100%)'};
+		$status === 'complete' ? 'var(--status-success)' : 'var(--gray-1000)'};
 	transition: width 1.5s ease-out;
 	position: relative;
 	overflow: hidden;
