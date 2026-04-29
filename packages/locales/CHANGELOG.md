@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.5.0...locales-v1.6.0) (2026-04-29)
+
+
+### Features
+
+* Add Account Sync QR ([#3360](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3360)) ([580ad3d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/580ad3d6a1f894d49a38f5bda18f251694dce604))
+* Allow groups of Ledger addresses, multi-device support ([#3268](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3268)) ([8ef6ff3](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8ef6ff3935a6aafe42069c4192de7d9bffd94cd2))
+* **dual-staking:** Re-enable dual staking (nominator + pool member) ([#3265](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3265)) ([3b42de5](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3b42de5714aa6d684ac77e1a8fdada7147da3578))
+* improved pool & validator sharing functionality ([#3290](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3290)) ([16ce3e9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/16ce3e9d0efc2a0c690f5d321673967917d6fe69))
+* Ledger Flex & Stax device support ([#3248](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3248)) ([75918a9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75918a938a4711b95bc442a1271899257d624c07))
+* **locale:** Add German (Deutsch) language support ([#3262](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3262)) ([8b751b8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8b751b8df0a10413f352fcadd50d4308a9bbcbc8))
+* **locale:** Add Korean (한국어) language support ([#3263](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3263)) ([3ed9de7](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3ed9de79b83fe8e48c806d3c060e2de89e9e5293))
+* **locale:** Add Portuguese (Português) language support ([#3272](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3272)) ([cfac13c](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/cfac13c6fd6568efd45cfb04f9d59b2f1e89f64f))
+* **refactor:** Bump deps, dedot as peer, refresh pnpm.lock ([#3261](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3261)) ([75d783e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75d783ee6a9d0e971aa2b88154d31d8476a89f6e))
+* **refactor:** Deprecate direct wallet connect support ([#3211](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3211)) ([071cd78](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/071cd78c41d19fd5a2a57123b45837400e9eccfc))
+* **refactor:** Pool commission management UX redesign ([#3435](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3435)) ([50ce159](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/50ce159117ce8c04ea0be96fb4875409ce997829))
+* Use latest connect kit ([#3409](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3409)) ([de1d38f](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/de1d38fec73bb1801cc647454639e76603acb0d8))
+* **ux:** Add pool commission change rate warning ([#3230](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3230)) ([554d676](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/554d676099e74d1010c9ecd46ef230317cdcd052))
+* **ux:** Header menu adjustments ([#3253](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3253)) ([4074928](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/407492824389de4718870e580a2a72ad3125c5ca))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+* **ux:** Transaction submission UI redesign ([#3291](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3291)) ([36dbad7](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/36dbad704ad2a23a6db428e392a94cabfcc9764f))
+* **ux:** Visual progress tracker for unbonding chunks ([#3292](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3292)) ([732ff9d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/732ff9df35fc10e1c1888b9cbc88f4e3ddec547d))
+
+
+### Bug Fixes
+
+* localise hardcoded string and remove console.error in validator search ([#3313](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3313)) ([8061514](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/8061514e7720011fa3d107cf04e0a16b450a1be7))
+* minor spelling and grammar corrections across locale files ([#3376](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3376)) ([4726632](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/47266323645701bece0e6d754dd084d3ef5ea004))
+
 ## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.4.0...locales-v1.5.0) (2026-01-12)
 
 

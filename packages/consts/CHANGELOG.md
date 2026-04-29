@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.4.0...consts-v1.5.0) (2026-04-29)
+
+
+### Features
+
+* add DeServe RPC provider for Polkadot Asset Hub ([#3391](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3391)) ([14de3a4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/14de3a4336e95d8080786cc75730465992e6b70d))
+* Add Paseo testnet support ([#3237](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3237)) ([6f8254b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6f8254b514fba0cd582c33bb33615640b4407170))
+* improved pool & validator sharing functionality ([#3290](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3290)) ([16ce3e9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/16ce3e9d0efc2a0c690f5d321673967917d6fe69))
+* Ledger Flex & Stax device support ([#3248](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3248)) ([75918a9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/75918a938a4711b95bc442a1271899257d624c07))
+* **refactor:** Abstract proxy account support ([#3449](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3449)) ([abef2fb](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/abef2fbc238ed41682e29bd96bfa30fdade56bdc))
+* **refactor:** Deprecate direct wallet connect support ([#3211](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3211)) ([071cd78](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/071cd78c41d19fd5a2a57123b45837400e9eccfc))
+* **refactor:** Platform URLs to consts ([#3196](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3196)) ([29e3a17](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/29e3a179ca3a7d86006598d9f57251b8fa7b49b8))
+* **refactor:** Stop connecting to relay api on app bootstrap ([#3198](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3198)) ([3d6a52b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/3d6a52b5108242d3dda788fd7f483f1e05daff8b))
+* **ux:** Halving step graph adjustments ([#3254](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3254)) ([ece5018](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ece5018fa2c825e10b6255e767dbe2a62be7cd3e))
+* **ux:** Implement `NominateBuffer` for nominator recommendation ([#3197](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3197)) ([77b57d0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/77b57d0c9c17216f3ad3f37dc918f9ea55d52c18))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.3.0...consts-v1.4.0) (2026-01-12)
 
 
