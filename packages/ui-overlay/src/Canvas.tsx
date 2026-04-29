@@ -6,6 +6,7 @@ import type { ComponentType } from 'react'
 import { Suspense, useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Container, Content, Scroll } from 'ui-core/canvas'
+import { OverlayPreload } from './Preload'
 import { useOverlay } from './Provider'
 import type { CanvasProps } from './Provider/types'
 
@@ -79,7 +80,7 @@ export const Canvas = ({
 			<Scroll>
 				<Content size={size}>
 					<ErrorBoundary FallbackComponent={Fallback}>
-						<Suspense fallback={null}>
+						<Suspense fallback={<OverlayPreload type="canvas" />}>
 							{ActiveCanvas && <ActiveCanvas />}
 						</Suspense>
 					</ErrorBoundary>

@@ -6,6 +6,7 @@ import type { ComponentType } from 'react'
 import { Suspense, useEffect, useLayoutEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Card, Container, Scroll } from 'ui-core/modal'
+import { OverlayPreload } from './Preload'
 import { useOverlay } from './Provider'
 import type { ModalProps } from './Provider/types'
 
@@ -80,18 +81,21 @@ export const Modal = ({
 		setModalHeight(modalRef.current?.clientHeight || 0)
 	}
 
-	const openWhenMeasured = () => {
-		if (status !== 'opening') {
+	const syncMeasuredHeight = () => {
+		if (status !== 'opening' && status !== 'open') {
 			return false
 		}
 
 		const height = modalRef.current?.clientHeight || 0
-		if (height > 0) {
-			setModalHeight(height, false)
-			setModalStatus('open')
-			return true
+		if (height <= 0) {
+			return false
 		}
-		return false
+
+		setModalHeight(height, status !== 'opening')
+		if (status === 'opening') {
+			setModalStatus('open')
+		}
+		return true
 	}
 
 	// Control on modal status change
@@ -150,26 +154,19 @@ export const Modal = ({
 		setModalHeightRef(heightRef)
 	}, [modalRef?.current, heightRef?.current])
 
-	// Lazy modal content renders after the opening status is already set. Watch
-	// for the first measurable height so the modal can transition to open.
+	// Lazy modal content can replace the preload after the modal is already
+	// open. Watch content height so the card transitions to the real size.
 	useLayoutEffect(() => {
-		if (status !== 'opening' || !modalRef.current) {
+		if ((status !== 'opening' && status !== 'open') || !modalRef.current) {
 			return
 		}
 
-		if (openWhenMeasured()) {
-			return
-		}
+		syncMeasuredHeight()
 
 		let frame: number | undefined
 		let observer: ResizeObserver | undefined
 		const measure = () => {
-			if (openWhenMeasured()) {
-				observer?.disconnect()
-				if (frame) {
-					window.cancelAnimationFrame(frame)
-				}
-			}
+			syncMeasuredHeight()
 		}
 
 		if (typeof ResizeObserver === 'undefined') {
@@ -210,7 +207,7 @@ export const Modal = ({
 			>
 				<Card ref={modalRef} dimmed={dimmed}>
 					<ErrorBoundary FallbackComponent={Fallback || null}>
-						<Suspense fallback={null}>
+						<Suspense fallback={<OverlayPreload type="modal" />}>
 							{ActiveModal && <ActiveModal />}
 						</Suspense>
 					</ErrorBoundary>
