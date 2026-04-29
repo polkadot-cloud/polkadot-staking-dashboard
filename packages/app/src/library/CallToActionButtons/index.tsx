@@ -27,15 +27,21 @@ export const CallToActionButtons = ({
 		{syncing ? (
 			<CallToActionLoader />
 		) : (
-			sections.map((section, sectionIndex) => (
+			sections.map((section) => (
 				<section
-					key={`cta-section-${sectionIndex}`}
+					key={
+						section.id ??
+						section.className ??
+						section.buttons
+							.map((button) => button.id ?? String(button.label))
+							.join('-')
+					}
 					className={section.className}
 				>
 					<div className="buttons">
-						{section.buttons.map((button, buttonIndex) => (
+						{section.buttons.map((button) => (
 							<div
-								key={`cta-button-${sectionIndex}-${buttonIndex}`}
+								key={button.id ?? String(button.label)}
 								className={getButtonClassName(button)}
 							>
 								<button

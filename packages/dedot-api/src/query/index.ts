@@ -15,7 +15,6 @@ import { identityOfMulti } from './identityOfMulti'
 import { nominatorsMulti } from './nominatorsMulti'
 import { poolMembersMulti } from './poolMembersMulti'
 import { poolMetadataMulti } from './poolMetadataMulti'
-import { proxies } from './proxies'
 import { superOfMulti } from './superOfMulti'
 import { validatorEntries } from './validatorEntries'
 import { validatorsMulti } from './validatorsMulti'
@@ -35,7 +34,6 @@ export const query = {
 	nominatorsMulti,
 	poolMembersMulti,
 	poolMetadataMulti,
-	proxies,
 	superOfMulti,
 	validatorEntries,
 	validatorsMulti,

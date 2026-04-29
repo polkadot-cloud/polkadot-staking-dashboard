@@ -4,13 +4,12 @@
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
+import { setActiveProxy } from '@polkadot-cloud/connect-proxies'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
-import { setActiveProxy } from 'global-bus'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
@@ -28,7 +27,7 @@ export const AccountPopover = ({
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
 	const { getAccount } = useImportedAccounts()
-	const { activeAccount, activeAddress, setActiveAccount } = useActiveAccounts()
+	const { activeAccount, activeAddress, setActiveAccount } = useActiveAccount()
 	const { activeProxy, activeProxyType } = useActiveProxy()
 
 	const popoverRef = useRef<HTMLDivElement>(null)

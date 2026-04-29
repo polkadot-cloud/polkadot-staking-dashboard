@@ -31,7 +31,6 @@
 				"useJsxKeyInIterable": "off"
 			},
 			"suspicious": {
-				"noArrayIndexKey": "off",
 				"noImplicitAnyLet": "off",
 				"noShadowRestrictedNames": "off",
 				"noGlobalIsNan": "off"

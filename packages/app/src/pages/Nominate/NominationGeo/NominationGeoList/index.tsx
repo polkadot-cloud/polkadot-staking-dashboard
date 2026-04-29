@@ -40,9 +40,9 @@ export const NominationGeoList = ({ title, data }: NomninationGeoListProps) => {
 				<MotionContainer>
 					{data.nodeDistributionDetail
 						.sort((a, b) => b.TokenRewards - a.TokenRewards)
-						.map((node, i: number) => (
+						.map((node) => (
 							<Node
-								key={`nomination_geo_list_${i}`}
+								key={`nomination_geo_list_${node.Id}`}
 								node={node}
 								rewardTotal={rewardTotal}
 							/>

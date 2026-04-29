@@ -1,14 +1,14 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useQuickActions } from 'hooks/useQuickActions'
 import { QuickAction } from 'ui-buttons'
 import type { ButtonQuickActionProps } from 'ui-buttons/types'
 
 export const Disconnected = () => {
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { baseQuickActions } = useQuickActions()
 	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 
@@ -26,8 +26,8 @@ export const Disconnected = () => {
 
 	return (
 		<QuickAction.Container>
-			{actions.map((action, i) => (
-				<QuickAction.Button key={`action-${i}`} {...action} />
+			{actions.map((action) => (
+				<QuickAction.Button key={`action-${action.label}`} {...action} />
 			))}
 		</QuickAction.Container>
 	)

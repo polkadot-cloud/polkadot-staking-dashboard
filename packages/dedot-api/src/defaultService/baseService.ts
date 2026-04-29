@@ -176,10 +176,6 @@ export class BaseService<
 		return this.subscriptionManager.subPoolMemberships
 	}
 
-	get subProxies() {
-		return this.subscriptionManager.subProxies
-	}
-
 	get subActiveProxies() {
 		return this.subscriptionManager.subActiveProxies
 	}

@@ -3,10 +3,10 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useTimeLeft } from '@w3ux/hooks'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { fromUnixTime } from 'date-fns'
@@ -26,7 +26,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: ChunkProps) => {
 
 	const { getConsts, activeEra } = useApi()
 	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { get: getEraTimeleft } = useEraTimeLeft()
 

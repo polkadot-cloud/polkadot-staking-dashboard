@@ -25,12 +25,12 @@ export const NotificationPrompts = () => {
 		<Wrapper>
 			<AnimatePresence initial={false}>
 				{notifications.length > 0 &&
-					notifications.map((notification: NotificationItem, i: number) => {
+					notifications.map((notification: NotificationItem) => {
 						const { title, subtitle } = notification
 
 						return (
 							<motion.li
-								key={`notification_${i}`}
+								key={`notification_${notification.index}`}
 								layout
 								initial={{ opacity: 0, y: -50, scale: 0.75 }}
 								animate={{ opacity: 1, y: 0, scale: 1 }}
