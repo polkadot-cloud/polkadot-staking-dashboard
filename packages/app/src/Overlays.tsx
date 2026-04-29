@@ -1,90 +1,80 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { CreatePool } from 'canvas/CreatePool'
-import { ManageNominations } from 'canvas/ManageNominations'
-import { NominatorSetup } from 'canvas/NominatorSetup'
-import { Pool } from 'canvas/Pool'
-import { PoolMembers } from 'canvas/PoolMembers'
-import { ValidatorMetrics } from 'canvas/ValidatorMetrics'
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
-import { Accounts } from 'modals/Accounts'
-import { Bio } from 'modals/Bio'
-import { Bond } from 'modals/Bond'
-import { ChangePoolRoles } from 'modals/ChangePoolRoles'
-import { ClaimPayouts } from 'modals/ClaimPayouts'
-import { ClaimReward } from 'modals/ClaimReward'
-import { DiscordSupport } from 'modals/DiscordSupport'
-import { ExternalAccounts } from 'modals/ExternalAccounts'
-import { ImportAccounts } from 'modals/ImportAccounts'
-import { Invite } from 'modals/Invite'
-import { JoinPool } from 'modals/JoinPool'
-import { LeavePool } from 'modals/LeavePool'
-import { MailSupport } from 'modals/MailSupport'
-import { ManagePool } from 'modals/ManagePool'
-import { Networks } from 'modals/Networks'
-import { Plugins } from 'modals/Plugins'
-import { RewardCalculator } from 'modals/RewardCalculator'
-import { SelectCurrency } from 'modals/SelectCurrency'
-import { SelectLanguage } from 'modals/SelectLanguage'
-import { SetController } from 'modals/SetController'
-import { SimpleNominate } from 'modals/SimpleNominate'
-import { StakingOptions } from 'modals/StakingOptions'
-import { StopNominations } from 'modals/StopNominations'
-import { SyncAccounts } from 'modals/SyncAccounts'
-import { Transfer } from 'modals/Transfer'
-import { Unbond } from 'modals/Unbond'
-import { UnlockChunks } from 'modals/UnlockChunks'
-import { Unstake } from 'modals/Unstake'
-import { UpdatePayee } from 'modals/UpdatePayee'
-import { UpdateReserve } from 'modals/UpdateReserve'
+import { type ComponentType, lazy } from 'react'
 import { Overlay } from 'ui-overlay'
+
+type OverlayLoader = () => Promise<object>
+type OverlayLoaders = Record<string, OverlayLoader>
+
+const lazyNamed = (load: OverlayLoader, exportName: string) =>
+	lazy(async () => {
+		const component = ((await load()) as Record<string, ComponentType>)[
+			exportName
+		]
+
+		if (!component) {
+			throw new Error(`Missing overlay export: ${exportName}`)
+		}
+
+		return { default: component }
+	})
+
+const lazyOverlayComponents = <T extends OverlayLoaders>(loaders: T) =>
+	Object.fromEntries(
+		Object.entries(loaders).map(([key, load]) => [key, lazyNamed(load, key)]),
+	) as unknown as Record<keyof T, ComponentType>
+
+const modals = lazyOverlayComponents({
+	Accounts: () => import('modals/Accounts'),
+	Bio: () => import('modals/Bio'),
+	Bond: () => import('modals/Bond'),
+	ChangePoolRoles: () => import('modals/ChangePoolRoles'),
+	ClaimPayouts: () => import('modals/ClaimPayouts'),
+	ClaimReward: () => import('modals/ClaimReward'),
+	DiscordSupport: () => import('modals/DiscordSupport'),
+	ExternalAccounts: () => import('modals/ExternalAccounts'),
+	ImportAccounts: () => import('modals/ImportAccounts'),
+	Invite: () => import('modals/Invite'),
+	JoinPool: () => import('modals/JoinPool'),
+	LeavePool: () => import('modals/LeavePool'),
+	MailSupport: () => import('modals/MailSupport'),
+	ManagePool: () => import('modals/ManagePool'),
+	Networks: () => import('modals/Networks'),
+	Plugins: () => import('modals/Plugins'),
+	RewardCalculator: () => import('modals/RewardCalculator'),
+	SelectCurrency: () => import('modals/SelectCurrency'),
+	SelectLanguage: () => import('modals/SelectLanguage'),
+	SetController: () => import('modals/SetController'),
+	SimpleNominate: () => import('modals/SimpleNominate'),
+	StakingOptions: () => import('modals/StakingOptions'),
+	StopNominations: () => import('modals/StopNominations'),
+	SyncAccounts: () => import('modals/SyncAccounts'),
+	Transfer: () => import('modals/Transfer'),
+	Unbond: () => import('modals/Unbond'),
+	UnlockChunks: () => import('modals/UnlockChunks'),
+	Unstake: () => import('modals/Unstake'),
+	UpdatePayee: () => import('modals/UpdatePayee'),
+	UpdateReserve: () => import('modals/UpdateReserve'),
+})
+
+const canvas = lazyOverlayComponents({
+	CreatePool: () => import('canvas/CreatePool'),
+	ManageNominations: () => import('canvas/ManageNominations'),
+	NominatorSetup: () => import('canvas/NominatorSetup'),
+	Pool: () => import('canvas/Pool'),
+	PoolMembers: () => import('canvas/PoolMembers'),
+	ValidatorMetrics: () => import('canvas/ValidatorMetrics'),
+})
 
 export const Overlays = () => {
 	return (
 		<Overlay
 			fallback={ErrorFallbackModal}
 			externalOverlayStatus="closed"
-			modals={{
-				Bio,
-				Bond,
-				ExternalAccounts,
-				StopNominations,
-				ChangePoolRoles,
-				SelectLanguage,
-				ClaimPayouts,
-				ClaimReward,
-				Accounts,
-				DiscordSupport,
-				JoinPool,
-				LeavePool,
-				MailSupport,
-				ImportAccounts,
-				Invite,
-				ManagePool,
-				Networks,
-				RewardCalculator,
-				SelectCurrency,
-				SetController,
-				StakingOptions,
-				SimpleNominate,
-				SyncAccounts,
-				Transfer,
-				Plugins,
-				UnlockChunks,
-				Unstake,
-				Unbond,
-				UpdatePayee,
-				UpdateReserve,
-			}}
-			canvas={{
-				ManageNominations,
-				PoolMembers,
-				Pool,
-				CreatePool,
-				NominatorSetup,
-				ValidatorMetrics,
-			}}
+			modals={modals}
+			canvas={canvas}
 		/>
 	)
 }
