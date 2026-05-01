@@ -5,26 +5,37 @@ import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { type ComponentType, lazy } from 'react'
 import { Overlay } from 'ui-overlay'
 
-type OverlayLoader = () => Promise<object>
-type OverlayLoaders = Record<string, OverlayLoader>
+type OverlayLoader<TModule = Record<string, unknown>> = () => Promise<TModule>
 
-const lazyNamed = (load: OverlayLoader, exportName: string) =>
+const lazyNamed = <TModule extends Record<string, unknown>>(
+	load: OverlayLoader<TModule>,
+	exportName: string,
+) =>
 	lazy(async () => {
-		const component = ((await load()) as Record<string, ComponentType>)[
-			exportName
-		]
+		const module = await load()
+		const component = module[exportName]
 
 		if (!component) {
 			throw new Error(`Missing overlay export: ${exportName}`)
 		}
 
-		return { default: component }
+		if (typeof component !== 'function') {
+			throw new Error(
+				`Export ${exportName} is not a component (expected function, got ${typeof component})`,
+			)
+		}
+
+		return { default: component as ComponentType }
 	})
 
-const lazyOverlayComponents = <T extends OverlayLoaders>(loaders: T) =>
+const lazyOverlayComponents = <
+	T extends Record<string, OverlayLoader<Record<string, unknown>>>,
+>(
+	loaders: T,
+) =>
 	Object.fromEntries(
 		Object.entries(loaders).map(([key, load]) => [key, lazyNamed(load, key)]),
-	) as unknown as Record<keyof T, ComponentType>
+	) as Record<keyof T, ReturnType<typeof lazyNamed>>
 
 const modals = lazyOverlayComponents({
 	Accounts: () => import('modals/Accounts'),

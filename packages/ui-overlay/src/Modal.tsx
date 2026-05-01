@@ -165,11 +165,20 @@ export const Modal = ({
 
 		let frame: number | undefined
 		let observer: ResizeObserver | undefined
+		let polling = false
+
 		const measure = () => {
-			syncMeasuredHeight()
+			const success = syncMeasuredHeight()
+
+			// In fallback mode, keep polling until we successfully measure content
+			if (polling && !success) {
+				frame = window.requestAnimationFrame(measure)
+			}
 		}
 
 		if (typeof ResizeObserver === 'undefined') {
+			// Fallback: poll with rAF until content is measured
+			polling = true
 			frame = window.requestAnimationFrame(measure)
 		} else {
 			observer = new ResizeObserver(measure)
@@ -177,6 +186,7 @@ export const Modal = ({
 		}
 
 		return () => {
+			polling = false
 			observer?.disconnect()
 			if (frame) {
 				window.cancelAnimationFrame(frame)
