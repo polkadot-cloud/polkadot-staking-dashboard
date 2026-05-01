@@ -4,7 +4,12 @@
 import { extractUrlValue, varToUrlHash } from '@w3ux/utils'
 import { onLocaleFromModalEvent, onLocaleFromUrlEvent } from 'event-tracking'
 import type { i18n } from 'i18next'
-import { DefaultLocale, fallbackResources, lngNamespaces, locales } from '..'
+import {
+	DefaultLocale,
+	fallbackResources,
+	lngNamespaces,
+	locales,
+} from '../config'
 import type { LocaleJson, LocaleJsonValue } from '../types'
 
 /* Language Management */
