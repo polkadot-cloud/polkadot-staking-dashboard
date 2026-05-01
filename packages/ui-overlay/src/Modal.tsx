@@ -92,9 +92,6 @@ export const Modal = ({
 		}
 
 		setModalHeight(height, status !== 'opening')
-		if (status === 'opening') {
-			setModalStatus('open')
-		}
 		return true
 	}
 
