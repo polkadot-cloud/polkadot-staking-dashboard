@@ -179,7 +179,7 @@ export const Unbond = () => {
 			<Close />
 			<Padding>
 				<Title>{t('removeBond')}</Title>
-				{warnings.length > 0 ? (
+				{warnings.length > 0 || nominatorActiveBelowMin ? (
 					<Warnings>
 						{nominatorActiveBelowMin && (
 							<Warning
