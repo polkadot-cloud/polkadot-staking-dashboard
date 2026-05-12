@@ -171,7 +171,7 @@ export const Unbond = () => {
 	// Modal resize on form update.
 	useEffect(
 		() => setModalResize(),
-		[bond, feedbackErrors.length, warnings.length],
+		[bond, feedbackErrors.length, warnings.length, nominatorActiveBelowMin],
 	)
 
 	return (
