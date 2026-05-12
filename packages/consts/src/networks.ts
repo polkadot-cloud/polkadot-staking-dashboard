@@ -197,6 +197,7 @@ export const SystemChainList: Record<string, SystemChain> = {
 			getLightClient: async () =>
 				await import('@dedot/chain-specs/polkadot_asset_hub'),
 			rpc: {
+				DeServe: 'wss://asset-hub.polkadot.rpc.deserve.network',
 				// LuckyFriday: 'wss://rpc-asset-hub-polkadot.luckyfriday.io',
 				// Parity: 'wss://polkadot-asset-hub-rpc.polkadot.io',
 				StakeWorld: 'wss://dot-rpc.stakeworld.io/assethub',

@@ -1,15 +1,23 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
+import {
+	useExtensionAccounts,
+	useExtensions,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
+import { useLedger } from '@polkadot-cloud/connect-ledger'
+import {
+	type VaultSignatureResult,
+	VaultSigner,
+	type VaultSignStatus,
+} from '@polkadot-cloud/connect-vault'
 import type { HardwareAccount } from '@w3ux/types'
 import { DappName, ManualSigners } from 'consts'
 import { TxErrorKeyMap } from 'consts/tx'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useLedgerHardware } from 'contexts/LedgerHardware'
 import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { useTxMeta } from 'contexts/TxMeta'
@@ -30,11 +38,6 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySupported } from 'hooks/useProxySupported'
 import { QRSignPrompt } from 'library/QRSignPrompt'
 import { signLedgerPayload } from 'library/Signers/LedgerSigner'
-import { VaultSigner } from 'library/Signers/VaultSigner'
-import type {
-	VaultSignatureResult,
-	VaultSignStatus,
-} from 'library/Signers/VaultSigner/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ActiveAccount } from 'types'
@@ -54,9 +57,9 @@ export const useSubmitExtrinsic = ({
 	const { getTxSubmission } = useTxMeta()
 	const { getAccountBalance } = useBalances()
 	const { extensionsStatus } = useExtensions()
+	const { handleResetLedgerTask } = useLedger()
 	const { isProxySupported } = useProxySupported()
 	const { openPromptWith, closePrompt } = usePrompt()
-	const { handleResetLedgerTask } = useLedgerHardware()
 	const { getExtensionAccount } = useExtensionAccounts()
 	const { getAccount, requiresManualSign } = useImportedAccounts()
 	const { address: fromAddress, source, proxy } = from
@@ -179,22 +182,27 @@ export const useSubmitExtrinsic = ({
 			}
 
 			if (source === 'ledger') {
-				const metadata = await serviceApi.signer.metadata(specName)
-				const result = await signLedgerPayload(
-					specName,
-					submitAccount.address,
-					serviceApi.signer.extraSignedExtension,
-					tx,
-					metadata || '0x',
-					networkInfo,
-					(account as HardwareAccount).index,
-				)
-				if (result) {
-					encodedSig = {
-						address: submitAccount.address,
-						signature: $Signature.tryDecode(result.signature),
-						extra: result.data,
+				try {
+					const metadata = await serviceApi.signer.metadata(specName)
+					const result = await signLedgerPayload(
+						specName,
+						submitAccount.address,
+						serviceApi.signer.extraSignedExtension,
+						tx,
+						metadata || '0x',
+						networkInfo,
+						(account as HardwareAccount).index,
+					)
+					if (result) {
+						encodedSig = {
+							address: submitAccount.address,
+							signature: $Signature.tryDecode(result.signature),
+							extra: result.data,
+						}
 					}
+				} catch (_) {
+					onError('ledger')
+					return
 				}
 			}
 
@@ -234,6 +242,10 @@ export const useSubmitExtrinsic = ({
 					closePrompt: () => closePrompt(),
 					setSubmitting: (val: boolean) => setUidSubmitted(uid, val),
 				}).sign(prefixedPayload)
+
+				if (result === null) {
+					return
+				}
 
 				encodedSig = {
 					address: submitAccount.address,
@@ -324,6 +336,8 @@ export const useSubmitExtrinsic = ({
 	}
 
 	const onError = (type?: string, details?: string) => {
+		setUidSubmitted(uid, false)
+
 		if (type === 'ledger') {
 			handleResetLedgerTask()
 		}

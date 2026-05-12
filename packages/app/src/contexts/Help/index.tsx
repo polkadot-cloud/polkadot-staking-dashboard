@@ -3,7 +3,7 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import type { MaybeString } from '@w3ux/types'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import type {
 	HelpContextInterface,
 	HelpContextProps,
@@ -19,39 +19,44 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
 		tooltipAnchor: null,
 	})
 
-	// New tooltip-based help functions
-	const openHelpTooltip = (
-		definition: MaybeString,
-		anchor: HTMLButtonElement | null,
-	) => {
-		setState({
-			...state,
-			isTooltipOpen: true,
-			tooltipDefinition: definition,
-			tooltipAnchor: anchor,
-		})
-	}
+	// Tooltip-based help functions
+	const openHelpTooltip = useCallback(
+		(definition: MaybeString, anchor: HTMLButtonElement | null) => {
+			setState((prev) => ({
+				...prev,
+				isTooltipOpen: true,
+				tooltipDefinition: definition,
+				tooltipAnchor: anchor,
+			}))
+		},
+		[],
+	)
 
-	const closeHelpTooltip = () => {
-		setState({
-			...state,
+	const closeHelpTooltip = useCallback(() => {
+		setState((prev) => ({
+			...prev,
 			isTooltipOpen: false,
 			tooltipDefinition: null,
 			tooltipAnchor: null,
-		})
-	}
+		}))
+	}, [])
 
-	return (
-		<HelpContext.Provider
-			value={{
-				openHelpTooltip,
-				closeHelpTooltip,
-				isTooltipOpen: state.isTooltipOpen,
-				tooltipDefinition: state.tooltipDefinition,
-				tooltipAnchor: state.tooltipAnchor,
-			}}
-		>
-			{children}
-		</HelpContext.Provider>
+	const value = useMemo(
+		() => ({
+			openHelpTooltip,
+			closeHelpTooltip,
+			isTooltipOpen: state.isTooltipOpen,
+			tooltipDefinition: state.tooltipDefinition,
+			tooltipAnchor: state.tooltipAnchor,
+		}),
+		[
+			openHelpTooltip,
+			closeHelpTooltip,
+			state.isTooltipOpen,
+			state.tooltipDefinition,
+			state.tooltipAnchor,
+		],
 	)
+
+	return <HelpContext.Provider value={value}>{children}</HelpContext.Provider>
 }

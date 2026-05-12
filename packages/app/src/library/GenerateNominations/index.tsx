@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { MaxNominations } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useManageNominations } from 'contexts/ManageNominations'
 import { usePrompt } from 'contexts/Prompt'
@@ -47,7 +46,7 @@ export const GenerateNominations = ({
 	} = useFetchMethods()
 	const { isReady } = useApi()
 	const { advancedMode } = useUi()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { favoritesList } = useFavoriteValidators()
 	const { openPromptWith, closePrompt } = usePrompt()
 	const { isReadOnlyAccount } = useImportedAccounts()

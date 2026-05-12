@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useTheme } from 'contexts/Themes'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,8 @@ export const Account = ({ setOpenConnect }: ToggleConnectProps) => {
 	const { t } = useTranslation('app')
 	const { themeElementRef } = useTheme()
 	const { openModal } = useOverlay().modal
-	const { activeAccount, activeAddress, activeProxy } = useActiveAccounts()
+	const { activeAccount, activeAddress } = useActiveAccount()
+	const { activeProxy } = useActiveProxy()
 	const { accountHasSigner, getAccount, accounts } = useImportedAccounts()
 
 	const [open, setOpen] = useState<boolean>(false)

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
-import type { VaultSignatureResult } from 'library/Signers/VaultSigner/types'
+import type { VaultSignatureResult } from '@polkadot-cloud/connect-vault'
 import type {
 	ActiveAccount,
 	ActiveProxy,

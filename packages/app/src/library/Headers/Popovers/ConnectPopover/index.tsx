@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useExtensions } from '@polkadot-cloud/connect'
 import extensions from '@w3ux/extension-assets'
 import { useOutsideAlerter } from '@w3ux/hooks'
-import { useExtensions } from '@w3ux/react-connect-kit'
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

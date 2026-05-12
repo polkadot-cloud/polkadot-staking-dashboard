@@ -207,10 +207,10 @@ export const PoolList = ({
 				)}
 				<MotionContainer>
 					{poolsToDisplay.length ? (
-						poolsToDisplay.map((pool, index: number) => (
+						poolsToDisplay.map((pool) => (
 							<motion.div
 								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-								key={`nomination_${index}`}
+								key={`nomination_${pool.id}`}
 								variants={{
 									hidden: {
 										y: 15,

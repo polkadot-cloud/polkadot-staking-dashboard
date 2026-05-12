@@ -21,18 +21,18 @@
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^7.2.0",
 		"@fortawesome/free-solid-svg-icons": "^7.2.0",
-		"@fortawesome/react-fontawesome": "^3.2.0",
+		"@fortawesome/react-fontawesome": "^3.3.1",
 		"@w3ux/hooks": "^2.4.4",
 		"@w3ux/react-polkicon": "^4.0.2",
 		"@w3ux/utils": "3.1.1",
 		"classnames": "^2.5.1",
 		"motion": "12.23.24",
 		"radix-ui": "^1.4.2",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4",
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6",
 		"simplebar": "6.3.3",
 		"simplebar-react": "3.3.2",
-		"styles": "workspace:*"
+		"ui-styles": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*"

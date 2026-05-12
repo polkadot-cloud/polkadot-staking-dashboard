@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-@use 'styles/theme/variables' as *;
+@use 'ui-styles/theme/variables' as *;
 
 .tipsWrapper {
   padding: $summary-footer-padding;
@@ -218,7 +218,7 @@
     color: var(--text-tertiary);
     margin: 0 0.5rem 0 0;
 
-    @media (max-width: #{$small-font-size-max-width}px) {
+    @media (max-width: $small-font-size-max-width) {
       display: none;
     }
 

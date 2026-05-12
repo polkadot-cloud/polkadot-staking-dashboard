@@ -1,7 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -29,11 +30,12 @@ export const SetClaimPermission = ({
 	onResize: () => void
 }) => {
 	const { serviceApi } = useApi()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
 	const { getPoolMembership } = useBalances()
 	const { isOwner, isMember } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 
 	const { membership } = getPoolMembership(activeAddress)
 
@@ -84,8 +86,8 @@ export const SetClaimPermission = ({
 			<Padding horizontalOnly>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

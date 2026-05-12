@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { maxBigInt } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import type { SubmittableExtrinsic } from 'dedot'
@@ -14,7 +14,7 @@ import type { BondFor } from 'types'
 export const useBondGreatestFee = ({ bondFor }: { bondFor: BondFor }) => {
 	const { serviceApi } = useApi()
 	const { feeReserve } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const {
 		balances: { freeBalance, transferableBalance },
 	} = useAccountBalances(activeAddress)

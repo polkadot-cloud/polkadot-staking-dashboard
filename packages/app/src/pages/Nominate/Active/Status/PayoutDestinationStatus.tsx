@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useStaking } from 'contexts/Staking'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSyncing } from 'hooks/useSyncing'
@@ -19,7 +18,7 @@ export const PayoutDestinationStatus = () => {
 	const { openModal } = useOverlay().modal
 	const { getStakingLedger } = useBalances()
 	const { getPayeeItems } = usePayeeConfig()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 
 	const payee = getStakingLedger(activeAddress).payee

@@ -3,6 +3,8 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
+import { setActiveProxy } from '@polkadot-cloud/connect-proxies'
 import LedgerSVG from '@w3ux/extension-assets/LedgerSquare.svg?react'
 import PolkadotVaultSVG from '@w3ux/extension-assets/PolkadotVault.svg?react'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
@@ -11,10 +13,8 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn, planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useNetwork } from 'contexts/Network'
-import { setActiveProxy } from 'global-bus'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
 import type { AccountButtonProps } from './types'
@@ -33,13 +33,8 @@ export const AccountButton = ({
 	const { network } = useNetwork()
 	const { getAccount } = useImportedAccounts()
 	const { closeModal } = useOverlay().modal
-	const {
-		activeAccount,
-		activeProxy,
-		activeAddress,
-		setActiveAccount,
-		activeProxyType,
-	} = useActiveAccounts()
+	const { activeAccount, activeAddress, setActiveAccount } = useActiveAccount()
+	const { activeProxy, activeProxyType } = useActiveProxy()
 	const { unit, units } = getStakingChainData(network)
 
 	// Accumulate account data.
@@ -123,7 +118,10 @@ export const AccountButton = ({
 						{meta?.source === 'external' && (
 							<div
 								className="label warning"
-								style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+								style={{
+									color: 'var(--status-warning)',
+									paddingLeft: '0.5rem',
+								}}
 							>
 								{t('readOnly')}
 							</div>

@@ -2,8 +2,15 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { formatAccountSs58 } from '@w3ux/util-dedot'
-import type { SubmittableExtrinsic } from 'dedot'
+import type { DedotClient, SubmittableExtrinsic } from 'dedot'
+import type { GenericSubstrateApi } from 'dedot/types'
 import type { Bonded, ChainId, ImportedAccount } from 'types'
+import type { ServiceClass } from './types'
+
+export const hasApiHub = (
+	instance: ServiceClass,
+): instance is ServiceClass & { apiHub: DedotClient<GenericSubstrateApi> } =>
+	'apiHub' in instance
 
 // Gets added, removed and remaining accounts by comparing two lists of accounts
 export const diffImportedAccounts = (

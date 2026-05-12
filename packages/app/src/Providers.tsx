@@ -2,25 +2,21 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ThemedRouter } from 'Themes'
+import { ConnectProvider } from '@polkadot-cloud/connect'
+import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
+import { createProxiesAdaptor } from '@polkadot-cloud/connect-proxies'
 import { withProviders } from '@w3ux/factories'
-import {
-	ExtensionsProvider,
-	HardwareAccountsProvider,
-} from '@w3ux/react-connect-kit'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { ActiveAccountsProvider } from 'contexts/ActiveAccounts'
+import { ActiveProxyProvider } from 'contexts/ActiveProxy'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { APIProvider } from 'contexts/Api'
 import { BalancesProvider } from 'contexts/Balances'
-import { ExternalAccountsProvider } from 'contexts/Connect/ExternalAccounts'
-import { ImportedAccountsProvider } from 'contexts/Connect/ImportedAccounts'
 import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
 import { InvitesProvider } from 'contexts/Invites'
-import { LedgerHardwareProvider } from 'contexts/LedgerHardware'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { useNetwork } from 'contexts/Network'
@@ -34,7 +30,6 @@ import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
 import { PromptProvider } from 'contexts/Prompt'
-import { ProxiesProvider } from 'contexts/Proxies'
 import { StakingProvider } from 'contexts/Staking'
 import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
@@ -52,23 +47,19 @@ export const Providers = () => {
 	return withProviders(
 		// !! Provider order matters.
 		[
-			ActiveAccountsProvider,
+			ActiveProxyProvider,
 			UIProvider,
 			OverlayProvider,
 			[APIProvider, { network }],
-			LedgerHardwareProvider,
 			[
-				ExtensionsProvider,
-
+				ConnectProvider,
 				{
+					network,
 					dappName: DappName,
 					ss58,
+					adaptors: [LedgerAdaptor, createProxiesAdaptor(network)],
 				},
 			],
-			HardwareAccountsProvider,
-			ExternalAccountsProvider,
-			ImportedAccountsProvider,
-			ProxiesProvider,
 			HelpProvider,
 			PluginsProvider,
 			CurrencyProvider,

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { FC, RefObject } from 'react'
+import type { ComponentType, FC, RefObject } from 'react'
 import type {
 	ActiveOverlayInstance,
 	AnyJson,
@@ -27,6 +27,7 @@ export interface OverlayContextInterface {
 		openCanvas: (config: CanvasConfig) => void
 		closeCanvas: () => void
 		setCanvasStatus: (status: CanvasStatus) => void
+		setCanvasConfig: (config: CanvasConfig) => void
 	}
 	modal: {
 		status: ModalStatus
@@ -37,7 +38,7 @@ export interface OverlayContextInterface {
 		openModal: (config: ModalConfig) => void
 		closeModal: () => void
 		replaceModal: (config: ModalConfig) => void
-		setModalHeight: (height: number) => void
+		setModalHeight: (height: number, transition?: boolean) => void
 		setModalResize: () => void
 		setModalStatus: (status: ModalStatus) => void
 		setModalRef: (modalRef: RefObject<HTMLDivElement | null>) => void
@@ -49,12 +50,12 @@ export interface Fallback {
 }
 
 export type CanvasProps = Fallback & {
-	canvas?: Record<string, FC>
+	canvas?: Record<string, ComponentType>
 	externalOverlayStatus: CanvasStatus
 }
 
 export type ModalProps = Fallback & {
-	modals?: Record<string, FC>
+	modals?: Record<string, ComponentType>
 	externalOverlayStatus: CanvasStatus
 }
 export type OverlayProps = ModalProps & CanvasProps

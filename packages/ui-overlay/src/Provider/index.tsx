@@ -220,6 +220,7 @@ export const OverlayProvider = ({ children }: { children: ReactNode }) => {
 					openCanvas,
 					closeCanvas,
 					setCanvasStatus,
+					setCanvasConfig,
 				},
 				modal: {
 					status: modalStatusRef.current,

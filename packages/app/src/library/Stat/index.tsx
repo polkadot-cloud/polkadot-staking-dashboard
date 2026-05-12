@@ -117,10 +117,9 @@ export const Stat = ({
 					{display}
 					{buttons ? (
 						<span ref={subjectRef}>
-							{buttons.map((btn: StatButtonProps, index: number) => (
-								<span key={`stat_${index}`}>
+							{buttons.map((btn: StatButtonProps) => (
+								<span key={btn.id ?? btn.title}>
 									<Button
-										key={`btn_${index}_${Math.random()}`}
 										text={btn.title}
 										size={btn.large ? 'lg' : undefined}
 										iconLeft={btn.icon ?? undefined}

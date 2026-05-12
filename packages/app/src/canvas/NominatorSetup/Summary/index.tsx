@@ -3,12 +3,12 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { ellipsisFn, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
@@ -31,11 +31,12 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const { network } = useNetwork()
 	const { serviceApi } = useApi()
 	const { newBatchCall } = useBatchCall()
+	const { activeProxy } = useActiveProxy()
 	const { getPayeeItems } = usePayeeConfig()
 	const { closeCanvas } = useOverlay().canvas
 	const { accountHasSigner } = useImportedAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
-	const { activeAddress, activeProxy, activeAccount } = useActiveAccounts()
 	const { unit, units } = getStakingChainData(network)
 
 	const setup = getNominatorSetup(activeAddress)

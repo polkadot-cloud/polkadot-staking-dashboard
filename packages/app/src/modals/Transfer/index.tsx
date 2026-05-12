@@ -1,12 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useProxySwitcher } from 'hooks/useProxySwitcher'
@@ -26,8 +26,9 @@ export const Transfer = () => {
 	const { t } = useTranslation()
 	const { serviceApi } = useApi()
 	const { network } = useNetwork()
+	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount, activeProxy } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { accounts, accountHasSigner, getAccount } = useImportedAccounts()
 
 	// Filter accounts to only show those with signers

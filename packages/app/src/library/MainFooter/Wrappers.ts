@@ -28,15 +28,16 @@ export const Wrapper = styled.div`
   }
 
   .icon {
-    width: 2.35rem;
-    height: 2.35rem;
+    width: 2.15rem;
+    height: 2.15rem;
+    margin-right: 0.2rem;
   }
 
   .cloud-label {
-    font-family: var(--font-family-bold);
+    font-family: 'DM Serif Display', serif;
     color: var(--gray-1000);
     letter-spacing: 0.01em;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
 `
 

@@ -16,12 +16,12 @@ export const MenuList = ({
 
 	return (
 		<>
-			{items.map((item, i: number) => {
+			{items.map((item) => {
 				const { icon, title, cb, disabled } = item
 
 				return (
 					<ItemWrapper
-						key={`menu_item_${i}`}
+						key={`menu_item_${title}`}
 						$secondaryBg={secondaryBg}
 						disabled={disabled}
 						onClick={() => {

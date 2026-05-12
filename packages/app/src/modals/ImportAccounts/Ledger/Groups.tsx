@@ -34,7 +34,7 @@ export const Groups = ({
 						transform="shrink-3"
 					/>
 				),
-				title: `${t('ledgerDevice', { ns: 'modals', group })}`,
+				title: `${t('ledgerDevice', { ns: 'app', group })}`,
 				cb: () => onGroupChange(group),
 			}
 		})
@@ -65,7 +65,7 @@ export const Groups = ({
 		<GroupWrapper>
 			<ButtonWrapper ref={dropdownButtonRef}>
 				<ButtonMenu
-					text={`${t('ledgerDevice', { ns: 'modals', group: activeGroup })}`}
+					text={`${t('ledgerDevice', { ns: 'app', group: activeGroup })}`}
 					iconRight={faChevronDown}
 					iconTransform="shrink-3"
 					onClick={handleOpenGroupMenu}

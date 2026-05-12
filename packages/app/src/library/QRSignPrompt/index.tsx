@@ -6,12 +6,15 @@ import {
 	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	QrDisplayPayload,
+	QrScanSignature,
+} from '@polkadot-cloud/connect-vault'
 import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { usePrompt } from 'contexts/Prompt'
 import { hexToU8a } from 'dedot/utils'
-import { QrDisplayPayload } from 'library/QRCode/DisplayPayload'
-import { QrScanSignature } from 'library/QRCode/ScanSignature'
 import type { SignerPromptProps } from 'library/SubmitTx/types'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +29,7 @@ export const QRSignPrompt = ({
 	const { t } = useTranslation('app')
 	const { network } = useNetwork()
 	const { getChainSpec } = useApi()
+	const { setOnClosePrompt } = usePrompt()
 	const { genesisHash } = getChainSpec(getStakingChain(network))
 
 	// Whether user is on sign or submit stage
@@ -63,6 +67,7 @@ export const QRSignPrompt = ({
 						onScan={({ signature }) => {
 							onComplete('complete', signature)
 						}}
+						onCleanup={setOnClosePrompt}
 					/>
 				</div>
 			)}

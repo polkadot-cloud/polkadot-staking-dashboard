@@ -7,9 +7,11 @@ import {
 	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	useExternalAccounts,
+	useImportedAccounts,
+} from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { useExternalAccounts } from 'contexts/Connect/ExternalAccounts'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useHelp } from 'contexts/Help'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
@@ -86,8 +88,8 @@ export const ReadOnly = () => {
 						{inputOpen && <Add />}
 						{externalAccounts.length ? (
 							<div className="accounts">
-								{externalAccounts.map((a, i) => (
-									<ManualAccount key={`user_external_account_${i}`}>
+								{externalAccounts.map((a) => (
+									<ManualAccount key={`user_external_account_${a.address}`}>
 										<div>
 											<Polkicon address={a.address} fontSize="1.9rem" />
 											<div className="text">

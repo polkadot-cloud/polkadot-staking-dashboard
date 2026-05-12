@@ -89,6 +89,14 @@ export const Pool = () => {
 		initialSelectedPoolId,
 	)
 
+	// Sync selectedPoolId when the provided pool changes (e.g. deep link URL
+	// updated while canvas is already open)
+	useEffect(() => {
+		if (providedPoolId && providedPoolId !== selectedPoolId) {
+			setSelectedPoolId(providedPoolId)
+		}
+	}, [providedPoolId])
+
 	// The bonded pool to display. Use the provided `poolId`, or assign a random eligible filtered
 	// pool otherwise. Re-fetches when the selected pool count is incremented
 	const bondedPool = useMemo(
