@@ -156,7 +156,7 @@ export const Main = ({
 												pageKey={key}
 												name={t(key)}
 												to={() => {
-													if (!activeCategory && !!setLocalCategory) {
+													if (!activeCategory && setLocalCategory) {
 														setLocalCategory(categoryKey)
 													}
 													navigate(hash)

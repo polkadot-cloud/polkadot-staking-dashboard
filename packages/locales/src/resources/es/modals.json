@@ -177,6 +177,7 @@
 		"missingNesting": "Llamada sin soporte de anidamiento, no se puede firmar.",
 		"months": "Meses",
 		"moreFavoritesSurpassLimit": "Añadir más favoritos superará {{max}} nominaciones.",
+		"mustUnstakeToFreeBondedFunds": "Debes <unstake>hacer unstake</unstake> para liberar tus fondos vinculados.",
 		"networks": "Redes",
 		"newDevice": "Nuevo Dispositivo",
 		"newTotalBond": "Nueva vinculación total:",

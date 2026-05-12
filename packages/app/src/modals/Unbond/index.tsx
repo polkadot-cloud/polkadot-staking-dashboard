@@ -19,11 +19,11 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback'
-import { Warning } from 'library/Form/Warning'
+import { Warning, WarningLink } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { timeleftAsString } from 'utils'
@@ -45,6 +45,7 @@ export const Unbond = () => {
 	} = useApi()
 	const {
 		closeModal,
+		replaceModal,
 		setModalResize,
 		config: { options },
 	} = useOverlay().modal
@@ -138,6 +139,7 @@ export const Unbond = () => {
 
 	const poolToMin = isDepositor() ? minCreateBondBn : minJoinBondBn
 	const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
+	const openUnstakeModal = () => replaceModal({ key: 'Unstake', size: 'sm' })
 
 	// accumulate warnings.
 	const warnings = getSignerWarnings(
@@ -148,14 +150,6 @@ export const Unbond = () => {
 
 	if (pendingRewards > 0 && bondFor === 'pool') {
 		warnings.push(`${t('unbondingWithdraw')} ${pendingRewardsUnit} ${unit}.`)
-	}
-	if (nominatorActiveBelowMin) {
-		warnings.push(
-			t('unbondErrorBelowMinimum', {
-				bond: minNominatorBond.toFormat(),
-				unit,
-			}),
-		)
 	}
 	if (poolActiveBelowMin) {
 		warnings.push(
@@ -177,7 +171,7 @@ export const Unbond = () => {
 	// Modal resize on form update.
 	useEffect(
 		() => setModalResize(),
-		[bond, feedbackErrors.length, warnings.length],
+		[bond, feedbackErrors.length, warnings.length, nominatorActiveBelowMin],
 	)
 
 	return (
@@ -185,8 +179,24 @@ export const Unbond = () => {
 			<Close />
 			<Padding>
 				<Title>{t('removeBond')}</Title>
-				{warnings.length > 0 ? (
+				{warnings.length > 0 || nominatorActiveBelowMin ? (
 					<Warnings>
+						{nominatorActiveBelowMin && (
+							<Warning
+								status="danger"
+								text={
+									<Trans
+										ns="modals"
+										i18nKey="mustUnstakeToFreeBondedFunds"
+										components={{
+											unstake: (
+												<WarningLink type="button" onClick={openUnstakeModal} />
+											),
+										}}
+									/>
+								}
+							/>
+						)}
 						{warnings.map((text) => (
 							<Warning key={`warning_${text}`} text={text} />
 						))}

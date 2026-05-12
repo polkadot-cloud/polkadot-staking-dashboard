@@ -43,7 +43,7 @@ export const Accounts = () => {
 
 		// Check if nominating
 		if (
-			!!ledger &&
+			ledger &&
 			nominating.find((a) => a.address === address && a.source === source) ===
 				undefined
 		) {
