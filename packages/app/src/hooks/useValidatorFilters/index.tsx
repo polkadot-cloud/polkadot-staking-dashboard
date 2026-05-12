@@ -37,7 +37,7 @@ export const useValidatorFilters = () => {
 				const superExists = validatorSupers[validator.address] ?? false
 
 				// Validator included if identity or super identity has been set.
-				if (!!identityExists || !!superExists) {
+				if (identityExists || superExists) {
 					filteredList.push(validator)
 				}
 			}
