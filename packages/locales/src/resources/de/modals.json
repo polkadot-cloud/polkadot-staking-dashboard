@@ -177,6 +177,7 @@
 		"missingNesting": "Aufruf unterstützt keine Verschachtelung, kann nicht signieren.",
 		"months": "Monate",
 		"moreFavoritesSurpassLimit": "Das Hinzufügen weiterer Favoriten überschreitet {{max}} Nominierungen.",
+		"mustUnstakeToFreeBondedFunds": "Du musst <unstake>unstaken</unstake>, um deine gebundenen Mittel freizugeben.",
 		"networks": "Netzwerke",
 		"newDevice": "Neues Gerät",
 		"newTotalBond": "Neue Gesamtanlage:",

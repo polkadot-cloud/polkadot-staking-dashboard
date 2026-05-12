@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type BigNumber from 'bignumber.js'
+import type { ReactNode } from 'react'
 import type { BondFor, ClaimPermission } from 'types'
 
 export type ValueSetter = ({ value }: { value: BigNumber }) => void
@@ -48,7 +49,8 @@ export interface NominateStatusBarProps {
 }
 
 export interface WarningProps {
-	text: string
+	text: ReactNode
+	status?: 'warning' | 'danger'
 }
 
 // PoolMembers types

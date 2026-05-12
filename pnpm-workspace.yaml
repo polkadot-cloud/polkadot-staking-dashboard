@@ -1,5 +1,10 @@
 packages:
   - packages/*
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  node-hid: true
+  usb: true
 onlyBuiltDependencies:
   - bufferutil
   - esbuild

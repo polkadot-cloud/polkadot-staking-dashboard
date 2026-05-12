@@ -177,6 +177,7 @@
 		"missingNesting": "중첩 지원이 없으므로 서명할 수 없습니다.",
 		"months": "개월",
 		"moreFavoritesSurpassLimit": "더 많은 선호 검증인을 추가하면 {{max}}명의 지정을 초과합니다.",
+		"mustUnstakeToFreeBondedFunds": "본딩된 자금을 해제하려면 <unstake>스테이킹을 해제</unstake>해야 합니다.",
 		"networks": "네트워크",
 		"newDevice": "새 장치",
 		"newTotalBond": "새로운 총 본딩액:",
