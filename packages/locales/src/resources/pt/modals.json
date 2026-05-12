@@ -177,6 +177,7 @@
 		"missingNesting": "Chamada sem suporte de aninhamento, não é possível assinar.",
 		"months": "Meses",
 		"moreFavoritesSurpassLimit": "Adicionar mais favoritos ultrapassará {{max}} nomeações.",
+		"mustUnstakeToFreeBondedFunds": "Você precisa <unstake>remover o staking</unstake> para liberar seus fundos vinculados.",
 		"networks": "Redes",
 		"newDevice": "Novo Dispositivo",
 		"newTotalBond": "Novo vínculo total:",

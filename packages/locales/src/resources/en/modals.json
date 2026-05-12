@@ -177,6 +177,7 @@
 		"missingNesting": "Call missing nesting support, cannot sign.",
 		"months": "Months",
 		"moreFavoritesSurpassLimit": "Adding more favorites will surpass {{max}} nominations.",
+		"mustUnstakeToFreeBondedFunds": "You must <unstake>unstake</unstake> to free your bonded funds.",
 		"networks": "Networks",
 		"newDevice": "New Device",
 		"newTotalBond": "New total bond:",

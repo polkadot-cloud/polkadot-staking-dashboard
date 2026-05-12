@@ -1,7 +1,6 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
@@ -20,12 +19,11 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback'
-import { Warning } from 'library/Form/Warning'
+import { Warning, WarningLink } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ButtonPrimary } from 'ui-buttons'
+import { Trans, useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { timeleftAsString } from 'utils'
@@ -141,6 +139,7 @@ export const Unbond = () => {
 
 	const poolToMin = isDepositor() ? minCreateBondBn : minJoinBondBn
 	const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
+	const openUnstakeModal = () => replaceModal({ key: 'Unstake', size: 'sm' })
 
 	// accumulate warnings.
 	const warnings = getSignerWarnings(
@@ -151,14 +150,6 @@ export const Unbond = () => {
 
 	if (pendingRewards > 0 && bondFor === 'pool') {
 		warnings.push(`${t('unbondingWithdraw')} ${pendingRewardsUnit} ${unit}.`)
-	}
-	if (nominatorActiveBelowMin) {
-		warnings.push(
-			t('unbondErrorBelowMinimum', {
-				bond: minNominatorBond.toFormat(),
-				unit,
-			}),
-		)
 	}
 	if (poolActiveBelowMin) {
 		warnings.push(
@@ -190,20 +181,27 @@ export const Unbond = () => {
 				<Title>{t('removeBond')}</Title>
 				{warnings.length > 0 ? (
 					<Warnings>
+						{nominatorActiveBelowMin && (
+							<Warning
+								status="danger"
+								text={
+									<Trans
+										ns="modals"
+										i18nKey="mustUnstakeToFreeBondedFunds"
+										components={{
+											unstake: (
+												<WarningLink type="button" onClick={openUnstakeModal} />
+											),
+										}}
+									/>
+								}
+							/>
+						)}
 						{warnings.map((text) => (
 							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}
-				{nominatorActiveBelowMin && (
-					<div style={{ marginBottom: '1rem' }}>
-						<ButtonPrimary
-							text={t('unstake')}
-							iconLeft={faSignOutAlt}
-							onClick={() => replaceModal({ key: 'Unstake', size: 'sm' })}
-						/>
-					</div>
-				)}
 				<UnbondFeedback
 					bondFor={bondFor}
 					listenIsValid={(valid, errors) => {

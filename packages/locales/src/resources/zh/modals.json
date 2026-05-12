@@ -171,6 +171,7 @@
 		"missingNesting": "该调用缺少内置支持,无法签署交易",
 		"months": "月",
 		"moreFavoritesSurpassLimit": "添加更多收藏夹提名人将超过{{max}}的提名限制",
+		"mustUnstakeToFreeBondedFunds": "您必须先<unstake>解除抵押</unstake>，才能释放已绑定的资金。",
 		"networks": "网络",
 		"newDevice": "新建设备",
 		"newTotalBond": "新质押总额:",
