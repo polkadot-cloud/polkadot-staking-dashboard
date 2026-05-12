@@ -55,14 +55,14 @@ importers:
         specifier: ^1.99.0
         version: 1.99.0
       stylelint:
-        specifier: ^17.11.0
-        version: 17.11.0(typescript@6.0.3)
+        specifier: ^17.10.0
+        version: 17.10.0(typescript@6.0.3)
       stylelint-config-standard-scss:
         specifier: ^17.0.0
-        version: 17.0.0(postcss@8.5.14)(stylelint@17.11.0(typescript@6.0.3))
+        version: 17.0.0(postcss@8.5.14)(stylelint@17.10.0(typescript@6.0.3))
       stylelint-order:
         specifier: ^8.1.1
-        version: 8.1.1(stylelint@17.11.0(typescript@6.0.3))
+        version: 8.1.1(stylelint@17.10.0(typescript@6.0.3))
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -252,7 +252,7 @@ importers:
         version: 1.2.1
       vite-plugin-checker:
         specifier: ^0.13.0
-        version: 0.13.0(@biomejs/biome@2.4.15)(meow@14.1.0)(stylelint@17.11.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.10(@types/node@25.7.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0))
+        version: 0.13.0(@biomejs/biome@2.4.15)(meow@14.1.0)(stylelint@17.10.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.10(@types/node@25.7.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0))
       vite-plugin-svgr:
         specifier: ^5.2.0
         version: 5.2.0(typescript@6.0.3)(vite@8.0.10(@types/node@25.7.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0))
@@ -2716,8 +2716,8 @@ packages:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
     engines: {node: '>=8'}
 
-  cacheable@2.3.5:
-    resolution: {integrity: sha512-EQfaKe09tl615iNvq/TBRWTFf1AKJNXYQSsMx0Z3EI0nA+pVsVPS8wJhnRlkbdacKPh1d0qVIhwTc2zsQNFEEg==}
+  cacheable@2.3.4:
+    resolution: {integrity: sha512-djgxybDbw9fL/ZWMI3+CE8ZilNxcwFkVtDc1gJ+IlOSSWkSMPQabhV/XCHTQ6pwwN6aivXPZ43omTooZiX06Ew==}
 
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
@@ -2978,8 +2978,8 @@ packages:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
 
-  fast-uri@3.1.2:
-    resolution: {integrity: sha512-rVjf7ArG3LTk+FS6Yw81V1DLuZl1bRbNrev6Tmd/9RaroeeRRJhAt7jg/6YFxbvAQXUCavSoZhPPj6oOx+5KjQ==}
+  fast-uri@3.1.1:
+    resolution: {integrity: sha512-h2r7rcm6Ee/J8o0LD5djLuFVcfbZxhvho4vvsbeV0aMvXjUgqv4YpxpkEx0d68l6+IleVfLAdVEfhR7QNMkGHQ==}
 
   fastest-levenshtein@1.0.16:
     resolution: {integrity: sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==}
@@ -2997,8 +2997,8 @@ packages:
       picomatch:
         optional: true
 
-  file-entry-cache@11.1.3:
-    resolution: {integrity: sha512-oMbq0PD6VIiIwMF6LIa7MEwd/l9huKwmqRKXqmrkqIZv8CvRbfowL+L0ryAl8h//HfAS0zS+4SbYoRyAoA6BJA==}
+  file-entry-cache@11.1.2:
+    resolution: {integrity: sha512-N2WFfK12gmrK1c1GXOqiAJ1tc5YE+R53zvQ+t5P8S5XhnmKYVB5eZEiLNZKDSmoG8wqqbF9EXYBBW/nef19log==}
 
   file-uri-to-path@1.0.0:
     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
@@ -3068,8 +3068,8 @@ packages:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
-  get-east-asian-width@1.6.0:
-    resolution: {integrity: sha512-QRbvDIbx6YklUe6RxeTeleMR0yv3cYH6PsPZHcnVn7xv7zO1BHN8r0XETu8n6Ye3Q+ahtSarc3WgtNWmehIBfA==}
+  get-east-asian-width@1.5.0:
+    resolution: {integrity: sha512-CQ+bEO+Tva/qlmw24dCejulK5pMzVnUOFOijVogd3KQs07HnRIgp8TGipvCCRT06xeYEbpbgwaCxglFyiuIcmA==}
     engines: {node: '>=18'}
 
   get-intrinsic@1.3.0:
@@ -3665,8 +3665,8 @@ packages:
   pump@3.0.4:
     resolution: {integrity: sha512-VS7sjc6KR7e1ukRFhQSY5LM2uBWAUPiOPa/A3mkKmiMwSmRFUITt0xuj+/lesgnCv+dPIEYlkzrcyXgquIHMcA==}
 
-  qified@0.10.1:
-    resolution: {integrity: sha512-+Owyggi9IxT1ePKGafcI87ubSmxol6smwJ+RAHDQlx9+9cPwFWDiKFFCPuWhr9ignlGpZ9vDQLw67N4dcTVFEA==}
+  qified@0.9.1:
+    resolution: {integrity: sha512-n7mar4T0xQ+39dE2vGTAlbxUEpndwPANH0kDef1/MYsB8Bba9wshkybIRx74qgcvKQPEWErf9AqAdYjhzY2Ilg==}
     engines: {node: '>=20'}
 
   qrcode-generator@1.5.0:
@@ -4038,8 +4038,8 @@ packages:
     peerDependencies:
       stylelint: ^16.8.2 || ^17.0.0
 
-  stylelint@17.11.0:
-    resolution: {integrity: sha512-/3czzmbF9XdGWvReDF3Ex4R23Ajolo7j8RB2bFNEqk6Ht356nlpVV+G5bG2Qt8AW1ofJzXztBRDnAtd7cgowWA==}
+  stylelint@17.10.0:
+    resolution: {integrity: sha512-cI7I6HHEYOHHVNVci+s92WlA3QfmNhjwFdgCgYV3TLEysilOjk+B3EFxMED1xY9GYB0Kre3OD+mSLj19VLTIvA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -6333,7 +6333,7 @@ snapshots:
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 3.1.2
+      fast-uri: 3.1.1
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -6418,13 +6418,13 @@ snapshots:
 
   cac@6.7.14: {}
 
-  cacheable@2.3.5:
+  cacheable@2.3.4:
     dependencies:
       '@cacheable/memory': 2.0.8
       '@cacheable/utils': 2.4.1
       hookified: 1.15.1
       keyv: 5.6.0
-      qified: 0.10.1
+      qified: 0.9.1
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -6681,7 +6681,7 @@ snapshots:
       merge2: 1.4.1
       micromatch: 4.0.8
 
-  fast-uri@3.1.2: {}
+  fast-uri@3.1.1: {}
 
   fastest-levenshtein@1.0.16: {}
 
@@ -6693,7 +6693,7 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.4
 
-  file-entry-cache@11.1.3:
+  file-entry-cache@11.1.2:
     dependencies:
       flat-cache: 6.1.22
 
@@ -6706,7 +6706,7 @@ snapshots:
 
   flat-cache@6.1.22:
     dependencies:
-      cacheable: 2.3.5
+      cacheable: 2.3.4
       flatted: 3.4.2
       hookified: 1.15.1
 
@@ -6746,7 +6746,7 @@ snapshots:
 
   get-caller-file@2.0.5: {}
 
-  get-east-asian-width@1.6.0: {}
+  get-east-asian-width@1.5.0: {}
 
   get-intrinsic@1.3.0:
     dependencies:
@@ -7268,7 +7268,7 @@ snapshots:
       once: 1.4.0
     optional: true
 
-  qified@0.10.1:
+  qified@0.9.1:
     dependencies:
       hookified: 2.2.0
 
@@ -7603,7 +7603,7 @@ snapshots:
 
   string-width@8.2.1:
     dependencies:
-      get-east-asian-width: 1.6.0
+      get-east-asian-width: 1.5.0
       strip-ansi: 7.2.0
 
   string_decoder@1.3.0:
@@ -7632,39 +7632,39 @@ snapshots:
       css-to-react-native: 3.2.0
       react-dom: 19.2.6(react@19.2.6)
 
-  stylelint-config-recommended-scss@17.0.0(postcss@8.5.14)(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-config-recommended-scss@17.0.0(postcss@8.5.14)(stylelint@17.10.0(typescript@6.0.3)):
     dependencies:
       postcss-scss: 4.0.9(postcss@8.5.14)
-      stylelint: 17.11.0(typescript@6.0.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.11.0(typescript@6.0.3))
-      stylelint-scss: 7.0.0(stylelint@17.11.0(typescript@6.0.3))
+      stylelint: 17.10.0(typescript@6.0.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.10.0(typescript@6.0.3))
+      stylelint-scss: 7.0.0(stylelint@17.10.0(typescript@6.0.3))
     optionalDependencies:
       postcss: 8.5.14
 
-  stylelint-config-recommended@18.0.0(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-config-recommended@18.0.0(stylelint@17.10.0(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.11.0(typescript@6.0.3)
+      stylelint: 17.10.0(typescript@6.0.3)
 
-  stylelint-config-standard-scss@17.0.0(postcss@8.5.14)(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-config-standard-scss@17.0.0(postcss@8.5.14)(stylelint@17.10.0(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.11.0(typescript@6.0.3)
-      stylelint-config-recommended-scss: 17.0.0(postcss@8.5.14)(stylelint@17.11.0(typescript@6.0.3))
-      stylelint-config-standard: 40.0.0(stylelint@17.11.0(typescript@6.0.3))
+      stylelint: 17.10.0(typescript@6.0.3)
+      stylelint-config-recommended-scss: 17.0.0(postcss@8.5.14)(stylelint@17.10.0(typescript@6.0.3))
+      stylelint-config-standard: 40.0.0(stylelint@17.10.0(typescript@6.0.3))
     optionalDependencies:
       postcss: 8.5.14
 
-  stylelint-config-standard@40.0.0(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-config-standard@40.0.0(stylelint@17.10.0(typescript@6.0.3)):
     dependencies:
-      stylelint: 17.11.0(typescript@6.0.3)
-      stylelint-config-recommended: 18.0.0(stylelint@17.11.0(typescript@6.0.3))
+      stylelint: 17.10.0(typescript@6.0.3)
+      stylelint-config-recommended: 18.0.0(stylelint@17.10.0(typescript@6.0.3))
 
-  stylelint-order@8.1.1(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-order@8.1.1(stylelint@17.10.0(typescript@6.0.3)):
     dependencies:
       postcss: 8.5.14
       postcss-sorting: 10.0.0(postcss@8.5.14)
-      stylelint: 17.11.0(typescript@6.0.3)
+      stylelint: 17.10.0(typescript@6.0.3)
 
-  stylelint-scss@7.0.0(stylelint@17.11.0(typescript@6.0.3)):
+  stylelint-scss@7.0.0(stylelint@17.10.0(typescript@6.0.3)):
     dependencies:
       css-tree: 3.2.1
       is-plain-object: 5.0.0
@@ -7674,9 +7674,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 7.1.1
       postcss-value-parser: 4.2.0
-      stylelint: 17.11.0(typescript@6.0.3)
+      stylelint: 17.10.0(typescript@6.0.3)
 
-  stylelint@17.11.0(typescript@6.0.3):
+  stylelint@17.10.0(typescript@6.0.3):
     dependencies:
       '@csstools/css-calc': 3.2.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
@@ -7692,7 +7692,7 @@ snapshots:
       debug: 4.4.3
       fast-glob: 3.3.3
       fastest-levenshtein: 1.0.16
-      file-entry-cache: 11.1.3
+      file-entry-cache: 11.1.2
       global-modules: 2.0.0
       globby: 16.2.0
       globjoin: 0.1.4
@@ -7869,7 +7869,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-checker@0.13.0(@biomejs/biome@2.4.15)(meow@14.1.0)(stylelint@17.11.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.10(@types/node@25.7.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0)):
+  vite-plugin-checker@0.13.0(@biomejs/biome@2.4.15)(meow@14.1.0)(stylelint@17.10.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.10(@types/node@25.7.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0)):
     dependencies:
       '@babel/code-frame': 7.29.0
       chokidar: 4.0.3
@@ -7884,7 +7884,7 @@ snapshots:
     optionalDependencies:
       '@biomejs/biome': 2.4.15
       meow: 14.1.0
-      stylelint: 17.11.0(typescript@6.0.3)
+      stylelint: 17.10.0(typescript@6.0.3)
       typescript: 6.0.3
 
   vite-plugin-svgr@5.2.0(typescript@6.0.3)(vite@8.0.10(@types/node@25.7.0)(esbuild@0.27.4)(sass@1.99.0)(tsx@4.21.0)):
