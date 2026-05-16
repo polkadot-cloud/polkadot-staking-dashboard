@@ -3,13 +3,19 @@
 
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { onTabVisitEvent } from 'event-tracking'
+import { PagePreloader } from 'library/PagePreloader'
 import { PageTabs } from 'library/PageTabs'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
-import { AllValidators } from './AllValidators'
 import { useValidatorsTabs, ValidatorsTabsProvider } from './context'
-import { ValidatorFavorites } from './Favorites'
+
+const AllValidators = lazy(() =>
+	import('./AllValidators').then((m) => ({ default: m.AllValidators })),
+)
+const ValidatorFavorites = lazy(() =>
+	import('./Favorites').then((m) => ({ default: m.ValidatorFavorites })),
+)
 
 export const ValidatorsInner = () => {
 	const { t } = useTranslation('pages')
@@ -48,8 +54,10 @@ export const ValidatorsInner = () => {
 					]}
 				/>
 			</Page.Title>
-			{activeTab === 0 && <AllValidators />}
-			{activeTab === 1 && <ValidatorFavorites />}
+			<Suspense fallback={<PagePreloader showStats={activeTab === 0} />}>
+				{activeTab === 0 && <AllValidators />}
+				{activeTab === 1 && <ValidatorFavorites />}
+			</Suspense>
 		</>
 	)
 }
