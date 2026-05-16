@@ -6,13 +6,18 @@ import {
 	validatorListSupported,
 } from '@w3ux/validator-assets'
 import { useNetwork } from 'contexts/Network'
+import { PagePreloader } from 'library/PagePreloader'
+import { lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { PageProps } from 'types'
 import { Page } from 'ui-core/base'
 import { OperatorsSectionsProvider, useOperatorsSections } from './context'
-import { Entity } from './Entity'
-import { List } from './List'
 import { Wrapper } from './Wrappers'
+
+const List = lazy(() => import('./List').then((m) => ({ default: m.List })))
+const Entity = lazy(() =>
+	import('./Entity').then((m) => ({ default: m.Entity })),
+)
 
 export const OperatorsInner = ({ page }: PageProps) => {
 	const { t } = useTranslation('app')
@@ -28,12 +33,14 @@ export const OperatorsInner = ({ page }: PageProps) => {
 	return (
 		<Wrapper>
 			<Page.Title title={t(key)} />
-			{activeSection === 0 && (
-				<List network={network as ValidatorSupportedNetwork} />
-			)}
-			{activeSection === 1 && (
-				<Entity network={network as ValidatorSupportedNetwork} />
-			)}
+			<Suspense fallback={<PagePreloader />}>
+				{activeSection === 0 && (
+					<List network={network as ValidatorSupportedNetwork} />
+				)}
+				{activeSection === 1 && (
+					<Entity network={network as ValidatorSupportedNetwork} />
+				)}
+			</Suspense>
 		</Wrapper>
 	)
 }
