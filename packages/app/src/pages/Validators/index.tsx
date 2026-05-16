@@ -54,7 +54,7 @@ export const ValidatorsInner = () => {
 					]}
 				/>
 			</Page.Title>
-			<Suspense fallback={<PagePreloader />}>
+			<Suspense fallback={<PagePreloader showStats={activeTab === 0} />}>
 				{activeTab === 0 && <AllValidators />}
 				{activeTab === 1 && <ValidatorFavorites />}
 			</Suspense>
