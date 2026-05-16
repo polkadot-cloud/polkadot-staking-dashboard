@@ -33,7 +33,7 @@ export const OperatorsInner = ({ page }: PageProps) => {
 	return (
 		<Wrapper>
 			<Page.Title title={t(key)} />
-			<Suspense fallback={<PagePreloader />}>
+			<Suspense fallback={<PagePreloader showStats={false} />}>
 				{activeSection === 0 && (
 					<List network={network as ValidatorSupportedNetwork} />
 				)}
