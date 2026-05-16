@@ -3,13 +3,11 @@ SPDX-License-Identifier: GPL-3.0-only */
 
 @use 'ui-styles/theme/variables' as *;
 
-$header-button-width: 3.5rem;
-
 .btnHeader {
   transition: all var(--transition-duration);
   height: calc($header-height - 1px);
-  width: $header-button-width;
   display: flex;
+  padding: 0 0.85rem;
   align-items: center;
   justify-content: center;
   position: relative;
