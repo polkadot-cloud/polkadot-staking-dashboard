@@ -101,6 +101,25 @@ export const buildPoolShareAnnotations = ({
 			xValue: index,
 			yValue: value,
 			yAdjust: -14,
+			// Nudge horizontally if the tip would overflow the left/right edge
+			// of the chart area.
+			xAdjust: (ctx) => {
+				const area = ctx.chart.chartArea
+				if (!area) {
+					return 0
+				}
+				const tipWidthEstimate = tipContent.length * 6 + 12
+				const half = tipWidthEstimate / 2
+				const margin = 4
+				const xPx = ctx.chart.scales.x?.getPixelForValue(index) ?? 0
+				if (xPx - half < area.left + margin) {
+					return area.left + margin + half - xPx
+				}
+				if (xPx + half > area.right - margin) {
+					return area.right - margin - half - xPx
+				}
+				return 0
+			},
 			backgroundColor: 'rgba(0, 0, 0, 0.8)',
 			color: '#ffffff',
 			font: { size: 11, weight: 'bold' },
