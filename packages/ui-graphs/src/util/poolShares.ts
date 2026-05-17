@@ -51,8 +51,7 @@ export const buildPoolShareAnnotations = ({
 		totalsByIndex.set(index, previous.plus(reward))
 	}
 
-	const lineColor = getThemeValue('--gray-1000')
-	const barColor = color(lineColor).alpha(0.75).rgbString()
+	const barColor = color(getThemeValue('--gray-1000')).alpha(0.75).rgbString()
 	const tipBgColor = getThemeValue('--gray-1000')
 	const tipTextColor = getThemeValue('--gray-100')
 	const annotations: Record<string, AnnotationOptions> = {}
@@ -91,10 +90,12 @@ export const buildPoolShareAnnotations = ({
 		}
 
 		const toggleTip = (chart: Chart, show: boolean) => {
-			const annotations = chart.options.plugins?.annotation?.annotations as
+			const chartAnnotations = chart.options.plugins?.annotation?.annotations as
 				| Record<string, AnnotationOptions>
 				| undefined
-			const tip = annotations?.[tipId] as AnnotationOptions<'label'> | undefined
+			const tip = chartAnnotations?.[tipId] as
+				| AnnotationOptions<'label'>
+				| undefined
 			if (!tip) {
 				return
 			}
@@ -184,8 +185,8 @@ export const buildPoolShareAnnotations = ({
 				}
 				return 0
 			},
-			backgroundColor: 'rgba(0, 0, 0, 0)',
-			color: 'rgba(255, 255, 255, 0)',
+			backgroundColor: 'transparent',
+			color: 'transparent',
 			font: { size: 11, weight: 'bold' },
 			padding: { top: 6, right: 6, bottom: 6, left: 6 },
 			borderRadius: 4,

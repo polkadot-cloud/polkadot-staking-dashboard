@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { PolkadotKnownPoolIds } from 'consts/pools'
-import { getStakingChainData } from 'consts/util'
+import { getStakingChainData, isPoolShareEnabled } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -66,10 +65,7 @@ export const ActiveGraph = ({
 
 	// Pool-era reward share metrics are only available for the known
 	// pools on the Polkadot network.
-	const poolShareEnabled =
-		network === 'polkadot' &&
-		activePool?.id !== undefined &&
-		PolkadotKnownPoolIds.includes(activePool.id)
+	const poolShareEnabled = isPoolShareEnabled(network, activePool?.id)
 
 	const {
 		data: { poolEraRewards },

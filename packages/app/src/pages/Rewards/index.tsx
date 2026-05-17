@@ -3,7 +3,7 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
-import { PolkadotKnownPoolIds } from 'consts/pools'
+import { isPoolShareEnabled } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -62,10 +62,7 @@ export const Rewards = () => {
 
 		// Pool-era reward share metrics are restricted to Polkadot Cloud pools on
 		// the Polkadot network.
-		const poolShareEnabled =
-			network === 'polkadot' &&
-			activePool?.id !== undefined &&
-			PolkadotKnownPoolIds.includes(activePool.id)
+		const poolShareEnabled = isPoolShareEnabled(network, activePool?.id)
 
 		const [{ allRewards }, { poolRewards }, { poolEraRewards }] =
 			await Promise.all([
