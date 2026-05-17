@@ -70,6 +70,10 @@ export interface PoolRewardData {
 	poolRewards: PoolReward[]
 }
 
+export interface PoolEraRewardsData {
+	poolEraRewards: PoolReward[]
+}
+
 export interface EraTotalNominatorsData {
 	eraTotalNominators: {
 		totalNominators: number

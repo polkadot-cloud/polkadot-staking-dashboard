@@ -17,6 +17,8 @@ export interface PayoutGraphData {
 	payouts: NominatorReward[]
 	unclaimedPayouts: NominatorReward[]
 	poolClaims: PoolReward[]
+	// Per-era pool reward shares (Polkadot Cloud pools on Polkadot only)
+	poolShareRewards?: PoolReward[]
 }
 export interface PageProps {
 	payoutsList: RewardResults

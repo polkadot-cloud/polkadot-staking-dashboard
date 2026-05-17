@@ -13,3 +13,13 @@ export const getNetworkKnownPoolIds = (network: string): number[] => {
 			return []
 	}
 }
+
+// Pool-era reward share metrics are restricted to Polkadot Cloud known pools
+// on the Polkadot network.
+export const isPoolShareEnabled = (
+	network: string,
+	poolId: number | undefined,
+): boolean =>
+	network === 'polkadot' &&
+	poolId !== undefined &&
+	PolkadotKnownPoolIds.includes(poolId)

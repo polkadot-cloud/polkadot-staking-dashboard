@@ -45,7 +45,9 @@ export interface PayoutBarProps {
 		poolClaim: string
 		unclaimedPayouts: string
 		pending: string
+		poolShare: string
 	}
+	activeAccount?: string
 }
 
 export interface PayoutLineProps {
@@ -89,6 +91,8 @@ export interface GraphPayoutData {
 	payouts: NominatorReward[]
 	unclaimedPayouts: NominatorReward[]
 	poolClaims: PoolReward[]
+	// Optional per-era pool reward share entries rendered as filled vertical bars using box annotations
+	poolShareRewards?: PoolReward[]
 }
 
 export interface GeoDonutProps {
