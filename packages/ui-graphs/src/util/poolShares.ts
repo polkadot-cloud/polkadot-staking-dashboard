@@ -43,7 +43,7 @@ export const buildPoolShareAnnotations = ({
 		totalsByIndex.set(index, previous.plus(reward))
 	}
 
-	const lineColor = getThemeValue('--accent-color-primary')
+	const lineColor = getThemeValue('--gray-800')
 	const annotationLabel = poolShareLabel ?? 'Pool Share'
 	const annotations: Record<string, AnnotationOptions> = {}
 
@@ -53,7 +53,7 @@ export const buildPoolShareAnnotations = ({
 			continue
 		}
 
-		annotations[`poolShare-${index}`] = {
+		const lineAnnotation: AnnotationOptions<'line'> = {
 			type: 'line',
 			xMin: index,
 			xMax: index,
@@ -64,13 +64,13 @@ export const buildPoolShareAnnotations = ({
 				y2: properties.y,
 			}),
 			borderColor: lineColor,
-			borderWidth: 1.5,
-			borderDash: [3, 3],
+			borderWidth: 2,
 			label: {
 				display: false,
 				content: `${annotationLabel}: ${new BigNumber(value).decimalPlaces(units).toFormat()} ${unit}`,
 			},
 		}
+		annotations[`poolShare-${index}`] = lineAnnotation
 	}
 
 	return annotations
