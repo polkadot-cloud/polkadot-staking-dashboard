@@ -49,6 +49,7 @@ export const PayoutBar = ({
 	units,
 	dateFormat,
 	labels,
+	activeAccount,
 }: PayoutBarProps) => {
 	const staking = nominating || inPool
 
@@ -130,6 +131,7 @@ export const PayoutBar = ({
 				unit,
 				units,
 				poolShareLabel: labels.poolShare,
+				activeAccount,
 			}),
 		[
 			graphPayouts,
@@ -138,6 +140,7 @@ export const PayoutBar = ({
 			unit,
 			units,
 			labels.poolShare,
+			activeAccount,
 		],
 	)
 

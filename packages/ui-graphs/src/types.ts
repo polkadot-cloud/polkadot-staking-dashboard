@@ -47,6 +47,7 @@ export interface PayoutBarProps {
 		pending: string
 		poolShare: string
 	}
+	activeAccount?: string
 }
 
 export interface PayoutLineProps {

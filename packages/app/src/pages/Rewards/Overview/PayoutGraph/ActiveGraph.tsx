@@ -1,6 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { useNetwork } from 'contexts/Network'
@@ -26,6 +27,7 @@ export const ActiveGraph = ({
 }: Props) => {
 	const { i18n, t } = useTranslation()
 	const { network } = useNetwork()
+	const { activeAddress } = useActiveAccount()
 	const { getThemeValue } = useThemeValues()
 	const { unit, units } = getStakingChainData(network)
 
@@ -49,6 +51,7 @@ export const ActiveGraph = ({
 					pending: t('pending', { ns: 'app' }),
 					poolShare: t('share', { ns: 'app' }),
 				}}
+				activeAccount={activeAddress || undefined}
 			/>
 			<div style={{ marginTop: '1rem' }}>
 				<AveragePayoutLine

@@ -15,7 +15,12 @@ type BuildPoolShareAnnotationsArgs = {
 	unit: string
 	units: number
 	poolShareLabel: string
+	activeAccount?: string
 }
+
+// Tracks which accounts have already run their init animation in this
+// app session, so subsequent re-renders for the same owner don't replay it.
+const animatedAccounts = new Set<string>()
 
 export const buildPoolShareAnnotations = ({
 	graphPayouts,
@@ -24,6 +29,7 @@ export const buildPoolShareAnnotations = ({
 	unit,
 	units,
 	poolShareLabel,
+	activeAccount,
 }: BuildPoolShareAnnotationsArgs): Record<string, AnnotationOptions> => {
 	if (!poolShareRewards?.length) {
 		return {}
@@ -45,11 +51,21 @@ export const buildPoolShareAnnotations = ({
 		totalsByIndex.set(index, previous.plus(reward))
 	}
 
-	const lineColor = getThemeValue('--gray-900')
+	const lineColor = getThemeValue('--gray-1000')
 	const barColor = color(lineColor).alpha(0.75).rgbString()
+	const tipBgColor = getThemeValue('--gray-1000')
+	const tipTextColor = getThemeValue('--gray-100')
 	const annotations: Record<string, AnnotationOptions> = {}
 	// Half-width of the vertical bar in category units (1 = full slot width).
 	const barHalfWidth = 0.09
+	// Only run the grow-in animation the first time we build annotations for
+	// this owner; subsequent rebuilds (theme changes, hover updates, etc.)
+	// should render the bars in place.
+	const shouldAnimateInit =
+		activeAccount !== undefined && !animatedAccounts.has(activeAccount)
+	if (activeAccount !== undefined) {
+		animatedAccounts.add(activeAccount)
+	}
 
 	for (const [index, planckTotal] of totalsByIndex) {
 		const value = planckToUnitBn(planckTotal, units).toNumber()
@@ -60,14 +76,43 @@ export const buildPoolShareAnnotations = ({
 		const tipId = `poolShare-tip-${index}`
 		const tipContent = `${poolShareLabel}: ${new BigNumber(value).decimalPlaces(units).toFormat()} ${unit}`
 
-		const toggleTip = (chart: Chart, display: boolean) => {
-			const tip = chart.options.plugins?.annotation?.annotations as
+		// Per-tip fade state and animation handle (closed over by toggleTip).
+		let alpha = 0
+		let rafId: number | null = null
+
+		const applyAlpha = (tip: AnnotationOptions<'label'>, a: number) => {
+			tip.display = a > 0
+			tip.backgroundColor = color(tipBgColor).alpha(a).rgbString()
+			tip.color = color(tipTextColor).alpha(a).rgbString()
+		}
+
+		const toggleTip = (chart: Chart, show: boolean) => {
+			const annotations = chart.options.plugins?.annotation?.annotations as
 				| Record<string, AnnotationOptions>
 				| undefined
-			if (tip?.[tipId]) {
-				;(tip[tipId] as AnnotationOptions<'label'>).display = display
-				chart.update('none')
+			const tip = annotations?.[tipId] as AnnotationOptions<'label'> | undefined
+			if (!tip) {
+				return
 			}
+			const target = show ? 1 : 0
+			const from = alpha
+			const duration = 150
+			const start = performance.now()
+			if (rafId !== null) {
+				cancelAnimationFrame(rafId)
+			}
+			const step = (now: number) => {
+				const t = Math.min(1, (now - start) / duration)
+				alpha = from + (target - from) * t
+				applyAlpha(tip, alpha)
+				chart.update('none')
+				if (t < 1) {
+					rafId = requestAnimationFrame(step)
+				} else {
+					rafId = null
+				}
+			}
+			rafId = requestAnimationFrame(step)
 		}
 
 		const boxAnnotation: AnnotationOptions<'box'> = {
@@ -85,6 +130,21 @@ export const buildPoolShareAnnotations = ({
 				bottomLeft: 0,
 				bottomRight: 0,
 			},
+			// Grow the bar from its baseline (bottom edge) on initial render,
+			// matching the chart's bar animation. Only applied on the first
+			// build for this animation key so re-renders don't replay it.
+			...(shouldAnimateInit
+				? {
+						init: ({ properties }) => ({
+							x: properties.x,
+							y: properties.y2,
+							x2: properties.x2,
+							y2: properties.y2,
+							width: properties.width,
+							height: 0,
+						}),
+					}
+				: {}),
 			enter: ({ chart }) => {
 				toggleTip(chart, true)
 				return true
@@ -120,10 +180,10 @@ export const buildPoolShareAnnotations = ({
 				}
 				return 0
 			},
-			backgroundColor: 'rgba(0, 0, 0, 0.8)',
-			color: '#ffffff',
+			backgroundColor: 'rgba(0, 0, 0, 0)',
+			color: 'rgba(255, 255, 255, 0)',
 			font: { size: 11, weight: 'bold' },
-			padding: { top: 4, right: 6, bottom: 4, left: 6 },
+			padding: { top: 6, right: 6, bottom: 6, left: 6 },
 			borderRadius: 4,
 			content: tipContent,
 		}

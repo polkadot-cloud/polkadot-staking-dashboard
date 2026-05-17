@@ -120,6 +120,7 @@ export const ActiveGraph = ({
 					pending: t('pending', { ns: 'app' }),
 					poolShare: t('share', { ns: 'app' }),
 				}}
+				activeAccount={activeAddress || undefined}
 			/>
 			<div style={{ marginTop: lineMarginTop }}>
 				<AveragePayoutLine
