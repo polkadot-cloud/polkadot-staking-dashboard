@@ -72,9 +72,10 @@ export const buildPoolShareAnnotations = ({
 		if (unitValue.lte(0)) {
 			continue
 		}
-		const value = unitValue.isFinite() && unitValue.lte(Number.MAX_VALUE)
-			? unitValue.toNumber()
-			: Number.MAX_VALUE
+		const value =
+			unitValue.isFinite() && unitValue.lte(Number.MAX_VALUE)
+				? unitValue.toNumber()
+				: Number.MAX_VALUE
 
 		const tipId = `poolShare-tip-${index}`
 		const tipContent = `${poolShareLabel}: ${unitValue.decimalPlaces(units).toFormat()} ${unit}`
