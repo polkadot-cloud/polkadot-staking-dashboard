@@ -118,7 +118,7 @@ export const ActiveGraph = ({
 					poolClaim: t('poolClaim', { ns: 'app' }),
 					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
 					pending: t('pending', { ns: 'app' }),
-					poolShare: t('poolShare', { ns: 'app', defaultValue: 'Pool Share' }),
+					poolShare: t('share', { ns: 'app' }),
 				}}
 			/>
 			<div style={{ marginTop: lineMarginTop }}>

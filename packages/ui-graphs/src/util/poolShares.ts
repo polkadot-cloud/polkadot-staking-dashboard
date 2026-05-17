@@ -12,7 +12,7 @@ type BuildPoolShareAnnotationsArgs = {
 	getThemeValue: (key: string) => string
 	unit: string
 	units: number
-	poolShareLabel?: string
+	poolShareLabel: string
 }
 
 export const buildPoolShareAnnotations = ({
@@ -44,7 +44,6 @@ export const buildPoolShareAnnotations = ({
 	}
 
 	const lineColor = getThemeValue('--gray-800')
-	const annotationLabel = poolShareLabel ?? 'Pool Share'
 	const annotations: Record<string, AnnotationOptions> = {}
 
 	for (const [index, planckTotal] of totalsByIndex) {
@@ -64,10 +63,29 @@ export const buildPoolShareAnnotations = ({
 				y2: properties.y,
 			}),
 			borderColor: lineColor,
-			borderWidth: 2,
+			borderWidth: 3,
 			label: {
 				display: false,
-				content: `${annotationLabel}: ${new BigNumber(value).decimalPlaces(units).toFormat()} ${unit}`,
+				position: 'start',
+				yAdjust: -8,
+				backgroundColor: 'rgba(0, 0, 0, 0.8)',
+				color: '#ffffff',
+				font: { size: 11, weight: 'bold' },
+				padding: { top: 4, right: 6, bottom: 4, left: 6 },
+				borderRadius: 4,
+				content: `${poolShareLabel}: ${new BigNumber(value).decimalPlaces(units).toFormat()} ${unit}`,
+			},
+			enter: ({ element }) => {
+				if (element.label) {
+					element.label.options.display = true
+				}
+				return true
+			},
+			leave: ({ element }) => {
+				if (element.label) {
+					element.label.options.display = false
+				}
+				return true
 			},
 		}
 		annotations[`poolShare-${index}`] = lineAnnotation

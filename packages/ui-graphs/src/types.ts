@@ -45,7 +45,7 @@ export interface PayoutBarProps {
 		poolClaim: string
 		unclaimedPayouts: string
 		pending: string
-		poolShare?: string
+		poolShare: string
 	}
 }
 
