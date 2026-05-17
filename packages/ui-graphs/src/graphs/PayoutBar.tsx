@@ -14,12 +14,16 @@ import {
 	Title,
 	Tooltip,
 } from 'chart.js'
+import annotationPlugin from 'chartjs-plugin-annotation'
 import { format, fromUnixTime } from 'date-fns'
 import { useMemo } from 'react'
 import { Bar } from 'react-chartjs-2'
 import { Spinner } from 'ui-core/base'
 import type { PayoutBarProps } from '../types'
-import { formatRewardsForGraphs } from '../util/index'
+import {
+	buildPoolShareAnnotations,
+	formatRewardsForGraphs,
+} from '../util/index'
 
 ChartJS.register(
 	CategoryScale,
@@ -30,12 +34,13 @@ ChartJS.register(
 	Title,
 	Tooltip,
 	Legend,
+	annotationPlugin,
 )
 
 export const PayoutBar = ({
 	days,
 	height,
-	data: { payouts, poolClaims, unclaimedPayouts },
+	data: { payouts, poolClaims, unclaimedPayouts, poolShareRewards },
 	nominating,
 	inPool,
 	syncing,
@@ -83,7 +88,6 @@ export const PayoutBar = ({
 			})
 			return `${dateObj}`
 		}),
-
 		datasets: [
 			{
 				order: 1,
@@ -116,6 +120,26 @@ export const PayoutBar = ({
 			},
 		],
 	}
+
+	const annotations = useMemo(
+		() =>
+			buildPoolShareAnnotations({
+				graphPayouts,
+				poolShareRewards,
+				getThemeValue,
+				unit,
+				units,
+				poolShareLabel: labels.poolShare,
+			}),
+		[
+			graphPayouts,
+			poolShareRewards,
+			getThemeValue,
+			unit,
+			units,
+			labels.poolShare,
+		],
+	)
 
 	const options = {
 		responsive: true,
@@ -156,6 +180,9 @@ export const PayoutBar = ({
 			},
 			title: {
 				display: false,
+			},
+			annotation: {
+				annotations,
 			},
 			tooltip: {
 				displayColors: false,

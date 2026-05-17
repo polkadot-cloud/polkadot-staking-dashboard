@@ -21,7 +21,7 @@ type Props = Omit<
 export const ActiveGraph = ({
 	nominating,
 	inPool,
-	payoutGraphData: { payouts, unclaimedPayouts, poolClaims },
+	payoutGraphData: { payouts, unclaimedPayouts, poolClaims, poolShareRewards },
 	loading,
 }: Props) => {
 	const { i18n, t } = useTranslation()
@@ -34,7 +34,7 @@ export const ActiveGraph = ({
 			<PayoutBar
 				days={MaxPayoutDays}
 				height="165px"
-				data={{ payouts, unclaimedPayouts, poolClaims }}
+				data={{ payouts, unclaimedPayouts, poolClaims, poolShareRewards }}
 				nominating={nominating}
 				inPool={inPool}
 				syncing={loading}
@@ -47,6 +47,7 @@ export const ActiveGraph = ({
 					poolClaim: t('poolClaim', { ns: 'app' }),
 					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
 					pending: t('pending', { ns: 'app' }),
+					poolShare: t('poolShare', { ns: 'app', defaultValue: 'Pool Share' }),
 				}}
 			/>
 			<div style={{ marginTop: '1rem' }}>

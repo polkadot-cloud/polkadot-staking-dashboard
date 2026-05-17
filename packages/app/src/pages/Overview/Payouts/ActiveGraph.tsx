@@ -2,13 +2,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
+import { PolkadotKnownPoolIds } from 'consts/pools'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { DefaultLocale, locales } from 'locales'
-import { usePoolRewards, useRewards } from 'plugin-staking-api'
+import {
+	usePoolEraRewards,
+	usePoolRewards,
+	useRewards,
+} from 'plugin-staking-api'
 import type {
 	NominatorReward,
 	RewardResult,
@@ -34,6 +40,7 @@ export const ActiveGraph = ({
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { activeAddress } = useActiveAccount()
+	const { activePool } = useActivePool()
 	const { getThemeValue } = useThemeValues()
 	const { unit, units } = getStakingChainData(network)
 
@@ -57,6 +64,22 @@ export const ActiveGraph = ({
 		from: getUnixTime(fromDate),
 	})
 
+	// Pool-era reward share metrics are only available for the known
+	// pools on the Polkadot network.
+	const poolShareEnabled =
+		network === 'polkadot' &&
+		activePool?.id !== undefined &&
+		PolkadotKnownPoolIds.includes(activePool.id)
+
+	const {
+		data: { poolEraRewards },
+	} = usePoolEraRewards({
+		network,
+		who: activeAddress || '',
+		fromEra: Math.max(activeEra.index - 1, 0),
+		skip: !poolShareEnabled || !activeAddress,
+	})
+
 	const nominatorRewards = nominatorRewardData.allRewards
 	const payouts =
 		nominatorRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
@@ -77,7 +100,12 @@ export const ActiveGraph = ({
 			<PayoutBar
 				days={days}
 				height="150px"
-				data={{ payouts, unclaimedPayouts, poolClaims }}
+				data={{
+					payouts,
+					unclaimedPayouts,
+					poolClaims,
+					poolShareRewards: poolShareEnabled ? poolEraRewards : undefined,
+				}}
 				nominating={nominating}
 				inPool={inPool}
 				syncing={rewardsLoading || poolRewardsLoading}
@@ -90,6 +118,7 @@ export const ActiveGraph = ({
 					poolClaim: t('poolClaim', { ns: 'app' }),
 					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
 					pending: t('pending', { ns: 'app' }),
+					poolShare: t('poolShare', { ns: 'app', defaultValue: 'Pool Share' }),
 				}}
 			/>
 			<div style={{ marginTop: lineMarginTop }}>

@@ -3,13 +3,19 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
+import { PolkadotKnownPoolIds } from 'consts/pools'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
-import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
+import {
+	fetchPoolEraRewards,
+	fetchPoolRewards,
+	fetchRewards,
+} from 'plugin-staking-api'
 import type { NominatorReward, RewardResults } from 'plugin-staking-api/types'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +32,7 @@ export const Rewards = () => {
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { activeAddress } = useActiveAccount()
+	const { activePool } = useActivePool()
 
 	// Store page active tab
 	const [activeTab, setActiveTab] = useState<number>(0)
@@ -53,14 +60,29 @@ export const Rewards = () => {
 	const getPayoutData = async () => {
 		const fromDate = subDays(startOfToday(), MaxPayoutDays)
 
-		const [{ allRewards }, { poolRewards }] = await Promise.all([
-			fetchRewards(
-				network,
-				activeAddress || '',
-				Math.max(activeEra.index - 1, 0),
-			),
-			fetchPoolRewards(network, activeAddress || '', getUnixTime(fromDate)),
-		])
+		// Pool-era reward share metrics are restricted to Polkadot Cloud pools on
+		// the Polkadot network.
+		const poolShareEnabled =
+			network === 'polkadot' &&
+			activePool?.id !== undefined &&
+			PolkadotKnownPoolIds.includes(activePool.id)
+
+		const [{ allRewards }, { poolRewards }, { poolEraRewards }] =
+			await Promise.all([
+				fetchRewards(
+					network,
+					activeAddress || '',
+					Math.max(activeEra.index - 1, 0),
+				),
+				fetchPoolRewards(network, activeAddress || '', getUnixTime(fromDate)),
+				poolShareEnabled
+					? fetchPoolEraRewards(
+							network,
+							activeAddress || '',
+							Math.max(activeEra.index - 1, 0),
+						)
+					: Promise.resolve({ poolEraRewards: [] }),
+			])
 
 		const payouts =
 			allRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
@@ -76,7 +98,12 @@ export const Rewards = () => {
 				(allRewards as RewardResults).concat(poolClaims) as RewardResults,
 			),
 		)
-		setPayoutGraphData({ payouts, unclaimedPayouts, poolClaims })
+		setPayoutGraphData({
+			payouts,
+			unclaimedPayouts,
+			poolClaims,
+			poolShareRewards: poolShareEnabled ? poolEraRewards : undefined,
+		})
 		setLoading(false)
 	}
 
@@ -93,7 +120,13 @@ export const Rewards = () => {
 			setLoading(true)
 			getPayoutData()
 		}
-	}, [network, activeAddress, pluginEnabled('staking_api'), activeEra.index])
+	}, [
+		network,
+		activeAddress,
+		pluginEnabled('staking_api'),
+		activeEra.index,
+		activePool?.id,
+	])
 
 	// Reset payout list state on account change
 	useEffect(() => {
