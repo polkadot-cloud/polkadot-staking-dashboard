@@ -68,13 +68,16 @@ export const buildPoolShareAnnotations = ({
 	}
 
 	for (const [index, planckTotal] of totalsByIndex) {
-		const value = planckToUnitBn(planckTotal, units).toNumber()
-		if (value <= 0) {
+		const unitValue = planckToUnitBn(planckTotal, units)
+		if (unitValue.lte(0)) {
 			continue
 		}
+		const value = unitValue.isFinite() && unitValue.lte(Number.MAX_VALUE)
+			? unitValue.toNumber()
+			: Number.MAX_VALUE
 
 		const tipId = `poolShare-tip-${index}`
-		const tipContent = `${poolShareLabel}: ${new BigNumber(value).decimalPlaces(units).toFormat()} ${unit}`
+		const tipContent = `${poolShareLabel}: ${unitValue.decimalPlaces(units).toFormat()} ${unit}`
 
 		// Per-tip fade state and animation handle (closed over by toggleTip).
 		let alpha = 0
