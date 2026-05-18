@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { PoolWarningsData, PoolWarningsResult } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
 	query PoolWarnings($network: String!, $addresses: [String!]!) {
@@ -28,17 +28,10 @@ export const fetchPoolWarnings = async (
 	if (addresses.length === 0) {
 		return DEFAULT
 	}
-
-	try {
-		const result = await client.query<PoolWarningsData>({
-			query: QUERY,
-			variables: { network, addresses },
-		})
-
-		return {
-			warnings: result?.data?.poolWarnings?.warnings || [],
-		}
-	} catch {
-		return DEFAULT
-	}
+	const data = await fetchQuery<PoolWarningsData>(
+		QUERY,
+		{ network, addresses },
+		{ poolWarnings: DEFAULT },
+	)
+	return { warnings: data.poolWarnings?.warnings || [] }
 }

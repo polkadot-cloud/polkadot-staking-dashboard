@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { ValidatorEraPointsBatchData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query ValidatorEraPointsBatch(
@@ -32,19 +32,14 @@ const DEFAULT: ValidatorEraPointsBatchData = {
 	validatorEraPointsBatch: [],
 }
 
-export const fetchValidatorEraPointsBatch = async (
+export const fetchValidatorEraPointsBatch = (
 	network: string,
 	validators: string[],
 	fromEra: number,
 	depth?: number,
-): Promise<ValidatorEraPointsBatchData> => {
-	try {
-		const result = await client.query<ValidatorEraPointsBatchData>({
-			query: QUERY,
-			variables: { network, validators, fromEra, depth },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+) =>
+	fetchQuery<ValidatorEraPointsBatchData>(
+		QUERY,
+		{ network, validators, fromEra, depth },
+		DEFAULT,
+	)

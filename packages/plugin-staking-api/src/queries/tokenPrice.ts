@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { TokenPriceData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query TokenPrice($ticker: String!) {
@@ -21,19 +21,8 @@ const DEFAULT: TokenPriceData = {
 	},
 }
 
-export const fetchTokenPrice = async (
-	ticker: string,
-): Promise<TokenPriceData> => {
-	try {
-		const result = await client.query<TokenPriceData>({
-			query: QUERY,
-			variables: { ticker },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+export const fetchTokenPrice = (ticker: string) =>
+	fetchQuery<TokenPriceData>(QUERY, { ticker }, DEFAULT)
 
 export const formatTokenPrice = (
 	maybePrice: number | null,
