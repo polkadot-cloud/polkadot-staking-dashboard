@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { ValidatorAvgRewardRateBatchData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query ValidatorAvgRewardRateBatch(
@@ -27,19 +27,14 @@ const DEFAULT: ValidatorAvgRewardRateBatchData = {
 	validatorAvgRewardRateBatch: [],
 }
 
-export const fetchValidatorAvgRewardRateBatch = async (
+export const fetchValidatorAvgRewardRateBatch = (
 	chain: string,
 	validators: string[],
 	fromEra: number,
 	depth?: number,
-): Promise<ValidatorAvgRewardRateBatchData> => {
-	try {
-		const result = await client.query<ValidatorAvgRewardRateBatchData>({
-			query: QUERY,
-			variables: { chain, validators, fromEra, depth },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+) =>
+	fetchQuery<ValidatorAvgRewardRateBatchData>(
+		QUERY,
+		{ chain, validators, fromEra, depth },
+		DEFAULT,
+	)

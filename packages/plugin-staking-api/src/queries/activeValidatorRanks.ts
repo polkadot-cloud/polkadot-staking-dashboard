@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { ActiveValidatorRanksData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query ActiveValidatorRanks($network: String!) {
@@ -18,16 +18,5 @@ const DEFAULT: ActiveValidatorRanksData = {
 	activeValidatorRanks: [],
 }
 
-export const fetchActiveValidatorRanks = async (
-	network: string,
-): Promise<ActiveValidatorRanksData> => {
-	try {
-		const result = await client.query<ActiveValidatorRanksData>({
-			query: QUERY,
-			variables: { network },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+export const fetchActiveValidatorRanks = (network: string) =>
+	fetchQuery<ActiveValidatorRanksData>(QUERY, { network }, DEFAULT)

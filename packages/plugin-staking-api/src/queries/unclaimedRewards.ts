@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
 import type { QueryReturn, UnclaimedRewardsData } from '../types'
+import { useApiQuery } from './generic'
 
 const QUERY = gql`
   query UnclaimedRewards($network: String!, $who: String!, $fromEra: Int!) {
@@ -29,20 +29,9 @@ const DEFAULT: UnclaimedRewardsData = {
 	},
 }
 
-export const useUnclaimedRewards = ({
-	network,
-	who,
-	fromEra,
-}: {
+export const useUnclaimedRewards = (variables: {
 	network: string
 	who: string
 	fromEra: number
-}): QueryReturn<UnclaimedRewardsData> => {
-	const { loading, error, data, refetch } = useQuery<UnclaimedRewardsData>(
-		QUERY,
-		{
-			variables: { network, who, fromEra },
-		},
-	)
-	return { loading, error, data: data || DEFAULT, refetch }
-}
+}): QueryReturn<UnclaimedRewardsData> =>
+	useApiQuery<UnclaimedRewardsData>(QUERY, variables, DEFAULT)

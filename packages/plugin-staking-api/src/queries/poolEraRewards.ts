@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
-import { client } from '../Client'
 import type { PoolEraRewardsData, QueryReturn } from '../types'
+import { fetchQuery, useApiQuery } from './generic'
 
 const QUERY = gql`
   query PoolEraRewards($network: String!, $who: String!, $fromEra: Int!) {
@@ -31,29 +30,13 @@ export const usePoolEraRewards = ({
 	who: string
 	fromEra: number
 	skip?: boolean
-}): QueryReturn<PoolEraRewardsData> => {
-	const { loading, error, data, refetch } = useQuery<PoolEraRewardsData>(
-		QUERY,
-		{
-			variables: { network, who, fromEra },
-			skip,
-		},
-	)
-	return { loading, error, data: data || DEFAULT, refetch }
-}
+}): QueryReturn<PoolEraRewardsData> =>
+	useApiQuery<PoolEraRewardsData>(QUERY, { network, who, fromEra }, DEFAULT, {
+		skip,
+	})
 
-export const fetchPoolEraRewards = async (
+export const fetchPoolEraRewards = (
 	network: string,
 	who: string,
 	fromEra: number,
-): Promise<PoolEraRewardsData> => {
-	try {
-		const result = await client.query<PoolEraRewardsData>({
-			query: QUERY,
-			variables: { network, who, fromEra },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+) => fetchQuery<PoolEraRewardsData>(QUERY, { network, who, fromEra }, DEFAULT)

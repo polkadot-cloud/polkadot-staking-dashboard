@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
 import type { PoolEraPointsData, QueryReturn } from '../types'
+import { useApiQuery } from './generic'
 
 const QUERY = gql`
   query PoolEraPoints(
@@ -29,19 +29,10 @@ const DEFAULT: PoolEraPointsData = {
 	poolEraPoints: [],
 }
 
-export const usePoolEraPoints = ({
-	network,
-	poolId,
-	fromEra,
-	depth,
-}: {
+export const usePoolEraPoints = (variables: {
 	network: string
 	poolId: number
 	fromEra: number
 	depth?: number
-}): QueryReturn<PoolEraPointsData> => {
-	const { loading, error, data, refetch } = useQuery<PoolEraPointsData>(QUERY, {
-		variables: { network, poolId, fromEra, depth },
-	})
-	return { loading, error, data: data || DEFAULT, refetch }
-}
+}): QueryReturn<PoolEraPointsData> =>
+	useApiQuery<PoolEraPointsData>(QUERY, variables, DEFAULT)

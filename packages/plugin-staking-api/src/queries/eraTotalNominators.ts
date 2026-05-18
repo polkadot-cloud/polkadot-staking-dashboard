@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { EraTotalNominatorsData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query EraTotalNominators($network: String!, $era: Int!) {
@@ -19,17 +19,5 @@ const DEFAULT: EraTotalNominatorsData = {
 	},
 }
 
-export const fetchEraTotalNominators = async (
-	network: string,
-	era: number,
-): Promise<EraTotalNominatorsData> => {
-	try {
-		const result = await client.query<EraTotalNominatorsData>({
-			query: QUERY,
-			variables: { network, era },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+export const fetchEraTotalNominators = (network: string, era: number) =>
+	fetchQuery<EraTotalNominatorsData>(QUERY, { network, era }, DEFAULT)
