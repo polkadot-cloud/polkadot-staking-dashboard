@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
 import type { QueryReturn, ValidatorEraPointsData } from '../types'
+import { useApiQuery } from './generic'
 
 const QUERY = gql`
   query ValidatorEraPoints(
@@ -28,22 +28,10 @@ const DEFAULT: ValidatorEraPointsData = {
 	validatorEraPoints: [],
 }
 
-export const useValidatorEraPoints = ({
-	network,
-	validator,
-	fromEra,
-	depth,
-}: {
+export const useValidatorEraPoints = (variables: {
 	network: string
 	validator: string
 	fromEra: number
 	depth?: number
-}): QueryReturn<ValidatorEraPointsData> => {
-	const { loading, error, data, refetch } = useQuery<ValidatorEraPointsData>(
-		QUERY,
-		{
-			variables: { network, validator, fromEra, depth },
-		},
-	)
-	return { loading, error, data: data || DEFAULT, refetch }
-}
+}): QueryReturn<ValidatorEraPointsData> =>
+	useApiQuery<ValidatorEraPointsData>(QUERY, variables, DEFAULT)

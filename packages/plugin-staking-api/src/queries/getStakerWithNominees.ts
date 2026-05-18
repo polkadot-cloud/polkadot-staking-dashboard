@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type {
 	ActiveStatusWithNominees,
 	GetActiveStakerWithNomineesData,
 } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query GetStakerWithNominees($network: String!, $era: Int!, $who: String!, $addresses: [String!]!) {
@@ -22,9 +22,9 @@ const QUERY = gql`
 }
 `
 
-const DEFAULT: ActiveStatusWithNominees = {
-	active: false,
-	statuses: [],
+const DEFAULT_DATA: GetActiveStakerWithNomineesData = {
+	isActiveStaker: { active: false },
+	getNomineesStatus: { statuses: [] },
 }
 
 export const fetchGetStakerWithNominees = async (
@@ -33,21 +33,13 @@ export const fetchGetStakerWithNominees = async (
 	who: string,
 	addresses: string[],
 ): Promise<ActiveStatusWithNominees> => {
-	try {
-		const result = await client.query<GetActiveStakerWithNomineesData>({
-			query: QUERY,
-			variables: { network, era, who, addresses },
-		})
-		return result?.data
-			? {
-					active: result.data.isActiveStaker.active,
-					statuses: result.data.getNomineesStatus.statuses,
-				}
-			: {
-					active: false,
-					statuses: [],
-				}
-	} catch {
-		return DEFAULT
+	const data = await fetchQuery<GetActiveStakerWithNomineesData>(
+		QUERY,
+		{ network, era, who, addresses },
+		DEFAULT_DATA,
+	)
+	return {
+		active: data.isActiveStaker.active,
+		statuses: data.getNomineesStatus.statuses,
 	}
 }

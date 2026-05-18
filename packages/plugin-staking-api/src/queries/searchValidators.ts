@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { SearchValidatorsData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query SearchValidators($network: String!, $searchTerm: String!) {
@@ -27,17 +27,5 @@ const DEFAULT: SearchValidatorsData = {
 	},
 }
 
-export const fetchSearchValidators = async (
-	network: string,
-	searchTerm: string,
-): Promise<SearchValidatorsData> => {
-	try {
-		const result = await client.query<SearchValidatorsData>({
-			query: QUERY,
-			variables: { network, searchTerm },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+export const fetchSearchValidators = (network: string, searchTerm: string) =>
+	fetchQuery<SearchValidatorsData>(QUERY, { network, searchTerm }, DEFAULT)
