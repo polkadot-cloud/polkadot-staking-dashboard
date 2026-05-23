@@ -8,6 +8,11 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
 `
 
+export const ListStatusWrapper = styled.div`
+  width: 100%;
+  padding: 1rem 0.5rem;
+`
+
 export const ItemWrapper = styled.div`
   padding: 0.5rem;
   width: 100%;

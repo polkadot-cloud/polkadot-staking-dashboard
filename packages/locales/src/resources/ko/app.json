@@ -265,6 +265,7 @@
 		"otherOptions": "다른 옵션",
 		"overview": "개요",
 		"page": "페이지 {{page}}/{{total}}",
+		"pageNumber": "페이지 {{page}}",
 		"payee": {
 			"account": {
 				"subtitle": "지급금을 다른 계정으로 자유 잔액으로 보냅니다.",

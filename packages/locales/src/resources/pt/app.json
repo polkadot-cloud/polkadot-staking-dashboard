@@ -265,6 +265,7 @@
 		"otherOptions": "Outras Opções",
 		"overview": "Visão Geral",
 		"page": "Página {{page}} de {{total}}",
+		"pageNumber": "Página {{page}}",
 		"payee": {
 			"account": {
 				"subtitle": "Enviar pagamentos para outra conta como saldo livre.",

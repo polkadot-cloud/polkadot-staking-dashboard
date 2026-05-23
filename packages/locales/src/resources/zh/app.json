@@ -260,6 +260,7 @@
 		"otherOptions": "其他选项",
 		"overview": "总览",
 		"page": "{{page}} / {{total}}",
+		"pageNumber": "第 {{page}} 页",
 		"payee": {
 			"account": {
 				"subtitle": "收益作为自由余额发到其他帐户",

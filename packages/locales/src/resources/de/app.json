@@ -264,6 +264,7 @@
 		"otherOptions": "Weitere Optionen",
 		"overview": "Übersicht",
 		"page": "Seite {{page}} von {{total}}",
+		"pageNumber": "Seite {{page}}",
 		"payee": {
 			"account": {
 				"subtitle": "Auszahlungen als freien Kontostand auf ein anderes Konto senden.",

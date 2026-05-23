@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useStaking } from 'contexts/Staking'
 import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { onTabVisitEvent } from 'event-tracking'
 import { PageTabs } from 'library/PageTabs'
@@ -22,7 +23,7 @@ import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { filterAndSortRewards } from 'ui-graphs/util'
 import { Overview } from './Overview'
-import { RecentPayouts } from './PayoutList'
+import { NominatorPayouts, PoolPayouts } from './PayoutList'
 import type { PayoutGraphData } from './types'
 import { Wrapper } from './Wrappers'
 
@@ -30,14 +31,16 @@ export const Rewards = () => {
 	const { t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
+	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { activeAddress } = useActiveAccount()
-	const { activePool } = useActivePool()
+	const { activePool, inPool } = useActivePool()
 
 	// Store page active tab
 	const [activeTab, setActiveTab] = useState<number>(0)
 
-	// Store payouts list in state, fetched by Staking API
+	// Combined payouts list, used by the Overview graph for the date range header. The two payout
+	// list tabs each fetch their own paginated data.
 	const [payoutsList, setPayoutsList] = useState<RewardResults>([])
 
 	// Store whether data is being fetched
@@ -50,7 +53,7 @@ export const Rewards = () => {
 		poolClaims: [],
 	})
 
-	// Payouts list props to pass to each tab
+	// Payouts list props to pass to the overview tab
 	const pageProps = {
 		payoutsList,
 		setPayoutsList,
@@ -130,29 +133,51 @@ export const Rewards = () => {
 		setPayoutsList([])
 	}, [activeAddress])
 
+	// If the currently active tab becomes hidden (e.g. user leaves a pool while on the Pool Claim
+	// tab), fall back to the Overview tab.
+	useEffect(() => {
+		if (activeTab === 1 && !isBonding) {
+			setActiveTab(0)
+		} else if (activeTab === 2 && !inPool) {
+			setActiveTab(0)
+		}
+	}, [activeTab, isBonding, inPool])
+
+	const tabs = [
+		{
+			title: t('overview', { ns: 'app' }),
+			active: activeTab === 0,
+			onClick: () => {
+				onTabVisitEvent('rewards', 'overview')
+				setActiveTab(0)
+			},
+		},
+	]
+	if (isBonding) {
+		tabs.push({
+			title: t('payouts', { ns: 'app' }),
+			active: activeTab === 1,
+			onClick: () => {
+				onTabVisitEvent('rewards', 'nominator_payouts')
+				setActiveTab(1)
+			},
+		})
+	}
+	if (inPool) {
+		tabs.push({
+			title: t('poolClaim', { ns: 'app' }),
+			active: activeTab === 2,
+			onClick: () => {
+				onTabVisitEvent('rewards', 'pool_claims')
+				setActiveTab(2)
+			},
+		})
+	}
+
 	return (
 		<Wrapper>
 			<Page.Title title={t('rewards', { ns: 'modals' })}>
-				<PageTabs
-					tabs={[
-						{
-							title: t('overview', { ns: 'app' }),
-							active: activeTab === 0,
-							onClick: () => {
-								onTabVisitEvent('rewards', 'overview')
-								setActiveTab(0)
-							},
-						},
-						{
-							title: t('recentPayouts', { ns: 'pages' }),
-							active: activeTab === 1,
-							onClick: () => {
-								onTabVisitEvent('rewards', 'recent_payouts')
-								setActiveTab(1)
-							},
-						},
-					]}
-				/>
+				<PageTabs tabs={tabs} />
 			</Page.Title>
 			{activeTab === 0 && (
 				<Overview
@@ -161,7 +186,8 @@ export const Rewards = () => {
 					loading={loading}
 				/>
 			)}
-			{activeTab === 1 && <RecentPayouts {...pageProps} />}
+			{activeTab === 1 && isBonding && <NominatorPayouts />}
+			{activeTab === 2 && inPool && <PoolPayouts />}
 		</Wrapper>
 	)
 }

@@ -31,7 +31,7 @@ import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutListProps } from '../types'
-import { ItemWrapper } from '../Wrappers'
+import { ItemWrapper, ListStatusWrapper } from '../Wrappers'
 
 export const PayoutList = ({
 	allowMoreCols,
@@ -39,6 +39,8 @@ export const PayoutList = ({
 	title,
 	payouts: initialPayouts,
 	itemsPerPage,
+	loading,
+	remotePagination,
 }: PayoutListProps) => {
 	const { i18n, t } = useTranslation('pages')
 	const { isReady, activeEra } = useApi()
@@ -59,8 +61,16 @@ export const PayoutList = ({
 	// Whether still in initial fetch
 	const [fetched, setFetched] = useState<boolean>(false)
 
-	const totalPages = Math.ceil(payouts.length / itemsPerPage)
-	const pageEnd = page * itemsPerPage - 1
+	// When using remote pagination, pagination state is controlled by the parent and the provided
+	// `payouts` already represents the current page. Otherwise fall back to in-memory slicing using
+	// the list context's page state.
+	const remote = !!remotePagination
+	const currentPage = remotePagination?.page ?? page
+	const setCurrentPage = remotePagination?.setPage ?? setPage
+	const totalPages = remote
+		? undefined
+		: Math.ceil(payouts.length / itemsPerPage)
+	const pageEnd = currentPage * itemsPerPage - 1
 	const pageStart = pageEnd - (itemsPerPage - 1)
 
 	// Refetch list when list changes
@@ -76,16 +86,14 @@ export const PayoutList = ({
 		}
 	}, [isReady, fetched, activeEra.index])
 
-	const listPayouts = payouts.slice(pageStart).slice(0, itemsPerPage)
-	if (!listPayouts.length) {
-		return (
-			<ListWrapper>
-				<div>
-					<h3>{t('noRecentPayouts')}.</h3>
-				</div>
-			</ListWrapper>
-		)
-	}
+	const listPayouts = remote
+		? payouts
+		: payouts.slice(pageStart).slice(0, itemsPerPage)
+	const status = !listPayouts.length
+		? loading
+			? `${t('syncing', { ns: 'app' })}...`
+			: `${t('noRecentPayouts')}.`
+		: null
 
 	return (
 		<ListWrapper>
@@ -114,111 +122,123 @@ export const PayoutList = ({
 			</Header>
 			<List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
 				{pagination && (
-					<Pagination page={page} total={totalPages} setter={setPage} />
+					<Pagination
+						page={currentPage}
+						total={totalPages}
+						hasNext={remotePagination?.hasNext}
+						setter={setCurrentPage}
+						disabled={!!loading}
+					/>
 				)}
-				<MotionContainer>
-					{listPayouts.map((p) => {
-						const poolReward = isPoolReward(p)
-						const record = poolReward
-							? (p as PoolReward)
-							: (p as NominatorReward)
+				{status ? (
+					<ListStatusWrapper>
+						<h3>{status}</h3>
+					</ListStatusWrapper>
+				) : (
+					<MotionContainer>
+						{listPayouts.map((p) => {
+							const poolReward = isPoolReward(p)
+							const record = poolReward
+								? (p as PoolReward)
+								: (p as NominatorReward)
 
-						const label = poolReward ? t('poolClaim') : t('payout')
+							const label = poolReward ? t('poolClaim') : t('payout')
 
-						const labelClass = poolReward ? 'claim' : 'reward'
+							const labelClass = poolReward ? 'claim' : 'reward'
 
-						let batchIndex
-						let pool: BondedPool | undefined
-						let keyId: string
-						if (poolReward) {
-							const item = p as PoolReward
-							pool = bondedPools.find(({ id }) => id === item.poolId)
-							batchIndex = pool ? bondedPools.indexOf(pool) : 0
-							keyId = `pool_${item.poolId}_${item.timestamp}`
-						} else {
-							const item = p as NominatorReward
-							const validator = getValidators().find(
-								(v) => v.address === item.validator,
-							)
-							batchIndex = validator ? getValidators().indexOf(validator) : 0
-							keyId = `nom_${item.validator}_${item.era}_${item.timestamp}`
-						}
+							let batchIndex
+							let pool: BondedPool | undefined
+							let keyId: string
+							if (poolReward) {
+								const item = p as PoolReward
+								pool = bondedPools.find(({ id }) => id === item.poolId)
+								batchIndex = pool ? bondedPools.indexOf(pool) : 0
+								keyId = `pool_${item.poolId}_${item.timestamp}`
+							} else {
+								const item = p as NominatorReward
+								const validator = getValidators().find(
+									(v) => v.address === item.validator,
+								)
+								batchIndex = validator ? getValidators().indexOf(validator) : 0
+								keyId = `nom_${item.validator}_${item.era}_${item.timestamp}`
+							}
 
-						return (
-							<motion.div
-								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-								key={keyId}
-								variants={{
-									hidden: {
-										y: 15,
-										opacity: 0,
-									},
-									show: {
-										y: 0,
-										opacity: 1,
-									},
-								}}
-							>
-								<ItemWrapper>
-									<div className="inner">
-										<div className="row">
-											<div>
+							return (
+								<motion.div
+									className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+									key={keyId}
+									variants={{
+										hidden: {
+											y: 15,
+											opacity: 0,
+										},
+										show: {
+											y: 0,
+											opacity: 1,
+										},
+									}}
+								>
+									<ItemWrapper>
+										<div className="inner">
+											<div className="row">
 												<div>
-													<h4 className={labelClass}>
-														+
-														{planckToUnitBn(
-															new BigNumber(record.reward),
-															units,
-														).toString()}{' '}
-														{unit}
-													</h4>
-												</div>
-												<div>
-													<h5 className={labelClass}>{label}</h5>
+													<div>
+														<h4 className={labelClass}>
+															+
+															{planckToUnitBn(
+																new BigNumber(record.reward),
+																units,
+															).toString()}{' '}
+															{unit}
+														</h4>
+													</div>
+													<div>
+														<h5 className={labelClass}>{label}</h5>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div className="row">
-											<div>
+											<div className="row">
 												<div>
-													{!poolReward ? (
-														<NominatorIdentity
-															batchIndex={batchIndex}
-															address={(record as NominatorReward).validator}
-														/>
-													) : (
-														<PoolClaim
-															pool={pool}
-															poolId={(record as PoolReward).poolId}
-														/>
-													)}
-													{label === t('slashed') && (
-														<h4>{t('deductedFromBond')}</h4>
-													)}
-												</div>
-												<div>
-													<h5>
-														{formatDistance(
-															fromUnixTime(record.timestamp),
-															new Date(),
-															{
-																addSuffix: true,
-																locale:
-																	locales[
-																		i18n.resolvedLanguage ?? DefaultLocale
-																	].dateFormat,
-															},
+													<div>
+														{!poolReward ? (
+															<NominatorIdentity
+																batchIndex={batchIndex}
+																address={(record as NominatorReward).validator}
+															/>
+														) : (
+															<PoolClaim
+																pool={pool}
+																poolId={(record as PoolReward).poolId}
+															/>
 														)}
-													</h5>
+														{label === t('slashed') && (
+															<h4>{t('deductedFromBond')}</h4>
+														)}
+													</div>
+													<div>
+														<h5>
+															{formatDistance(
+																fromUnixTime(record.timestamp),
+																new Date(),
+																{
+																	addSuffix: true,
+																	locale:
+																		locales[
+																			i18n.resolvedLanguage ?? DefaultLocale
+																		].dateFormat,
+																},
+															)}
+														</h5>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</ItemWrapper>
-							</motion.div>
-						)
-					})}
-				</MotionContainer>
+									</ItemWrapper>
+								</motion.div>
+							)
+						})}
+					</MotionContainer>
+				)}
 			</List>
 		</ListWrapper>
 	)
