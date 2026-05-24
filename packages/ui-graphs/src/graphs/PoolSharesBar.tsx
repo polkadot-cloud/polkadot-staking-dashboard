@@ -129,6 +129,7 @@ export const PoolSharesBar = ({
 			const value = new BigNumber(claimedReward).decimalPlaces(units).toFormat()
 			const tipContent = `${labels.claimed} ${value} ${unit}`
 			const claimBadgeXOffset = -28
+			const claimBadgeWidth = labels.claim.length * 6 + 18
 			const getXAdjust = (
 				ctx: { chart: ChartType },
 				estimatedWidth: number,
@@ -150,6 +151,8 @@ export const PoolSharesBar = ({
 				}
 				return baseOffset
 			}
+			const getClaimBadgeXAdjust = (ctx: { chart: ChartType }) =>
+				getXAdjust(ctx, claimBadgeWidth, claimBadgeXOffset)
 			let alpha = 0
 			let rafId: number | null = null
 
@@ -195,15 +198,35 @@ export const PoolSharesBar = ({
 				xValue: index,
 				yValue: 0,
 				yAdjust: -16,
-				xAdjust: (ctx) =>
-					getXAdjust(ctx, labels.claim.length * 6 + 18, claimBadgeXOffset),
+				xAdjust: getClaimBadgeXAdjust,
 				content: labels.claim,
 				backgroundColor: getThemeValue('--gray-1000'),
 				color: getThemeValue('--gray-100'),
 				font: { size: 10, weight: 'bold' },
 				padding: { top: 4, right: 7, bottom: 4, left: 7 },
 				borderWidth: 0,
-				borderRadius: 9,
+				borderRadius: 5,
+				enter: ({ chart }) => {
+					toggleTip(chart, true)
+					return true
+				},
+				leave: ({ chart }) => {
+					toggleTip(chart, false)
+					return true
+				},
+			}
+			annotations[`pool-claim-arrow-${index}`] = {
+				type: 'label',
+				xValue: index,
+				yValue: 0,
+				yAdjust: -15.5,
+				xAdjust: (ctx) => getClaimBadgeXAdjust(ctx) + claimBadgeWidth / 2 - 1,
+				content: '\u25B6',
+				backgroundColor: 'transparent',
+				color: getThemeValue('--gray-1000'),
+				font: { size: 9, weight: 'bold' },
+				padding: 0,
+				borderWidth: 0,
 				enter: ({ chart }) => {
 					toggleTip(chart, true)
 					return true
