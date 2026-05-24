@@ -9,25 +9,32 @@ import type { PaginationProps } from './types'
 export const Pagination = ({
 	page,
 	total,
+	hasNext,
 	setter,
 	disabled = false,
 }: PaginationProps) => {
 	const { t } = useTranslation('app')
-	const [next, setNext] = useState<number>(page + 1 > total ? total : page + 1)
+	const [next, setNext] = useState<number>(
+		total === undefined || page + 1 <= total ? page + 1 : total,
+	)
 	const [prev, setPrev] = useState<number>(page - 1 < 1 ? 1 : page - 1)
 
 	useEffect(() => {
-		setNext(page + 1 > total ? total : page + 1)
+		setNext(total === undefined || page + 1 <= total ? page + 1 : total)
 		setPrev(page - 1 < 1 ? 1 : page - 1)
 	}, [page, total])
 
 	const prevActive = page !== 1
-	const nextActive = page !== total
+	const nextActive = total === undefined ? !!hasNext : page !== total
 
 	return (
 		<PaginationWrapper $prev={prevActive} $next={nextActive}>
 			<div>
-				<h4>{t('page', { page, total })}</h4>
+				<h4>
+					{total === undefined
+						? t('pageNumber', { page })
+						: t('page', { page, total })}
+				</h4>
 			</div>
 			<div>
 				<button

@@ -6,8 +6,20 @@ import type { AllRewardsData, QueryReturn } from '../types'
 import { fetchQuery, useApiQuery } from './generic'
 
 const QUERY = gql`
-  query AllRewards($network: String!, $who: String!, $fromEra: Int!) {
-    allRewards(network: $network, who: $who, fromEra: $fromEra) {
+  query AllRewards(
+    $network: String!
+    $who: String!
+    $fromEra: Int!
+    $limit: Int
+    $offset: Int
+  ) {
+    allRewards(
+      network: $network
+      who: $who
+      fromEra: $fromEra
+      limit: $limit
+      offset: $offset
+    ) {
       claimed
       era
       reward
@@ -26,8 +38,20 @@ export const useRewards = (variables: {
 	network: string
 	who: string
 	fromEra: number
+	limit?: number
+	offset?: number
 }): QueryReturn<AllRewardsData> =>
 	useApiQuery<AllRewardsData>(QUERY, variables, DEFAULT)
 
-export const fetchRewards = (network: string, who: string, fromEra: number) =>
-	fetchQuery<AllRewardsData>(QUERY, { network, who, fromEra }, DEFAULT)
+export const fetchRewards = (
+	network: string,
+	who: string,
+	fromEra: number,
+	limit?: number,
+	offset?: number,
+) =>
+	fetchQuery<AllRewardsData>(
+		QUERY,
+		{ network, who, fromEra, limit, offset },
+		DEFAULT,
+	)

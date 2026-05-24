@@ -25,12 +25,23 @@ export interface PageProps {
 	setPayoutsList: Dispatch<SetStateAction<RewardResults>>
 }
 
+export type RewardsKind = 'nominator' | 'pool'
+
+export interface RemotePagination {
+	page: number
+	hasNext: boolean
+	setPage: Dispatch<SetStateAction<number>>
+}
+
 export interface PayoutListProps {
 	allowMoreCols?: boolean
 	pagination?: boolean
 	title?: string | null
 	itemsPerPage: number
 	payouts: RewardResults
+	endBadge?: string
+	loading?: boolean
+	remotePagination?: RemotePagination
 }
 
 export interface CalculatorMetrics {

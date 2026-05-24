@@ -38,9 +38,9 @@ export const ActiveGraph = ({
 	const { i18n, t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccount()
 	const { activePool } = useActivePool()
 	const { getThemeValue } = useThemeValues()
+	const { activeAddress } = useActiveAccount()
 	const { unit, units } = getStakingChainData(network)
 
 	const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({

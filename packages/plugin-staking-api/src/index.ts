@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client/react'
 
 export * from './Client'
 export * from './queries/activeValidatorRanks'
+export * from './queries/combinedPoolRewards'
 export * from './queries/eraTotalNominators'
 export * from './queries/generic'
 export * from './queries/getStakerWithNominees'
