@@ -17,13 +17,13 @@
 	"dependencies": {
 		"@w3ux/utils": "3.1.1",
 		"consts": "workspace:*",
-		"date-fns": "^4.1.0",
+		"date-fns": "^4.2.1",
 		"event-tracking": "workspace:*",
-		"i18next": "^26.1.0",
-		"react-i18next": "^17.0.6",
+		"i18next": "^26.2.0",
+		"react-i18next": "^17.0.8",
 		"utils": "workspace:*"
 	},
 	"devDependencies": {
-		"vite": "8.0.10"
+		"vite": "8.0.13"
 	}
 }

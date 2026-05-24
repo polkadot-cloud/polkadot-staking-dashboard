@@ -18,8 +18,8 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@types/react-helmet": "^6.1.11",
-		"@vitejs/plugin-react": "^6.0.1",
-		"vite": "8.0.10",
+		"@vitejs/plugin-react": "^6.0.2",
+		"vite": "8.0.13",
 		"@w3ux/types": "^2.4.2",
 		"globals": "^17.6.0",
 		"postcss": "^8.5.14",
@@ -27,14 +27,14 @@
 		"prettier": "^3.8.3",
 		"prettier-plugin-organize-imports": "^4.1.0",
 		"sass": "^1.99.0",
-		"stylelint": "^17.11.0",
+		"stylelint": "^17.11.1",
 		"stylelint-config-standard-scss": "^17.0.0",
 		"stylelint-order": "^8.1.1",
 		"typescript": "^6.0.3"
 	},
 	"pnpm": {
 		"overrides": {
-			"vite": "8.0.10",
+			"vite": "8.0.13",
 			"react-helmet-async>react": "19.1.0",
 			"use-sync-external-store>react": "19.1.0"
 		},
