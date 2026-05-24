@@ -127,7 +127,7 @@ export const PoolSharesBar = ({
 
 			const tipId = `pool-claim-tip-${index}`
 			const value = new BigNumber(claimedReward).decimalPlaces(units).toFormat()
-			const tipContent = `${labels.claimed} ${value} ${unit}`
+			const tipContent = `${value} ${unit}`
 			const claimBadgeXOffset = -28
 			const claimBadgeWidth = labels.claim.length * 6 + 18
 			const getXAdjust = (
