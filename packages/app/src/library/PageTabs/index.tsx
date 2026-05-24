@@ -3,7 +3,7 @@
 
 import classNames from 'classnames'
 import type { PageTitleProps, PageTitleTabProps } from 'types'
-import { ButtonTab } from 'ui-buttons'
+import { ButtonTab, ButtonTabPreloader } from 'ui-buttons'
 import classes from './index.module.scss'
 
 export const PageTabs = ({
@@ -12,6 +12,7 @@ export const PageTabs = ({
 	inline = false,
 	tabClassName,
 	colorSecondary,
+	preloading = false,
 }: PageTitleProps) => {
 	const buttonClasses = classNames(classes.pageTitleTabs, {
 		[classes.inline]: inline,
@@ -41,6 +42,12 @@ export const PageTabs = ({
 								disabled={disabled === undefined ? false : disabled}
 							/>
 						),
+					)}
+					{preloading && (
+						<ButtonTabPreloader
+							className={tabClassName}
+							colorSecondary={colorSecondary}
+						/>
 					)}
 				</div>
 			</div>

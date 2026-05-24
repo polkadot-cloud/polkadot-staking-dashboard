@@ -11,6 +11,7 @@ import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { onTabVisitEvent } from 'event-tracking'
+import { useSyncing } from 'hooks/useSyncing'
 import { PageTabs } from 'library/PageTabs'
 import {
 	fetchPoolEraRewards,
@@ -35,6 +36,7 @@ export const Rewards = () => {
 	const { pluginEnabled } = usePlugins()
 	const { activeAddress } = useActiveAccount()
 	const { activePool, inPool } = useActivePool()
+	const { syncing: tabsSyncing } = useSyncing(['initialization'])
 
 	// Store page active tab
 	const [activeTab, setActiveTab] = useState<number>(0)
@@ -177,7 +179,7 @@ export const Rewards = () => {
 	return (
 		<Wrapper>
 			<Page.Title title={t('rewards', { ns: 'modals' })}>
-				<PageTabs tabs={tabs} />
+				<PageTabs tabs={tabs} preloading={tabsSyncing} />
 			</Page.Title>
 			{activeTab === 0 && (
 				<Overview

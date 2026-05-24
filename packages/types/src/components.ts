@@ -17,6 +17,7 @@ export type PageTitleProps = ComponentBase & {
 	colorSecondary?: boolean
 	tabClassName?: string
 	inline?: boolean
+	preloading?: boolean
 	title?: string
 	sticky?: boolean
 }
