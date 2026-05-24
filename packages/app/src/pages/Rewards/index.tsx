@@ -37,6 +37,7 @@ export const Rewards = () => {
 	const { activeAddress } = useActiveAccount()
 	const { activePool, inPool } = useActivePool()
 	const { syncing: tabsSyncing } = useSyncing(['initialization'])
+	const apiEnabled = pluginEnabled('staking_api')
 
 	// Store page active tab
 	const [activeTab, setActiveTab] = useState<number>(0)
@@ -111,7 +112,7 @@ export const Rewards = () => {
 
 	// Fetch payout data on account or staking api toggle
 	useEffect(() => {
-		if (!pluginEnabled('staking_api')) {
+		if (!apiEnabled) {
 			setPayoutsList([])
 			setPayoutGraphData({
 				payouts: [],
@@ -122,13 +123,7 @@ export const Rewards = () => {
 			setLoading(true)
 			getPayoutData()
 		}
-	}, [
-		network,
-		activeAddress,
-		pluginEnabled('staking_api'),
-		activeEra.index,
-		activePool?.id,
-	])
+	}, [network, activeAddress, apiEnabled, activeEra.index, activePool?.id])
 
 	// Reset payout list state on account change
 	useEffect(() => {
@@ -138,12 +133,14 @@ export const Rewards = () => {
 	// If the currently active tab becomes hidden (e.g. user leaves a pool while on the Pool Claim
 	// tab), fall back to the Overview tab.
 	useEffect(() => {
-		if (activeTab === 1 && !isBonding) {
+		if (!apiEnabled && activeTab !== 0) {
+			setActiveTab(0)
+		} else if (activeTab === 1 && !isBonding) {
 			setActiveTab(0)
 		} else if (activeTab === 2 && !inPool) {
 			setActiveTab(0)
 		}
-	}, [activeTab, isBonding, inPool])
+	}, [activeTab, apiEnabled, isBonding, inPool])
 
 	const tabs = [
 		{
@@ -155,7 +152,7 @@ export const Rewards = () => {
 			},
 		},
 	]
-	if (isBonding) {
+	if (apiEnabled && isBonding) {
 		tabs.push({
 			title: t('payouts', { ns: 'app' }),
 			active: activeTab === 1,
@@ -165,7 +162,7 @@ export const Rewards = () => {
 			},
 		})
 	}
-	if (inPool) {
+	if (apiEnabled && inPool) {
 		tabs.push({
 			title: t('poolClaim', { count: 2, ns: 'app' }),
 			active: activeTab === 2,
@@ -179,7 +176,11 @@ export const Rewards = () => {
 	return (
 		<Wrapper>
 			<Page.Title title={t('rewards', { ns: 'modals' })}>
-				<PageTabs tabs={tabs} preloading={tabsSyncing} />
+				<PageTabs
+					tabs={tabs}
+					preloading={apiEnabled && tabsSyncing}
+					preloaderTabs={1}
+				/>
 			</Page.Title>
 			{activeTab === 0 && (
 				<Overview
@@ -188,8 +189,8 @@ export const Rewards = () => {
 					loading={loading}
 				/>
 			)}
-			{activeTab === 1 && isBonding && <NominatorPayouts />}
-			{activeTab === 2 && inPool && <PoolPayouts />}
+			{activeTab === 1 && apiEnabled && isBonding && <NominatorPayouts />}
+			{activeTab === 2 && apiEnabled && inPool && <PoolPayouts />}
 		</Wrapper>
 	)
 }

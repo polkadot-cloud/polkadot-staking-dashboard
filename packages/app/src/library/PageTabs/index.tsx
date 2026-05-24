@@ -13,11 +13,13 @@ export const PageTabs = ({
 	tabClassName,
 	colorSecondary,
 	preloading = false,
+	preloaderTabs = 1,
 }: PageTitleProps) => {
 	const buttonClasses = classNames(classes.pageTitleTabs, {
 		[classes.inline]: inline,
 		[classes.sticky]: sticky,
 	})
+	const tabPreloaders = Array.from({ length: preloaderTabs }, (_, i) => i + 1)
 
 	return (
 		<section className={buttonClasses}>
@@ -43,12 +45,14 @@ export const PageTabs = ({
 							/>
 						),
 					)}
-					{preloading && (
-						<ButtonTabPreloader
-							className={tabClassName}
-							colorSecondary={colorSecondary}
-						/>
-					)}
+					{preloading &&
+						tabPreloaders.map((tabPreloader) => (
+							<ButtonTabPreloader
+								className={tabClassName}
+								colorSecondary={colorSecondary}
+								key={`page_tab_preloader_${tabPreloader}`}
+							/>
+						))}
 				</div>
 			</div>
 		</section>
