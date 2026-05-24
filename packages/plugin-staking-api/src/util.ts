@@ -9,8 +9,10 @@ export const isPoolReward = (
 
 export const isPoolShareReward = (
 	p: PoolReward | NominatorReward,
-): p is CombinedPoolReward =>
-	isPoolReward(p) && p.source?.toLowerCase().includes('share') === true
+): p is CombinedPoolReward => {
+	const source = isPoolReward(p) ? p.source?.toLowerCase() : undefined
+	return source === 'share'
+}
 
 export const isNominatorReward = (
 	p: PoolReward | NominatorReward,

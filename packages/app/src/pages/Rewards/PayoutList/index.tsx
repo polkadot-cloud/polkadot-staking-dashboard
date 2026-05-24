@@ -3,21 +3,25 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
+import { isPoolShareEnabled } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useActivePool } from 'contexts/Pools/ActivePool'
 import { getUnixTime, startOfToday, subDays } from 'date-fns'
 import { CardWrapper } from 'library/Card/Wrappers'
-import { fetchPoolRewards, fetchRewards } from 'plugin-staking-api'
+import {
+	fetchCombinedPoolRewards,
+	fetchPoolRewards,
+	fetchRewards,
+} from 'plugin-staking-api'
 import type { RewardResults } from 'plugin-staking-api/types'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
+import { MAX_REWARD_PAGES, REWARD_ITEMS_PER_PAGE } from '../constants'
 import type { RewardsKind } from '../types'
 import { Inner } from './Inner'
-
-const ITEMS_PER_PAGE = 50
-const MAX_PAGES = 5
 
 interface PaginatedPayoutsProps {
 	kind: RewardsKind
@@ -26,6 +30,7 @@ interface PaginatedPayoutsProps {
 interface PayoutPage {
 	payouts: RewardResults
 	hasNext: boolean
+	nextCursor?: string | null
 }
 
 // Renders a paginated list of payouts for a single source (nominator or pool). Each page is fetched
@@ -36,9 +41,11 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
+	const { activePool } = useActivePool()
 	const { activeAddress } = useActiveAccount()
 
 	const apiEnabled = pluginEnabled('staking_api')
+	const poolShareEnabled = isPoolShareEnabled(network, activePool?.id)
 
 	// Current page (1-indexed)
 	const [page, setPage] = useState<number>(1)
@@ -53,28 +60,47 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 	useEffect(() => {
 		setPage(1)
 		setPages({})
-	}, [network, activeAddress, kind, apiEnabled])
+	}, [network, activeAddress, kind, apiEnabled, poolShareEnabled])
 
 	const fetchPage = useCallback(
 		async (targetPage: number): Promise<PayoutPage> => {
-			const offset = (targetPage - 1) * ITEMS_PER_PAGE
+			const offset = (targetPage - 1) * REWARD_ITEMS_PER_PAGE
 			let payouts: RewardResults
 			if (kind === 'nominator') {
 				const { allRewards } = await fetchRewards(
 					network,
 					activeAddress || '',
 					Math.max(activeEra.index - 1, 0),
-					ITEMS_PER_PAGE,
+					REWARD_ITEMS_PER_PAGE,
 					offset,
 				)
 				payouts = allRewards as RewardResults
 			} else {
+				if (poolShareEnabled) {
+					const after =
+						targetPage > 1 ? pages[targetPage - 1]?.nextCursor : undefined
+					const {
+						combinedPoolRewards: { entries, hasNextPage, nextCursor },
+					} = await fetchCombinedPoolRewards(
+						network,
+						activeAddress || '',
+						REWARD_ITEMS_PER_PAGE,
+						after ?? undefined,
+					)
+					payouts = entries as RewardResults
+					return {
+						payouts,
+						hasNext: hasNextPage && targetPage < MAX_REWARD_PAGES,
+						nextCursor,
+					}
+				}
+
 				const fromDate = subDays(startOfToday(), MaxPayoutDays)
 				const { poolRewards } = await fetchPoolRewards(
 					network,
 					activeAddress || '',
 					getUnixTime(fromDate),
-					ITEMS_PER_PAGE,
+					REWARD_ITEMS_PER_PAGE,
 					offset,
 				)
 				payouts = poolRewards as RewardResults
@@ -82,10 +108,12 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 
 			return {
 				payouts,
-				hasNext: payouts.length === ITEMS_PER_PAGE && targetPage < MAX_PAGES,
+				hasNext:
+					payouts.length === REWARD_ITEMS_PER_PAGE &&
+					targetPage < MAX_REWARD_PAGES,
 			}
 		},
-		[network, activeAddress, activeEra.index, kind],
+		[network, activeAddress, activeEra.index, kind, pages, poolShareEnabled],
 	)
 
 	// Fetch the current page on demand (cache miss)
@@ -130,7 +158,7 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 					title={title}
 					payouts={payouts}
 					pagination
-					itemsPerPage={ITEMS_PER_PAGE}
+					itemsPerPage={REWARD_ITEMS_PER_PAGE}
 					loading={loading}
 					remotePagination={{
 						page,

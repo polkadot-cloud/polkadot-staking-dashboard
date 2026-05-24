@@ -20,7 +20,7 @@ import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
 import { DefaultLocale, locales } from 'locales'
 import { motion } from 'motion/react'
-import { isPoolReward } from 'plugin-staking-api'
+import { isPoolReward, isPoolShareReward } from 'plugin-staking-api'
 import type {
 	NominatorReward,
 	PoolReward,
@@ -143,10 +143,16 @@ export const PayoutList = ({
 								: (p as NominatorReward)
 
 							const label = poolReward
-								? t('poolClaim', { ns: 'app' })
+								? isPoolShareReward(p)
+									? t('share', { ns: 'app' })
+									: t('poolClaim', { ns: 'app' })
 								: t('payout', { ns: 'app' })
 
-							const labelClass = poolReward ? 'claim' : 'reward'
+							const labelClass = isPoolShareReward(p)
+								? 'share'
+								: poolReward
+									? 'claim'
+									: 'reward'
 
 							let batchIndex
 							let pool: BondedPool | undefined
@@ -181,7 +187,9 @@ export const PayoutList = ({
 									}}
 								>
 									<ItemWrapper>
-										<div className="inner">
+										<div
+											className={`inner${isPoolShareReward(p) ? ' share' : ''}`}
+										>
 											<div className="row">
 												<div>
 													<div>
