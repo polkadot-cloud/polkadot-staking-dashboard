@@ -70,6 +70,16 @@ export interface PoolRewardData {
 	poolRewards: PoolReward[]
 }
 
+export interface CombinedPoolRewardsData {
+	combinedPoolRewards: CombinedPoolRewardsResult
+}
+
+export interface CombinedPoolRewardsResult {
+	entries: CombinedPoolReward[]
+	nextCursor: string | null
+	hasNextPage: boolean
+}
+
 export interface PoolEraRewardsData {
 	poolEraRewards: PoolReward[]
 }
@@ -155,6 +165,11 @@ export interface PoolReward {
 	timestamp: number
 	who: string
 	poolId: number
+	source?: string
+}
+
+export interface CombinedPoolReward extends PoolReward {
+	source: string
 }
 
 export interface PoolEraPointsData {
