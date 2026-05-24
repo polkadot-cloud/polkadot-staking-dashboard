@@ -128,25 +128,27 @@ export const PoolSharesBar = ({
 			const tipId = `pool-claim-tip-${index}`
 			const value = new BigNumber(claimedReward).decimalPlaces(units).toFormat()
 			const tipContent = `${labels.claimed} ${value} ${unit}`
+			const claimBadgeXOffset = -28
 			const getXAdjust = (
 				ctx: { chart: ChartType },
 				estimatedWidth: number,
+				baseOffset = 0,
 			) => {
 				const area = ctx.chart.chartArea
 				const scale = ctx.chart.scales.x
 				if (!area || !scale) {
-					return 0
+					return baseOffset
 				}
-				const xPx = scale.getPixelForValue(index)
+				const xPx = scale.getPixelForValue(index) + baseOffset
 				const half = estimatedWidth / 2
 				const margin = 4
 				if (xPx - half < area.left + margin) {
-					return area.left + margin + half - xPx
+					return baseOffset + area.left + margin + half - xPx
 				}
 				if (xPx + half > area.right - margin) {
-					return area.right - margin - half - xPx
+					return baseOffset + area.right - margin - half - xPx
 				}
-				return 0
+				return baseOffset
 			}
 			let alpha = 0
 			let rafId: number | null = null
@@ -191,9 +193,10 @@ export const PoolSharesBar = ({
 			annotations[`pool-claim-flag-${index}`] = {
 				type: 'label',
 				xValue: index,
-				yValue: (ctx) => ctx.chart.scales.y.max,
-				yAdjust: 11,
-				xAdjust: (ctx) => getXAdjust(ctx, labels.claim.length * 6 + 18),
+				yValue: 0,
+				yAdjust: -16,
+				xAdjust: (ctx) =>
+					getXAdjust(ctx, labels.claim.length * 6 + 18, claimBadgeXOffset),
 				content: labels.claim,
 				backgroundColor: getThemeValue('--gray-1000'),
 				color: getThemeValue('--gray-100'),
@@ -214,9 +217,10 @@ export const PoolSharesBar = ({
 				type: 'label',
 				display: false,
 				xValue: index,
-				yValue: (ctx) => ctx.chart.scales.y.max,
-				yAdjust: 40,
-				xAdjust: (ctx) => getXAdjust(ctx, tipContent.length * 6 + 14),
+				yValue: 0,
+				yAdjust: -44,
+				xAdjust: (ctx) =>
+					getXAdjust(ctx, tipContent.length * 6 + 14, claimBadgeXOffset),
 				backgroundColor: 'transparent',
 				color: 'transparent',
 				font: { size: 11, weight: 'bold' },
