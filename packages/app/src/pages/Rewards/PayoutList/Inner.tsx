@@ -161,7 +161,7 @@ export const PayoutList = ({
 								const item = p as PoolReward
 								pool = bondedPools.find(({ id }) => id === item.poolId)
 								batchIndex = pool ? bondedPools.indexOf(pool) : 0
-								keyId = `pool_${item.poolId}_${item.timestamp}`
+								keyId = `pool_${item.source ?? 'claim'}_${item.poolId}_${item.timestamp}`
 							} else {
 								const item = p as NominatorReward
 								const validator = getValidators().find(
