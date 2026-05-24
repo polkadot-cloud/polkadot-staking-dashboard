@@ -96,6 +96,7 @@
 		"done": "Pronto",
 		"email": "Email",
 		"enablePermissionlessClaiming": "Ativar Reivindicação sem Permissão",
+		"endOfResults": "Fim dos resultados",
 		"ensureLedgerIsConnected": "Dica: Certifique-se de que seu dispositivo Ledger está conectado antes de continuar.",
 		"era": "Era",
 		"eraPoints": "Pontos da Era",
@@ -266,7 +267,6 @@
 		"overview": "Visão Geral",
 		"page": "Página {{page}} de {{total}}",
 		"pageNumber": "Página {{page}}",
-		"endOfResults": "Fim dos resultados",
 		"payee": {
 			"account": {
 				"subtitle": "Enviar pagamentos para outra conta como saldo livre.",

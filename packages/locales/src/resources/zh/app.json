@@ -94,6 +94,7 @@
 		"done": "完成",
 		"email": "电子邮件",
 		"enablePermissionlessClaiming": "启用己许可申领",
+		"endOfResults": "结果已结束",
 		"ensureLedgerIsConnected": "提示:请确保您的Ledger设备已连接",
 		"era": "Era",
 		"eraPoints": "Era 点数",
@@ -261,7 +262,6 @@
 		"overview": "总览",
 		"page": "{{page}} / {{total}}",
 		"pageNumber": "第 {{page}} 页",
-		"endOfResults": "结果已结束",
 		"payee": {
 			"account": {
 				"subtitle": "收益作为自由余额发到其他帐户",

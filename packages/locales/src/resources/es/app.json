@@ -95,6 +95,7 @@
 		"done": "Hecho",
 		"email": "Correo",
 		"enablePermissionlessClaiming": "Habilitar reclamación sin permisos",
+		"endOfResults": "Fin de los resultados",
 		"ensureLedgerIsConnected": "Consejo: Asegúrate de que tu dispositivo Ledger esté conectado antes de continuar.",
 		"era": "Era",
 		"eraPoints": "Puntos de la Era",
@@ -265,7 +266,6 @@
 		"overview": "Resumen",
 		"page": "Página {{page}} de {{total}}",
 		"pageNumber": "Página {{page}}",
-		"endOfResults": "Fin de los resultados",
 		"payee": {
 			"account": {
 				"subtitle": "Enviar pagos a otra cuenta como saldo disponible.",

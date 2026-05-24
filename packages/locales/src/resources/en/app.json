@@ -95,6 +95,7 @@
 		"done": "Done",
 		"email": "Email",
 		"enablePermissionlessClaiming": "Enable Permissionless Claiming",
+		"endOfResults": "End of results",
 		"ensureLedgerIsConnected": "Tip: Ensure your Ledger device is connected before continuing.",
 		"era": "Era",
 		"eraPoints": "Era Points",
@@ -265,7 +266,6 @@
 		"overview": "Overview",
 		"page": "Page {{page}} of {{total}}",
 		"pageNumber": "Page {{page}}",
-		"endOfResults": "End of results",
 		"payee": {
 			"account": {
 				"subtitle": "Send payouts to another account as free balance.",

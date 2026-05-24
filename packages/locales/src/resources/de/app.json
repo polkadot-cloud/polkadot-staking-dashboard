@@ -95,6 +95,7 @@
 		"done": "Fertig",
 		"email": "E-Mail",
 		"enablePermissionlessClaiming": "Erlaubnisfreie Anspruchnahme aktivieren",
+		"endOfResults": "Ende der Ergebnisse",
 		"ensureLedgerIsConnected": "Tipp: Stelle sicher, dass dein Ledger-Gerät verbunden ist, bevor du fortfährst.",
 		"era": "Ära",
 		"eraPoints": "Era-Punkte",
@@ -265,7 +266,6 @@
 		"overview": "Übersicht",
 		"page": "Seite {{page}} von {{total}}",
 		"pageNumber": "Seite {{page}}",
-		"endOfResults": "Ende der Ergebnisse",
 		"payee": {
 			"account": {
 				"subtitle": "Auszahlungen als freien Kontostand auf ein anderes Konto senden.",
