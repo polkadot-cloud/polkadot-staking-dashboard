@@ -261,6 +261,7 @@
 		"overview": "总览",
 		"page": "{{page}} / {{total}}",
 		"pageNumber": "第 {{page}} 页",
+		"endOfResults": "结果已结束",
 		"payee": {
 			"account": {
 				"subtitle": "收益作为自由余额发到其他帐户",

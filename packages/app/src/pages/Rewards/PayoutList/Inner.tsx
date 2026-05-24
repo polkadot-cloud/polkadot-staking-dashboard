@@ -31,13 +31,14 @@ import { useTranslation } from 'react-i18next'
 import type { BondedPool } from 'types'
 import { planckToUnitBn } from 'utils'
 import type { PayoutListProps } from '../types'
-import { ItemWrapper, ListStatusWrapper } from '../Wrappers'
+import { ItemWrapper, ListEndBadge, ListStatusWrapper } from '../Wrappers'
 
 export const PayoutList = ({
 	allowMoreCols,
 	pagination,
 	title,
 	payouts: initialPayouts,
+	endBadge,
 	itemsPerPage,
 	loading,
 	remotePagination,
@@ -247,6 +248,7 @@ export const PayoutList = ({
 								</motion.div>
 							)
 						})}
+						{endBadge && <EndBadge>{endBadge}</EndBadge>}
 					</MotionContainer>
 				)}
 			</List>
@@ -258,6 +260,26 @@ export const Inner = (props: PayoutListProps) => (
 	<ListProvider>
 		<PayoutList {...props} />
 	</ListProvider>
+)
+
+const EndBadge = ({ children }: { children: string }) => (
+	<motion.div
+		className="item row"
+		variants={{
+			hidden: {
+				y: 15,
+				opacity: 0,
+			},
+			show: {
+				y: 0,
+				opacity: 1,
+			},
+		}}
+	>
+		<ListEndBadge>
+			<span>{children}</span>
+		</ListEndBadge>
+	</motion.div>
 )
 
 export const NominatorIdentity = ({

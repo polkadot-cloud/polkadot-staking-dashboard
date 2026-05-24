@@ -145,6 +145,10 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 
 	const pageData = pages[page]
 	const payouts = pageData?.payouts ?? []
+	const endOfResults =
+		pageData !== undefined &&
+		payouts.length > 0 &&
+		(page === MAX_REWARD_PAGES || !pageData.hasNext)
 
 	const title =
 		kind === 'nominator'
@@ -157,6 +161,7 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 				<Inner
 					title={title}
 					payouts={payouts}
+					endBadge={endOfResults ? t('endOfResults', { ns: 'app' }) : undefined}
 					pagination
 					itemsPerPage={REWARD_ITEMS_PER_PAGE}
 					loading={loading}

@@ -265,6 +265,7 @@
 		"overview": "Resumen",
 		"page": "Página {{page}} de {{total}}",
 		"pageNumber": "Página {{page}}",
+		"endOfResults": "Fin de los resultados",
 		"payee": {
 			"account": {
 				"subtitle": "Enviar pagos a otra cuenta como saldo disponible.",

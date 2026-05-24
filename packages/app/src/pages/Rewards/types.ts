@@ -39,6 +39,7 @@ export interface PayoutListProps {
 	title?: string | null
 	itemsPerPage: number
 	payouts: RewardResults
+	endBadge?: string
 	loading?: boolean
 	remotePagination?: RemotePagination
 }
