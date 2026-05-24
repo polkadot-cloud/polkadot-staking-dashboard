@@ -2,25 +2,31 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
+import { Odometer } from '@w3ux/react-odometer'
+import { minDecimalPlaces } from '@w3ux/utils'
+import { getChainIcons } from 'assets'
+import BigNumber from 'bignumber.js'
 import { PoolSharesDays } from 'consts'
 import { PolkadotKnownPoolIds } from 'consts/pools'
 import { getStakingChainData, isPoolShareEnabled } from 'consts/util'
+import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { useSyncing } from 'hooks/useSyncing'
+import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import { fetchCombinedPoolRewards, isPoolShareReward } from 'plugin-staking-api'
 import type { CombinedPoolReward } from 'plugin-staking-api/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardHeader, Page } from 'ui-core/base'
+import { CardHeader, CardLabel, Page } from 'ui-core/base'
 import { GraphWrapper, PoolSharesBar } from 'ui-graphs'
-import { startOfUTCDay, subUTCDays } from 'utils'
+import { planckToUnitBn, startOfUTCDay, subUTCDays } from 'utils'
 
 const POOL_SHARE_FETCH_LIMIT = 100
 const MAX_POOL_SHARE_FETCH_PAGES = 5
@@ -28,6 +34,7 @@ const MAX_POOL_SHARE_FETCH_PAGES = 5
 export const PoolShares = () => {
 	const { i18n, t } = useTranslation()
 	const { network } = useNetwork()
+	const { currency } = useCurrency()
 	const { pluginEnabled } = usePlugins()
 	const { activePool } = useActivePool()
 	const { getThemeValue } = useThemeValues()
@@ -44,11 +51,32 @@ export const PoolShares = () => {
 
 	const stakingApiEnabled = pluginEnabled('staking_api')
 	const poolShareEnabled = isPoolShareEnabled(network, activePool?.id)
+	const Token = getChainIcons(network).token
 	const graphActive =
 		!syncingInitialization &&
 		stakingApiEnabled &&
 		poolShareEnabled &&
 		!!activeAddress
+	const currentDate = useMemo(() => startOfUTCDay(new Date()), [])
+	const fromTimestamp = useMemo(
+		() => getUnixTime(subUTCDays(currentDate, PoolSharesDays - 1)),
+		[currentDate],
+	)
+	const averageDailyShare = useMemo(() => {
+		if (!graphActive) {
+			return new BigNumber(0)
+		}
+
+		const totalReward = poolShareRewards
+			.filter(({ timestamp }) => timestamp >= fromTimestamp)
+			.reduce((total, { reward }) => total.plus(reward), new BigNumber(0))
+
+		const averageRewardPlanck = totalReward
+			.dividedBy(PoolSharesDays)
+			.integerValue(BigNumber.ROUND_HALF_UP)
+
+		return planckToUnitBn(averageRewardPlanck, units)
+	}, [fromTimestamp, graphActive, poolShareRewards, units])
 
 	useEffect(() => {
 		if (!graphActive) {
@@ -57,10 +85,6 @@ export const PoolShares = () => {
 			setLoading(false)
 			return
 		}
-
-		const fromTimestamp = getUnixTime(
-			subUTCDays(startOfUTCDay(new Date()), PoolSharesDays - 1),
-		)
 
 		let cancelled = false
 		const fetchPoolShares = async () => {
@@ -108,7 +132,7 @@ export const PoolShares = () => {
 		return () => {
 			cancelled = true
 		}
-	}, [graphActive, network, activeAddress])
+	}, [graphActive, network, activeAddress, fromTimestamp])
 
 	const poolIds = PolkadotKnownPoolIds.join(' and ')
 
@@ -117,6 +141,22 @@ export const PoolShares = () => {
 			<CardWrapper>
 				<CardHeader margin>
 					<h3>Reward Trend</h3>
+				</CardHeader>
+				<CardHeader margin>
+					<h4>Average Daily Share</h4>
+					<h2>
+						<Token />
+						<Odometer
+							value={minDecimalPlaces(averageDailyShare.toFormat(), 2)}
+							zeroDecimals={2}
+						/>
+						<CardLabel>
+							<Balance.Value
+								tokenBalance={averageDailyShare.toString()}
+								currency={currency}
+							/>
+						</CardLabel>
+					</h2>
 				</CardHeader>
 				<div className="inner" style={{ minHeight: '205px' }}>
 					{!stakingApiEnabled && (
