@@ -142,7 +142,9 @@ export const PayoutList = ({
 								? (p as PoolReward)
 								: (p as NominatorReward)
 
-							const label = poolReward ? t('poolClaim') : t('payout')
+							const label = poolReward
+								? t('poolClaim', { ns: 'app' })
+								: t('payout', { ns: 'app' })
 
 							const labelClass = poolReward ? 'claim' : 'reward'
 

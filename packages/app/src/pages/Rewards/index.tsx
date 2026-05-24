@@ -167,7 +167,7 @@ export const Rewards = () => {
 	}
 	if (inPool) {
 		tabs.push({
-			title: t('poolClaim', { ns: 'app' }),
+			title: t('poolClaim', { count: 2, ns: 'app' }),
 			active: activeTab === 2,
 			onClick: () => {
 				onTabVisitEvent('rewards', 'pool_claims')

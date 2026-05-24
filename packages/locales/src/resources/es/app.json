@@ -303,6 +303,8 @@
 		"points": "Puntos",
 		"pool": "Pool",
 		"poolClaim": "Reclamación del Pool",
+		"poolClaim_one": "Reclamación del Pool",
+		"poolClaim_other": "Reclamaciones del Pool",
 		"poolCommission": "Comisión del Pool",
 		"poolId": "ID del Pool",
 		"poolInviteSubtitle": "Alguien te ha invitado a unirte a su pool de nominación. Revisa los detalles a continuación y únete si estás interesado.",

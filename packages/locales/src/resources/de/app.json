@@ -303,6 +303,8 @@
 		"points": "Punkte",
 		"pool": "Pool",
 		"poolClaim": "Pool-Anspruch",
+		"poolClaim_one": "Pool-Anspruch",
+		"poolClaim_other": "Pool-Ansprüche",
 		"poolCommission": "Pool-Gebühr",
 		"poolId": "Pool-ID",
 		"poolInviteSubtitle": "Tritt diesem Pool bei, um deine Token einzusetzen und Belohnungen als Teil einer kollektiven Staking-Gruppe zu verdienen.",

@@ -303,6 +303,8 @@
 		"points": "Points",
 		"pool": "Pool",
 		"poolClaim": "Pool Claim",
+		"poolClaim_one": "Pool Claim",
+		"poolClaim_other": "Pool Claims",
 		"poolCommission": "Pool Commission",
 		"poolId": "Pool ID",
 		"poolInviteSubtitle": "Join this pool to stake your tokens and earn rewards as part of a collective staking group.",

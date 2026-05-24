@@ -304,6 +304,8 @@
 		"points": "Pontos",
 		"pool": "Pool",
 		"poolClaim": "Reivindicação de Pool",
+		"poolClaim_one": "Reivindicação de Pool",
+		"poolClaim_other": "Reivindicações de Pool",
 		"poolCommission": "Comissão do Pool",
 		"poolId": "ID do Pool",
 		"poolInviteSubtitle": "Junte-se a este pool para fazer staking de seus tokens e ganhar recompensas como parte de um grupo de staking coletivo.",

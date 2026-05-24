@@ -118,13 +118,16 @@ export const PaginatedPayouts = ({ kind }: PaginatedPayoutsProps) => {
 	const pageData = pages[page]
 	const payouts = pageData?.payouts ?? []
 
-	const titleKey = kind === 'nominator' ? 'payouts' : 'poolClaim'
+	const title =
+		kind === 'nominator'
+			? t('payouts', { ns: 'app' })
+			: t('poolClaim', { count: 2, ns: 'app' })
 
 	return (
 		<Page.Row>
 			<CardWrapper>
 				<Inner
-					title={t(titleKey, { ns: 'app' })}
+					title={title}
 					payouts={payouts}
 					pagination
 					itemsPerPage={ITEMS_PER_PAGE}
