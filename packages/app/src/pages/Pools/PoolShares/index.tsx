@@ -7,7 +7,6 @@ import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { PoolSharesDays } from 'consts'
-import { PolkadotKnownPoolIds } from 'consts/pools'
 import { getStakingChainData, isPoolShareEnabled } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
@@ -27,6 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { CardHeader, CardLabel, Page } from 'ui-core/base'
 import { GraphWrapper, PoolSharesBar } from 'ui-graphs'
 import { planckToUnitBn, startOfUTCDay, subUTCDays } from 'utils'
+import { PoolSharesDemoGraph } from './DemoGraph'
 
 const POOL_SHARE_FETCH_LIMIT = 100
 const MAX_POOL_SHARE_FETCH_PAGES = 5
@@ -137,7 +137,13 @@ export const PoolShares = () => {
 		}
 	}, [graphActive, network, activeAddress, fromTimestamp])
 
-	const poolIds = PolkadotKnownPoolIds.join(' and ')
+	const dateFormat = locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
+	const graphHeight = '175px'
+	const graphLabels = {
+		poolShares: t('share', { ns: 'app' }),
+		claim: t('claim', { ns: 'modals' }),
+		claimed: 'Claimed',
+	}
 
 	return (
 		<Page.Row>
@@ -163,12 +169,10 @@ export const PoolShares = () => {
 						</h2>
 					</CardHeader>
 				)}
-				<div
-					className="inner"
-					style={{ minHeight: poolShareUnavailable ? '70px' : '205px' }}
-				>
+				<div className="inner" style={{ minHeight: '205px' }}>
 					{!stakingApiEnabled && (
 						<StatusLabel
+							backgroundOpacity={0.95}
 							status="active_service"
 							statusFor="staking_api"
 							title={t('stakingApiDisabled', { ns: 'pages' })}
@@ -176,15 +180,29 @@ export const PoolShares = () => {
 						/>
 					)}
 					{poolShareUnavailable ? (
-						<StatusLabel
-							status="pool_share_unavailable"
-							title={`Available for Polkadot Cloud pools only (${poolIds}).`}
-							topOffset="38%"
-						/>
+						<>
+							<StatusLabel
+								backgroundOpacity={0.95}
+								status="pool_share_unavailable"
+								title={`Available for Polkadot Cloud pools only`}
+								topOffset="38%"
+							/>
+							<PoolSharesDemoGraph
+								activeAddress={activeAddress || undefined}
+								dateFormat={dateFormat}
+								getThemeValue={getThemeValue}
+								height={graphHeight}
+								poolId={activePool?.id}
+								unit={unit}
+								units={units}
+								width="100%"
+								labels={graphLabels}
+							/>
+						</>
 					) : (
 						<GraphWrapper
 							style={{
-								height: '175px',
+								height: graphHeight,
 								position: 'absolute',
 								opacity: graphActive ? 1 : 0.55,
 								transition: 'opacity 0.5s',
@@ -195,18 +213,12 @@ export const PoolShares = () => {
 								entries={graphActive ? poolShareRewards : []}
 								claimedEntries={graphActive ? poolClaimRewards : []}
 								syncing={syncingInitialization || (graphActive && loading)}
-								height="175px"
+								height={graphHeight}
 								getThemeValue={getThemeValue}
 								unit={unit}
 								units={units}
-								dateFormat={
-									locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
-								}
-								labels={{
-									poolShares: t('share', { ns: 'app' }),
-									claim: t('claim', { ns: 'modals' }),
-									claimed: 'Claimed',
-								}}
+								dateFormat={dateFormat}
+								labels={graphLabels}
 							/>
 						</GraphWrapper>
 					)}

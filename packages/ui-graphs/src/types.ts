@@ -71,6 +71,7 @@ export interface PoolSharesBarProps {
 	claimedEntries: PoolReward[]
 	syncing: boolean
 	height: string
+	hideYAxisLabels?: boolean
 	getThemeValue: (key: string) => string
 	unit: string
 	units: number

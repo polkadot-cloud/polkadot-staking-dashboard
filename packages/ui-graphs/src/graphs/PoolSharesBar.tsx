@@ -42,6 +42,7 @@ export const PoolSharesBar = ({
 	claimedEntries,
 	syncing,
 	height,
+	hideYAxisLabels = false,
 	getThemeValue,
 	unit,
 	units,
@@ -331,6 +332,7 @@ export const PoolSharesBar = ({
 			y: {
 				beginAtZero: true,
 				ticks: {
+					display: !hideYAxisLabels,
 					font: {
 						size: 10,
 					},
