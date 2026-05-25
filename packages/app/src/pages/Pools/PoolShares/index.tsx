@@ -62,6 +62,9 @@ export const PoolShares = () => {
 		() => getUnixTime(subUTCDays(currentDate, PoolSharesDays - 1)),
 		[currentDate],
 	)
+	const poolShareUnavailable =
+		stakingApiEnabled && !poolShareEnabled && !syncingInitialization
+
 	const averageDailyShare = useMemo(() => {
 		if (!graphActive) {
 			return new BigNumber(0)
@@ -140,25 +143,30 @@ export const PoolShares = () => {
 		<Page.Row>
 			<CardWrapper>
 				<CardHeader margin>
-					<h3>Reward Trend</h3>
+					<h3>Trends</h3>
 				</CardHeader>
-				<CardHeader margin>
-					<h4>Average Daily Share</h4>
-					<h2>
-						<Token />
-						<Odometer
-							value={minDecimalPlaces(averageDailyShare.toFormat(), 2)}
-							zeroDecimals={2}
-						/>
-						<CardLabel>
-							<Balance.Value
-								tokenBalance={averageDailyShare.toString()}
-								currency={currency}
+				{!poolShareUnavailable && (
+					<CardHeader margin>
+						<h4>Average Daily Share</h4>
+						<h2>
+							<Token />
+							<Odometer
+								value={minDecimalPlaces(averageDailyShare.toFormat(), 2)}
+								zeroDecimals={2}
 							/>
-						</CardLabel>
-					</h2>
-				</CardHeader>
-				<div className="inner" style={{ minHeight: '205px' }}>
+							<CardLabel>
+								<Balance.Value
+									tokenBalance={averageDailyShare.toString()}
+									currency={currency}
+								/>
+							</CardLabel>
+						</h2>
+					</CardHeader>
+				)}
+				<div
+					className="inner"
+					style={{ minHeight: poolShareUnavailable ? '70px' : '205px' }}
+				>
 					{!stakingApiEnabled && (
 						<StatusLabel
 							status="active_service"
@@ -167,40 +175,41 @@ export const PoolShares = () => {
 							topOffset="38%"
 						/>
 					)}
-					{stakingApiEnabled && !poolShareEnabled && !syncingInitialization && (
+					{poolShareUnavailable ? (
 						<StatusLabel
 							status="pool_share_unavailable"
-							title={`Pool share analytics are only available for Polkadot Cloud pools ${poolIds}.`}
+							title={`Available for Polkadot Cloud pools only (${poolIds}).`}
 							topOffset="38%"
 						/>
-					)}
-					<GraphWrapper
-						style={{
-							height: '175px',
-							position: 'absolute',
-							opacity: graphActive ? 1 : 0.55,
-							transition: 'opacity 0.5s',
-						}}
-					>
-						<PoolSharesBar
-							days={PoolSharesDays}
-							entries={graphActive ? poolShareRewards : []}
-							claimedEntries={graphActive ? poolClaimRewards : []}
-							syncing={syncingInitialization || (graphActive && loading)}
-							height="175px"
-							getThemeValue={getThemeValue}
-							unit={unit}
-							units={units}
-							dateFormat={
-								locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
-							}
-							labels={{
-								poolShares: t('share', { ns: 'app' }),
-								claim: t('claim', { ns: 'modals' }),
-								claimed: 'Claimed',
+					) : (
+						<GraphWrapper
+							style={{
+								height: '175px',
+								position: 'absolute',
+								opacity: graphActive ? 1 : 0.55,
+								transition: 'opacity 0.5s',
 							}}
-						/>
-					</GraphWrapper>
+						>
+							<PoolSharesBar
+								days={PoolSharesDays}
+								entries={graphActive ? poolShareRewards : []}
+								claimedEntries={graphActive ? poolClaimRewards : []}
+								syncing={syncingInitialization || (graphActive && loading)}
+								height="175px"
+								getThemeValue={getThemeValue}
+								unit={unit}
+								units={units}
+								dateFormat={
+									locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
+								}
+								labels={{
+									poolShares: t('share', { ns: 'app' }),
+									claim: t('claim', { ns: 'modals' }),
+									claimed: 'Claimed',
+								}}
+							/>
+						</GraphWrapper>
+					)}
 				</div>
 			</CardWrapper>
 		</Page.Row>
