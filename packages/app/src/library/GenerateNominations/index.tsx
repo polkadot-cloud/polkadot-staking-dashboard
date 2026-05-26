@@ -106,14 +106,14 @@ export const GenerateNominations = ({
 					selected: AnyJson
 					callback?: AnyFunction
 				}) => {
-					const newNominations = [...nominations].filter(
-						(n) =>
-							!selected
-								.map(({ address }: { address: string }) => address)
-								.includes(n.address),
+					const selectedAddresses = new Set(
+						selected.map(({ address }: { address: string }) => address),
 					)
-					setNominations([...newNominations])
-					updateSetters(setters, [...newNominations])
+					const newNominations = nominations.filter(
+						(n) => !selectedAddresses.has(n.address),
+					)
+					setNominations(newNominations)
+					updateSetters(setters, newNominations)
 					if (typeof callback === 'function') {
 						callback()
 					}
