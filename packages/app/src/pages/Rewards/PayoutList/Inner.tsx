@@ -96,6 +96,8 @@ export const PayoutList = ({
 			: `${t('noRecentPayouts')}.`
 		: null
 
+	const allValidators = getValidators()
+
 	return (
 		<ListWrapper>
 			<Header>
@@ -160,15 +162,18 @@ export const PayoutList = ({
 							let keyId: string
 							if (poolReward) {
 								const item = p as PoolReward
-								pool = bondedPools.find(({ id }) => id === item.poolId)
-								batchIndex = pool ? bondedPools.indexOf(pool) : 0
+								const poolIndex = bondedPools.findIndex(
+									({ id }) => id === item.poolId,
+								)
+								pool = poolIndex >= 0 ? bondedPools[poolIndex] : undefined
+								batchIndex = Math.max(poolIndex, 0)
 								keyId = `pool_${item.source ?? 'claim'}_${item.poolId}_${item.timestamp}`
 							} else {
 								const item = p as NominatorReward
-								const validator = getValidators().find(
+								const validatorIndex = allValidators.findIndex(
 									(v) => v.address === item.validator,
 								)
-								batchIndex = validator ? getValidators().indexOf(validator) : 0
+								batchIndex = Math.max(validatorIndex, 0)
 								keyId = `nom_${item.validator}_${item.era}_${item.timestamp}`
 							}
 
