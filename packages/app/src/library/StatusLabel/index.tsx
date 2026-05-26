@@ -13,6 +13,7 @@ import type { StatusLabelProps } from './types'
 import { Wrapper } from './Wrapper'
 
 export const StatusLabel = ({
+	backgroundOpacity,
 	title,
 	helpKey,
 	hideIcon,
@@ -40,7 +41,7 @@ export const StatusLabel = ({
 	}
 
 	return (
-		<Wrapper $topOffset={topOffset}>
+		<Wrapper $backgroundOpacity={backgroundOpacity} $topOffset={topOffset}>
 			<div>
 				{!hideIcon && <FontAwesomeIcon icon={faExclamationTriangle} />}
 				<h2>
