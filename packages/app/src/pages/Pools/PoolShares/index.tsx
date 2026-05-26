@@ -32,7 +32,7 @@ const POOL_SHARE_FETCH_LIMIT = 100
 const MAX_POOL_SHARE_FETCH_PAGES = 5
 
 export const PoolShares = () => {
-	const { i18n, t } = useTranslation()
+	const { i18n, t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { currency } = useCurrency()
 	const { pluginEnabled } = usePlugins()
@@ -142,18 +142,18 @@ export const PoolShares = () => {
 	const graphLabels = {
 		poolShares: t('share', { ns: 'app' }),
 		claim: t('claim', { ns: 'modals' }),
-		claimed: 'Claimed',
+		claimed: t('claimed'),
 	}
 
 	return (
 		<Page.Row>
 			<CardWrapper>
 				<CardHeader margin>
-					<h3>Trends</h3>
+					<h3>{t('rewardTrend')}</h3>
 				</CardHeader>
 				{!poolShareUnavailable && (
 					<CardHeader margin>
-						<h4>Average Daily Share</h4>
+						<h4>{t('averageDailyShare')}</h4>
 						<h2>
 							<Token />
 							<Odometer
@@ -184,7 +184,7 @@ export const PoolShares = () => {
 							<StatusLabel
 								backgroundOpacity={0.95}
 								status="pool_share_unavailable"
-								title={`Available for Polkadot Cloud pools only`}
+								title={t('availableForPolkadotCloudPoolsOnly')}
 								topOffset="38%"
 							/>
 							<PoolSharesDemoGraph
