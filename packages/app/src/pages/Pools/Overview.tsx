@@ -8,6 +8,7 @@ import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { Page } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
 import { ManagePool } from './ManagePool'
+import { PoolShares } from './PoolShares'
 import { PoolStats } from './PoolStats'
 import { Roles } from './Roles'
 import { Status } from './Status'
@@ -42,6 +43,7 @@ export const PoolOverview = ({
 			</Page.Row>
 			{activePool !== undefined && (
 				<>
+					<PoolShares />
 					<ManagePool />
 					<Page.Row>
 						<CardWrapper>
