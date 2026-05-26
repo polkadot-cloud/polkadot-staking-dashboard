@@ -65,6 +65,24 @@ export interface PayoutLineProps {
 	}
 }
 
+export interface PoolSharesBarProps {
+	days: number
+	entries: PoolReward[]
+	claimedEntries: PoolReward[]
+	syncing: boolean
+	height: string
+	hideYAxisLabels?: boolean
+	getThemeValue: (key: string) => string
+	unit: string
+	units: number
+	dateFormat: Locale
+	labels: {
+		poolShares: string
+		claim: string
+		claimed: string
+	}
+}
+
 export interface PayoutLineEntry {
 	era: number
 	reward: string
