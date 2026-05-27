@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useCurrency } from 'contexts/Currency'
 import { useNetwork } from 'contexts/Network'
 import { useAccountBalances } from 'hooks/useAccountBalances'
@@ -31,7 +30,7 @@ export const BalanceChart = () => {
 	const { openModal } = useOverlay().modal
 	const { syncing } = useSyncing(['initialization'])
 	const { accountHasSigner } = useImportedAccounts()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { unit, units } = getStakingChainData(network)
 	const Token = getChainIcons(network).token

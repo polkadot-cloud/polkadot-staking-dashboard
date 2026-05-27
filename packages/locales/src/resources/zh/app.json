@@ -94,6 +94,7 @@
 		"done": "完成",
 		"email": "电子邮件",
 		"enablePermissionlessClaiming": "启用己许可申领",
+		"endOfResults": "结果已结束",
 		"ensureLedgerIsConnected": "提示:请确保您的Ledger设备已连接",
 		"era": "Era",
 		"eraPoints": "Era 点数",
@@ -260,6 +261,7 @@
 		"otherOptions": "其他选项",
 		"overview": "总览",
 		"page": "{{page}} / {{total}}",
+		"pageNumber": "第 {{page}} 页",
 		"payee": {
 			"account": {
 				"subtitle": "收益作为自由余额发到其他帐户",
@@ -284,7 +286,7 @@
 		"payout": "收益",
 		"payoutAccount": "收益到账账户",
 		"payoutAddress": "收益到账地址",
-		"payouts": "收益",
+		"payouts": "收益记录",
 		"pending": "待定中",
 		"performance": "表现",
 		"permissioned": "已获许可",
@@ -298,6 +300,8 @@
 		"points": "点数",
 		"pool": "提名池",
 		"poolClaim": "提名池申领",
+		"poolClaim_one": "提名池申领",
+		"poolClaim_other": "提名池申领记录",
 		"poolCommission": "提名池佣金",
 		"poolId": "提名池ID",
 		"poolInviteSubtitle": "有人邀请您加入他们的提名矿池。查看以下详情，如有兴趣请加入.",

@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useNetwork } from 'contexts/Network'
@@ -47,7 +47,7 @@ export const Forms = forwardRef(
 		const { getConsts, serviceApi } = useApi()
 		const { getSignerWarnings } = useSignerWarnings()
 		const { removeFromBondedPools } = useBondedPools()
-		const { activeAddress, activeAccount } = useActiveAccounts()
+		const { activeAddress, activeAccount } = useActiveAccount()
 		const { removeFavorite: removeFavoritePool } = useFavoritePools()
 
 		const { unit, units } = getStakingChainData(network)
@@ -119,8 +119,8 @@ export const Forms = forwardRef(
 					<Padding horizontalOnly>
 						{warnings.length > 0 ? (
 							<Warnings>
-								{warnings.map((text, i) => (
-									<Warning key={`warning${i}`} text={text} />
+								{warnings.map((text) => (
+									<Warning key={`warning_${text}`} text={text} />
 								))}
 							</Warnings>
 						) : null}

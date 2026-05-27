@@ -95,6 +95,7 @@
 		"done": "Done",
 		"email": "Email",
 		"enablePermissionlessClaiming": "Enable Permissionless Claiming",
+		"endOfResults": "End of results",
 		"ensureLedgerIsConnected": "Tip: Ensure your Ledger device is connected before continuing.",
 		"era": "Era",
 		"eraPoints": "Era Points",
@@ -264,6 +265,7 @@
 		"otherOptions": "Other Options",
 		"overview": "Overview",
 		"page": "Page {{page}} of {{total}}",
+		"pageNumber": "Page {{page}}",
 		"payee": {
 			"account": {
 				"subtitle": "Send payouts to another account as free balance.",
@@ -302,6 +304,8 @@
 		"points": "Points",
 		"pool": "Pool",
 		"poolClaim": "Pool Claim",
+		"poolClaim_one": "Pool Claim",
+		"poolClaim_other": "Pool Claims",
 		"poolCommission": "Pool Commission",
 		"poolId": "Pool ID",
 		"poolInviteSubtitle": "Join this pool to stake your tokens and earn rewards as part of a collective staking group.",

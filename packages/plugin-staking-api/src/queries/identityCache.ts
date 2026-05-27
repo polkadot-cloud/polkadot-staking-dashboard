@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { IdentityCacheData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query IdentityCache($network: String!, $addresses: [String!]!) {
@@ -17,6 +17,7 @@ const QUERY = gql`
 `
 
 const BATCH_SIZE = 500
+const EMPTY: IdentityCacheData = { identityCache: [] }
 
 export const fetchIdentityCache = async (
 	network: string,
@@ -28,24 +29,17 @@ export const fetchIdentityCache = async (
 		batches.push(addresses.slice(i, i + BATCH_SIZE))
 	}
 
-	try {
-		// Fetch all batches in parallel
-		const results = await Promise.all(
-			batches.map((batch) =>
-				client.query<IdentityCacheData>({
-					query: QUERY,
-					variables: { network, addresses: batch },
-				}),
+	const results = await Promise.all(
+		batches.map((batch) =>
+			fetchQuery<IdentityCacheData>(
+				QUERY,
+				{ network, addresses: batch },
+				EMPTY,
 			),
-		)
+		),
+	)
 
-		// Combine all results
-		const combinedCache = results.flatMap(
-			(result) => result?.data?.identityCache || [],
-		)
-
-		return { identityCache: combinedCache }
-	} catch {
-		return { identityCache: [] }
+	return {
+		identityCache: results.flatMap((result) => result.identityCache || []),
 	}
 }

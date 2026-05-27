@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { PolkawatchApi } from '@polkawatch/ddp-client'
 import { PolkawatchConfig } from 'consts/plugins'
 import { getPolkawatchConfig } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useHelp } from 'contexts/Help'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
@@ -31,7 +31,7 @@ export const NominationGeo = () => {
 	const { isNominating } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const enabled = pluginEnabled('polkawatch')
 

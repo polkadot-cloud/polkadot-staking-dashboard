@@ -4,10 +4,10 @@
 import { Offline } from 'Offline'
 import { Overlays } from 'Overlays'
 import { StakingApi } from 'StakingApi'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
 import { getPagesConfig } from 'config/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
@@ -54,7 +54,7 @@ const RouterInner = () => {
 	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { pathname, search } = useLocation()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setContainerRefs, advancedMode } = useUi()
 
 	// References to outer container
@@ -133,9 +133,9 @@ const RouterInner = () => {
 									{getPagesConfig(network, null, advancedMode, {
 										inPool,
 										isBonding,
-									}).map((page, i) => (
+									}).map((page) => (
 										<Route
-											key={`main_interface_page_${i}`}
+											key={`main_interface_page_${page.key}`}
 											path={page.hash}
 											element={<PageWithTitle page={page} />}
 										/>

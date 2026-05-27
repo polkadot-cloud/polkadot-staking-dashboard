@@ -96,6 +96,7 @@
 		"done": "Pronto",
 		"email": "Email",
 		"enablePermissionlessClaiming": "Ativar Reivindicação sem Permissão",
+		"endOfResults": "Fim dos resultados",
 		"ensureLedgerIsConnected": "Dica: Certifique-se de que seu dispositivo Ledger está conectado antes de continuar.",
 		"era": "Era",
 		"eraPoints": "Pontos da Era",
@@ -265,6 +266,7 @@
 		"otherOptions": "Outras Opções",
 		"overview": "Visão Geral",
 		"page": "Página {{page}} de {{total}}",
+		"pageNumber": "Página {{page}}",
 		"payee": {
 			"account": {
 				"subtitle": "Enviar pagamentos para outra conta como saldo livre.",
@@ -303,6 +305,8 @@
 		"points": "Pontos",
 		"pool": "Pool",
 		"poolClaim": "Reivindicação de Pool",
+		"poolClaim_one": "Reivindicação de Pool",
+		"poolClaim_other": "Reivindicações de Pool",
 		"poolCommission": "Comissão do Pool",
 		"poolId": "ID do Pool",
 		"poolInviteSubtitle": "Junte-se a este pool para fazer staking de seus tokens e ganhar recompensas como parte de um grupo de staking coletivo.",

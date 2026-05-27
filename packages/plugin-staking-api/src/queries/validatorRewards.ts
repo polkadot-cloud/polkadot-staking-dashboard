@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
 import type { QueryReturn, ValidatorRewardsData } from '../types'
+import { useApiQuery } from './generic'
 
 const QUERY = gql`
   query ValidatorRewards(
@@ -29,22 +29,10 @@ const DEFAULT: ValidatorRewardsData = {
 	validatorRewards: [],
 }
 
-export const useValidatorRewards = ({
-	network,
-	validator,
-	fromEra,
-	depth,
-}: {
+export const useValidatorRewards = (variables: {
 	network: string
 	validator: string
 	fromEra: number
 	depth?: number
-}): QueryReturn<ValidatorRewardsData> => {
-	const { loading, error, data, refetch } = useQuery<ValidatorRewardsData>(
-		QUERY,
-		{
-			variables: { network, validator, fromEra, depth },
-		},
-	)
-	return { loading, error, data: data || DEFAULT, refetch }
-}
+}): QueryReturn<ValidatorRewardsData> =>
+	useApiQuery<ValidatorRewardsData>(QUERY, variables, DEFAULT)

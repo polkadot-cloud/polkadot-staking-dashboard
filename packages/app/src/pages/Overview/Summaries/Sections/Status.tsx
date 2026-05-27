@@ -3,7 +3,7 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
@@ -32,7 +32,7 @@ export const Status = () => {
 	const { formatted } = useNextRewards()
 	const { openModal } = useOverlay().modal
 	const { warningMessages } = useWarnings()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { items, getPoolWarningTips } = useTips()
 	const { getNominationStatus } = useNominationStatus()
 	const { inPool, activePool, membershipDisplay, label } =

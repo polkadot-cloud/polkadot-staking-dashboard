@@ -15,9 +15,11 @@ export const Wrapper = styled.div<WrapperProps>`
   z-index: 2;
 
   > div {
-    background: var(--bg-list);
+    background: var(--bg-primary);
+    box-shadow: var(--shadow);
     min-width: 125px;
-    opacity: 0.75;
+    opacity: ${(props) =>
+			props.$backgroundOpacity === undefined ? 0.75 : props.$backgroundOpacity};
     padding: 1rem 1.25rem;
     border-radius: 1rem;
     display: flex;

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { SupportedProxies } from '../proxies'
+import { SupportedProxies } from '@polkadot-cloud/connect-proxies'
 
 // Check if proxy type is supported in the dashboard
 export const isSupportedProxy = (proxy: string) =>

@@ -3,7 +3,7 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,7 @@ import { MembersList as FetchPageMemberList } from './Lists/FetchPage'
 export const Members = ({ bondedPool }: { bondedPool: BondedPool }) => {
 	const { t } = useTranslation('pages')
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const annuncementBorderColor = getThemeValue('--status-warning')
 

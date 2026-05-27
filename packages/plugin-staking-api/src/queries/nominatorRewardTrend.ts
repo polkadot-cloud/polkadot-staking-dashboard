@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { NominatorRewardTrendData, RewardTrend } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query NominatorRewardTrend($network: String!, $who: String!, $eras: Int!) {
@@ -32,13 +32,10 @@ export const fetchNominatorRewardTrend = async (
 	who: string,
 	eras: number,
 ): Promise<RewardTrend> => {
-	try {
-		const result = await client.query<NominatorRewardTrendData>({
-			query: QUERY,
-			variables: { network, who, eras },
-		})
-		return result?.data?.nominatorRewardTrend || DEFAULT
-	} catch {
-		return DEFAULT
-	}
+	const data = await fetchQuery<NominatorRewardTrendData>(
+		QUERY,
+		{ network, who, eras },
+		{ nominatorRewardTrend: DEFAULT },
+	)
+	return data.nominatorRewardTrend || DEFAULT
 }

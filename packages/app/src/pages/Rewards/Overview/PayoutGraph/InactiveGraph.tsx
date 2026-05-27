@@ -33,6 +33,7 @@ export const InactiveGraph = () => {
 					poolClaim: t('poolClaim', { ns: 'app' }),
 					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
 					pending: t('pending', { ns: 'app' }),
+					poolShare: t('share', { ns: 'app' }),
 				}}
 			/>
 			<AveragePayoutLine

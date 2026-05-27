@@ -12,6 +12,9 @@ import {
 import { isValidNetwork } from 'consts/util/networks'
 import type { NetworkId, Plugin } from 'types'
 
+const isProd =
+	(import.meta as ImportMeta & { env?: { PROD?: boolean } }).env?.PROD === true
+
 // Get initial plugins from local storage
 export const getAvailablePlugins = () => {
 	const allPlugins = localStorageOrDefault(
@@ -20,7 +23,7 @@ export const getAvailablePlugins = () => {
 		true,
 	) as Plugin[]
 	// In production, add compulsory plugins to `localPlugins` if they do not exist
-	if (import.meta.env.PROD) {
+	if (isProd) {
 		CompulsoryPluginsProduction.forEach((plugin) => {
 			if (!allPlugins.includes(plugin)) {
 				allPlugins.push(plugin)

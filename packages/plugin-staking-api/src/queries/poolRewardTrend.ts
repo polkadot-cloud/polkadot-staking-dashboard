@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { PoolRewardTrendData, RewardTrend } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
   query PoolRewardTrend($network: String!, $who: String!, $duration: Int!) {
@@ -32,13 +32,10 @@ export const fetchPoolRewardTrend = async (
 	who: string,
 	duration: number,
 ): Promise<RewardTrend> => {
-	try {
-		const result = await client.query<PoolRewardTrendData>({
-			query: QUERY,
-			variables: { network, who, duration },
-		})
-		return result?.data?.poolRewardTrend || DEFAULT
-	} catch {
-		return DEFAULT
-	}
+	const data = await fetchQuery<PoolRewardTrendData>(
+		QUERY,
+		{ network, who, duration },
+		{ poolRewardTrend: DEFAULT },
+	)
+	return data.poolRewardTrend || DEFAULT
 }

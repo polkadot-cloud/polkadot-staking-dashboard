@@ -9,11 +9,38 @@ export const defaultPoolCommissionContext: PoolCommissionContextInterface = {
 	setPayee: (_payee) => {},
 	setMaxCommission: (_maxCommission) => {},
 	setChangeRate: (_changeRate) => {},
-	getInitial: (_feature) => {},
-	getCurrent: (_feature) => {},
-	getEnabled: (_feature) => false,
-	setEnabled: (_feature, _enabled) => {},
-	isUpdated: (_feature) => false,
-	hasValue: (_feature) => false,
+	setFeatureEnabled: (_feature, _enabled) => {},
+	initial: {
+		commission: 0,
+		payee: null,
+		maxCommission: 100,
+		changeRate: {
+			maxIncrease: 10,
+			minDelay: 0,
+		},
+	},
+	current: {
+		commission: 0,
+		payee: null,
+		maxCommission: 100,
+		changeRate: {
+			maxIncrease: 10,
+			minDelay: 0,
+		},
+	},
+	enabled: {
+		maxCommission: false,
+		changeRate: false,
+	},
+	hasValue: {
+		maxCommission: false,
+		changeRate: false,
+	},
+	updated: {
+		commission: false,
+		payee: false,
+		maxCommission: false,
+		changeRate: false,
+	},
 	resetAll: () => {},
 }

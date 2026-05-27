@@ -3,7 +3,7 @@
 
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useSyncing } from 'hooks/useSyncing'
@@ -23,7 +23,7 @@ export const QuickActions = ({ height }: { height: number }) => {
 	const { isBonding } = useStaking()
 	const { accountSynced } = useSyncing()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const isStaking = inPool || isBonding
 	const syncing = !accountSynced(activeAddress)

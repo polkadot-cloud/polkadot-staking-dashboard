@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedger } from '@w3ux/ledger-connect'
+import { useLedger } from '@polkadot-cloud/connect-ledger'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'

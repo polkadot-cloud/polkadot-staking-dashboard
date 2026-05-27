@@ -1,9 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { determinePoolDisplay } from 'contexts/Pools/util'
@@ -19,7 +18,7 @@ export const useActiveAccountPool = () => {
 	} = useApi()
 	const { bondedPools } = useBondedPools()
 	const { poolsMetaData } = useBondedPools()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReadOnlyAccount } = useImportedAccounts()
 	const { balances } = useAccountBalances(activeAddress)
 	const { membership } = getPoolMembership(activeAddress)

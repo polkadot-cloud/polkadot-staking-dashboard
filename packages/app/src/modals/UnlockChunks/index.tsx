@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useLedger } from '@w3ux/ledger-connect'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { useLedger } from '@polkadot-cloud/connect-ledger'
 import { setStateWithRef } from '@w3ux/utils'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useBalances } from 'contexts/Balances'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { Title } from 'library/Modal/Title'
@@ -25,7 +25,7 @@ export const UnlockChunks = () => {
 	const { integrityChecked } = useLedger()
 	const { getStakingLedger } = useBalances()
 	const { getPoolUnlocking } = useActivePool()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const { bondFor } = options || {}
 

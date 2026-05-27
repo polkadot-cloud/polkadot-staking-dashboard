@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxNominations } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import {
@@ -38,7 +38,7 @@ export const Inner = () => {
 	const { serviceApi } = useApi()
 	const { activePool } = useActivePool()
 	const { activeProxy } = useActiveProxy()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { updatePoolNominations } = useBondedPools()
 	const { defaultNominations, nominations, setNominations, method } =
 		useManageNominations()

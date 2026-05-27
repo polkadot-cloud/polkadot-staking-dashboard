@@ -1,6 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useNetwork } from 'contexts/Network'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { BondManager } from 'library/BondManager'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -8,6 +9,7 @@ import { WithdrawPrompt } from 'library/WithdrawPrompt'
 import { Page } from 'ui-core/base'
 import { ClosurePrompts } from './ClosurePrompts'
 import { ManagePool } from './ManagePool'
+import { PoolShares } from './PoolShares'
 import { PoolStats } from './PoolStats'
 import { Roles } from './Roles'
 import { Status } from './Status'
@@ -19,6 +21,7 @@ export const PoolOverview = ({
 	isPreloading?: boolean
 	showOtherOptions?: boolean
 }) => {
+	const { network } = useNetwork()
 	const { getPoolRoles, activePool } = useActivePool()
 	const ROW_HEIGHT = 220
 
@@ -42,6 +45,7 @@ export const PoolOverview = ({
 			</Page.Row>
 			{activePool !== undefined && (
 				<>
+					{network === 'polkadot' && <PoolShares />}
 					<ManagePool />
 					<Page.Row>
 						<CardWrapper>
