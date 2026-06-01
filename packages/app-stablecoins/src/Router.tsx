@@ -1,0 +1,29 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { Headers } from 'library/Headers'
+import { SideMenu } from 'library/SideMenu'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { Page } from 'ui-core/base'
+import { Send } from './pages/Send'
+
+export const Router = () => (
+	<Page.Body id="portal-root">
+		<SideMenu />
+		<Page.Main>
+			<Headers />
+			<Routes>
+				<Route index element={<Navigate to="/send" replace />} />
+				<Route
+					path="/send"
+					element={
+						<Page.Container>
+							<Send />
+						</Page.Container>
+					}
+				/>
+				<Route path="*" element={<Navigate to="/send" replace />} />
+			</Routes>
+		</Page.Main>
+	</Page.Body>
+)

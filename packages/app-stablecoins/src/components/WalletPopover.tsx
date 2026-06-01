@@ -1,0 +1,207 @@
+import type { CSSProperties } from 'react'
+import { useState } from 'react'
+import dotSvg from '../assets/svg/dot.svg'
+import glmrSvg from '../assets/svg/glmr.svg'
+import hdxSvg from '../assets/svg/hdx.svg'
+import hollarSvg from '../assets/svg/hollar.svg'
+import usdcSvg from '../assets/svg/usdc.svg'
+import usdtSvg from '../assets/svg/usdt.svg'
+import classes from './WalletPopover.module.scss'
+
+const stablecoinMix = [
+	{
+		icon: usdcSvg,
+		label: 'USDC',
+		value: '$750,000',
+		share: 60,
+		color: '#3E73C4',
+	},
+	{
+		icon: usdtSvg,
+		label: 'USDT',
+		value: '$312,450',
+		share: 27,
+		color: '#26A17B',
+	},
+	{
+		icon: hollarSvg,
+		label: 'HOLLAR',
+		value: '$150,000',
+		share: 13,
+		color: '#B3CF92',
+	},
+]
+
+const chainBalances = [
+	{ chain: 'Polkadot Hub', value: '$935,200.00', share: 65 },
+	{ chain: 'Hydration', value: '$255,540.00', share: 20 },
+	{ chain: 'Moonbeam', value: '$57,852.42', share: 15 },
+]
+
+const chainTokenBreakdown = [
+	{
+		chain: 'Polkadot Hub',
+		total: '$935,200.00',
+		tokens: [
+			{ icon: usdcSvg, name: 'USDC', value: '750,000.00' },
+			{ icon: usdtSvg, name: 'USDT', value: '185,200.00' },
+			{ icon: dotSvg, name: 'DOT', value: '31,696.00' },
+		],
+	},
+	{
+		chain: 'Hydration',
+		total: '$255,540.00',
+		tokens: [
+			{ icon: usdcSvg, name: 'USDC', value: '92,500.00' },
+			{ icon: usdtSvg, name: 'USDT', value: '312,450.00' },
+			{ icon: hollarSvg, name: 'HOLLAR', value: '150,000.00' },
+			{ icon: hdxSvg, name: 'HDX', value: '820,000.00' },
+			{ icon: dotSvg, name: 'DOT', value: '13,584.00' },
+		],
+	},
+	{
+		chain: 'Moonbeam',
+		total: '$57,852.42',
+		tokens: [
+			{ icon: usdcSvg, name: 'USDC', value: '45,000.00' },
+			{ icon: usdtSvg, name: 'USDT', value: '68,200.00' },
+			{ icon: glmrSvg, name: 'GLMR', value: '250,000.00' },
+			{ icon: dotSvg, name: 'DOT', value: '4,850.00' },
+		],
+	},
+]
+
+export const WalletPopover = () => {
+	const [activeTab, setActiveTab] = useState<'mix' | 'balances'>('balances')
+
+	return (
+		<div className={classes.popover}>
+			<div className={classes.header}>
+				<h2 className={classes.title}>Wallet</h2>
+				<span className={classes.balance}>$1,248,592.42</span>
+			</div>
+
+			<div className={classes.tabs} role="tablist" aria-label="Wallet sections">
+				<button
+					type="button"
+					role="tab"
+					aria-selected={activeTab === 'balances'}
+					className={
+						activeTab === 'balances' ? classes.tabBtnActive : classes.tabBtn
+					}
+					onClick={() => setActiveTab('balances')}
+				>
+					Balances
+				</button>
+				<button
+					type="button"
+					role="tab"
+					aria-selected={activeTab === 'mix'}
+					className={
+						activeTab === 'mix' ? classes.tabBtnActive : classes.tabBtn
+					}
+					onClick={() => setActiveTab('mix')}
+				>
+					Mix
+				</button>
+			</div>
+
+			{activeTab === 'mix' && (
+				<div className={classes.section}>
+					<h3 className={classes.sectionTitle}>Stablecoin Mix</h3>
+					<div className={classes.mixBar}>
+						{stablecoinMix.map((coin) => (
+							<div
+								key={coin.label}
+								className={classes.mixSegment}
+								style={
+									{
+										width: `${coin.share}%`,
+										'--mix-color': coin.color,
+									} as CSSProperties
+								}
+							/>
+						))}
+					</div>
+					<div className={classes.mixLegend}>
+						{stablecoinMix.map((coin) => (
+							<div key={coin.label} className={classes.mixLegendItem}>
+								<div className={classes.mixLegendLabel}>
+									<img
+										src={coin.icon}
+										alt={coin.label}
+										className={classes.mixLegendIcon}
+									/>
+									<span>{coin.label}</span>
+								</div>
+								<span className={classes.mixLegendValue}>{coin.value}</span>
+							</div>
+						))}
+					</div>
+
+					<div className={classes.subSection}>
+						<h3 className={classes.sectionTitle}>Balances by Chain</h3>
+						<div className={classes.chainTable}>
+							<div
+								className={`${classes.chainTableRow} ${classes.chainTableHead}`}
+							>
+								<span className={classes.chainCell}>Chain</span>
+								<span className={classes.valueCell}>Balance</span>
+								<span className={classes.shareCell}>Share</span>
+							</div>
+							{chainBalances.map((row) => (
+								<div key={row.chain} className={classes.chainTableRow}>
+									<span className={classes.chainCell}>{row.chain}</span>
+									<span className={classes.valueCell}>{row.value}</span>
+									<div className={classes.shareCell}>
+										<span className={classes.shareValue}>{row.share}%</span>
+										<div className={classes.chainTrack}>
+											<div
+												className={classes.chainFill}
+												style={{ width: `${row.share}%` }}
+											/>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			)}
+
+			{activeTab === 'balances' && (
+				<div className={classes.section}>
+					<h3 className={classes.sectionTitle}>Token Balances by Chain</h3>
+					<div className={classes.breakdownGroups}>
+						{chainTokenBreakdown.map((group) => (
+							<div key={group.chain} className={classes.breakdownGroup}>
+								<div className={classes.breakdownHeader}>
+									<h4 className={classes.breakdownChainTitle}>{group.chain}</h4>
+									<span className={classes.breakdownTotal}>{group.total}</span>
+								</div>
+								<div className={classes.tokenList}>
+									{group.tokens.map((token) => (
+										<div
+											key={`${group.chain}-${token.name}`}
+											className={classes.tokenRow}
+										>
+											<div className={classes.tokenLabel}>
+												<img
+													src={token.icon}
+													alt={token.name}
+													className={classes.tokenIcon}
+												/>
+												<span>{token.name}</span>
+											</div>
+											<span className={classes.tokenValue}>{token.value}</span>
+										</div>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+		</div>
+	)
+}

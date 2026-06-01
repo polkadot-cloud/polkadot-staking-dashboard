@@ -1,0 +1,33 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
+import { ConnectProvider } from '@polkadot-cloud/connect'
+import { LedgerAdaptor } from '@polkadot-cloud/connect-ledger'
+import { UIProvider } from 'contexts/UI'
+import { Tooltip } from 'radix-ui'
+import { BrowserRouter } from 'react-router-dom'
+import { OverlayProvider } from './library/Overlay'
+import { ThemedRouter } from './Themes'
+
+const DappName = 'Polkadot Cloud Stablecoins'
+const Network = 'polkadot'
+const PolkadotSs58 = 0
+
+export const Providers = () => (
+	<ConnectProvider
+		network={Network}
+		dappName={DappName}
+		ss58={PolkadotSs58}
+		adaptors={[LedgerAdaptor]}
+	>
+		<UIProvider>
+			<BrowserRouter>
+				<OverlayProvider>
+					<Tooltip.Provider>
+						<ThemedRouter />
+					</Tooltip.Provider>
+				</OverlayProvider>
+			</BrowserRouter>
+		</UIProvider>
+	</ConnectProvider>
+)
