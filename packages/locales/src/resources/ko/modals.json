@@ -259,6 +259,7 @@
 		"rpcProviders": "RPC 제공자",
 		"scanFromPolkadotVault": "Polkadot Vault에서 스캔",
 		"scanToSync": "이 QR 코드를 스캔하여 계정을 동기화하세요.",
+		"accessCode": "액세스 코드",
 		"searchAccount": "계정 검색",
 		"searchCurrency": "검색",
 		"selectCurrency": "통화 선택",

@@ -251,6 +251,7 @@
 		"rpcProviders": "RPC服务端",
 		"scanFromPolkadotVault": "从Polkadot Vault中扫描",
 		"scanToSync": "扫描此二维码以同步您的账户。",
+		"accessCode": "访问码",
 		"searchAccount": "搜索帐户",
 		"searchCurrency": "搜索",
 		"selectCurrency": "选择币种",

@@ -259,6 +259,7 @@
 		"rpcProviders": "RPC Providers",
 		"scanFromPolkadotVault": "Scan From Polkadot Vault",
 		"scanToSync": "Scan this QR code to sync your accounts.",
+		"accessCode": "Access Code",
 		"searchAccount": "Search Account",
 		"searchCurrency": "Search",
 		"selectCurrency": "Select Currency",
