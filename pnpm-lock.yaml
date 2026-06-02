@@ -363,6 +363,9 @@ importers:
       ui-core:
         specifier: workspace:*
         version: link:../ui-core
+      ui-overlay:
+        specifier: workspace:*
+        version: link:../ui-overlay
       ui-styles:
         specifier: workspace:*
         version: link:../ui-styles

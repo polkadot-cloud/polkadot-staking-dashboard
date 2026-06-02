@@ -16,6 +16,8 @@ void i18next.init({
 		en: {
 			app: {
 				connectAccounts: 'Connect Accounts',
+				currency: 'Currency',
+				darkMode: 'Dark Mode',
 				network: 'Network',
 				notification: 'Notification',
 				notification_other: 'Notifications',

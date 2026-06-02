@@ -5,7 +5,7 @@
 			"App": ["./src/App"],
 			"contexts/*": ["./src/contexts/*"],
 			"library/*": ["./src/library/*"],
-			"ui-overlay": ["./src/library/Overlay"]
+			"modals/*": ["./src/modals/*"]
 		},
 		"outDir": "build",
 		"target": "ESNext",

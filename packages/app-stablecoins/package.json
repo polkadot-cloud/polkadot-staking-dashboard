@@ -48,6 +48,7 @@
 		"styled-components": "^6.4.2",
 		"ui-buttons": "workspace:*",
 		"ui-core": "workspace:*",
+		"ui-overlay": "workspace:*",
 		"ui-styles": "workspace:*"
 	},
 	"devDependencies": {
