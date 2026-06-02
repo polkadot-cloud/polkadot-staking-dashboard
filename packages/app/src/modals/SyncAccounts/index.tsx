@@ -33,6 +33,7 @@ export const SyncAccounts = () => {
 	const { activeAccount, activeAddress } = useActiveAccount()
 
 	const [token, setToken] = useState<string | null>(null)
+	const [accessCode, setAccessCode] = useState<string | null>(null)
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 	const [mode, setMode] = useState<SyncMode>('active')
@@ -47,6 +48,7 @@ export const SyncAccounts = () => {
 		controllerRef.current = controller
 
 		setToken(null)
+		setAccessCode(null)
 		setLoading(true)
 		setError(null)
 
@@ -56,6 +58,7 @@ export const SyncAccounts = () => {
 			})
 			if (!controller.signal.aborted) {
 				setToken(data.token)
+				setAccessCode(data.accessCode)
 			}
 		} catch (err) {
 			if (!controller.signal.aborted) {
@@ -168,6 +171,26 @@ export const SyncAccounts = () => {
 								? t('scanToSync', { ns: 'modals' })
 								: null}
 				</h4>
+				{!loading && !error && accessCode ? (
+					<p
+						style={{
+							display: 'flex',
+							alignItems: 'baseline',
+							gap: '0.5rem',
+							margin: '-0.5rem 0 1rem',
+						}}
+					>
+						<span>{t('accessCode', { ns: 'modals' })}:</span>
+						<span
+							style={{
+								fontWeight: 700,
+								letterSpacing: '0.08em',
+							}}
+						>
+							{accessCode}
+						</span>
+					</p>
+				) : null}
 				<ExplainerBox>
 					<div className="text">
 						<h3>Staking Companion App</h3>
