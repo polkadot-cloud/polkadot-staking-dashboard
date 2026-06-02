@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react'
-import { useState } from 'react'
+import { useOutsideAlerter } from '@w3ux/hooks'
+import type { CSSProperties, Dispatch, SetStateAction } from 'react'
+import { useRef, useState } from 'react'
 import dotSvg from '../assets/svg/dot.svg'
 import glmrSvg from '../assets/svg/glmr.svg'
 import hdxSvg from '../assets/svg/hdx.svg'
@@ -71,11 +72,20 @@ const chainTokenBreakdown = [
 	},
 ]
 
-export const WalletPopover = () => {
+export const WalletPopover = ({
+	setOpen,
+}: {
+	setOpen: Dispatch<SetStateAction<boolean>>
+}) => {
+	const popoverRef = useRef<HTMLDivElement>(null)
 	const [activeTab, setActiveTab] = useState<'mix' | 'balances'>('balances')
 
+	useOutsideAlerter(popoverRef, () => {
+		setOpen(false)
+	}, ['header-notifications'])
+
 	return (
-		<div className={classes.popover}>
+		<div ref={popoverRef} className={classes.popover}>
 			<div className={classes.header}>
 				<h2 className={classes.title}>Wallet</h2>
 				<span className={classes.balance}>$1,248,592.42</span>
