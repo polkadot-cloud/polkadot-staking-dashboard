@@ -19,6 +19,6 @@
 		"smoldot": "^3.2.0"
 	},
 	"devDependencies": {
-		"tsx": "^4.22.3"
+		"tsx": "^4.22.4"
 	}
 }
