@@ -183,7 +183,7 @@ const removeFromSelected = (items: Validator[]) => {
 							</SearchList.SearchHeader>
 							{isSearching || (!hasSearchTerm && !validatorsSynced) ? (
 								<SearchList.Loading
-									message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
+									message={`${t(hasSearchTerm ? 'validatorSearch.searching' : 'waiting', { ns: 'app' })}...`}
 								/>
 							) : displayValidators.length > 0 ? (
 								displayValidators.map((validator) => {
