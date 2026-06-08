@@ -93,10 +93,10 @@ const addToSelected = (item: Validator) => {
 	)
 }
 
-	const removeFromSelected = (items: Validator[]) => {
-		const addresses = new Set(items.map((item) => item.address))
-		setSelected([...selected].filter((item) => !addresses.has(item.address)))
-	}
+const removeFromSelected = (items: Validator[]) => {
+	const addresses = new Set(items.map((item) => item.address))
+	setSelected((prev) => prev.filter((item) => !addresses.has(item.address)))
+}
 
 	const remaining = MaxNominations - nominations.length - selected.length
 	const canAdd = remaining > 0
