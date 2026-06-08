@@ -2,21 +2,34 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { activeProxy$ } from '@polkadot-cloud/connect-proxies'
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 import type { ActiveProxy } from 'types'
 import type { ActiveProxyHookInterface } from './types'
 
-export const useActiveProxy = (): ActiveProxyHookInterface => {
-	const [activeProxy, setActiveProxy] = useState<ActiveProxy | null>(null)
+// A single RxJS subscription shared across every hook instance. The current value is cached in a
+// module-level variable so useSyncExternalStore has a synchronous snapshot to read from, avoiding
+// the need for each component to hold its own subscription.
+let currentActiveProxy: ActiveProxy | null = null
+const activeProxyListeners = new Set<() => void>()
 
-	// This hook is intentionally a thin wrapper around the activeProxy$ observable from
-	// connect-proxies. Components subscribe directly to the global bus value here.
-	useEffect(() => {
-		const subscription = activeProxy$.subscribe((result) => {
-			setActiveProxy(result)
-		})
-		return () => subscription.unsubscribe()
-	}, [])
+activeProxy$.subscribe((result) => {
+	currentActiveProxy = result
+	for (const listener of activeProxyListeners) {
+		listener()
+	}
+})
+
+function subscribeToActiveProxy(onStoreChange: () => void): () => void {
+	activeProxyListeners.add(onStoreChange)
+	return () => activeProxyListeners.delete(onStoreChange)
+}
+
+export const useActiveProxy = (): ActiveProxyHookInterface => {
+	const activeProxy = useSyncExternalStore(
+		subscribeToActiveProxy,
+		() => currentActiveProxy,
+		() => currentActiveProxy,
+	)
 
 	return {
 		activeProxy,

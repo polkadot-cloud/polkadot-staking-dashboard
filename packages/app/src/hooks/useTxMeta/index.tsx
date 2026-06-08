@@ -2,21 +2,34 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { uids$ } from 'global-bus'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 import type { TxSubmissionItem } from 'types'
 import type { TxMetaHookInterface } from './types'
 
-export const useTxMeta = (): TxMetaHookInterface => {
-	const [uids, setUids] = useState<TxSubmissionItem[]>([])
+// A single RxJS subscription shared across every hook instance. The current value is cached in a
+// module-level variable so useSyncExternalStore has a synchronous snapshot to read from, avoiding
+// the need for each component to hold its own subscription.
+let currentUids: TxSubmissionItem[] = []
+const uidsListeners = new Set<() => void>()
 
-	// Subscribe to the global uids$ bus so this hook always reflects the latest state of in-flight
-	// and completed transactions. The subscription is cleaned up when the calling component unmounts.
-	useEffect(() => {
-		const subscription = uids$.subscribe((result) => {
-			setUids(result)
-		})
-		return () => subscription.unsubscribe()
-	}, [])
+uids$.subscribe((result) => {
+	currentUids = result
+	for (const listener of uidsListeners) {
+		listener()
+	}
+})
+
+function subscribeToUids(onStoreChange: () => void): () => void {
+	uidsListeners.add(onStoreChange)
+	return () => uidsListeners.delete(onStoreChange)
+}
+
+export const useTxMeta = (): TxMetaHookInterface => {
+	const uids = useSyncExternalStore(
+		subscribeToUids,
+		() => currentUids,
+		() => currentUids,
+	)
 
 	// Wrap the lookup functions in useCallback so their references stay stable between renders.
 	// Components and effects that depend on these won't re-run unnecessarily unless the uids array
