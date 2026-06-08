@@ -3,7 +3,7 @@
 
 import { formatAccountSs58, isValidAddress } from '@w3ux/util-dedot'
 import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { RoleEditInputProps } from '../types'

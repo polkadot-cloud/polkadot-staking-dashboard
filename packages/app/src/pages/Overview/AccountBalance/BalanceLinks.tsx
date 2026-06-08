@@ -4,7 +4,7 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { getSubscanBalanceChainId } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert } from 'ui-buttons'
 import { Separator } from 'ui-core/base'

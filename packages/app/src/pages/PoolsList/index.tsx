@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useNetwork } from 'contexts/Network'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { onTabVisitEvent } from 'event-tracking'
+import { useNetwork } from 'hooks/useNetwork'
 import { PagePreloader } from 'library/PagePreloader'
 import { PageTabs } from 'library/PageTabs'
 import { lazy, Suspense, useEffect } from 'react'

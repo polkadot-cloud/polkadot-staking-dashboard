@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Router } from 'Router'
-import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
+import { useNetwork } from 'hooks/useNetwork'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ThemeProvider } from 'styled-components'
