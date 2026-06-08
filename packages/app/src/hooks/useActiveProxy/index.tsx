@@ -9,6 +9,8 @@ import type { ActiveProxyHookInterface } from './types'
 export const useActiveProxy = (): ActiveProxyHookInterface => {
 	const [activeProxy, setActiveProxy] = useState<ActiveProxy | null>(null)
 
+	// This hook is intentionally a thin wrapper around the activeProxy$ observable from
+	// connect-proxies. Components subscribe directly to the global bus value here.
 	useEffect(() => {
 		const subscription = activeProxy$.subscribe((result) => {
 			setActiveProxy(result)
@@ -18,6 +20,8 @@ export const useActiveProxy = (): ActiveProxyHookInterface => {
 
 	return {
 		activeProxy,
+		// Flatten proxyType out of the activeProxy object so callers don't have to reach into it — most
+		// components only need the type string, not the full record.
 		activeProxyType: activeProxy?.proxyType || null,
 	}
 }
