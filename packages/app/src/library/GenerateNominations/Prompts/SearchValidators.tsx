@@ -85,18 +85,18 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 		return () => clearTimeout(timeoutId)
 	}, [searchTerm, debouncedSearch])
 
-const addToSelected = (item: Validator) => {
-	setSelected((prev) =>
-		prev.some(({ address }) => address === item.address)
-			? prev
-			: prev.concat(item),
-	)
-}
+	const addToSelected = (item: Validator) => {
+		setSelected((prev) =>
+			prev.some(({ address }) => address === item.address)
+				? prev
+				: prev.concat(item),
+		)
+	}
 
-const removeFromSelected = (items: Validator[]) => {
-	const addresses = new Set(items.map((item) => item.address))
-	setSelected((prev) => prev.filter((item) => !addresses.has(item.address)))
-}
+	const removeFromSelected = (items: Validator[]) => {
+		const addresses = new Set(items.map((item) => item.address))
+		setSelected((prev) => prev.filter((item) => !addresses.has(item.address)))
+	}
 
 	const remaining = MaxNominations - nominations.length - selected.length
 	const canAdd = remaining > 0
