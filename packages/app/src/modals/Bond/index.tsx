@@ -39,7 +39,7 @@ export const Bond = () => {
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
-	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
+	const { getPendingPoolRewards, getPoolMembership } = useBalances()
 
 	const { membership } = getPoolMembership(activeAddress)
 	const { unit, units } = getStakingChainData(network)
@@ -49,11 +49,13 @@ export const Bond = () => {
 	const isPooling = bondFor === 'pool'
 	const { nominator, transferableBalance } = balances
 
+	// `totalAdditionalBond` and `transferableBalance` already have `feeReserve`
+	// deducted (see `getTransferableBalance`), so it must not be subtracted again
 	const freeToBond = new BigNumber(
 		planckToUnit(
-			(bondFor === 'nominator'
+			bondFor === 'nominator'
 				? nominator.totalAdditionalBond
-				: transferableBalance) - feeReserve,
+				: transferableBalance,
 			units,
 		),
 	)
