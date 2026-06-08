@@ -4,7 +4,7 @@
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

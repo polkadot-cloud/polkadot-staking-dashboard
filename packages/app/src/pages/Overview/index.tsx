@@ -3,9 +3,9 @@
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'

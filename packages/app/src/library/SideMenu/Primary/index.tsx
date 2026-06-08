@@ -3,10 +3,10 @@
 
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNetwork } from 'contexts/Network'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { onPageNavigationEvent } from 'event-tracking'
+import { useNetwork } from 'hooks/useNetwork'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Tooltip } from 'ui-core/base'

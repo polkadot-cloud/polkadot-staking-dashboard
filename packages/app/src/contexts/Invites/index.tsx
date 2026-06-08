@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue } from '@w3ux/utils'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import type { ReactNode } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import {

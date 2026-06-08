@@ -3,9 +3,9 @@
 
 import { pageFromUri } from '@w3ux/utils'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useTxMeta } from 'contexts/TxMeta'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useSyncing } from 'hooks/useSyncing'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { useLocation } from 'react-router-dom'
 import { Spinner } from 'ui-core/base'
 

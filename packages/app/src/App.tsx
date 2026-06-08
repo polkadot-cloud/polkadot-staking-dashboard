@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { Providers } from 'Providers'
-import { NetworkProvider } from 'contexts/Network'
 import { ThemesProvider } from 'contexts/Themes'
 import { ThemeValuesProvider } from 'contexts/ThemeValues'
 import { i18next } from 'locales'
@@ -12,9 +11,7 @@ export const App = () => (
 	<I18nextProvider i18n={i18next}>
 		<ThemesProvider>
 			<ThemeValuesProvider>
-				<NetworkProvider>
-					<Providers />
-				</NetworkProvider>
+				<Providers />
 			</ThemeValuesProvider>
 		</ThemesProvider>
 	</I18nextProvider>
