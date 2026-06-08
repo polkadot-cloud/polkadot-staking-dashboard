@@ -6,22 +6,31 @@ import { useCallback, useSyncExternalStore } from 'react'
 import type { TxSubmissionItem } from 'types'
 import type { TxMetaHookInterface } from './types'
 
-// A single RxJS subscription shared across every hook instance. The current value is cached in a
-// module-level variable so useSyncExternalStore has a synchronous snapshot to read from, avoiding
-// the need for each component to hold its own subscription.
+// A single RxJS subscription shared across every hook instance. The current value is cached in a a
+// module-level variable so useSyncExternalStore has a synchronous snapshot to read from. The
+// subscription is reference-counted: created when the first component mounts and torn down when the
+// last one unmounts, so no RxJS subscriber is held open while the hook has no consumers.
 let currentUids: TxSubmissionItem[] = []
 const uidsListeners = new Set<() => void>()
-
-uids$.subscribe((result) => {
-	currentUids = result
-	for (const listener of uidsListeners) {
-		listener()
-	}
-})
+let uidsRxSubscription: { unsubscribe(): void } | null = null
 
 function subscribeToUids(onStoreChange: () => void): () => void {
+	if (uidsListeners.size === 0) {
+		uidsRxSubscription = uids$.subscribe((result) => {
+			currentUids = result
+			for (const listener of uidsListeners) {
+				listener()
+			}
+		})
+	}
 	uidsListeners.add(onStoreChange)
-	return () => uidsListeners.delete(onStoreChange)
+	return () => {
+		uidsListeners.delete(onStoreChange)
+		if (uidsListeners.size === 0) {
+			uidsRxSubscription?.unsubscribe()
+			uidsRxSubscription = null
+		}
+	}
 }
 
 export const useTxMeta = (): TxMetaHookInterface => {

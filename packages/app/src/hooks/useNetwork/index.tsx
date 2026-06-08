@@ -15,20 +15,28 @@ import { useCallback, useSyncExternalStore } from 'react'
 import type { NetworkId } from 'types'
 import type { NetworkHookInterface } from './types'
 
-// A single RxJS subscription shared across every hook instance. Rather than each component creating
-// its own subscriber, we maintain one module-level subscription that forwards emissions to a set of
-// plain React callbacks. This keeps the number of RxJS subscriptions constant regardless of how
-// many components call useNetwork.
+// A single RxJS subscription shared across every hook instance. The subscription is reference-
+// counted: it is created when the first component mounts and torn down when the last one unmounts,
+// so no RxJS subscriber is held open while the hook has no consumers.
 const networkListeners = new Set<() => void>()
-networkConfig$.subscribe(() => {
-	for (const listener of networkListeners) {
-		listener()
-	}
-})
+let networkRxSubscription: { unsubscribe(): void } | null = null
 
 function subscribeToNetwork(onStoreChange: () => void): () => void {
+	if (networkListeners.size === 0) {
+		networkRxSubscription = networkConfig$.subscribe(() => {
+			for (const listener of networkListeners) {
+				listener()
+			}
+		})
+	}
 	networkListeners.add(onStoreChange)
-	return () => networkListeners.delete(onStoreChange)
+	return () => {
+		networkListeners.delete(onStoreChange)
+		if (networkListeners.size === 0) {
+			networkRxSubscription?.unsubscribe()
+			networkRxSubscription = null
+		}
+	}
 }
 
 export const useNetwork = (): NetworkHookInterface => {

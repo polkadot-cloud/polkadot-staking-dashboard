@@ -6,22 +6,31 @@ import { useSyncExternalStore } from 'react'
 import type { ActiveProxy } from 'types'
 import type { ActiveProxyHookInterface } from './types'
 
-// A single RxJS subscription shared across every hook instance. The current value is cached in a
-// module-level variable so useSyncExternalStore has a synchronous snapshot to read from, avoiding
-// the need for each component to hold its own subscription.
+// A single RxJS subscription shared across every hook instance. The current value is cached in a a
+// module-level variable so useSyncExternalStore has a synchronous snapshot to read from. The
+// subscription is reference-counted: created when the first component mounts and torn down when the
+// last one unmounts, so no RxJS subscriber is held open while the hook has no consumers.
 let currentActiveProxy: ActiveProxy | null = null
 const activeProxyListeners = new Set<() => void>()
-
-activeProxy$.subscribe((result) => {
-	currentActiveProxy = result
-	for (const listener of activeProxyListeners) {
-		listener()
-	}
-})
+let activeProxyRxSubscription: { unsubscribe(): void } | null = null
 
 function subscribeToActiveProxy(onStoreChange: () => void): () => void {
+	if (activeProxyListeners.size === 0) {
+		activeProxyRxSubscription = activeProxy$.subscribe((result) => {
+			currentActiveProxy = result
+			for (const listener of activeProxyListeners) {
+				listener()
+			}
+		})
+	}
 	activeProxyListeners.add(onStoreChange)
-	return () => activeProxyListeners.delete(onStoreChange)
+	return () => {
+		activeProxyListeners.delete(onStoreChange)
+		if (activeProxyListeners.size === 0) {
+			activeProxyRxSubscription?.unsubscribe()
+			activeProxyRxSubscription = null
+		}
+	}
 }
 
 export const useActiveProxy = (): ActiveProxyHookInterface => {
