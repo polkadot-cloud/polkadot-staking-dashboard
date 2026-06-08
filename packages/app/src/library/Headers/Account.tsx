@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useTheme } from 'contexts/Themes'
+import { useActiveProxy } from 'hooks/useActiveProxy'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ButtonAccount } from 'ui-buttons'

@@ -5,7 +5,7 @@ import {
 	type ValidatorSupportedNetwork,
 	validatorListSupported,
 } from '@w3ux/validator-assets'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { PagePreloader } from 'library/PagePreloader'
 import { lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -10,7 +10,7 @@ import {
 	getStakingChainData,
 } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import type { AnyJson } from 'types'
 import { planckToUnitBn } from 'utils'
 import { useErasPerDay } from '../useErasPerDay'

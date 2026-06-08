@@ -3,7 +3,7 @@
 
 import { getStakingChain } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { createPoolAccounts as createUtil } from 'utils'
 
 export const useCreatePoolAccounts = () => {
