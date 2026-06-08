@@ -4,10 +4,10 @@
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
-import { useNetwork } from 'contexts/Network'
 import { hexToString } from 'dedot/utils'
 import { removeSyncing } from 'global-bus'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
+import { useNetwork } from 'hooks/useNetwork'
 import type { ReactNode } from 'react'
 import { useCallback, useRef, useState } from 'react'
 import type {

@@ -4,9 +4,9 @@
 import { getStakingChainData } from 'consts/util/chains'
 import { useApi } from 'contexts/Api'
 import { useEraStakers } from 'contexts/EraStakers'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { useNetwork } from 'hooks/useNetwork'
 import { fetchValidatorAvgRewardRateBatch } from 'plugin-staking-api'
 import { useEffect, useState } from 'react'
 import {

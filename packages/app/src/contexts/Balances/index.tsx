@@ -5,7 +5,6 @@ import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { getStakingChain, getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import {
 	accountBalances$,
 	defaultAccountBalance,
@@ -14,6 +13,7 @@ import {
 	poolMemberships$,
 	stakingLedgers$,
 } from 'global-bus'
+import { useNetwork } from 'hooks/useNetwork'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type {

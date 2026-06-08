@@ -3,7 +3,7 @@
 
 import type { NetworkId } from 'types'
 
-export interface NetworkContextInterface {
+export interface NetworkHookInterface {
 	network: NetworkId
 	switchNetwork: (network: NetworkId) => Promise<void>
 }

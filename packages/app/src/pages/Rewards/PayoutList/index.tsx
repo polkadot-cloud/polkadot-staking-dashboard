@@ -5,10 +5,10 @@ import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
 import { isPoolShareEnabled } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { getUnixTime, startOfToday, subDays } from 'date-fns'
+import { useNetwork } from 'hooks/useNetwork'
 import { CardWrapper } from 'library/Card/Wrappers'
 import {
 	fetchCombinedPoolRewards,

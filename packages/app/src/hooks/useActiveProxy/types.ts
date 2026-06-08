@@ -3,7 +3,7 @@
 
 import type { ActiveProxy } from 'types'
 
-export interface ActiveProxyContextInterface {
+export interface ActiveProxyHookInterface {
 	activeProxy: ActiveProxy | null
 	activeProxyType: string | null
 }

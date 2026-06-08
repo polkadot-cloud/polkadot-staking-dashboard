@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useImportedAccounts } from '@polkadot-cloud/connect'
-import { useActiveProxy } from 'contexts/ActiveProxy'
+import { useActiveProxy } from 'hooks/useActiveProxy'
 import { useSignerAvailable } from 'hooks/useSignerAvailable'
 import { useTranslation } from 'react-i18next'
 import type { ActiveAccount } from 'types'

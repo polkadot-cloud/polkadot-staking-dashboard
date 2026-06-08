@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { useTranslation } from 'react-i18next'
 import { ButtonSubmit } from 'ui-buttons'
 import { planckToUnitBn } from 'utils'

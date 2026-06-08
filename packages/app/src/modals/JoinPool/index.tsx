@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getNetworkKnownPoolIds } from 'consts/util/pools'
-import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useNetwork } from 'hooks/useNetwork'
 import { useState } from 'react'
 import { Close } from 'ui-overlay'
 import { Form } from './Form'
