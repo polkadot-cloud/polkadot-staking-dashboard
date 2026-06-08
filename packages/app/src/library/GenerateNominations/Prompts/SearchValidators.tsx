@@ -3,6 +3,7 @@
 
 import { MaxNominations } from 'consts'
 import { useNetwork } from 'contexts/Network'
+import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { emitNotification } from 'global-bus'
 import { SearchInput } from 'library/List/SearchInput'
 import { Identity } from 'library/ListItem/Labels/Identity'
@@ -21,6 +22,10 @@ import type { PromptProps } from '../types'
 export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 	const { t } = useTranslation()
 	const { network } = useNetwork()
+	const { getValidators, validatorsFetched } = useValidators()
+
+	// Number of validators to show by default when no search term is entered
+	const defaultDisplayLimit = 50
 
 	// Store the validators selected from search results
 	const [selected, setSelected] = useState<Validator[]>([])
@@ -80,11 +85,18 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 		return () => clearTimeout(timeoutId)
 	}, [searchTerm, debouncedSearch])
 
-	const addToSelected = (item: Validator) =>
-		setSelected([...selected].concat(item))
+	const addToSelected = (item: Validator) => {
+		setSelected((prev) =>
+			prev.some(({ address }) => address === item.address)
+				? prev
+				: prev.concat(item),
+		)
+	}
 
-	const removeFromSelected = (items: Validator[]) =>
-		setSelected([...selected].filter((item) => !items.includes(item)))
+	const removeFromSelected = (items: Validator[]) => {
+		const addresses = new Set(items.map((item) => item.address))
+		setSelected((prev) => prev.filter((item) => !addresses.has(item.address)))
+	}
 
 	const remaining = MaxNominations - nominations.length - selected.length
 	const canAdd = remaining > 0
@@ -98,6 +110,20 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 	const filteredSearchResults = searchResults.filter(
 		(validator) => (validator.prefs?.commission || 0) <= maxCommission,
 	)
+
+	const hasSearchTerm = searchTerm.length > 0
+	const validatorsSynced = validatorsFetched === 'synced'
+
+	// When no search term is entered, show a capped, commission-filtered slice of
+	// the full validator list (already loaded client-side via useValidators)
+	const defaultValidators = getValidators()
+		.filter((validator) => (validator.prefs?.commission || 0) <= maxCommission)
+		.slice(0, defaultDisplayLimit)
+
+	// The validators to render in the list area
+	const displayValidators = hasSearchTerm
+		? filteredSearchResults
+		: defaultValidators
 
 	return (
 		<>
@@ -145,52 +171,53 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 							/>
 						</div>
 
-						{/* Search Results Section */}
-						{searchTerm.length > 0 && (
-							<div>
-								<SearchList.SearchHeader>
-									{isSearching
-										? `${t('validatorSearch.searching', { ns: 'app' })}...`
-										: `${t('validatorSearch.searchResults', { ns: 'app' })} (${filteredSearchResults.length})`}
-								</SearchList.SearchHeader>
-								{isSearching ? (
-									<SearchList.Loading
-										message={`${t('validatorSearch.searching', { ns: 'app' })}...`}
-									/>
-								) : filteredSearchResults.length > 0 ? (
-									filteredSearchResults.map((validator) => {
-										const inInitial = !!nominations.find(
-											({ address }) => address === validator.address,
-										)
-										const inSelected = selected.includes(validator)
-										const disabled = !canAdd || inInitial
+						{/* Results Section: search results when searching, otherwise a
+						    default slice of the full validator list */}
+						<div>
+							<SearchList.SearchHeader>
+								{isSearching
+									? `${t('validatorSearch.searching', { ns: 'app' })}...`
+									: hasSearchTerm
+										? `${t('validatorSearch.searchResults', { ns: 'app' })} (${filteredSearchResults.length})`
+										: `${t('validators', { ns: 'app' })} (${defaultValidators.length})`}
+							</SearchList.SearchHeader>
+							{isSearching || (!hasSearchTerm && !validatorsSynced) ? (
+								<SearchList.Loading
+									message={`${t(hasSearchTerm ? 'validatorSearch.searching' : 'waiting', { ns: 'app' })}...`}
+								/>
+							) : displayValidators.length > 0 ? (
+								displayValidators.map((validator) => {
+									const inInitial = !!nominations.find(
+										({ address }) => address === validator.address,
+									)
+									const inSelected = selected.some(
+										({ address }) => address === validator.address,
+									)
+									const disabled = !canAdd || inInitial
 
-										return (
-											<PromptListItem
-												key={`search_result_${validator.address}`}
-												className={
-													disabled && inInitial ? 'inactive' : undefined
-												}
-											>
-												<Checkbox
-													checked={inInitial || inSelected}
-													onClick={() => {
-														if (inSelected) {
-															removeFromSelected([validator])
-														} else if (!disabled) {
-															addToSelected(validator)
-														}
-													}}
-												/>
-												<Identity address={validator.address} />
-											</PromptListItem>
-										)
-									})
-								) : (
-									<SearchList.NoResults />
-								)}
-							</div>
-						)}
+									return (
+										<PromptListItem
+											key={`search_result_${validator.address}`}
+											className={disabled && inInitial ? 'inactive' : undefined}
+										>
+											<Checkbox
+												checked={inInitial || inSelected}
+												onClick={() => {
+													if (inSelected) {
+														removeFromSelected([validator])
+													} else if (!disabled) {
+														addToSelected(validator)
+													}
+												}}
+											/>
+											<Identity address={validator.address} />
+										</PromptListItem>
+									)
+								})
+							) : (
+								<SearchList.NoResults />
+							)}
+						</div>
 					</SearchList.LeftColumn>
 
 					{/* Right Column - Selected Validators (1/3 width) */}

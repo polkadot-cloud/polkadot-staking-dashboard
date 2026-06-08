@@ -7,6 +7,7 @@ export const localeDefinitions = {
 	de: { label: 'Deutsch' },
 	ko: { label: '한국어' },
 	pt: { label: 'Português' },
+	tr: { label: 'Türkçe' },
 	zh: { label: '中文' },
 	es: { label: 'Español' },
 } as const

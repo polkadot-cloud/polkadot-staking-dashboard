@@ -25,5 +25,16 @@ const DEFAULT: RpcEndpointHealthData = {
 	},
 }
 
+// NOTE: Test API key for the `rpcEndpointHealth` query. Key deliberately not stored in environment
+// variables since this query is only used in testing and is not critical to the functioning of the
+// app. Rotate key if moved to a private environment variable store.
+const RPC_ENDPOINT_HEALTH_API_KEY = 'sk_test_api_key'
+
 export const fetchRpcEndpointHealth = (network: string) =>
-	fetchQuery<RpcEndpointHealthData>(QUERY, { network }, DEFAULT)
+	fetchQuery<RpcEndpointHealthData>(QUERY, { network }, DEFAULT, {
+		context: {
+			headers: {
+				'x-api-key': RPC_ENDPOINT_HEALTH_API_KEY,
+			},
+		},
+	})
