@@ -85,12 +85,13 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 		return () => clearTimeout(timeoutId)
 	}, [searchTerm, debouncedSearch])
 
-	const addToSelected = (item: Validator) => {
-		if (selected.some(({ address }) => address === item.address)) {
-			return
-		}
-		setSelected([...selected].concat(item))
-	}
+const addToSelected = (item: Validator) => {
+	setSelected((prev) =>
+		prev.some(({ address }) => address === item.address)
+			? prev
+			: prev.concat(item),
+	)
+}
 
 	const removeFromSelected = (items: Validator[]) => {
 		const addresses = new Set(items.map((item) => item.address))
