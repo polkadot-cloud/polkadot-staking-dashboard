@@ -3,8 +3,8 @@
 
 import classNames from 'classnames'
 import { useList } from 'contexts/List'
-import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { usePlugins } from 'hooks/usePlugins'
 import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { HistoricalEraPoints } from 'library/List/EraPointsGraph/HistoricalEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'

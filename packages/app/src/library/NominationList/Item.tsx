@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { usePlugins } from 'hooks/usePlugins'
 import { CurrentEraPoints } from 'library/List/EraPointsGraph/CurrentEraPoints'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { APY } from 'library/ListItem/Labels/APY'
