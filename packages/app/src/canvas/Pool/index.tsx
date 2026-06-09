@@ -3,9 +3,9 @@
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { getNetworkKnownPoolIds } from 'consts/util/pools'
-import { useInvites } from 'contexts/Invites'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { poolRoleIdentities$ } from 'global-bus'
+import { useInvites } from 'hooks/useInvites'
 import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
 import { CardWrapper } from 'library/Card/Wrappers'
