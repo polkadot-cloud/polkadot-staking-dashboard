@@ -62,19 +62,14 @@ export const Overview = (props: PayoutHistoryProps) => {
 
 	const annualRewardAfterCommission =
 		annualRewardBase * (1 - avgCommission / 100)
-	const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
-	const dailyRewardAfterCommission = annualRewardAfterCommission / 365
 
-	const annualReward = showAdjusted
+	const activeAnnualReward = showAdjusted
 		? annualRewardAfterCommission
 		: annualRewardBase
 
-	const monthlyReward = showAdjusted
-		? monthlyRewardAfterCommission
-		: annualRewardBase / 12
-	const dailyReward = showAdjusted
-		? dailyRewardAfterCommission
-		: annualRewardBase / 365
+	const annualReward = activeAnnualReward
+	const monthlyReward = annualReward / 12
+	const dailyReward = annualReward / 365
 
 	// Format the currency with user's locale and currency preference
 	const formatLocalCurrency = (value: number) =>

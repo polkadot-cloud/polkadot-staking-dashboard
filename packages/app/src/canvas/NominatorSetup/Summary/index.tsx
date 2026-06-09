@@ -39,6 +39,11 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
 	const { unit, units } = getStakingChainData(network)
 
+	// Whether the active account (or its active proxy) can actually sign. Used to
+	// gate the submit button so read-only accounts cannot attempt to submit
+	const hasSigner =
+		accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+
 	const setup = getNominatorSetup(activeAddress)
 	const { progress } = setup
 	const { bond, nominations, payee } = progress
@@ -103,9 +108,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 			/>
 
 			<MotionContainer thisSection={section} activeSection={setup.section}>
-				{!(
-					accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-				) && <Warning text={t('readOnly')} />}
+				{!hasSigner && <Warning text={t('readOnly')} />}
 				<SummaryWrapper style={{ marginTop: '1rem' }}>
 					<section>
 						<div>
@@ -151,7 +154,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 				>
 					<SubmitTx
 						submitText={t('startNominating')}
-						valid={true}
+						valid={hasSigner}
 						{...submitExtrinsic}
 						displayFor="canvas"
 						stacked
