@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxNominations } from 'consts'
-import { useNetwork } from 'contexts/Network'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { emitNotification } from 'global-bus'
+import { useNetwork } from 'hooks/useNetwork'
 import { SearchInput } from 'library/List/SearchInput'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { Title } from 'library/Prompt/Title'

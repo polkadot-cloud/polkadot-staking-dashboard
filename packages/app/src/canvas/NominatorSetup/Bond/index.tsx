@@ -4,7 +4,7 @@
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
-import { useTxMeta } from 'contexts/TxMeta'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { NominateStatusBar } from 'library/Form/NominateStatusBar'
 import { Footer } from 'library/SetupSteps/Footer'

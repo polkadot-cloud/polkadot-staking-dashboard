@@ -8,7 +8,7 @@ import { NominateBuffer } from 'consts/nominate'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import type { AccountBalances } from 'types'
 import { calculateAllBalances } from 'utils'
 

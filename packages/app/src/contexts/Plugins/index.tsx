@@ -3,8 +3,8 @@
 
 import { createSafeContext } from '@w3ux/hooks'
 import { DisabledPluginsPerNetwork } from 'consts/plugins'
-import { useNetwork } from 'contexts/Network'
 import { getAvailablePlugins, plugins$, setPlugins } from 'global-bus'
+import { useNetwork } from 'hooks/useNetwork'
 import type { ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import type { Plugin } from 'types'

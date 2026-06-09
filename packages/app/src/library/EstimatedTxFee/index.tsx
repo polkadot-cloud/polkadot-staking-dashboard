@@ -3,8 +3,8 @@
 
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
-import { useTxMeta } from 'contexts/TxMeta'
+import { useNetwork } from 'hooks/useNetwork'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'
 import type { EstimatedTxFeeProps } from './types'

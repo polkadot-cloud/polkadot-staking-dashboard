@@ -3,7 +3,6 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxNominations } from 'consts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import {
 	ManageNominationsProvider,
@@ -11,6 +10,7 @@ import {
 } from 'contexts/ManageNominations'
 import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useActiveProxy } from 'hooks/useActiveProxy'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { GenerateNominations } from 'library/GenerateNominations'
