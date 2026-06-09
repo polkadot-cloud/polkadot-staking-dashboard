@@ -5,14 +5,14 @@ import { activeProxy$ } from '@polkadot-cloud/connect-proxies'
 import { useSyncExternalStore } from 'react'
 import type { ActiveProxy } from 'types'
 import { createObservableStore } from 'utils'
-import type { ActiveProxyContextInterface } from './types'
+import type { ActiveProxyHookInterface } from './types'
 
 const activeProxyStore = createObservableStore<ActiveProxy | null>(
 	activeProxy$,
 	null,
 )
 
-export const useActiveProxy = (): ActiveProxyContextInterface => {
+export const useActiveProxy = (): ActiveProxyHookInterface => {
 	const activeProxy = useSyncExternalStore(
 		activeProxyStore.subscribe,
 		activeProxyStore.getSnapshot,
