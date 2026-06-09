@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js'
 import { getRelayChainConsts } from 'consts/util'
-import { useApi } from 'contexts/Api'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 
 export const useErasPerDay = () => {

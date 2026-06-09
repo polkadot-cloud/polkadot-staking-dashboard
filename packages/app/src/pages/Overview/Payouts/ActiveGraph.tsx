@@ -3,10 +3,10 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { getStakingChainData, isPoolShareEnabled } from 'consts/util'
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { DefaultLocale, locales } from 'locales'
 import {

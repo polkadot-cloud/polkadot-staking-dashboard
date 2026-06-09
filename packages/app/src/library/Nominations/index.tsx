@@ -3,11 +3,11 @@
 
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useBalances } from 'contexts/Balances'
 import { useHelp } from 'contexts/Help'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useActivePool } from 'hooks/useActivePool'
+import { useBalances } from 'hooks/useBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { ListStatusHeader } from 'library/List'

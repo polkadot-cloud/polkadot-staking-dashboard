@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusPreloader } from 'library/StatusPreloader'

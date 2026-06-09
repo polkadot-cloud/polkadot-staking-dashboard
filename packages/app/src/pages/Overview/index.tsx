@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useBalances } from 'contexts/Balances'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
+import { useBalances } from 'hooks/useBalances'
 import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'

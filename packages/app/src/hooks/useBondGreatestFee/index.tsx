@@ -4,10 +4,10 @@
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { maxBigInt } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
 import { useEffect, useState } from 'react'
 import type { BondFor } from 'types'
 
