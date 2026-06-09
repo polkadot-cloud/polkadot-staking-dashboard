@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-export type CurrencyContextInterface = {
-	currency: string
-	setCurrency: (currency: string) => void
+export type TokenPricesHookInterface = {
+	price: number
+	change: number
 }

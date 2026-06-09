@@ -3,7 +3,7 @@
 
 import { rmCommas } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import { useTokenPrices } from 'contexts/TokenPrice'
+import { useTokenPrices } from 'hooks/useTokenPrices'
 import { formatFiatCurrency } from 'locales/util'
 
 export const Value = ({
