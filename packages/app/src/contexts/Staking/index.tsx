@@ -3,8 +3,8 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext } from '@w3ux/hooks'
-import { useBalances } from 'contexts/Balances'
 import type { StakingContextInterface } from 'contexts/Staking/types'
+import { useBalances } from 'hooks/useBalances'
 import type { ReactNode } from 'react'
 
 export const [StakingContext, useStaking] =

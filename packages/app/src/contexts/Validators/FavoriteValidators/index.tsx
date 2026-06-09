@@ -3,7 +3,7 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import { getRelayChainData } from 'consts/util'
-import { useApi } from 'contexts/Api'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import type { ReactNode } from 'react'
 import { useState } from 'react'

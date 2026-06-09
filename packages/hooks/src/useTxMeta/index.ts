@@ -5,11 +5,11 @@ import { uids$ } from 'global-bus'
 import { useCallback, useSyncExternalStore } from 'react'
 import type { TxSubmissionItem } from 'types'
 import { createObservableStore } from 'utils'
-import type { TxMetaContextInterface } from './types'
+import type { TxMetaHookInterface } from './types'
 
 const uidsStore = createObservableStore<TxSubmissionItem[]>(uids$, [])
 
-export const useTxMeta = (): TxMetaContextInterface => {
+export const useTxMeta = (): TxMetaHookInterface => {
 	const uids = useSyncExternalStore(
 		uidsStore.subscribe,
 		uidsStore.getSnapshot,

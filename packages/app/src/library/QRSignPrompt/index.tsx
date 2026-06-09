@@ -11,9 +11,9 @@ import {
 	QrScanSignature,
 } from '@polkadot-cloud/connect-vault'
 import { getStakingChain } from 'consts/util'
-import { useApi } from 'contexts/Api'
 import { usePrompt } from 'contexts/Prompt'
 import { hexToU8a } from 'dedot/utils'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import type { SignerPromptProps } from 'library/SubmitTx/types'
 import { useState } from 'react'

@@ -6,6 +6,7 @@ import type { Sync } from '@w3ux/types'
 import { setStateWithRef, shuffle } from '@w3ux/utils'
 import { hexToString } from 'dedot/utils'
 import { removeSyncing } from 'global-bus'
+import { useApi } from 'hooks/useApi'
 import { useCreatePoolAccounts } from 'hooks/useCreatePoolAccounts'
 import { useNetwork } from 'hooks/useNetwork'
 import type { ReactNode } from 'react'
@@ -18,7 +19,6 @@ import type {
 	PoolTab,
 } from 'types'
 import { poolSearchFilter } from 'utils'
-import { useApi } from '../../Api'
 import type { BondedPoolsContextState } from './types'
 
 export const [BondedPoolsContext, useBondedPools] =

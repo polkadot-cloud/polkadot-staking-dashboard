@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useApi } from 'hooks/useApi'
 import { useProxySupported } from 'hooks/useProxySupported'
 import type { ActiveProxy, MaybeAddress } from 'types'
 

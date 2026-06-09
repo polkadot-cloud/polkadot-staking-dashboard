@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChain } from 'consts/util'
-import { useApi } from 'contexts/Api'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { createPoolAccounts as createUtil } from 'utils'
 
