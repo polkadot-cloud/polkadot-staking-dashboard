@@ -51,12 +51,16 @@ const stopTokenPrices = () => {
 }
 
 const fetchCurrentTokenPrice = async () => {
-	if (!currentConfig) {
+	const config = currentConfig
+	if (!config) {
 		return
 	}
-	const { network, currency, enabled } = currentConfig
+	const { network, currency, enabled } = config
 	if (!enabled || IGNORE_NETWORKS.includes(network)) {
-		setCurrentPrice(defaultTokenPrice)
+		// Prevent stale calls from overwriting state after a config change.
+		if (currentConfig === config) {
+			setCurrentPrice(defaultTokenPrice)
+		}
 		return
 	}
 
@@ -64,6 +68,12 @@ const fetchCurrentTokenPrice = async () => {
 	const { tokenPrice } = await fetchTokenPrice(
 		`${unit}${currency}${currency === 'USD' ? 'T' : ''}`,
 	)
+
+	// Avoid applying results for a stale network/currency config.
+	if (currentConfig !== config) {
+		return
+	}
+
 	setCurrentPrice(
 		tokenPrice
 			? formatTokenPrice(tokenPrice.price, tokenPrice.change)
