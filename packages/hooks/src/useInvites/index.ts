@@ -95,16 +95,19 @@ const subscribeInvites = (listener: () => void) => {
 		listeners.delete(listener)
 	}
 }
+}
+
+const serverInvitesSnapshot: InvitesState = {
+	acknowledged: true,
+	inviteConfig: undefined,
+}
 
 export const useInvites = (): InvitesHookInterface => {
 	const { network } = useNetwork()
 	const { acknowledged, inviteConfig } = useSyncExternalStore(
 		subscribeInvites,
 		getInvitesSnapshot,
-		() => ({
-			acknowledged: true,
-			inviteConfig: undefined,
-		}),
+		() => serverInvitesSnapshot,
 	)
 
 	useEffect(() => {
