@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { determinePoolDisplay } from 'contexts/Pools/util'
 import { getPoolMembership } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useTranslation } from 'react-i18next'
 
 export const useActiveAccountPool = () => {

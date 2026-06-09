@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { useBalances } from 'contexts/Balances'
 import { useUi } from 'contexts/UI'
+import { useBalances } from 'hooks/useBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'

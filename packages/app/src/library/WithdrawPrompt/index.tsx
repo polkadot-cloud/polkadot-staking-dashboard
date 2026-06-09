@@ -3,11 +3,11 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useNetwork } from 'hooks/useNetwork'
 import { CardWrapper } from 'library/Card/Wrappers'

@@ -7,9 +7,9 @@ import {
 	faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useApi } from 'contexts/Api'
 import { useHelp } from 'contexts/Help'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
