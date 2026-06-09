@@ -3,10 +3,10 @@
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util/chains'
-import { useApi } from 'contexts/Api'
 import { usePrompt } from 'contexts/Prompt'
 import { getRpcEndpoints, setRpcEndpoints } from 'global-bus'
 import { measureChainLatencies } from 'global-bus/util'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { Title } from 'library/Prompt/Title'
 import { PromptSelectItem } from 'library/Prompt/Wrappers'
