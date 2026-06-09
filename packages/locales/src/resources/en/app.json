@@ -423,6 +423,7 @@
 		"webExtensions": "Web Extensions",
 		"whenActivelyNominating": "when actively nominating.",
 		"wrongTransaction": "Wrong transaction, please sign again.",
-		"year": "year"
+		"year": "year",
+		"yourPayouts": "Your Payouts"
 	}
 }

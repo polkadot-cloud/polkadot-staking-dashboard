@@ -8,10 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { Odometer } from '@w3ux/react-odometer'
-import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
-import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useCurrency } from 'contexts/Currency'
 import { usePlugins } from 'contexts/Plugins'
@@ -21,24 +18,18 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useNetwork } from 'hooks/useNetwork'
 import { useRewardOverviewStats } from 'hooks/useStats'
+import { AnnouncementsList } from 'library/Announcements/AnnouncementsList'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Stats } from 'library/Stats'
 import { formatFiatCurrency } from 'locales/util'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-	CardHeader,
-	CardLabel,
-	Page,
-	RewardGrid,
-	Separator,
-	Stat,
-} from 'ui-core/base'
+import { CardHeader, Page, RewardGrid, Separator, Stat } from 'ui-core/base'
 import type { PayoutHistoryProps } from '../types'
 import { IncomingPayouts } from './IncomingPayouts'
 import { mockIncomingProjectionAccounts } from './mockIncomingProjection'
-import { RecentPayouts } from './PayoutGraph'
+import { AccountPayouts } from './PayoutGraph'
 import { RewardTrend } from './RewardTrend'
 
 export const Overview = (props: PayoutHistoryProps) => {
@@ -57,11 +48,11 @@ export const Overview = (props: PayoutHistoryProps) => {
 	const Token = getChainIcons(network).token
 
 	// Whether to show base or commission-adjusted rewards
-	const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
+	const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(true)
 
 	// Whether to include incoming payout account projections in totals
 	const [includeIncomingProjection, setIncludeIncomingProjection] =
-		useState<boolean>(false)
+		useState<boolean>(true)
 
 	const currentStake = stakedBalance.toNumber()
 	const annualRewardBase = currentStake * (getAverageRewardRate() / 100) || 0
@@ -71,6 +62,10 @@ export const Overview = (props: PayoutHistoryProps) => {
 
 	const incomingAnnualProjection = mockIncomingProjectionAccounts.reduce(
 		(acc, item) => acc + item.stakedBalance * (item.validatorApy / 100),
+		0,
+	)
+	const incomingStakedBalance = mockIncomingProjectionAccounts.reduce(
+		(acc, item) => acc + item.stakedBalance,
 		0,
 	)
 
@@ -83,10 +78,26 @@ export const Overview = (props: PayoutHistoryProps) => {
 		(includeIncomingProjection ? incomingAnnualProjection : 0)
 	const monthlyReward = annualReward / 12
 	const dailyReward = annualReward / 365
+	const totalDisplayedStake =
+		currentStake + (includeIncomingProjection ? incomingStakedBalance : 0)
 
 	// Format the currency with user's locale and currency preference
 	const formatLocalCurrency = (value: number) =>
 		formatFiatCurrency(value, currency)
+
+	const projectedRewardAnnouncements = [
+		{
+			label: t('stakedBalance'),
+			value: '',
+			valueNode: (
+				<Balance.WithFiat
+					Token={<Token />}
+					value={totalDisplayedStake}
+					currency={currency}
+				/>
+			),
+		},
+	]
 
 	return (
 		<>
@@ -96,7 +107,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 			</Stat.Row>
 			<Page.Row>
 				<CardWrapper>
-					<RecentPayouts {...props} />
+					<AccountPayouts {...props} />
 				</CardWrapper>
 			</Page.Row>
 			{pluginEnabled('staking_api') && (
@@ -114,26 +125,6 @@ export const Overview = (props: PayoutHistoryProps) => {
 								<h3>{t('projectedRewards')}</h3>
 							</CardHeader>
 							<Separator style={{ margin: '0 0 1.5rem 0', border: 0 }} />
-							<CardHeader>
-								<h4>{t('stakedBalance')}</h4>
-								<h2>
-									<Token />
-									<Odometer
-										value={minDecimalPlaces(
-											new BigNumber(currentStake).toFormat(),
-											2,
-										)}
-										zeroDecimals={2}
-									/>
-									<CardLabel>
-										<Balance.Value
-											tokenBalance={currentStake}
-											currency={currency}
-										/>
-									</CardLabel>
-								</h2>
-							</CardHeader>
-							<Separator />
 							<div style={{ padding: '0.5rem' }}>
 								<h3>
 									<button
@@ -182,6 +173,9 @@ export const Overview = (props: PayoutHistoryProps) => {
 									</button>
 								</h3>
 							</div>
+							<Separator transparent />
+							<AnnouncementsList items={projectedRewardAnnouncements} />
+							<Separator transparent />
 							<RewardGrid.Root>
 								<RewardGrid.Head>
 									<RewardGrid.Cells

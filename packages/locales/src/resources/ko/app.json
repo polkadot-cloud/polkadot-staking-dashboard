@@ -424,6 +424,7 @@
 		"webExtensions": "웹 확장 프로그램",
 		"whenActivelyNominating": "활발하게 노미네이션할 때.",
 		"wrongTransaction": "잘못된 거래입니다. 다시 서명해주세요.",
-		"year": "년"
+		"year": "년",
+		"yourPayouts": "내 지급"
 	}
 }
