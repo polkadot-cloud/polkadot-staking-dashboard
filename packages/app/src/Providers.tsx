@@ -9,9 +9,6 @@ import { withProviders } from '@w3ux/factories'
 import { DappName } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
-import { APIProvider } from 'contexts/Api'
-import { BalancesProvider } from 'contexts/Balances'
-import { CurrencyProvider } from 'contexts/Currency'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
@@ -21,15 +18,12 @@ import { MigrateProvider } from 'contexts/Migrate'
 import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
 import { OperatorsProvider } from 'contexts/Operators'
 import { PayoutsProvider } from 'contexts/Payouts'
-import { PluginsProvider } from 'contexts/Plugins'
 import { PoolSetupsProvider } from 'contexts/PoolSetups'
-import { ActivePoolProvider } from 'contexts/Pools/ActivePool'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
 import { PromptProvider } from 'contexts/Prompt'
 import { StakingProvider } from 'contexts/Staking'
-import { TokenPricesProvider } from 'contexts/TokenPrice'
 import { TooltipProvider } from 'contexts/Tooltip'
 import { UIProvider } from 'contexts/UI'
 import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
@@ -47,7 +41,6 @@ export const Providers = () => {
 		[
 			UIProvider,
 			OverlayProvider,
-			[APIProvider, { network }],
 			[
 				ConnectProvider,
 				{
@@ -58,16 +51,11 @@ export const Providers = () => {
 				},
 			],
 			HelpProvider,
-			PluginsProvider,
-			CurrencyProvider,
-			TokenPricesProvider,
-			BalancesProvider,
 			EraStakersProvider,
 			StakingProvider,
 			FavoritePoolsProvider,
 			BondedPoolsProvider,
 			PoolMembersProvider,
-			ActivePoolProvider,
 			ValidatorsProvider,
 			FavoriteValidatorsProvider,
 			PayoutsProvider,

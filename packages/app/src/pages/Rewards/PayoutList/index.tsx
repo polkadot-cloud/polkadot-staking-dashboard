@@ -4,11 +4,11 @@
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
 import { isPoolShareEnabled } from 'consts/util'
-import { useApi } from 'contexts/Api'
-import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { getUnixTime, startOfToday, subDays } from 'date-fns'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
 import { CardWrapper } from 'library/Card/Wrappers'
 import {
 	fetchCombinedPoolRewards,

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useApi } from 'contexts/Api'
 import { useStaking } from 'contexts/Staking'
 import { onNewNominatorButtonPressedEvent } from 'event-tracking'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'

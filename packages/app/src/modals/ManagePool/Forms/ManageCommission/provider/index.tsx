@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { MaybeAddress } from 'types'
 import { perbillToPercent } from 'utils'

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useLedger } from '@polkadot-cloud/connect-ledger'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

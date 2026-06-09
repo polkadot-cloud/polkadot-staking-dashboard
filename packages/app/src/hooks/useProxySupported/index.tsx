@@ -6,8 +6,8 @@ import {
 	useProxies,
 } from '@polkadot-cloud/connect-proxies'
 import { UnsupportedIfUniqueController } from 'consts/proxies'
-import { useBalances } from 'contexts/Balances'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useBalances } from 'hooks/useBalances'
 import type { ActiveProxy, MaybeAddress } from 'types'
 
 export const useProxySupported = () => {

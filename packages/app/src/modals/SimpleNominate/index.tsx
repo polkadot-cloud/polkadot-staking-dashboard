@@ -5,11 +5,11 @@ import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useApi } from 'contexts/Api'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useNetwork } from 'hooks/useNetwork'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -41,6 +41,11 @@ export const SimpleNominate = () => {
 		},
 	} = useAccountBalances(activeAddress)
 	const { units } = getStakingChainData(network)
+
+	// Whether the active account (or its active proxy) can actually sign. Used to
+	// gate the submit button so read-only accounts cannot attempt to submit
+	const hasSigner =
+		accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
 
 	// Take optimal nominations from setup progress
 	const setup = getNominatorSetup(activeAddress)
@@ -104,9 +109,7 @@ export const SimpleNominate = () => {
 			<Close />
 			<Padding>
 				<Title>{t('becomeNominator', { ns: 'modals' })}</Title>
-				{!(
-					accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-				) && <Warning text={t('readOnly')} />}
+				{!hasSigner && <Warning text={t('readOnly')} />}
 
 				<Separator transparent />
 				<BondFeedback
@@ -124,7 +127,7 @@ export const SimpleNominate = () => {
 				<SubmitTx
 					displayFor="card"
 					submitText={t('startNominating')}
-					valid={bondValid}
+					valid={bondValid && hasSigner}
 					{...submitExtrinsic}
 					stacked
 				/>

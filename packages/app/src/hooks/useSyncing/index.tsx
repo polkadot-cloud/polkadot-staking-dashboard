@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useBalances } from 'contexts/Balances'
 import { getActivePool, getSyncIds, syncStatus$ } from 'global-bus'
 import { getIdsFromSyncConfig } from 'global-bus/util'
+import { useBalances } from 'hooks/useBalances'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, SyncConfig, SyncId } from 'types'
 
