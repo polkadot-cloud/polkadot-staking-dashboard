@@ -7,7 +7,6 @@ import { shuffle } from '@w3ux/utils'
 import { PerbillMultiplier } from 'consts'
 import { getPeopleChainId } from 'consts/util'
 import { useEraStakers } from 'contexts/EraStakers'
-import { usePlugins } from 'contexts/Plugins'
 import {
 	getValidatorRank as getValidatorRankBus,
 	getValidatorRanks,
@@ -15,6 +14,7 @@ import {
 import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
 import { fetchIdentityCache, fetchValidatorStats } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'
