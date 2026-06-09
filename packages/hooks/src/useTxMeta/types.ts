@@ -3,7 +3,7 @@
 
 import type { TxSubmissionItem } from 'types'
 
-export interface TxMetaContextInterface {
+export interface TxMetaHookInterface {
 	uids: TxSubmissionItem[]
 	getTxSubmission: (uid?: number) => TxSubmissionItem | undefined
 	getTxSubmissionByTag: (tag: string) => TxSubmissionItem | undefined

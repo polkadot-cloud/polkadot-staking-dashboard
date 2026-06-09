@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { extractUrlValue } from '@w3ux/utils'
-import { useApi } from 'contexts/Api'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { emitNotification } from 'global-bus'
+import { useApi } from 'hooks/useApi'
 import { getIdentityDisplay } from 'library/List/Utils'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
