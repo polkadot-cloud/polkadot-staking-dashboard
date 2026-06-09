@@ -3,10 +3,10 @@
 
 import { useSize } from '@w3ux/hooks'
 import { getStakingChainData } from 'consts/util'
-import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
 import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'

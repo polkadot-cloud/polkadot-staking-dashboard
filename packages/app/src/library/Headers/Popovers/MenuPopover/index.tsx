@@ -31,11 +31,11 @@ import {
 	PlatformURL,
 } from 'consts'
 import { getRelayChainData } from 'consts/util/chains'
-import { useCurrency } from 'contexts/Currency'
 import { useStaking } from 'contexts/Staking'
 import { useTheme } from 'contexts/Themes'
 import { useUi } from 'contexts/UI'
 import { useBalances } from 'hooks/useBalances'
+import { useCurrency } from 'hooks/useCurrency'
 import { useNetwork } from 'hooks/useNetwork'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'

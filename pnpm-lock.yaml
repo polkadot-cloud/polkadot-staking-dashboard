@@ -400,6 +400,9 @@ importers:
       global-bus:
         specifier: workspace:*
         version: link:../global-bus
+      plugin-staking-api:
+        specifier: workspace:*
+        version: link:../plugin-staking-api
       react:
         specifier: ^19.2.7
         version: 19.2.7
