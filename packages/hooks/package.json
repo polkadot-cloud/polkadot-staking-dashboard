@@ -18,6 +18,7 @@
 		"@w3ux/utils": "^3.1.1",
 		"consts": "workspace:*",
 		"global-bus": "workspace:*",
+		"plugin-staking-api": "workspace:*",
 		"react": "^19.2.7",
 		"utils": "workspace:*"
 	},

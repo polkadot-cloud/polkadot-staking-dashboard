@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { TokenPricesContextInterface } from './types'
+import type { TokenPricesHookInterface } from './types'
 
-export const defaultTokenPrice: TokenPricesContextInterface = {
+export const defaultTokenPrice: TokenPricesHookInterface = {
 	price: 0,
 	change: 0,
 }
