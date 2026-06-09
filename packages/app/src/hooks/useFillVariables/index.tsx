@@ -9,7 +9,7 @@ import {
 	getStakingChain,
 	getStakingChainData,
 } from 'consts/util'
-import { useApi } from 'contexts/Api'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import type { AnyJson } from 'types'
 import { planckToUnitBn } from 'utils'

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
 import { GraphContainer, Interface } from 'ui-core/canvas'
 import type { OverviewSectionProps } from '../types'
 import { Addresses } from './Addresses'

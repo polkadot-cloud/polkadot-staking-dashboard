@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'

@@ -14,14 +14,14 @@ import { getInitialRpcEndpoints } from 'global-bus/util'
 import { useCallback, useSyncExternalStore } from 'react'
 import type { NetworkId } from 'types'
 import { createObservableStore } from 'utils'
-import type { NetworkContextInterface } from './types'
+import type { NetworkHookInterface } from './types'
 
 const networkStore = createObservableStore<NetworkId>(
 	networkConfig$,
 	getNetwork,
 )
 
-export const useNetwork = (): NetworkContextInterface => {
+export const useNetwork = (): NetworkHookInterface => {
 	const network = useSyncExternalStore(
 		networkStore.subscribe,
 		networkStore.getSnapshot,

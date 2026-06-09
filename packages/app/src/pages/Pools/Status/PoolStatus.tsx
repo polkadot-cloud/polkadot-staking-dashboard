@@ -5,7 +5,7 @@ import {
 	faExclamationTriangle,
 	faLock,
 } from '@fortawesome/free-solid-svg-icons'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { Stat } from 'library/Stat'

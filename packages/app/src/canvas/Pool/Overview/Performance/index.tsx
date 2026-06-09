@@ -3,9 +3,9 @@
 
 import { useSize } from '@w3ux/hooks'
 import { getStakingChainData } from 'consts/util'
-import { useApi } from 'contexts/Api'
 import { usePlugins } from 'contexts/Plugins'
 import { useUi } from 'contexts/UI'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { StatusLabel } from 'library/StatusLabel'
 import { useRef } from 'react'
