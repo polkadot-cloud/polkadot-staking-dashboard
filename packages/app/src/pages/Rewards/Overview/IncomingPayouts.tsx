@@ -34,11 +34,6 @@ export const IncomingPayouts = ({
 		0,
 	)
 
-	const totalProjectedAnnual = accounts.reduce(
-		(acc, item) => acc + item.stakedBalance * (item.validatorApy / 100),
-		0,
-	)
-
 	const announcements: AnnouncementItem[] = [
 		{
 			label: t('last30dIncoming', { defaultValue: 'Last 30 Days' }),
@@ -47,20 +42,6 @@ export const IncomingPayouts = ({
 				<Balance.WithFiat
 					Token={<Token />}
 					value={totalIncoming30d}
-					currency={currency}
-					caretAsUnit
-				/>
-			),
-		},
-		{
-			label: t('projectedAnnualIncoming', {
-				defaultValue: 'Projected Annual Total',
-			}),
-			value: '',
-			valueNode: (
-				<Balance.WithFiat
-					Token={<Token />}
-					value={totalProjectedAnnual}
 					currency={currency}
 					caretAsUnit
 				/>
