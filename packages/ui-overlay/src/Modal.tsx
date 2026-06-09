@@ -202,6 +202,7 @@ export const Modal = ({
 			}}
 			style={{ opacity: status === 'opening' ? 0 : 1 }}
 			onClose={() => closeModal()}
+			label={key}
 		>
 			<Scroll
 				ref={heightRef}
