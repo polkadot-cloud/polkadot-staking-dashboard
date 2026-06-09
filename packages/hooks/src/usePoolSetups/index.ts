@@ -34,8 +34,9 @@ const emitPoolSetupsChange = () => {
 }
 
 const getPoolSetupsSnapshot = () => currentPoolSetups
-const getServerPoolSetupsSnapshot = (): PoolSetups => ({})
 
+const serverPoolSetupsSnapshot: PoolSetups = {}
+const getServerPoolSetupsSnapshot = () => serverPoolSetupsSnapshot
 const setPoolSetups = (setups: PoolSetups) => {
 	currentPoolSetups = setups
 	setLocalPoolSetups(setups)
