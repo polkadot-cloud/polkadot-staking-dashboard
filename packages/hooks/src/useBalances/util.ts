@@ -1,12 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeString } from '@w3ux/types'
 import type { NetworkId } from 'types'
 
-// Get the local storage record for an account reserve balance
 export const getLocalFeeReserve = (
-	address: MaybeString,
+	address: string | null | undefined,
 	defaultReserve: bigint,
 	{ network }: { network: NetworkId; units: number },
 ): bigint => {
@@ -14,16 +12,14 @@ export const getLocalFeeReserve = (
 	const localReserve = BigInt(
 		reserves?.[network]?.[address || ''] || defaultReserve,
 	)
-	// Ensure the local reserve is at least the default reserve
 	if (localReserve < defaultReserve) {
 		return defaultReserve
 	}
 	return defaultReserve
 }
 
-// Sets the local storage record fro an account reserve balance
 export const setLocalFeeReserve = (
-	address: MaybeString,
+	address: string | null | undefined,
 	amount: bigint,
 	network: NetworkId,
 ): void => {

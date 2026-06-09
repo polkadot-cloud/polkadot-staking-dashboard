@@ -385,6 +385,9 @@ importers:
 
   packages/hooks:
     dependencies:
+      '@polkadot-cloud/connect':
+        specifier: ^1.0.9
+        version: 1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2)
       '@polkadot-cloud/connect-proxies':
         specifier: ^0.2.3
         version: 0.2.3(@polkadot-cloud/connect@1.0.9(dedot@1.3.0(typescript@6.0.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(rxjs@7.8.2)(typescript@6.0.3)
