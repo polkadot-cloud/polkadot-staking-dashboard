@@ -3,8 +3,8 @@
 
 import { ListProvider } from 'contexts/List'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { useApi } from 'hooks/useApi'
+import { useFavoritePools } from 'hooks/useFavoritePools'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ListStatusHeader } from 'library/List'
