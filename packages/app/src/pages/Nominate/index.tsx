@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePlugins } from 'contexts/Plugins'
 import { onTabVisitEvent } from 'event-tracking'
+import { usePlugins } from 'hooks/usePlugins'
 import { PageTabs } from 'library/PageTabs'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

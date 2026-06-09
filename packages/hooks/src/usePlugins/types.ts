@@ -3,8 +3,8 @@
 
 import type { Plugin } from 'types'
 
-export interface PluginsContextInterface {
-	togglePlugin: (k: Plugin) => void
+export interface PluginsHookInterface {
+	togglePlugin: (key: Plugin) => void
 	pluginEnabled: (key: Plugin) => boolean
 	plugins: Plugin[]
 }
