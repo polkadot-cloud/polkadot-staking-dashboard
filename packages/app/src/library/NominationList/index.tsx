@@ -3,10 +3,10 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useNetwork } from 'hooks/useNetwork'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useValidatorRewardRateBatch } from 'hooks/useValidatorRewardRateBatch'

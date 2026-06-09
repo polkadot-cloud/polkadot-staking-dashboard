@@ -6,10 +6,10 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { getPoolMembership } from 'global-bus'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { useNetwork } from 'hooks/useNetwork'
 import { Ticker } from 'library/StatCards/Ticker'
 import {
 	fetchNominatorRewardTrend,

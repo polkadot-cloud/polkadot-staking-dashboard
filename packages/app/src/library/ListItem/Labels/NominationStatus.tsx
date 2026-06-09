@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useEraStakers } from 'contexts/EraStakers'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'

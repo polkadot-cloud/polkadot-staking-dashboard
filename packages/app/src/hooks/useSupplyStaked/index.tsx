@@ -5,7 +5,7 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 
 export const useSupplyStaked = () => {
 	const {

@@ -6,7 +6,7 @@ import {
 	type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { useWarnings } from 'hooks/useWarnings'
 import { CardWrapper } from 'library/Card/Wrappers'

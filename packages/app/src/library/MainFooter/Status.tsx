@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 

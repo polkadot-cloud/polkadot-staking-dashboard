@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useActiveProxy } from 'contexts/ActiveProxy'
 import { useApi } from 'contexts/Api'
 import { useBalances } from 'contexts/Balances'
 import { useStaking } from 'contexts/Staking'
+import { useActiveProxy } from 'hooks/useActiveProxy'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { useSyncing } from 'hooks/useSyncing'

@@ -6,8 +6,8 @@ import {
 	DisabledPluginsPerNetwork,
 	PluginsList,
 } from 'consts/plugins'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useNetwork } from 'hooks/useNetwork'
 import { Title } from 'library/Modal/Title'
 import { useTranslation } from 'react-i18next'
 import { ButtonModal } from 'ui-buttons'
