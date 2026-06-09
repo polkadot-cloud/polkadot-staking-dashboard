@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { usePoolSetups } from 'contexts/PoolSetups'
-import type { PoolProgress } from 'contexts/PoolSetups/types'
+import type { PoolProgress } from 'hooks/usePoolSetups'
+import { usePoolSetups } from 'hooks/usePoolSetups'
 import { Footer } from 'library/SetupSteps/Footer'
 import { Header } from 'library/SetupSteps/Header'
 import { MotionContainer } from 'library/SetupSteps/MotionContainer'
