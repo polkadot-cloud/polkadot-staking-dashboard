@@ -67,13 +67,14 @@ const subscribeFavoritePools = (listener: () => void) => {
 		listeners.delete(listener)
 	}
 }
+const serverFavoritePoolsSnapshot: string[] = []
 
 export const useFavoritePools = (): FavoritePoolsHookInterface => {
 	const { network } = useNetwork()
 	const favorites = useSyncExternalStore(
 		subscribeFavoritePools,
 		() => getFavoritePoolsSnapshot(network),
-		() => [],
+		() => serverFavoritePoolsSnapshot,
 	)
 
 	useEffect(() => {
