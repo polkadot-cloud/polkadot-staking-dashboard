@@ -3,7 +3,7 @@
 
 import type { MaybeAddress, PoolRoles, ValidatorPrefs } from 'types'
 
-export interface PoolSetupsContextInterface {
+export interface PoolSetupsHookInterface {
 	getPoolSetup: (address: MaybeAddress) => PoolSetup
 	setPoolSetup: (setup: PoolProgress) => void
 	removePoolSetup: (address: MaybeAddress) => void
