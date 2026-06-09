@@ -50,7 +50,7 @@ export const Bond = () => {
 	const { nominator, transferableBalance } = balances
 
 	// `totalAdditionalBond` and `transferableBalance` already have `feeReserve`
-	// deducted (see `getTransferableBalance`), so it must not be subtracted again
+	// deducted.
 	const freeToBond = new BigNumber(
 		planckToUnit(
 			bondFor === 'nominator'
