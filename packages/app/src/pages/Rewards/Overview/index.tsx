@@ -36,6 +36,8 @@ import {
 	Stat,
 } from 'ui-core/base'
 import type { PayoutHistoryProps } from '../types'
+import { IncomingPayouts } from './IncomingPayouts'
+import { mockIncomingProjectionAccounts } from './mockIncomingProjection'
 import { RecentPayouts } from './PayoutGraph'
 import { RewardTrend } from './RewardTrend'
 
@@ -56,25 +58,30 @@ export const Overview = (props: PayoutHistoryProps) => {
 
 	// Whether to show base or commission-adjusted rewards
 	const [showAdjusted, setShowCommissionAdjusted] = useState<boolean>(false)
+	// Whether to include incoming payout account projections
+	const [includeIncomingProjection, setIncludeIncomingProjection] =
+		useState<boolean>(false)
 
 	const currentStake = stakedBalance.toNumber()
 	const annualRewardBase = currentStake * (getAverageRewardRate() / 100) || 0
 
 	const annualRewardAfterCommission =
 		annualRewardBase * (1 - avgCommission / 100)
-	const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
-	const dailyRewardAfterCommission = annualRewardAfterCommission / 365
 
-	const annualReward = showAdjusted
+	const incomingAnnualProjection = mockIncomingProjectionAccounts.reduce(
+		(acc, item) => acc + item.stakedBalance * (item.validatorApy / 100),
+		0,
+	)
+
+	const activeAnnualReward = showAdjusted
 		? annualRewardAfterCommission
 		: annualRewardBase
 
-	const monthlyReward = showAdjusted
-		? monthlyRewardAfterCommission
-		: annualRewardBase / 12
-	const dailyReward = showAdjusted
-		? dailyRewardAfterCommission
-		: annualRewardBase / 365
+	const annualReward =
+		activeAnnualReward +
+		(includeIncomingProjection ? incomingAnnualProjection : 0)
+	const monthlyReward = annualReward / 12
+	const dailyReward = annualReward / 365
 
 	// Format the currency with user's locale and currency preference
 	const formatLocalCurrency = (value: number) =>
@@ -92,134 +99,173 @@ export const Overview = (props: PayoutHistoryProps) => {
 				</CardWrapper>
 			</Page.Row>
 			{pluginEnabled('staking_api') && (
-				<Page.Row>
-					<CardWrapper>
-						<CardHeader>
-							<h3>{t('projectedRewards')}</h3>
-						</CardHeader>
-						<Separator style={{ margin: '0 0 1.5rem 0', border: 0 }} />
-						<CardHeader>
-							<h4>{t('stakedBalance')}</h4>
-							<h2>
-								<Token />
-								<Odometer
-									value={minDecimalPlaces(
-										new BigNumber(currentStake).toFormat(),
-										2,
-									)}
-									zeroDecimals={2}
-								/>
-								<CardLabel>
-									<Balance.Value
-										tokenBalance={currentStake}
-										currency={currency}
-									/>
-								</CardLabel>
-							</h2>
-						</CardHeader>
-						<Separator />
-						<div style={{ padding: '0.5rem' }}>
-							<h3>
-								<button
-									type="button"
-									onClick={() => setShowCommissionAdjusted(!showAdjusted)}
-								>
-									<FontAwesomeIcon
-										icon={showAdjusted ? faToggleOn : faToggleOff}
-										style={{
-											color: showAdjusted
-												? 'var(--gray-1000)'
-												: 'var(--text-tertiary)',
-											marginRight: '0.8rem',
-										}}
-										transform={'grow-6'}
-									/>
-									{t('deductAvgCommissionOf', {
-										commission: avgCommission,
-									})}
-								</button>
-							</h3>
-						</div>
-						<RewardGrid.Root>
-							<RewardGrid.Head>
-								<RewardGrid.Cells
-									items={[
-										<h4>{t('period')}</h4>,
-										<h4>
-											<Token />
-											{unit}
-										</h4>,
-										<h4>{currency}</h4>,
-									]}
-								/>
-							</RewardGrid.Head>
-							<RewardGrid.Row>
-								<RewardGrid.Cell>
-									<RewardGrid.Label>{t('daily')}</RewardGrid.Label>
-								</RewardGrid.Cell>
-								<RewardGrid.Cell>
-									<h3>
-										{dailyReward > 0 && <FontAwesomeIcon icon={faCaretUp} />}
-										{dailyReward.toLocaleString('en-US', {
-											minimumFractionDigits: 3,
-											maximumFractionDigits: 3,
-										})}
-									</h3>
-								</RewardGrid.Cell>
-								<RewardGrid.Cell>
-									<h3>
-										{dailyReward > 0 && tokenPrice > 0 && (
-											<FontAwesomeIcon icon={faCaretUp} />
+				<>
+					<Page.Row>
+						<IncomingPayouts
+							accounts={mockIncomingProjectionAccounts}
+							unit={unit}
+							currency={currency}
+							tokenPrice={tokenPrice}
+						/>
+					</Page.Row>
+					<Page.Row>
+						<CardWrapper>
+							<CardHeader>
+								<h3>{t('projectedRewards')}</h3>
+							</CardHeader>
+							<Separator style={{ margin: '0 0 1.5rem 0', border: 0 }} />
+							<CardHeader>
+								<h4>{t('stakedBalance')}</h4>
+								<h2>
+									<Token />
+									<Odometer
+										value={minDecimalPlaces(
+											new BigNumber(currentStake).toFormat(),
+											2,
 										)}
-										{formatLocalCurrency(dailyReward * tokenPrice)}
-									</h3>
-								</RewardGrid.Cell>
-							</RewardGrid.Row>
-							<RewardGrid.Row>
-								<RewardGrid.Cells
-									items={[
-										<RewardGrid.Label>{t('monthly')}</RewardGrid.Label>,
+										zeroDecimals={2}
+									/>
+									<CardLabel>
+										<Balance.Value
+											tokenBalance={currentStake}
+											currency={currency}
+										/>
+									</CardLabel>
+								</h2>
+							</CardHeader>
+							<Separator />
+							<div style={{ padding: '0.5rem' }}>
+								<h3>
+									<button
+										type="button"
+										onClick={() => setShowCommissionAdjusted(!showAdjusted)}
+									>
+										<FontAwesomeIcon
+											icon={showAdjusted ? faToggleOn : faToggleOff}
+											style={{
+												color: showAdjusted
+													? 'var(--gray-1000)'
+													: 'var(--text-tertiary)',
+												marginRight: '0.8rem',
+											}}
+											transform={'grow-6'}
+										/>
+										{t('deductAvgCommissionOf', {
+											commission: avgCommission,
+										})}
+									</button>
+								</h3>
+							</div>
+							<div style={{ padding: '0 0.5rem 0.5rem 0.5rem' }}>
+								<h3>
+									<button
+										type="button"
+										onClick={() =>
+											setIncludeIncomingProjection(!includeIncomingProjection)
+										}
+									>
+										<FontAwesomeIcon
+											icon={
+												includeIncomingProjection ? faToggleOn : faToggleOff
+											}
+											style={{
+												color: includeIncomingProjection
+													? 'var(--gray-1000)'
+													: 'var(--text-tertiary)',
+												marginRight: '0.8rem',
+											}}
+											transform={'grow-6'}
+										/>
+										{t('includeIncomingProjection', {
+											defaultValue:
+												'Include incoming payout accounts in projection (mock)',
+										})}
+									</button>
+								</h3>
+							</div>
+							<RewardGrid.Root>
+								<RewardGrid.Head>
+									<RewardGrid.Cells
+										items={[
+											<h4>{t('period')}</h4>,
+											<h4>
+												<Token />
+												{unit}
+											</h4>,
+											<h4>{currency}</h4>,
+										]}
+									/>
+								</RewardGrid.Head>
+								<RewardGrid.Row>
+									<RewardGrid.Cell>
+										<RewardGrid.Label>{t('daily')}</RewardGrid.Label>
+									</RewardGrid.Cell>
+									<RewardGrid.Cell>
 										<h3>
-											{monthlyReward > 0 && (
-												<FontAwesomeIcon icon={faCaretUp} />
-											)}
-											{monthlyReward.toLocaleString('en-US', {
+											{dailyReward > 0 && <FontAwesomeIcon icon={faCaretUp} />}
+											{dailyReward.toLocaleString('en-US', {
 												minimumFractionDigits: 3,
 												maximumFractionDigits: 3,
 											})}
-										</h3>,
+										</h3>
+									</RewardGrid.Cell>
+									<RewardGrid.Cell>
 										<h3>
-											{monthlyReward > 0 && tokenPrice > 0 && (
+											{dailyReward > 0 && tokenPrice > 0 && (
 												<FontAwesomeIcon icon={faCaretUp} />
 											)}
-											{formatLocalCurrency(monthlyReward * tokenPrice)}
-										</h3>,
-									]}
-								/>
-							</RewardGrid.Row>
-							<RewardGrid.Row>
-								<RewardGrid.Cells
-									items={[
-										<RewardGrid.Label>{t('annual')}</RewardGrid.Label>,
-										<h3>
-											{annualReward > 0 && <FontAwesomeIcon icon={faCaretUp} />}
-											{annualReward.toLocaleString('en-US', {
-												minimumFractionDigits: 3,
-												maximumFractionDigits: 3,
-											})}
-										</h3>,
-										<h3>
-											{annualReward > 0 && tokenPrice > 0 && (
-												<FontAwesomeIcon icon={faCaretUp} />
-											)}
-											{formatLocalCurrency(annualReward * tokenPrice)}
-										</h3>,
-									]}
-								/>
-							</RewardGrid.Row>
-						</RewardGrid.Root>
-					</CardWrapper>
-				</Page.Row>
+											{formatLocalCurrency(dailyReward * tokenPrice)}
+										</h3>
+									</RewardGrid.Cell>
+								</RewardGrid.Row>
+								<RewardGrid.Row>
+									<RewardGrid.Cells
+										items={[
+											<RewardGrid.Label>{t('monthly')}</RewardGrid.Label>,
+											<h3>
+												{monthlyReward > 0 && (
+													<FontAwesomeIcon icon={faCaretUp} />
+												)}
+												{monthlyReward.toLocaleString('en-US', {
+													minimumFractionDigits: 3,
+													maximumFractionDigits: 3,
+												})}
+											</h3>,
+											<h3>
+												{monthlyReward > 0 && tokenPrice > 0 && (
+													<FontAwesomeIcon icon={faCaretUp} />
+												)}
+												{formatLocalCurrency(monthlyReward * tokenPrice)}
+											</h3>,
+										]}
+									/>
+								</RewardGrid.Row>
+								<RewardGrid.Row>
+									<RewardGrid.Cells
+										items={[
+											<RewardGrid.Label>{t('annual')}</RewardGrid.Label>,
+											<h3>
+												{annualReward > 0 && (
+													<FontAwesomeIcon icon={faCaretUp} />
+												)}
+												{annualReward.toLocaleString('en-US', {
+													minimumFractionDigits: 3,
+													maximumFractionDigits: 3,
+												})}
+											</h3>,
+											<h3>
+												{annualReward > 0 && tokenPrice > 0 && (
+													<FontAwesomeIcon icon={faCaretUp} />
+												)}
+												{formatLocalCurrency(annualReward * tokenPrice)}
+											</h3>,
+										]}
+									/>
+								</RewardGrid.Row>
+							</RewardGrid.Root>
+						</CardWrapper>
+					</Page.Row>
+				</>
 			)}
 		</>
 	)
