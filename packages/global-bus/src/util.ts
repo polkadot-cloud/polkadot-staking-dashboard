@@ -1,5 +1,6 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+export * from './networkConfig/latency'
 export * from './networkConfig/util'
 export * from './syncStatus/util'
