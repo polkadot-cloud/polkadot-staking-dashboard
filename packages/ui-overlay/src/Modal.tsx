@@ -14,6 +14,7 @@ export const Modal = ({
 	modals,
 	externalOverlayStatus,
 	fallback: Fallback,
+	closeLabel,
 }: ModalProps) => {
 	const {
 		activeOverlayInstance,
@@ -203,6 +204,7 @@ export const Modal = ({
 			style={{ opacity: status === 'opening' ? 0 : 1 }}
 			onClose={() => closeModal()}
 			label={key}
+			closeLabel={closeLabel}
 		>
 			<Scroll
 				ref={heightRef}

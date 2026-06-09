@@ -39,6 +39,8 @@ export type ContainerProps = BaseWithAnimation & {
 	onClose: () => void
 	// Accessible name for the dialog, announced by assistive technology
 	label?: string
+	// Translated accessible label for the backdrop dismiss button
+	closeLabel?: string
 }
 
 export interface RoleChangeProps {

@@ -3,9 +3,11 @@
 
 import { usePrompt } from 'contexts/Prompt'
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ContentWrapper, HeightWrapper, PromptWrapper } from './Wrappers'
 
 export const Prompt = () => {
+	const { t } = useTranslation('modals')
 	const {
 		size,
 		status,
@@ -53,7 +55,7 @@ export const Prompt = () => {
 							closePrompt()
 						}
 					}}
-					aria-label="Close"
+					aria-label={t('close')}
 					tabIndex={-1}
 				>
 					&nbsp;

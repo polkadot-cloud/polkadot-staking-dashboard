@@ -12,6 +12,7 @@ export const Container = ({
 	children,
 	onClose,
 	label = 'Dialog',
+	closeLabel = 'Close',
 	...rest
 }: ContainerProps) => {
 	const allClasses = classNames(commonClasses.fixed, classes.container)
@@ -41,7 +42,7 @@ export const Container = ({
 					type="button"
 					className={classes.close}
 					onClick={() => onClose()}
-					aria-label="Close"
+					aria-label={closeLabel}
 					tabIndex={-1}
 				>
 					&nbsp;
