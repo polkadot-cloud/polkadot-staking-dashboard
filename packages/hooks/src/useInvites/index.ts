@@ -95,7 +95,6 @@ const subscribeInvites = (listener: () => void) => {
 		listeners.delete(listener)
 	}
 }
-}
 
 const serverInvitesSnapshot: InvitesState = {
 	acknowledged: true,
