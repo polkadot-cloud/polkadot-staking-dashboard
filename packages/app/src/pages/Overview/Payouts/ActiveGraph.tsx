@@ -1,14 +1,19 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
+import { useActiveAccount } from '@polkadot-cloud/connect'
+import { getStakingChainData, isPoolShareEnabled } from 'consts/util'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { DefaultLocale, locales } from 'locales'
-import { usePoolRewards, useRewards } from 'plugin-staking-api'
+import {
+	usePoolEraRewards,
+	usePoolRewards,
+	useRewards,
+} from 'plugin-staking-api'
 import type {
 	NominatorReward,
 	RewardResult,
@@ -33,8 +38,9 @@ export const ActiveGraph = ({
 	const { i18n, t } = useTranslation()
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
-	const { activeAddress } = useActiveAccounts()
+	const { activePool } = useActivePool()
 	const { getThemeValue } = useThemeValues()
+	const { activeAddress } = useActiveAccount()
 	const { unit, units } = getStakingChainData(network)
 
 	const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({
@@ -57,6 +63,19 @@ export const ActiveGraph = ({
 		from: getUnixTime(fromDate),
 	})
 
+	// Pool-era reward share metrics are only available for the known
+	// pools on the Polkadot network.
+	const poolShareEnabled = isPoolShareEnabled(network, activePool?.id)
+
+	const {
+		data: { poolEraRewards },
+	} = usePoolEraRewards({
+		network,
+		who: activeAddress || '',
+		fromEra: Math.max(activeEra.index - 1, 0),
+		skip: !poolShareEnabled || !activeAddress,
+	})
+
 	const nominatorRewards = nominatorRewardData.allRewards
 	const payouts =
 		nominatorRewards.filter((reward: NominatorReward) => reward.claimed) ?? []
@@ -77,7 +96,12 @@ export const ActiveGraph = ({
 			<PayoutBar
 				days={days}
 				height="150px"
-				data={{ payouts, unclaimedPayouts, poolClaims }}
+				data={{
+					payouts,
+					unclaimedPayouts,
+					poolClaims,
+					poolShareRewards: poolShareEnabled ? poolEraRewards : undefined,
+				}}
 				nominating={nominating}
 				inPool={inPool}
 				syncing={rewardsLoading || poolRewardsLoading}
@@ -90,7 +114,9 @@ export const ActiveGraph = ({
 					poolClaim: t('poolClaim', { ns: 'app' }),
 					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
 					pending: t('pending', { ns: 'app' }),
+					poolShare: t('share', { ns: 'app' }),
 				}}
+				activeAccount={activeAddress || undefined}
 			/>
 			<div style={{ marginTop: lineMarginTop }}>
 				<AveragePayoutLine

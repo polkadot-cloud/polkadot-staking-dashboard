@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useUi } from 'contexts/UI'
+import { useBalances } from 'hooks/useBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -12,7 +12,7 @@ export const useAccountSwitchNavigation = () => {
 	const navigate = useNavigate()
 	const { pathname } = useLocation()
 	const { advancedMode } = useUi()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { getPoolMembership, getStakingLedger, getNominations } = useBalances()
 	const { accountSynced } = useSyncing()
 

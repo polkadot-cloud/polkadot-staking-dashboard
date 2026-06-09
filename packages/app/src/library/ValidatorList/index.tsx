@@ -3,16 +3,16 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { getPeopleChainId } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
 import { ListProvider, useList } from 'contexts/List'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useThemeValues } from 'contexts/ThemeValues'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { useValidatorRewardRateBatch } from 'hooks/useValidatorRewardRateBatch'
 import { FilterHeaderWrapper, List, Wrapper as ListWrapper } from 'library/List'
@@ -70,7 +70,7 @@ export const ValidatorListInner = ({
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setModalResize } = useOverlay().modal
 	const { injectValidatorListData } = useValidators()
 	const { isReady, activeEra, getApiStatus } = useApi()
@@ -363,9 +363,9 @@ export const ValidatorListInner = ({
 				{BeforeListNode}
 				<MotionContainer>
 					{listItems.length ? (
-						listItems.map((validator, index) => (
+						listItems.map((validator) => (
 							<motion.div
-								key={`nomination_${index}`}
+								key={`nomination_${validator.address}`}
 								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
 								variants={{
 									hidden: {

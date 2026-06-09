@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { gql } from '@apollo/client'
-import { client } from '../Client'
 import type { PoolMembersData } from '../types'
+import { fetchQuery } from './generic'
 
 const QUERY = gql`
 	query PoolMembers($network: String!, $poolId: Int!, $limit: Int, $offset: Int) {
@@ -31,19 +31,14 @@ const DEFAULT: PoolMembersData = {
 	},
 }
 
-export const fetchPoolMembers = async (
+export const fetchPoolMembers = (
 	network: string,
 	poolId: number,
 	limit?: number,
 	offset?: number,
-): Promise<PoolMembersData> => {
-	try {
-		const result = await client.query<PoolMembersData>({
-			query: QUERY,
-			variables: { network, poolId, limit, offset },
-		})
-		return result?.data || DEFAULT
-	} catch {
-		return DEFAULT
-	}
-}
+) =>
+	fetchQuery<PoolMembersData>(
+		QUERY,
+		{ network, poolId, limit, offset },
+		DEFAULT,
+	)

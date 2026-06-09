@@ -1,16 +1,16 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { PageCategories } from 'config/pages'
 import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
+import { useBalances } from 'hooks/useBalances'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { useWarnings } from 'hooks/useWarnings'
 import { Fragment } from 'react'
@@ -44,7 +44,7 @@ export const Main = ({
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { sideMenuMinimised, advancedMode } = useUi()
 	const { getNominations, getStakingLedger } = useBalances()
 	const { warningMessages, getMostSevereWarningFormat } = useWarnings()
@@ -156,7 +156,7 @@ export const Main = ({
 												pageKey={key}
 												name={t(key)}
 												to={() => {
-													if (!activeCategory && !!setLocalCategory) {
+													if (!activeCategory && setLocalCategory) {
 														setLocalCategory(categoryKey)
 													}
 													navigate(hash)

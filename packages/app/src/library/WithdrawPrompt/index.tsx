@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
+import { useNetwork } from 'hooks/useNetwork'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
 import type { BondFor } from 'types'
@@ -26,7 +26,7 @@ export const WithdrawPrompt = ({ bondFor }: { bondFor: BondFor }) => {
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
 
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { state } = activePool?.bondedPool || {}
 

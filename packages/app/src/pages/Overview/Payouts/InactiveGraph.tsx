@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { useNetwork } from 'hooks/useNetwork'
 import { DefaultLocale, locales } from 'locales'
 import type { NominatorReward } from 'plugin-staking-api/types'
 import { useEffect } from 'react'
@@ -42,6 +42,7 @@ export const InactiveGraph = ({
 					poolClaim: t('poolClaim', { ns: 'app' }),
 					unclaimedPayouts: t('unclaimedPayouts', { ns: 'app' }),
 					pending: t('pending', { ns: 'app' }),
+					poolShare: t('share', { ns: 'app' }),
 				}}
 			/>
 			<div style={{ marginTop: '3rem' }}>

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util/chains'
-import { useApi } from 'contexts/Api'
 import { useEraStakers } from 'contexts/EraStakers'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
+import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { useNetwork } from 'hooks/useNetwork'
 import { fetchValidatorAvgRewardRateBatch } from 'plugin-staking-api'
 import { useEffect, useState } from 'react'
 import {

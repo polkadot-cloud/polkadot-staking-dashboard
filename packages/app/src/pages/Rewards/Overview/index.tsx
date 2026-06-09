@@ -7,19 +7,19 @@ import {
 	faToggleOn,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Odometer } from '@w3ux/react-odometer'
 import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useCurrency } from 'contexts/Currency'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { useTokenPrices } from 'contexts/TokenPrice'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { useNetwork } from 'hooks/useNetwork'
 import { useRewardOverviewStats } from 'hooks/useStats'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -45,7 +45,7 @@ export const Overview = (props: PayoutHistoryProps) => {
 	const { currency } = useCurrency()
 	const { pluginEnabled } = usePlugins()
 	const { avgCommission } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { price: tokenPrice } = useTokenPrices()
 	const { getAverageRewardRate } = useAverageRewardRate()
 	const { averageRewardRate, rewardCalculator } = useRewardOverviewStats()
@@ -62,19 +62,14 @@ export const Overview = (props: PayoutHistoryProps) => {
 
 	const annualRewardAfterCommission =
 		annualRewardBase * (1 - avgCommission / 100)
-	const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
-	const dailyRewardAfterCommission = annualRewardAfterCommission / 365
 
-	const annualReward = showAdjusted
+	const activeAnnualReward = showAdjusted
 		? annualRewardAfterCommission
 		: annualRewardBase
 
-	const monthlyReward = showAdjusted
-		? monthlyRewardAfterCommission
-		: annualRewardBase / 12
-	const dailyReward = showAdjusted
-		? dailyRewardAfterCommission
-		: annualRewardBase / 365
+	const annualReward = activeAnnualReward
+	const monthlyReward = annualReward / 12
+	const dailyReward = annualReward / 365
 
 	// Format the currency with user's locale and currency preference
 	const formatLocalCurrency = (value: number) =>

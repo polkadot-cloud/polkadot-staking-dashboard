@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { useApi } from 'contexts/Api'
 import { useTooltip } from 'contexts/Tooltip'
+import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { normaliseEraPoints, prefillEraPoints } from 'library/List/Utils'
 import { useTranslation } from 'react-i18next'
@@ -99,26 +99,23 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
 			version="1.1"
 			xmlns="http://www.w3.org/2000/svg"
 		>
-			{!syncing &&
-				[{ y1: vbHeight * 0.5, y2: vbHeight * 0.5 }].map(
-					({ y1, y2 }, index) => (
-						<line
-							key={`grid_coord_${index}`}
-							strokeWidth="3.75"
-							stroke="var(--grid-primary)"
-							x1={0}
-							y1={y1}
-							x2={vbWidth}
-							y2={y2}
-							opacity={0.5}
-						/>
-					),
-				)}
+			{!syncing && (
+				<line
+					key="grid_coord_mid"
+					strokeWidth="3.75"
+					stroke="var(--grid-primary)"
+					x1={0}
+					y1={vbHeight * 0.5}
+					x2={vbWidth}
+					y2={vbHeight * 0.5}
+					opacity={0.5}
+				/>
+			)}
 
 			{!syncing &&
-				barCoords.map(({ x1, y1, x2, y2 }, index) => (
+				barCoords.map(({ x1, y1, x2, y2 }) => (
 					<line
-						key={`line_coord_${index}`}
+						key={`line_coord_${x1}_${y1}_${x2}_${y2}`}
 						strokeWidth={5}
 						opacity={1}
 						stroke="var(--gray-300)"
@@ -130,9 +127,9 @@ export const RewardsGraph = ({ points = [], syncing }: RewardsGraphProps) => {
 				))}
 
 			{!syncing &&
-				lineCoords.map(({ x1, y1, x2, y2, zero }, index) => (
+				lineCoords.map(({ x1, y1, x2, y2, zero }) => (
 					<line
-						key={`line_coord_${index}`}
+						key={`line_coord_${x1}_${y1}_${x2}_${y2}`}
 						strokeWidth={5}
 						opacity={zero ? 0.5 : 1}
 						stroke={zero ? 'var(--text-tertiary)' : 'var(--gray-1000)'}

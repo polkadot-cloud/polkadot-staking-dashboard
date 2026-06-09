@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useBalances } from 'hooks/useBalances'
 import { useNominatorStats } from 'hooks/useStats'
 import { useSyncing } from 'hooks/useSyncing'
 import { BondManager } from 'library/BondManager'
@@ -24,7 +24,7 @@ export const Active = () => {
 	const { isBonding } = useStaking()
 	const { getNominations } = useBalances()
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { activeNominators, minimumNominatorBond, minimumActiveStake } =
 		useNominatorStats()
 

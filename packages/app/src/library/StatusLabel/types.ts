@@ -4,6 +4,7 @@
 import type { Plugin } from 'types'
 
 export interface StatusLabelProps {
+	backgroundOpacity?: number
 	hideIcon?: boolean
 	status: string
 	statusFor?: Plugin
@@ -13,5 +14,6 @@ export interface StatusLabelProps {
 }
 
 export interface WrapperProps {
+	$backgroundOpacity?: number
 	$topOffset?: string
 }

@@ -1,16 +1,16 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { usePrompt } from 'contexts/Prompt'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -38,7 +38,7 @@ export const WithdrawMember = ({
 	const { closePrompt } = usePrompt()
 	const { activeProxy } = useActiveProxy()
 	const { getConsts, activeEra } = useApi()
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { unit, units } = getStakingChainData(network)
 	const { historyDepth } = getConsts(network)
@@ -87,8 +87,8 @@ export const WithdrawMember = ({
 			<Padding>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

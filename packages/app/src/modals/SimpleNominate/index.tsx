@@ -1,21 +1,20 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import type BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
-import { useTxMeta } from 'contexts/TxMeta'
 import type { PalletStakingRewardDestination } from 'dedot/chaintypes'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
 import { useBatchCall } from 'hooks/useBatchCall'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { Warning } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
@@ -34,7 +33,7 @@ export const SimpleNominate = () => {
 	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
 	const { accountHasSigner } = useImportedAccounts()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { getNominatorSetup, removeNominatorSetup } = useNominatorSetups()
 	const {
 		balances: {
@@ -42,6 +41,11 @@ export const SimpleNominate = () => {
 		},
 	} = useAccountBalances(activeAddress)
 	const { units } = getStakingChainData(network)
+
+	// Whether the active account (or its active proxy) can actually sign. Used to
+	// gate the submit button so read-only accounts cannot attempt to submit
+	const hasSigner =
+		accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
 
 	// Take optimal nominations from setup progress
 	const setup = getNominatorSetup(activeAddress)
@@ -105,9 +109,7 @@ export const SimpleNominate = () => {
 			<Close />
 			<Padding>
 				<Title>{t('becomeNominator', { ns: 'modals' })}</Title>
-				{!(
-					accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
-				) && <Warning text={t('readOnly')} />}
+				{!hasSigner && <Warning text={t('readOnly')} />}
 
 				<Separator transparent />
 				<BondFeedback
@@ -125,7 +127,7 @@ export const SimpleNominate = () => {
 				<SubmitTx
 					displayFor="card"
 					submitText={t('startNominating')}
-					valid={bondValid}
+					valid={bondValid && hasSigner}
 					{...submitExtrinsic}
 					stacked
 				/>

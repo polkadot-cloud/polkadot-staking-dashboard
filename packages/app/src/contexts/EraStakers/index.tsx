@@ -1,13 +1,14 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
-import { setStateWithRef } from '@w3ux/utils'
+import { planckToUnit, setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import { removeSyncing, setSyncing } from 'global-bus'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { fetchEraTotalNominators } from 'plugin-staking-api'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
@@ -18,7 +19,6 @@ import type {
 } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
-import { useApi } from '../Api'
 import { defaultEraStakers } from './defaults'
 import type { EraStakers, EraStakersContextInterface, Exposure } from './types'
 import { getLocalEraExposures, setLocalEraExposures } from './util'
@@ -31,7 +31,7 @@ export const [EraStakersContext, useEraStakers] =
 export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isReady, activeEra, getApiStatus, serviceApi } = useApi()
 	const { units, ss58 } = getStakingChainData(network)
 
@@ -294,6 +294,25 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 	const getActiveValidator = (who: MaybeAddress) => {
 		return eraStakers.stakers.find((s) => s.address === who)
 	}
+
+	// When the active account changes and stakers are already loaded, re-derive activeAccountOwnStake
+	// for the new account without re-fetching chain data.
+	useEffectIgnoreInitial(() => {
+		if (!eraStakersRef.current.stakers.length) {
+			return
+		}
+		const activeAccountOwnStake = eraStakersRef.current.stakers.flatMap(
+			({ address, others }) => {
+				const own = others.find(({ who }) => who === activeAddress)
+				return own ? [{ address, value: planckToUnit(own.value, units) }] : []
+			},
+		)
+		setStateWithRef(
+			{ ...eraStakersRef.current, activeAccountOwnStake },
+			setEraStakers,
+			eraStakersRef,
+		)
+	}, [activeAddress])
 
 	useEffectIgnoreInitial(() => {
 		if (getApiStatus(network) === 'connecting') {

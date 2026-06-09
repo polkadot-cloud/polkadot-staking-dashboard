@@ -170,6 +170,11 @@ export type ButtonTabProps = ComponentBaseWithClassName &
 		badge?: string | number
 	}
 
+export type ButtonTabPreloaderProps = ComponentBaseWithClassName & {
+	colorSecondary?: boolean
+	width?: string | number
+}
+
 export type ButtonTertiaryProps = ComponentBaseWithClassName &
 	ButtonIconProps &
 	ButtonCommonProps & {

@@ -60,6 +60,7 @@ export const Wallets = ({
 					title="Ledger"
 					websiteUrl="https://ledger.com"
 					websiteText="ledger.com"
+					last
 				/>
 			</section>
 			<h4>{t('webExtensions', { ns: 'app' })}</h4>

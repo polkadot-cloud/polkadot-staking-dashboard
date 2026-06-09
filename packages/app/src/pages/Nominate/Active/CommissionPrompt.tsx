@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useBalances } from 'hooks/useBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { WarningPrompt } from 'library/WarningPrompt'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ export const CommissionPrompt = () => {
 	const { getNominations } = useBalances()
 	const { openCanvas } = useOverlay().canvas
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { syncing } = useSyncing(['active-pools'])
 
 	const nominated = formatWithPrefs(getNominations(activeAddress))

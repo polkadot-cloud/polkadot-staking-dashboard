@@ -3,9 +3,9 @@
 
 import { useSize } from '@w3ux/hooks'
 import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
+import { useActivePool } from 'hooks/useActivePool'
 import { useSyncing } from 'hooks/useSyncing'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'

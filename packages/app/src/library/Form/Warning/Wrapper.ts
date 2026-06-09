@@ -3,9 +3,10 @@
 
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ $danger?: boolean }>`
   background: var(--gray-200);
-  border: 1px solid var(--status-warning);
+  border: 1px solid ${({ $danger }) =>
+		$danger ? 'var(--status-danger)' : 'var(--status-warning)'};
   margin: 0.5rem 0;
   padding: 0.6rem 0.9rem;
   border-radius: 0.75rem;
@@ -15,12 +16,25 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: var(--status-warning);
+    color: ${({ $danger }) =>
+			$danger ? 'var(--status-danger)' : 'var(--status-warning)'};
     font-family: var(--font-family-default);
 
     .icon {
-      color: var(--status-warning);
+      color: ${({ $danger }) =>
+				$danger ? 'var(--status-danger)' : 'var(--status-warning)'};
       margin-right: 0.5rem;
     }
   }
+`
+
+export const WarningLink = styled.button`
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  font: inherit;
 `

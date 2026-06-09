@@ -23,7 +23,6 @@ import type { WestendService } from '../services/westend'
 import type { ActivePoolQuery } from '../subscribe/activePool'
 import type { BondedQuery } from '../subscribe/bonded'
 import type { PoolMembershipQuery } from '../subscribe/poolMembership'
-import type { ProxiesQuery } from '../subscribe/proxies'
 import type { StakingLedgerQuery } from '../subscribe/stakingLedger'
 
 // All available chains
@@ -116,10 +115,4 @@ export type ActivePools<StakingApi extends StakingChain> = Record<
 export type PoolMemberships<StakingApi extends StakingChain> = Record<
 	string,
 	PoolMembershipQuery<StakingApi>
->
-
-// Proxies record
-export type Proxies<StakingApi extends StakingChain> = Record<
-	string,
-	ProxiesQuery<StakingApi>
 >

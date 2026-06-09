@@ -4,12 +4,12 @@
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useApi } from 'contexts/Api'
 import { useFilters } from 'contexts/Filters'
 import { useList } from 'contexts/List'
-import { useNetwork } from 'contexts/Network'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { usePoolFilters } from 'hooks/usePoolFilters'
 import { useSyncing } from 'hooks/useSyncing'
 import { Tabs } from 'library/Filter/Tabs'
@@ -207,10 +207,10 @@ export const PoolList = ({
 				)}
 				<MotionContainer>
 					{poolsToDisplay.length ? (
-						poolsToDisplay.map((pool, index: number) => (
+						poolsToDisplay.map((pool) => (
 							<motion.div
 								className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-								key={`nomination_${index}`}
+								key={`nomination_${pool.id}`}
 								variants={{
 									hidden: {
 										y: 15,

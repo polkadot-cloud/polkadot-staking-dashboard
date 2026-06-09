@@ -4,10 +4,10 @@
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { SystemChainList } from 'consts/networks'
 import { getStakingChainData } from 'consts/util/chains'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { usePrompt } from 'contexts/Prompt'
 import { getRpcEndpoints, setRpcEndpoints } from 'global-bus'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { Title } from 'library/Prompt/Title'
 import { PromptSelectItem } from 'library/Prompt/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -31,12 +31,12 @@ export const ProvidersPrompt = () => {
 						network: capitalizeFirstLetter(network),
 					})}
 				</h4>
-				{Object.entries(rpcProviders)?.map(([key, url], i) => {
+				{Object.entries(rpcProviders)?.map(([key, url]) => {
 					const isDisabled = getRpcEndpoint(network) === key
 
 					return (
 						<PromptSelectItem
-							key={`favorite_${i}`}
+							key={`favorite_${key}`}
 							className={isDisabled ? 'inactive' : undefined}
 							onClick={() => {
 								closePrompt()

@@ -1,13 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { TipsConfigAdvanced, TipsConfigSimple } from 'consts/tips'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { usePrompt } from 'contexts/Prompt'
 import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { Tip } from 'library/Tips/Tip'
 import { DefaultLocale } from 'locales'
@@ -22,7 +22,7 @@ export const useTips = () => {
 	const { isNominating } = useStaking()
 	const { inPool, isOwner } = useActivePool()
 	const { fillVariables } = useFillVariables()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { closePrompt, openPromptWith } = usePrompt()
 	const { hasEnoughToNominate } = useAccountBalances(activeAddress)
 

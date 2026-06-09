@@ -1,21 +1,21 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
 import { capitalizeFirstLetter, planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { PerbillMultiplier } from 'consts'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { defaultPoolProgress } from 'contexts/PoolSetups/defaults'
 import { defaultClaimPermission } from 'global-bus'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -48,7 +48,7 @@ export const Form = ({
 	const { setPoolSetup } = usePoolSetups()
 	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const {
 		balances: {
 			pool: { totalPossibleBond },

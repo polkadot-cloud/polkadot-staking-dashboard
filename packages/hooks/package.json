@@ -1,0 +1,27 @@
+{
+	"name": "hooks",
+	"version": "0.1.0",
+	"license": "GPL-3.0-only",
+	"type": "module",
+	"scripts": {
+		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
+		"check": "biome check .",
+		"lint": "biome check --write ."
+	},
+	"exports": {
+		".": "./src/index.ts",
+		"./*": "./src/*/index.ts"
+	},
+	"dependencies": {
+		"@polkadot-cloud/connect": "^1.0.9",
+		"@polkadot-cloud/connect-proxies": "^0.2.3",
+		"@w3ux/utils": "^3.1.1",
+		"consts": "workspace:*",
+		"global-bus": "workspace:*",
+		"react": "^19.2.7",
+		"utils": "workspace:*"
+	},
+	"devDependencies": {
+		"types": "workspace:*"
+	}
+}

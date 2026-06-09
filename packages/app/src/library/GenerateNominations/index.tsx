@@ -2,10 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { MaxNominations } from 'consts'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useManageNominations } from 'contexts/ManageNominations'
 import { usePrompt } from 'contexts/Prompt'
@@ -13,6 +11,7 @@ import { useUi } from 'contexts/UI'
 import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { pluginEnabled } from 'global-bus'
+import { useApi } from 'hooks/useApi'
 import { useFetchMethods } from 'hooks/useFetchMethods'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
@@ -47,7 +46,7 @@ export const GenerateNominations = ({
 	} = useFetchMethods()
 	const { isReady } = useApi()
 	const { advancedMode } = useUi()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { favoritesList } = useFavoriteValidators()
 	const { openPromptWith, closePrompt } = usePrompt()
 	const { isReadOnlyAccount } = useImportedAccounts()
@@ -107,14 +106,14 @@ export const GenerateNominations = ({
 					selected: AnyJson
 					callback?: AnyFunction
 				}) => {
-					const newNominations = [...nominations].filter(
-						(n) =>
-							!selected
-								.map(({ address }: { address: string }) => address)
-								.includes(n.address),
+					const selectedAddresses = new Set(
+						selected.map(({ address }: { address: string }) => address),
 					)
-					setNominations([...newNominations])
-					updateSetters(setters, [...newNominations])
+					const newNominations = nominations.filter(
+						(n) => !selectedAddresses.has(n.address),
+					)
+					setNominations(newNominations)
+					updateSetters(setters, newNominations)
 					if (typeof callback === 'function') {
 						callback()
 					}

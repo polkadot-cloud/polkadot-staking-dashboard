@@ -1,12 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { LedgerDeviceModel } from '@w3ux/ledger-connect'
-import { useLedger, useLedgerAccounts } from '@w3ux/ledger-connect'
+import type { LedgerDeviceModel } from '@polkadot-cloud/connect-ledger'
+import { useLedger, useLedgerAccounts } from '@polkadot-cloud/connect-ledger'
 import type { HardwareAccount } from '@w3ux/types'
 import { setStateWithRef } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getStoredGroupDeviceModels, setStoredGroupDeviceModels } from './local'
 import type { GroupAnchor, UseLedgerDeviceGroupsProps } from './types'

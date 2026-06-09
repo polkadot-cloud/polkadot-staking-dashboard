@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getRelayChainConsts } from 'consts/util'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 
 export const useEraTimeLeft = () => {
 	const { network } = useNetwork()
@@ -31,8 +31,8 @@ export const useEraTimeLeft = () => {
 
 		// Percentage of eraDuration
 		const percentage = eraDuration / 100
-		const percentRemaining = timeleft === 0 ? 100 : timeleft / percentage
-		const percentSurpassed = timeleft === 0 ? 0 : 100 - percentRemaining
+		const percentRemaining = timeleft === 0 ? 0 : timeleft / percentage
+		const percentSurpassed = timeleft === 0 ? 100 : 100 - percentRemaining
 
 		return { timeleft, end, percentSurpassed, percentRemaining }
 	}

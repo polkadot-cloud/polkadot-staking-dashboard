@@ -1,17 +1,16 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useStaking } from 'contexts/Staking'
+import { useApi } from 'hooks/useApi'
 import { useSyncing } from 'hooks/useSyncing'
 import type { UseNominatorBondActions } from './types'
 
 export const useNominatorBondActions = (): UseNominatorBondActions => {
 	const { isReady } = useApi()
 	const { isBonding } = useStaking()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { syncing, accountSynced } = useSyncing([
 		'initialization',
 		'era-stakers',

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
 import type { PayeeOption } from 'contexts/NominatorSetups/types'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
@@ -22,7 +22,7 @@ import type { MaybeAddress } from 'types'
 export const Payee = ({ section }: SetupStepProps) => {
 	const { t } = useTranslation('pages')
 	const { getPayeeItems } = usePayeeConfig()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 
 	const setup = getNominatorSetup(activeAddress)

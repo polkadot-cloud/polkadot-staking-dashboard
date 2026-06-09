@@ -17,10 +17,20 @@ export interface PayoutGraphData {
 	payouts: NominatorReward[]
 	unclaimedPayouts: NominatorReward[]
 	poolClaims: PoolReward[]
+	// Per-era pool reward shares (Polkadot Cloud pools on Polkadot only)
+	poolShareRewards?: PoolReward[]
 }
 export interface PageProps {
 	payoutsList: RewardResults
 	setPayoutsList: Dispatch<SetStateAction<RewardResults>>
+}
+
+export type RewardsKind = 'nominator' | 'pool'
+
+export interface RemotePagination {
+	page: number
+	hasNext: boolean
+	setPage: Dispatch<SetStateAction<number>>
 }
 
 export interface PayoutListProps {
@@ -29,6 +39,9 @@ export interface PayoutListProps {
 	title?: string | null
 	itemsPerPage: number
 	payouts: RewardResults
+	endBadge?: string
+	loading?: boolean
+	remotePagination?: RemotePagination
 }
 
 export interface CalculatorMetrics {

@@ -6,15 +6,15 @@ import type { Sync } from '@w3ux/types'
 import { shuffle } from '@w3ux/utils'
 import { PerbillMultiplier } from 'consts'
 import { getPeopleChainId } from 'consts/util'
-import { useApi } from 'contexts/Api'
 import { useEraStakers } from 'contexts/EraStakers'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
 import {
 	getValidatorRank as getValidatorRankBus,
 	getValidatorRanks,
 } from 'global-bus'
+import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { useNetwork } from 'hooks/useNetwork'
 import { fetchIdentityCache, fetchValidatorStats } from 'plugin-staking-api'
 import type { ActiveValidatorRank } from 'plugin-staking-api/types'
 import type { ReactNode } from 'react'

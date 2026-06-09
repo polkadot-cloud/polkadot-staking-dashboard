@@ -93,7 +93,7 @@ export const HelpTooltip = () => {
 					</CloseButton>
 					<h4>{title}</h4>
 					{Array.isArray(description) ? (
-						description.map((desc, index) => <p key={index}>{desc}</p>)
+						description.map((desc) => <p key={desc}>{desc}</p>)
 					) : (
 						<p>{description}</p>
 					)}

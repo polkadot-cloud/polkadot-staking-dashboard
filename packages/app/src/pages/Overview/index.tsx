@@ -1,12 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { usePlugins } from 'contexts/Plugins'
 import { useStaking } from 'contexts/Staking'
+import { useBalances } from 'hooks/useBalances'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -25,7 +24,7 @@ export const Overview = () => {
 	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
 	const { getStakingLedger } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { syncing, accountSynced } = useSyncing()
 	const { isReadOnlyAccount } = useImportedAccounts()
 

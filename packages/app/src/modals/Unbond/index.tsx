@@ -1,29 +1,29 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useTxMeta } from 'contexts/TxMeta'
 import { getUnixTime } from 'date-fns'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback'
-import { Warning } from 'library/Form/Warning'
+import { Warning, WarningLink } from 'library/Form/Warning'
 import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import { Notes, Padding, Title, Warnings } from 'ui-core/modal'
 import { Close, useOverlay } from 'ui-overlay'
 import { timeleftAsString } from 'utils'
@@ -36,7 +36,7 @@ export const Unbond = () => {
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getPendingPoolRewards } = useBalances()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isDepositor, activePool } = useActivePool()
 	const {
@@ -45,6 +45,7 @@ export const Unbond = () => {
 	} = useApi()
 	const {
 		closeModal,
+		replaceModal,
 		setModalResize,
 		config: { options },
 	} = useOverlay().modal
@@ -138,6 +139,7 @@ export const Unbond = () => {
 
 	const poolToMin = isDepositor() ? minCreateBondBn : minJoinBondBn
 	const poolActiveBelowMin = bondFor === 'pool' && active < poolToMin
+	const openUnstakeModal = () => replaceModal({ key: 'Unstake', size: 'sm' })
 
 	// accumulate warnings.
 	const warnings = getSignerWarnings(
@@ -148,14 +150,6 @@ export const Unbond = () => {
 
 	if (pendingRewards > 0 && bondFor === 'pool') {
 		warnings.push(`${t('unbondingWithdraw')} ${pendingRewardsUnit} ${unit}.`)
-	}
-	if (nominatorActiveBelowMin) {
-		warnings.push(
-			t('unbondErrorBelowMinimum', {
-				bond: minNominatorBond.toFormat(),
-				unit,
-			}),
-		)
 	}
 	if (poolActiveBelowMin) {
 		warnings.push(
@@ -177,7 +171,7 @@ export const Unbond = () => {
 	// Modal resize on form update.
 	useEffect(
 		() => setModalResize(),
-		[bond, feedbackErrors.length, warnings.length],
+		[bond, feedbackErrors.length, warnings.length, nominatorActiveBelowMin],
 	)
 
 	return (
@@ -185,10 +179,26 @@ export const Unbond = () => {
 			<Close />
 			<Padding>
 				<Title>{t('removeBond')}</Title>
-				{warnings.length > 0 ? (
+				{warnings.length > 0 || nominatorActiveBelowMin ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{nominatorActiveBelowMin && (
+							<Warning
+								status="danger"
+								text={
+									<Trans
+										ns="modals"
+										i18nKey="mustUnstakeToFreeBondedFunds"
+										components={{
+											unstake: (
+												<WarningLink type="button" onClick={openUnstakeModal} />
+											),
+										}}
+									/>
+								}
+							/>
+						)}
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

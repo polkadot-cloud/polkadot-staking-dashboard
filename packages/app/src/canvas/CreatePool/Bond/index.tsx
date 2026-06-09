@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { usePoolSetups } from 'contexts/PoolSetups'
-import { useTxMeta } from 'contexts/TxMeta'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar'
 import { Footer } from 'library/SetupSteps/Footer'
@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next'
 export const Bond = ({ section }: SetupStepProps) => {
 	const { t } = useTranslation('pages')
 	const { getTxSubmissionByTag } = useTxMeta()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getPoolSetup, setPoolSetup } = usePoolSetups()
 
 	const txSubmission = getTxSubmissionByTag('createPool')

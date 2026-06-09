@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { isValidAddress } from '@w3ux/util-dedot'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
 import type { PayeeConfig, PayeeOption } from 'contexts/NominatorSetups/types'
 import { AccountId32 } from 'dedot/codecs'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
@@ -33,7 +33,7 @@ export const UpdatePayee = () => {
 	const { getStakingLedger } = useBalances()
 	const { getPayeeItems } = usePayeeConfig()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 
 	const payee = getStakingLedger(activeAddress).payee
 
@@ -132,8 +132,8 @@ export const UpdatePayee = () => {
 			<Padding horizontalOnly>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

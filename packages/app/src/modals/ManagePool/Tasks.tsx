@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { Warning } from 'library/Form/Warning'
 import type { ForwardedRef } from 'react'
 import { forwardRef } from 'react'
@@ -75,7 +75,7 @@ export const Tasks = forwardRef(
 									}}
 								>
 									<TaskInnerWrapper>
-										<h3>{t('manageCommission')}</h3>
+										<h3>{t('manageCommission.title')}</h3>
 										<p>{t('updatePoolCommission')}</p>
 									</TaskInnerWrapper>
 								</ButtonOption>

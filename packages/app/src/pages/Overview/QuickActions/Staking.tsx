@@ -2,7 +2,7 @@
 /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: <> */
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
 import { useQuickActions } from 'hooks/useQuickActions'
 import type { BondFor } from 'types'
 import { QuickAction } from 'ui-buttons'
@@ -52,8 +52,8 @@ export const Staking = ({ bondFor }: { bondFor: BondFor[] }) => {
 
 	return (
 		<QuickAction.Container>
-			{actions.map((action, i) => (
-				<QuickAction.Button key={`action-${i}`} {...action} />
+			{actions.map((action) => (
+				<QuickAction.Button key={`action-${action.label}`} {...action} />
 			))}
 		</QuickAction.Container>
 	)

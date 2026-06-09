@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
-import { useNetwork } from 'contexts/Network'
 import { useUi } from 'contexts/UI'
 import {
 	onCreatePoolButtonPressedEvent,
 	onJoinPoolButtonPressedEvent,
 } from 'event-tracking'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
+import { useNetwork } from 'hooks/useNetwork'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'

@@ -3,10 +3,10 @@
 
 import { createSafeContext, useEffectIgnoreInitial } from '@w3ux/hooks'
 import type { Sync } from '@w3ux/types'
+import { useApi } from 'hooks/useApi'
 import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useOverlay } from 'ui-overlay'
-import { useApi } from '../../Api'
 import { defaultPoolMemberData } from './defaults'
 import type { FetchedPoolMembers, PoolMemberContext } from './types'
 

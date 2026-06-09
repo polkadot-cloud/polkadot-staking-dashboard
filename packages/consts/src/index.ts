@@ -13,6 +13,7 @@ export const PlatformSupportEmail = 'staking@polkadot.cloud'
 export const PlatformGitHubURL =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
 export const DiscordSupportURL = 'https://discord.gg/QY7CSSJm3D'
+export const AssetHubPolkadotSubscanURL = 'https://assethub-polkadot.subscan.io'
 export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
 
 // Analytics
@@ -30,6 +31,7 @@ export const SmallFontSizeMaxWidth = 600
 // Misc Values
 export const MaxNominations = 16
 export const MaxPayoutDays = 60
+export const PoolSharesDays = 21
 export const MaxEraRewardPointsEras = 10
 export const PerbillMultiplier = 10000000
 export const ToastDelayDuration = 3000

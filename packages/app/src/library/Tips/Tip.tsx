@@ -14,8 +14,8 @@ export const Tip = ({ title, description, page, onPromptClick }: TipProps) => {
 		<>
 			<Title title={title} />
 			<div className="body">
-				{description.map((item, index: number) => (
-					<h4 key={`inner_def_${index}`} className="definition">
+				{description.map((item) => (
+					<h4 key={`inner_def_${item}`} className="definition">
 						{item}
 					</h4>
 				))}

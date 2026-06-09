@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useThemeValues } from 'contexts/ThemeValues'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +17,7 @@ export const ClosurePrompts = () => {
 	const { t } = useTranslation('pages')
 	const { openModal } = useOverlay().modal
 	const { getThemeValue } = useThemeValues()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { syncing } = useSyncing(['active-pools'])
 	const { balances } = useAccountBalances(activeAddress)
 	const { isBonding, activePool, isDepositor, activePoolNominations } =

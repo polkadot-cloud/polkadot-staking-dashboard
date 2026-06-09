@@ -1,18 +1,18 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { getUnixTime } from 'date-fns'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
 import { useBatchCall } from 'hooks/useBatchCall'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -36,7 +36,7 @@ export const Unstake = () => {
 	const { erasToSeconds } = useErasToTimeLeft()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { closeModal, setModalResize } = useOverlay().modal
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 
 	const { balances } = useAccountBalances(activeAddress)
 	const { bondDuration } = getConsts(network)
@@ -112,8 +112,8 @@ export const Unstake = () => {
 				<Title>{t('unstake')} </Title>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

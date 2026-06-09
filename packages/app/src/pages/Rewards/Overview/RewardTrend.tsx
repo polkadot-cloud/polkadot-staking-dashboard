@@ -1,15 +1,15 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { useStaking } from 'contexts/Staking'
 import { getPoolMembership } from 'global-bus'
+import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
+import { useNetwork } from 'hooks/useNetwork'
 import { Ticker } from 'library/StatCards/Ticker'
 import {
 	fetchNominatorRewardTrend,
@@ -25,7 +25,7 @@ export const RewardTrend = () => {
 	const { activeEra } = useApi()
 	const { isBonding } = useStaking()
 	const { erasPerDay } = useErasPerDay()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 
 	const { unit, units } = getStakingChainData(network)
 	const { membership } = getPoolMembership(activeAddress)

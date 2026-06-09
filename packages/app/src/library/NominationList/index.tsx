@@ -1,12 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { usePlugins } from 'contexts/Plugins'
 import type { ValidatorListEntry } from 'contexts/Validators/types'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { useNominationStatus } from 'hooks/useNominationStatus'
 import { useSyncing } from 'hooks/useSyncing'
 import { useValidatorRewardRateBatch } from 'hooks/useValidatorRewardRateBatch'
@@ -36,7 +36,7 @@ export const NominationList = ({
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { isReady, activeEra } = useApi()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { setModalResize } = useOverlay().modal
 	const { injectValidatorListData } = useValidators()
 	const { getNominationSetStatus, getPoolNominationStatus } =
@@ -168,9 +168,9 @@ export const NominationList = ({
 			<List $flexBasisLarge={'33.33%'}>
 				<MotionContainer>
 					{validators.length ? (
-						validators.map((validator, index) => (
+						validators.map((validator) => (
 							<motion.div
-								key={`nomination_${index}`}
+								key={`nomination_${validator.address}`}
 								className={`item col`}
 								variants={{
 									hidden: {

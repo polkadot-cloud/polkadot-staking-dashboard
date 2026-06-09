@@ -1,12 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useActivePool } from 'hooks/useActivePool'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -27,7 +27,7 @@ export const StopNominations = () => {
 	const { getNominations } = useBalances()
 	const { activeProxy } = useActiveProxy()
 	const { getSignerWarnings } = useSignerWarnings()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { activePoolNominations, isNominator, isOwner, activePool } =
 		useActivePool()
 
@@ -96,8 +96,8 @@ export const StopNominations = () => {
 				</Title>
 				{warnings.length ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning_${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

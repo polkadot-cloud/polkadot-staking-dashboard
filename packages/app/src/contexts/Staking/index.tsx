@@ -1,17 +1,17 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext } from '@w3ux/hooks'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
 import type { StakingContextInterface } from 'contexts/Staking/types'
+import { useBalances } from 'hooks/useBalances'
 import type { ReactNode } from 'react'
 
 export const [StakingContext, useStaking] =
 	createSafeContext<StakingContextInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getStakingLedger, getNominations } = useBalances()
 	const nominations = getNominations(activeAddress)
 

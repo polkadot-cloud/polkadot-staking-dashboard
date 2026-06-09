@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useImportedAccounts } from '@polkadot-cloud/connect'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useBalances } from 'hooks/useBalances'
 import type { ActiveAccount } from 'types'
 
 export const useSignerAvailable = () => {

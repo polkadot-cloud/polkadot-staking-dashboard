@@ -19,12 +19,12 @@ export const Overview = forwardRef(
 		return (
 			<ContentWrapper>
 				<Padding horizontalOnly ref={ref}>
-					{unclaimedRewards.entries.map(({ era, reward, validators }, i) =>
+					{unclaimedRewards.entries.map(({ era, reward, validators }) =>
 						new BigNumber(reward).isZero() ? (
-							<Fragment key={`unclaimed_payout_${i}`} />
+							<Fragment key={`unclaimed_payout_${era}`} />
 						) : (
 							<Item
-								key={`unclaimed_payout_${i}`}
+								key={`unclaimed_payout_${era}`}
 								era={String(era)}
 								validators={validators}
 								setPayouts={setPayouts}

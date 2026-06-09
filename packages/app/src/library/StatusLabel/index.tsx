@@ -5,14 +5,15 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useHelp } from 'contexts/Help'
 import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
+import { useActivePool } from 'hooks/useActivePool'
 import { useSyncing } from 'hooks/useSyncing'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { StatusLabelProps } from './types'
 import { Wrapper } from './Wrapper'
 
 export const StatusLabel = ({
+	backgroundOpacity,
 	title,
 	helpKey,
 	hideIcon,
@@ -40,7 +41,7 @@ export const StatusLabel = ({
 	}
 
 	return (
-		<Wrapper $topOffset={topOffset}>
+		<Wrapper $backgroundOpacity={backgroundOpacity} $topOffset={topOffset}>
 			<div>
 				{!hideIcon && <FontAwesomeIcon icon={faExclamationTriangle} />}
 				<h2>

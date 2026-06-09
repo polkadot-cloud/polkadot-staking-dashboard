@@ -1,16 +1,16 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
 import { usePayouts } from 'contexts/Payouts'
 import type { SubmittableExtrinsic } from 'dedot'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
 import { useBatchCall } from 'hooks/useBatchCall'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -38,7 +38,7 @@ export const Forms = forwardRef(
 		const { activeProxy } = useActiveProxy()
 		const { closeModal } = useOverlay().modal
 		const { getSignerWarnings } = useSignerWarnings()
-		const { activeAddress, activeAccount } = useActiveAccounts()
+		const { activeAddress, activeAccount } = useActiveAccount()
 		const { unclaimedRewards, setUnclaimedRewards } = usePayouts()
 		const { unit, units } = getStakingChainData(network)
 
@@ -138,8 +138,8 @@ export const Forms = forwardRef(
 					<Padding horizontalOnly>
 						{warnings.length > 0 ? (
 							<Warnings>
-								{warnings.map((text, i) => (
-									<Warning key={`warning${i}`} text={text} />
+								{warnings.map((text) => (
+									<Warning key={`warning_${text}`} text={text} />
 								))}
 							</Warnings>
 						) : null}

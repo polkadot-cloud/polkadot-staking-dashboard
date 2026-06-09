@@ -3,17 +3,16 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
 import { usePoolSetups } from 'contexts/PoolSetups'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
 import { useBatchCall } from 'hooks/useBatchCall'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
@@ -38,7 +37,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 	const { accountHasSigner } = useImportedAccounts()
 	const { getPoolSetup, removePoolSetup } = usePoolSetups()
 	const { queryBondedPool, addToBondedPools } = useBondedPools()
-	const { activeAddress, activeAccount } = useActiveAccounts()
+	const { activeAddress, activeAccount } = useActiveAccount()
 	const { unit, units } = getStakingChainData(network)
 
 	const poolId = lastPoolId + 1

@@ -1,13 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext } from '@w3ux/hooks'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
 import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
+import { useNetwork } from 'hooks/useNetwork'
 import { fetchGetStakerWithNominees } from 'plugin-staking-api'
 import type { ActiveStatusWithNominees } from 'plugin-staking-api/types'
 import { type ReactNode, useEffect, useState } from 'react'
@@ -21,7 +21,7 @@ export const ActiveStakerProvider = ({ children }: { children: ReactNode }) => {
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
 	const { getNominations } = useBalances()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { activePool, activePoolNominations } = useActivePool()
 
 	const nominations = getNominations(activeAddress)

@@ -1,12 +1,11 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useApi } from 'contexts/Api'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
-import { useNetwork } from 'contexts/Network'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useStaking } from 'contexts/Staking'
 import { onNewNominatorButtonPressedEvent } from 'event-tracking'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'
@@ -18,7 +17,7 @@ export const NewNominator = ({ syncing }: NewNominatorProps) => {
 	const { isReady } = useApi()
 	const { network } = useNetwork()
 	const { openModal } = useOverlay().modal
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { isBonding, isNominating } = useStaking()
 	const { isReadOnlyAccount } = useImportedAccounts()
 

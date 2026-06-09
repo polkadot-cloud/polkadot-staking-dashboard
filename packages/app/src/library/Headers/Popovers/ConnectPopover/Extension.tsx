@@ -7,11 +7,11 @@ import {
 	faPlugCircleXmark,
 	faPlus,
 } from '@fortawesome/free-solid-svg-icons'
+import { useExtensionAccounts, useExtensions } from '@polkadot-cloud/connect'
 import { ExtensionIcons } from '@w3ux/extension-assets/util'
-import { useExtensionAccounts, useExtensions } from '@w3ux/react-connect-kit'
 import { localStorageOrDefault } from '@w3ux/utils'
-import { useNetwork } from 'contexts/Network'
 import { onExtensionConnectedEvent } from 'event-tracking'
+import { useNetwork } from 'hooks/useNetwork'
 import { useTranslation } from 'react-i18next'
 import { ButtonMonoInvert } from 'ui-buttons'
 import { ConnectItem } from 'ui-core/popover'

@@ -1,25 +1,27 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ListProvider } from 'contexts/List'
-import { useNetwork } from 'contexts/Network'
-import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useFavoritePools } from 'contexts/Pools/FavoritePools'
 import { onTabVisitEvent } from 'event-tracking'
-import { CardWrapper } from 'library/Card/Wrappers'
+import { useNetwork } from 'hooks/useNetwork'
+import { PagePreloader } from 'library/PagePreloader'
 import { PageTabs } from 'library/PageTabs'
-import { PoolList } from 'library/PoolList'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'
 import { PoolsTabsProvider, usePoolsTabs } from './context'
-import { PoolFavorites } from './Favorites'
+
+const PoolsOverview = lazy(() =>
+	import('./Overview').then((m) => ({ default: m.PoolsOverview })),
+)
+const PoolFavorites = lazy(() =>
+	import('./Favorites').then((m) => ({ default: m.PoolFavorites })),
+)
 
 const PoolsListInner = () => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { favorites } = useFavoritePools()
-	const { bondedPools } = useBondedPools()
 	const { activeTab, setActiveTab } = usePoolsTabs()
 
 	// Go back to tab 0 on network change
@@ -52,21 +54,10 @@ const PoolsListInner = () => {
 					]}
 				/>
 			</Page.Title>
-			{activeTab === 0 && (
-				<Page.Row>
-					<CardWrapper>
-						<ListProvider>
-							<PoolList
-								pools={bondedPools}
-								itemsPerPage={50}
-								allowMoreCols
-								allowSearch
-							/>
-						</ListProvider>
-					</CardWrapper>
-				</Page.Row>
-			)}
-			{activeTab === 1 && <PoolFavorites />}
+			<Suspense fallback={<PagePreloader showStats={false} />}>
+				{activeTab === 0 && <PoolsOverview />}
+				{activeTab === 1 && <PoolFavorites />}
+			</Suspense>
 		</>
 	)
 }

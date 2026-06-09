@@ -1,12 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { stringToU8a } from 'dedot/utils'
+import { useActivePool } from 'hooks/useActivePool'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
@@ -32,7 +32,7 @@ export const RenamePool = ({
 	const { serviceApi } = useApi()
 	const { activeProxy } = useActiveProxy()
 	const { closeModal } = useOverlay().modal
-	const { activeAccount } = useActiveAccounts()
+	const { activeAccount } = useActiveAccount()
 	const { isOwner, activePool } = useActivePool()
 	const { getSignerWarnings } = useSignerWarnings()
 	const { bondedPools, poolsMetaData } = useBondedPools()
@@ -91,8 +91,8 @@ export const RenamePool = ({
 			<Padding horizontalOnly>
 				{warnings.length > 0 ? (
 					<Warnings>
-						{warnings.map((text, i) => (
-							<Warning key={`warning${i}`} text={text} />
+						{warnings.map((text) => (
+							<Warning key={`warning_${text}`} text={text} />
 						))}
 					</Warnings>
 				) : null}

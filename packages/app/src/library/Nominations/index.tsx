@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog, faStopCircle } from '@fortawesome/free-solid-svg-icons'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
-import { useBalances } from 'contexts/Balances'
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts'
+import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useHelp } from 'contexts/Help'
-import { useActivePool } from 'contexts/Pools/ActivePool'
 import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useActivePool } from 'hooks/useActivePool'
+import { useBalances } from 'hooks/useBalances'
 import { useSyncing } from 'hooks/useSyncing'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { ListStatusHeader } from 'library/List'
@@ -42,7 +41,7 @@ export const Nominations = ({
 	const { openHelpTooltip } = useHelp()
 	const { getNominations } = useBalances()
 	const { formatWithPrefs } = useValidators()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { syncing } = useSyncing(['era-stakers'])
 	const { isReadOnlyAccount } = useImportedAccounts()
 

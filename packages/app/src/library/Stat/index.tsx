@@ -7,7 +7,7 @@ import { Polkicon } from '@w3ux/react-polkicon'
 import { applyWidthAsPadding, minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import { useHelp } from 'contexts/Help'
-import { useNetwork } from 'contexts/Network'
+import { useNetwork } from 'hooks/useNetwork'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ButtonPrimary, ButtonSecondary } from 'ui-buttons'
@@ -117,10 +117,9 @@ export const Stat = ({
 					{display}
 					{buttons ? (
 						<span ref={subjectRef}>
-							{buttons.map((btn: StatButtonProps, index: number) => (
-								<span key={`stat_${index}`}>
+							{buttons.map((btn: StatButtonProps) => (
+								<span key={btn.id ?? btn.title}>
 									<Button
-										key={`btn_${index}_${Math.random()}`}
 										text={btn.title}
 										size={btn.large ? 'lg' : undefined}
 										iconLeft={btn.icon ?? undefined}

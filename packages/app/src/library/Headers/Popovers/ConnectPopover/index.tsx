@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useExtensions } from '@polkadot-cloud/connect'
 import extensions from '@w3ux/extension-assets'
 import { useOutsideAlerter } from '@w3ux/hooks'
-import { useExtensions } from '@w3ux/react-connect-kit'
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -33,16 +33,16 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 	// Whether the app is running in a SubWallet Mobile
 	const inSubWallet = !!window.injectedWeb3?.['subwallet-js'] && isMobile
 
+	// NOTE: Deprecated support for these wallets/extensions
+	const deprecated = ['snap', 'polkagate', 'fearless']
+
 	// Format supported extensions as array
 	const extensionsAsArray = Object.entries(extensions)
 		.map(([key, value]) => ({
 			id: key,
 			...value,
 		}))
-		// NOTE: Deprecated support for these wallets/extensions
-		.filter(({ id }) => !id.includes('snap'))
-		.filter(({ id }) => !id.includes('polkagate'))
-		.filter(({ id }) => !id.includes('fearless'))
+		.filter(({ id }) => !deprecated.some((d) => id.includes(d)))
 
 	// Determine which web extensions to display. Only display Subwallet Mobile or Nova if in one of
 	// those environments. In Nova Wallet's case, fetch `nova-wallet` metadata and overwrite
@@ -56,15 +56,14 @@ export const ConnectPopover = ({ setOpen }: SetOpenProp) => {
 			: // Otherwise, keep all extensions except `polkadot-js`.
 				extensionsAsArray.filter((a) => a.category === 'web-extension')
 
-	const installed = web.filter((a) =>
-		Object.keys(extensionsStatus).find((key) => key === a.id),
-	)
+	const installed = web.filter((a) => a.id in extensionsStatus)
 	// NOTE: Moving `enkrypt` to last item
 	installed.sort((a, b) =>
 		a.id === 'enkrypt' ? 1 : b.id === 'enkrypt' ? -1 : 0,
 	)
 
-	const other = web.filter((a) => !installed.find((b) => b.id === a.id))
+	const installedIds = new Set(installed.map((a) => a.id))
+	const other = web.filter((a) => !installedIds.has(a.id))
 
 	// Close the menu if clicked outside of its container
 	useOutsideAlerter(popoverRef, () => {

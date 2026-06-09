@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
+import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
-import { useActiveAccounts } from 'contexts/ActiveAccounts'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
-import { useTxMeta } from 'contexts/TxMeta'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { NominateStatusBar } from 'library/Form/NominateStatusBar'
 import { Footer } from 'library/SetupSteps/Footer'
@@ -24,7 +24,7 @@ export const Bond = ({
 }) => {
 	const { t } = useTranslation('pages')
 	const { getTxSubmissionByTag } = useTxMeta()
-	const { activeAddress } = useActiveAccounts()
+	const { activeAddress } = useActiveAccount()
 	const { getNominatorSetup, setNominatorSetup } = useNominatorSetups()
 	const setup = getNominatorSetup(activeAddress)
 	const { progress } = setup

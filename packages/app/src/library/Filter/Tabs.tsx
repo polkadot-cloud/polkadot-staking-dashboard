@@ -13,12 +13,12 @@ export const Tabs = ({ config }: FilterTabsProps) => {
 
 	return (
 		<TabsWrapper>
-			{config.map((c, i) => {
+			{config.map((c) => {
 				const label = c.label as PoolTab
 
 				return (
 					<TabWrapper
-						key={`pools_tab_filter_${i}`}
+						key={`pools_tab_filter_${label}`}
 						$active={label === poolListActiveTab}
 						disabled={label === poolListActiveTab}
 						onClick={() => {
