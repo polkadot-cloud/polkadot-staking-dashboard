@@ -6,8 +6,8 @@ import {
 	type ValidatorSupportedNetwork,
 	validatorListSupported,
 } from '@w3ux/validator-assets'
-import { useApi } from 'contexts/Api'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useApi } from 'hooks/useApi'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { ValidatorList } from 'library/ValidatorList'
 import { useEffect, useState } from 'react'

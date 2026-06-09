@@ -8,7 +8,7 @@ import type {
 	StakingLedger,
 } from 'types'
 
-export interface BalancesContextInterface {
+export interface BalancesHookInterface {
 	getAccountBalance: (address: MaybeAddress) => AccountBalance
 	getStakingLedger: (address: MaybeAddress) => StakingLedger
 	getPoolMembership: (address: MaybeAddress) => PoolMembershipState

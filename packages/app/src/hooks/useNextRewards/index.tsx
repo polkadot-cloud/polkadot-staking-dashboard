@@ -3,8 +3,8 @@
 
 import { useTimeLeft } from '@w3ux/hooks'
 import { secondsFromNow } from '@w3ux/hooks/util'
-import { useApi } from 'contexts/Api'
 import { fromUnixTime, getUnixTime } from 'date-fns'
+import { useApi } from 'hooks/useApi'
 import { useEraTimeLeft } from 'hooks/useEraTimeLeft'
 import { useNetwork } from 'hooks/useNetwork'
 import { useEffect } from 'react'

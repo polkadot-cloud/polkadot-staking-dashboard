@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getRelayChainConsts } from 'consts/util'
-import { useApi } from 'contexts/Api'
 import { getUnixTime } from 'date-fns'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 
 export const useEraTimeLeft = () => {

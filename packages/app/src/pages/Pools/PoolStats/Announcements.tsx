@@ -3,8 +3,8 @@
 
 import BigNumber from 'bignumber.js'
 import { getStakingChain, getStakingChainData } from 'consts/util'
-import { useApi } from 'contexts/Api'
-import { useActivePool } from 'contexts/Pools/ActivePool'
+import { useActivePool } from 'hooks/useActivePool'
+import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
 import { AnnouncementsList } from 'library/Announcements/AnnouncementsList'
 import type { AnnouncementItem } from 'library/Announcements/types'
