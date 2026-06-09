@@ -10,6 +10,7 @@ export type { CurrencyHookInterface } from './types'
 
 let currentCurrency: string | null = null
 const listeners = new Set<() => void>()
+let storageListenerAttached = false
 
 const getCurrencySnapshot = () => {
 	if (!currentCurrency) {
@@ -24,10 +25,40 @@ const emitCurrencyChange = () => {
 	}
 }
 
+const handleStorageChange = (event: StorageEvent) => {
+	if (event.key === FiatCurrencyKey) {
+		currentCurrency = getUserFiatCurrency()
+		emitCurrencyChange()
+	}
+}
+
+const attachStorageListener = () => {
+	if (typeof window === 'undefined' || storageListenerAttached) {
+		return
+	}
+	window.addEventListener('storage', handleStorageChange)
+	storageListenerAttached = true
+}
+
+const detachStorageListener = () => {
+	if (typeof window === 'undefined' || !storageListenerAttached) {
+		return
+	}
+	window.removeEventListener('storage', handleStorageChange)
+	storageListenerAttached = false
+}
+
 const subscribeCurrency = (listener: () => void) => {
+	if (listeners.size === 0) {
+		currentCurrency = getUserFiatCurrency()
+		attachStorageListener()
+	}
 	listeners.add(listener)
 	return () => {
 		listeners.delete(listener)
+		if (listeners.size === 0) {
+			detachStorageListener()
+		}
 	}
 }
 
@@ -35,15 +66,6 @@ const setCurrencyState = (currency: string) => {
 	currentCurrency = currency
 	persistCurrency(currency)
 	emitCurrencyChange()
-}
-
-if (typeof window !== 'undefined') {
-	window.addEventListener('storage', (event) => {
-		if (event.key === FiatCurrencyKey) {
-			currentCurrency = getUserFiatCurrency()
-			emitCurrencyChange()
-		}
-	})
 }
 
 export const useCurrency = (): CurrencyHookInterface => {
