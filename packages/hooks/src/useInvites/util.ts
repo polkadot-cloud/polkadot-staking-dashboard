@@ -1,10 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { removeLocalInviteConfig } from './local'
 import type { LocalInviteConfig } from './types'
 
-// biome-ignore lint/suspicious/noExplicitAny: <>
+// biome-ignore lint/suspicious/noExplicitAny: Validate untyped local storage data.
 export const isLocalInviteValid = (raw: any): raw is LocalInviteConfig => {
 	try {
 		if (
@@ -20,7 +19,6 @@ export const isLocalInviteValid = (raw: any): raw is LocalInviteConfig => {
 		const { poolId } = raw.invite
 		return typeof poolId === 'number' && !isNaN(poolId)
 	} catch {
-		removeLocalInviteConfig()
 		return false
 	}
 }
