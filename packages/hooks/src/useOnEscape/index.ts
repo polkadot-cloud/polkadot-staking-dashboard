@@ -3,9 +3,8 @@
 
 import { useEffect, useRef } from 'react'
 
-// Invokes `handler` whenever the Escape key is pressed. The latest handler is
-// always used via a ref, so callers can pass an inline closure without
-// re-binding the listener on every render.
+// Invokes `handler` whenever the Escape key is pressed. The latest handler is always used via a
+// ref, so callers can pass an inline closure without re-binding the listener on every render.
 export const useOnEscape = (handler: () => void) => {
 	const handlerRef = useRef(handler)
 	handlerRef.current = handler

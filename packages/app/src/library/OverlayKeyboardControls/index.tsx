@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { usePrompt } from 'contexts/Prompt'
-import { useOnEscape, useOverlay } from 'ui-overlay'
+import { useOnEscape } from 'hooks'
+import { useOverlay } from 'ui-overlay'
 
 // Closes the topmost open overlay when the Escape key is pressed. Centralised
 // here because modals and canvases live in the overlay context while prompts
