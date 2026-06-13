@@ -112,6 +112,8 @@ export const SubmitTx = (props: SubmitTxProps) => {
 				submitText={activeSubmitText}
 				onSubmit={onSubmit}
 				valid={valid}
+				submitted={submitted}
+				notEnoughFunds={notEnoughFunds}
 			/>
 		)
 		PromptComponent = undefined
