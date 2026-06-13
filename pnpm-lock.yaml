@@ -705,6 +705,9 @@ importers:
       '@w3ux/utils':
         specifier: 3.1.1
         version: 3.1.1
+      hooks:
+        specifier: workspace:*
+        version: link:../hooks
       motion:
         specifier: 12.23.24
         version: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)

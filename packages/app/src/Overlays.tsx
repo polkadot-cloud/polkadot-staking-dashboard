@@ -3,6 +3,7 @@
 
 import { ErrorFallbackModal } from 'library/ErrorBoundary'
 import { type ComponentType, lazy } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Overlay } from 'ui-overlay'
 
 type OverlayLoader<TModule = Record<string, unknown>> = () => Promise<TModule>
@@ -80,12 +81,14 @@ const canvas = lazyOverlayComponents({
 })
 
 export const Overlays = () => {
+	const { t } = useTranslation('modals')
 	return (
 		<Overlay
 			fallback={ErrorFallbackModal}
 			externalOverlayStatus="closed"
 			modals={modals}
 			canvas={canvas}
+			closeLabel={t('close')}
 		/>
 	)
 }

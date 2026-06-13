@@ -11,6 +11,7 @@ export const Overlay = ({
 	canvas = {},
 	fallback,
 	externalOverlayStatus,
+	closeLabel,
 }: OverlayProps) => (
 	<>
 		<Background externalOverlayStatus={externalOverlayStatus} />
@@ -18,6 +19,7 @@ export const Overlay = ({
 			fallback={fallback}
 			modals={modals}
 			externalOverlayStatus={externalOverlayStatus}
+			closeLabel={closeLabel}
 		/>
 		<Canvas
 			fallback={fallback}

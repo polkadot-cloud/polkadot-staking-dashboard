@@ -57,6 +57,8 @@ export type CanvasProps = Fallback & {
 export type ModalProps = Fallback & {
 	modals?: Record<string, ComponentType>
 	externalOverlayStatus: CanvasStatus
+	// Translated accessible label for the backdrop dismiss button
+	closeLabel?: string
 }
 export type OverlayProps = ModalProps & CanvasProps
 export type ConfigOptions = Record<string, AnyJson>

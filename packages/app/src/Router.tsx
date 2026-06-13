@@ -29,6 +29,7 @@ import { HelpTooltip } from 'library/HelpTooltip'
 import { MainFooter } from 'library/MainFooter'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
+import { OverlayKeyboardControls } from 'library/OverlayKeyboardControls'
 import { PageWithTitle } from 'library/PageWithTitle'
 import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
@@ -124,6 +125,7 @@ const RouterInner = () => {
 					<Menu />
 					<Tooltip />
 					<Prompt />
+					<OverlayKeyboardControls />
 					<SideMenu />
 					<Page.Main ref={mainInterfaceRef}>
 						<HelmetProvider>
