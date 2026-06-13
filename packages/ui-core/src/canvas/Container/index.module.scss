@@ -8,4 +8,10 @@
   align-items: center;
   position: fixed;
   z-index: 10;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
 }
