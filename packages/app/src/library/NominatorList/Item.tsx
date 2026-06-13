@@ -3,11 +3,11 @@
 
 import BigNumber from 'bignumber.js'
 import { CopyAddress } from 'library/ListItem/Buttons/CopyAddress'
-import { APY } from 'library/ListItem/Labels/APY'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { Wrapper } from 'library/ListItem/Wrappers'
 import { useMemo } from 'react'
 import { HeaderButtonRow, Label, LabelRow, Separator } from 'ui-core/list'
+import { NominationStatus } from '../ListItem/Labels/NominationStatus'
 import type { NominatorListItemProps } from './types'
 import { VerticalPayoutPerformance } from './VerticalPayoutPerformance'
 
@@ -33,7 +33,6 @@ const generatePerformanceSeries = (total30d: number, seedText: string) => {
 
 export const Item = ({ item, unit }: NominatorListItemProps) => {
 	const address = item.address || ''
-	const annualProjection = item.stakedBalance * (item.validatorApy / 100)
 	const performance = useMemo(
 		() =>
 			item.performance30d ||
@@ -42,7 +41,10 @@ export const Item = ({ item, unit }: NominatorListItemProps) => {
 	)
 
 	const formattedStake = `${new BigNumber(item.stakedBalance).toFormat(3)} ${unit}`
-	const formattedAnnual = `${new BigNumber(annualProjection).toFormat(3)} ${unit}`
+
+	if (!item.address) {
+		return null
+	}
 
 	return (
 		<Wrapper>
@@ -64,11 +66,17 @@ export const Item = ({ item, unit }: NominatorListItemProps) => {
 					</div>
 					<div>
 						<LabelRow inline>
-							<APY rate={item.validatorApy} />
 							<Label>{formattedStake}</Label>
 						</LabelRow>
 						<LabelRow>
-							<Label>{formattedAnnual}</Label>
+							<NominationStatus
+								address={address}
+								bondFor={'nominator'}
+								nominator={address}
+								status={'active'}
+								asIncoming
+								noMargin
+							/>
 						</LabelRow>
 					</div>
 				</div>

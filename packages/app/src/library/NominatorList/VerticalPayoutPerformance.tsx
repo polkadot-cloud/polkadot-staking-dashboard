@@ -40,8 +40,8 @@ export const VerticalPayoutPerformance = ({
 								y1={chartHeight - lineHeight}
 								x2={x}
 								y2={chartHeight}
-								stroke="var(--gray-800)"
-								strokeWidth={1}
+								stroke="var(--gray-1000)"
+								strokeWidth={2.5}
 								opacity={0.95}
 							/>
 						)
