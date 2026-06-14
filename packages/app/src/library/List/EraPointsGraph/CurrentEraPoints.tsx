@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { useTooltip } from 'contexts/Tooltip'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import {
 	eraRewardPoints$,
@@ -10,6 +9,7 @@ import {
 	getValidatorEraPoints,
 } from 'global-bus'
 import { useApi } from 'hooks/useApi'
+import { useTooltip } from 'hooks/useTooltip'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'

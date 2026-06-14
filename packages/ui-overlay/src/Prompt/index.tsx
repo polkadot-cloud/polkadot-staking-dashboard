@@ -1,8 +1,14 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePrompt } from 'contexts/Prompt'
-import { ContentWrapper, HeightWrapper, PromptWrapper } from './Wrappers'
+import {
+	ContentWrapper,
+	HeightWrapper,
+	PromptBackdropButton,
+	PromptInner as PromptInnerWrapper,
+	PromptWrapper,
+} from 'ui-core/prompt'
+import { usePrompt } from '../Provider'
 
 export const Prompt = () => {
 	const {
@@ -19,13 +25,12 @@ export const Prompt = () => {
 
 	return (
 		<PromptWrapper>
-			<div>
+			<PromptInnerWrapper>
 				<HeightWrapper size={size}>
 					<ContentWrapper>{PromptInner}</ContentWrapper>
 				</HeightWrapper>
-				<button
-					type="button"
-					className="close"
+				<PromptBackdropButton
+					aria-label="Close prompt"
 					onClick={() => {
 						if (closeOnOutsideClick) {
 							closePrompt()
@@ -33,8 +38,8 @@ export const Prompt = () => {
 					}}
 				>
 					&nbsp;
-				</button>
-			</div>
+				</PromptBackdropButton>
+			</PromptInnerWrapper>
 		</PromptWrapper>
 	)
 }

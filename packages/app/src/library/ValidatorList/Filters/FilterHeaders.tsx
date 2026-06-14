@@ -6,9 +6,9 @@ import {
 	faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { useFilters } from 'contexts/Filters'
-import { usePrompt } from 'contexts/Prompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonPrimaryInvert, ButtonSecondary } from 'ui-buttons'
+import { usePrompt } from 'ui-overlay'
 import { FilterValidators } from '../Prompts/FilterValidators'
 import { OrderValidators } from '../Prompts/OrderValidators'
 
