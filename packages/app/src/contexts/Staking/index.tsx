@@ -3,12 +3,12 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { createSafeContext } from '@w3ux/hooks'
-import type { StakingContextInterface } from 'contexts/Staking/types'
 import { useBalances } from 'hooks/useBalances'
+import type { StakingHookInterface } from 'hooks/useStaking'
 import type { ReactNode } from 'react'
 
 export const [StakingContext, useStaking] =
-	createSafeContext<StakingContextInterface>()
+	createSafeContext<StakingHookInterface>()
 
 export const StakingProvider = ({ children }: { children: ReactNode }) => {
 	const { activeAddress } = useActiveAccount()

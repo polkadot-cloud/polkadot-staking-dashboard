@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { setStateWithRef } from '@w3ux/utils'
-import { usePayouts } from 'contexts/Payouts'
+import { usePayouts } from 'hooks/usePayouts'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

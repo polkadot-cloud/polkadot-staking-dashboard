@@ -16,14 +16,11 @@ import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
 import { OperatorsProvider } from 'contexts/Operators'
-import { PayoutsProvider } from 'contexts/Payouts'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
 import { PromptProvider } from 'contexts/Prompt'
-import { StakingProvider } from 'contexts/Staking'
 import { TooltipProvider } from 'contexts/Tooltip'
 import { UIProvider } from 'contexts/UI'
-import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { useNetwork } from 'hooks/useNetwork'
 import { Tooltip } from 'radix-ui'
@@ -49,12 +46,9 @@ export const Providers = () => {
 			],
 			HelpProvider,
 			EraStakersProvider,
-			StakingProvider,
 			BondedPoolsProvider,
 			PoolMembersProvider,
 			ValidatorsProvider,
-			FavoriteValidatorsProvider,
-			PayoutsProvider,
 			NominatorSetupsProvider,
 			ActiveStakerProvider,
 			MenuProvider,

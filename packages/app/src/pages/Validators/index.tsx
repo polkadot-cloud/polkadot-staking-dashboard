@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { onTabVisitEvent } from 'event-tracking'
+import { useFavoriteValidators } from 'hooks/useFavoriteValidators'
 import { PagePreloader } from 'library/PagePreloader'
 import { PageTabs } from 'library/PageTabs'
 import { lazy, Suspense, useEffect } from 'react'
