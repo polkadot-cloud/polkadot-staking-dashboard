@@ -76,7 +76,11 @@ const getInitialUserSideMenuMinimised = (): boolean => {
 	if (!hasLocalStorage()) {
 		return false
 	}
-	return localStorageOrDefault(SideMenuMinimisedKey, false, true) as boolean
+	try {
+		return localStorageOrDefault(SideMenuMinimisedKey, false, true) as boolean
+	} catch {
+		return false
+	}
 }
 
 const getResponsiveSideMenuMinimised = (userSideMenuMinimised: boolean) => {
