@@ -50,10 +50,14 @@ const setLocalFavoriteValidators = (
 	if (typeof localStorage === 'undefined') {
 		return
 	}
-	localStorage.setItem(
-		getFavoriteValidatorsKey(network),
-		JSON.stringify(favorites),
-	)
+	try {
+		localStorage.setItem(
+			getFavoriteValidatorsKey(network),
+			JSON.stringify(favorites),
+		)
+	} catch {
+		// Ignore write failures (e.g. storage disabled or quota exceeded).
+	}
 }
 
 const getFavoriteValidatorsSnapshot = (network: NetworkId) => {
