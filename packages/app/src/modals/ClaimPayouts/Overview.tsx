@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js'
-import { usePayouts } from 'contexts/Payouts'
+import { usePayouts } from 'hooks/usePayouts'
 import type { Ref } from 'react'
 import { Fragment, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'

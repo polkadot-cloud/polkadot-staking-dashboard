@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxNominations } from 'consts'
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { emitNotification } from 'global-bus'
+import { useFavoriteValidators } from 'hooks/useFavoriteValidators'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { Title } from 'library/Prompt/Title'
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers'

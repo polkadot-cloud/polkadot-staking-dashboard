@@ -29,13 +29,6 @@ export interface Validators {
 	validators: Validator[]
 }
 
-export interface FavoriteValidatorsContextInterface {
-	addFavorite: (address: string) => void
-	removeFavorite: (address: string) => void
-	favorites: string[]
-	favoritesList: Validator[] | null
-}
-
 export type ValidatorAddresses = {
 	address: string
 }[]

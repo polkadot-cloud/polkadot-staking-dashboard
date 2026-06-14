@@ -12,21 +12,15 @@ import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
 import { HelpProvider } from 'contexts/Help'
-import { InvitesProvider } from 'contexts/Invites'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
 import { OperatorsProvider } from 'contexts/Operators'
-import { PayoutsProvider } from 'contexts/Payouts'
-import { PoolSetupsProvider } from 'contexts/PoolSetups'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
-import { FavoritePoolsProvider } from 'contexts/Pools/FavoritePools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
 import { PromptProvider } from 'contexts/Prompt'
-import { StakingProvider } from 'contexts/Staking'
 import { TooltipProvider } from 'contexts/Tooltip'
 import { UIProvider } from 'contexts/UI'
-import { FavoriteValidatorsProvider } from 'contexts/Validators/FavoriteValidators'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { useNetwork } from 'hooks/useNetwork'
 import { Tooltip } from 'radix-ui'
@@ -52,14 +46,9 @@ export const Providers = () => {
 			],
 			HelpProvider,
 			EraStakersProvider,
-			StakingProvider,
-			FavoritePoolsProvider,
 			BondedPoolsProvider,
 			PoolMembersProvider,
 			ValidatorsProvider,
-			FavoriteValidatorsProvider,
-			PayoutsProvider,
-			PoolSetupsProvider,
 			NominatorSetupsProvider,
 			ActiveStakerProvider,
 			MenuProvider,
@@ -68,7 +57,6 @@ export const Providers = () => {
 			MigrateProvider,
 			FiltersProvider,
 			OperatorsProvider,
-			InvitesProvider,
 			Tooltip.Provider,
 		],
 		ThemedRouter,

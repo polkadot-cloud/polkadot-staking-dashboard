@@ -3,7 +3,7 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useNominatorSetups } from 'contexts/NominatorSetups'
-import { usePoolSetups } from 'contexts/PoolSetups'
+import { usePoolSetups } from 'hooks/usePoolSetups'
 import { useTranslation } from 'react-i18next'
 import { ButtonSecondary } from 'ui-buttons'
 import type { HeaderProps } from '../types'
