@@ -59,7 +59,11 @@ const getInitialShowHelp = (): boolean => {
 	try {
 		return localStorageOrDefault(ShowHelpKey, defaultShowHelp, true) as boolean
 	} catch {
-		localStorage.setItem(ShowHelpKey, String(defaultShowHelp))
+		try {
+			localStorage.setItem(ShowHelpKey, String(defaultShowHelp))
+		} catch {
+			// ignore storage write errors (e.g. private mode / blocked storage)
+		}
 		return defaultShowHelp
 	}
 }
