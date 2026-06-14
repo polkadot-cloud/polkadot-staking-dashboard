@@ -5,14 +5,21 @@ import { useOutsideAlerter } from '@w3ux/hooks'
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
-import type { RemoveSelectedProps } from '../GenerateNominations/types'
+import { ConfirmText } from './Wrappers'
+
+export interface ConfirmProps {
+	text: string
+	controlKey: string
+	onRevert: () => void
+	onClose: () => void
+}
 
 export const Confirm = ({
 	text,
 	controlKey,
 	onRevert,
 	onClose,
-}: RemoveSelectedProps) => {
+}: ConfirmProps) => {
 	const { t } = useTranslation('app')
 	const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -22,16 +29,10 @@ export const Confirm = ({
 
 	return (
 		<div ref={popoverRef}>
-			<h4
-				style={{
-					padding: '1rem',
-				}}
-			>
-				{text}
-			</h4>
+			<ConfirmText>{text}</ConfirmText>
 			<PopoverTab.Container position="bottom">
 				<PopoverTab.Button
-					style={{ color: 'var(--status-danger)' }}
+					status="danger"
 					text={t('cancel')}
 					onClick={() => onClose()}
 				/>

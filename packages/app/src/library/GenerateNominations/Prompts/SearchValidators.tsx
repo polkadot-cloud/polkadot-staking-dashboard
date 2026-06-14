@@ -7,7 +7,6 @@ import { emitNotification } from 'global-bus'
 import { useNetwork } from 'hooks/useNetwork'
 import { SearchInput } from 'library/List/SearchInput'
 import { Identity } from 'library/ListItem/Labels/Identity'
-import { Title } from 'library/Prompt/Title'
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers'
 import { StyledSlider } from 'library/StyledSlider'
 import { fetchSearchValidators } from 'plugin-staking-api'
@@ -17,10 +16,13 @@ import type { Validator } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
 import { SearchList } from 'ui-core/modal'
+import { Title } from 'ui-core/prompt'
+import { usePrompt } from 'ui-overlay'
 import type { PromptProps } from '../types'
 
 export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 	const { t } = useTranslation()
+	const { closePrompt } = usePrompt()
 	const { network } = useNetwork()
 	const { getValidators, validatorsFetched } = useValidators()
 
@@ -127,7 +129,10 @@ export const SearchValidators = ({ callback, nominations }: PromptProps) => {
 
 	return (
 		<>
-			<Title title={t('validatorSearch.searchValidators', { ns: 'app' })} />
+			<Title
+				title={t('validatorSearch.searchValidators', { ns: 'app' })}
+				onClose={closePrompt}
+			/>
 			<div className="padded">
 				<h3 className="subheading">
 					{t('validatorSearch.addToList', { ns: 'app' })}
