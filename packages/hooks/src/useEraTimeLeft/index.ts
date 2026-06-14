@@ -3,8 +3,8 @@
 
 import { getRelayChainConsts } from 'consts/util'
 import { getUnixTime } from 'date-fns'
-import { useApi } from 'hooks/useApi'
-import { useNetwork } from 'hooks/useNetwork'
+import { useApi } from '../useApi'
+import { useNetwork } from '../useNetwork'
 
 export const useEraTimeLeft = () => {
 	const { network } = useNetwork()

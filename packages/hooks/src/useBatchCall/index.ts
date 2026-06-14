@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { SubmittableExtrinsic } from 'dedot'
-import { useApi } from 'hooks/useApi'
-import { useProxySupported } from 'hooks/useProxySupported'
 import type { ActiveProxy, MaybeAddress } from 'types'
+import { useApi } from '../useApi'
+import { useProxySupported } from '../useProxySupported'
 
 export const useBatchCall = () => {
 	const { serviceApi } = useApi()

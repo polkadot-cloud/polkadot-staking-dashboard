@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getRelayChainConsts } from 'consts/util'
-import { useApi } from 'hooks/useApi'
-import { useNetwork } from 'hooks/useNetwork'
+import { useApi } from '../useApi'
+import { useNetwork } from '../useNetwork'
 
 export const useErasToTimeLeft = () => {
 	const { getConsts } = useApi()

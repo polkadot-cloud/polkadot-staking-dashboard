@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChain } from 'consts/util'
-import { useApi } from 'hooks/useApi'
-import { useNetwork } from 'hooks/useNetwork'
 import { createPoolAccounts as createUtil } from 'utils'
+import { useApi } from '../useApi'
+import { useNetwork } from '../useNetwork'
 
 export const useCreatePoolAccounts = () => {
 	const { network } = useNetwork()
