@@ -113,9 +113,14 @@ const detectBraveBrowser = () => {
 	const maybeNavigator = window.navigator as Navigator & {
 		brave?: { isBrave?: () => Promise<boolean> }
 	}
-	void maybeNavigator.brave?.isBrave?.().then((isBrave) => {
-		uiStore.patchSnapshot({ isBraveBrowser: isBrave })
-	})
+	void maybeNavigator.brave
+		?.isBrave?.()
+		.then((isBrave) => {
+			uiStore.patchSnapshot({ isBraveBrowser: isBrave })
+		})
+		.catch(() => {
+			// ignore brave detection errors
+		})
 }
 
 const attachUiListeners = () => {
