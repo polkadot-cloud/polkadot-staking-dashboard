@@ -47,7 +47,11 @@ const getInitialAdvancedMode = (): boolean => {
 		}
 		return localOrDefault
 	} catch {
-		localStorage.setItem(AdvancedModeKey, String(defaultAdvancedMode))
+		try {
+			localStorage.setItem(AdvancedModeKey, String(defaultAdvancedMode))
+		} catch {
+			// ignore storage write errors (e.g. private mode / blocked storage)
+		}
 		return defaultAdvancedMode
 	}
 }
