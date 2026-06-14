@@ -1,9 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { usePrompt } from 'contexts/Prompt'
 import { useTranslation } from 'react-i18next'
 import { ButtonMenu, ButtonPrimary } from 'ui-buttons'
+import { usePrompt } from 'ui-overlay'
 import { RevertChanges } from './Prompts/RevertChanges'
 
 export const Revert = ({

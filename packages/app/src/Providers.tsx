@@ -18,7 +18,6 @@ import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
 import { OperatorsProvider } from 'contexts/Operators'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
-import { PromptProvider } from 'contexts/Prompt'
 import { TooltipProvider } from 'contexts/Tooltip'
 import { UIProvider } from 'contexts/UI'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
@@ -53,7 +52,6 @@ export const Providers = () => {
 			ActiveStakerProvider,
 			MenuProvider,
 			TooltipProvider,
-			PromptProvider,
 			MigrateProvider,
 			FiltersProvider,
 			OperatorsProvider,

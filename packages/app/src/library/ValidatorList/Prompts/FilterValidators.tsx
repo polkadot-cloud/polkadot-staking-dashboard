@@ -5,12 +5,14 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useFilters } from 'contexts/Filters'
 import { useValidatorFilters } from 'hooks/useValidatorFilters'
-import { Title } from 'library/Prompt/Title'
 import { FilterListButton, FilterListWrapper } from 'library/Prompt/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { Title } from 'ui-core/prompt'
+import { usePrompt } from 'ui-overlay'
 
 export const FilterValidators = () => {
 	const { t } = useTranslation('app')
+	const { closePrompt } = usePrompt()
 	const { getFilters, toggleFilter } = useFilters()
 	const { excludesToLabels, includesToLabels } = useValidatorFilters()
 
@@ -19,7 +21,7 @@ export const FilterValidators = () => {
 
 	return (
 		<FilterListWrapper>
-			<Title title={t('filterValidators')} />
+			<Title title={t('filterValidators')} onClose={closePrompt} />
 			<div className="body">
 				<h4>{t('include')}:</h4>
 				{Object.entries(includesToLabels).map(([f, l]) => (
