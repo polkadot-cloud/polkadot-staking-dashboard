@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { camelize } from '@w3ux/utils'
-import { HelpNoDocs } from 'config/help'
+import { HelpNoDocs } from 'config'
 import { PlatformDocsURL } from 'consts'
 import { useTheme } from 'contexts/Themes'
 import { useFillVariables } from 'hooks/useFillVariables'

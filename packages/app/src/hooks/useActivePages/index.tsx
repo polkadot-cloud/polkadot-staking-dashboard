@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils'
-import { PageCategories, PagesConfig } from 'config/pages'
+import { PageCategories, PagesConfig } from 'config'
 import { ActivePagesKey } from 'consts'
 import { useActivePool } from 'hooks/useActivePool'
 import { useNetwork } from 'hooks/useNetwork'

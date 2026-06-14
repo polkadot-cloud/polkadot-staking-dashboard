@@ -20,6 +20,7 @@ import { Stake } from 'pages/Stake'
 import { Validators } from 'pages/Validators'
 import type { PageCategoryItems, PagesConfigItems } from 'types'
 
+// Pages categories config - order determines the order of items in the sidebar
 export const PageCategories: PageCategoryItems = [
 	{
 		id: 2,
@@ -41,6 +42,7 @@ export const PageCategories: PageCategoryItems = [
 	},
 ]
 
+// Pages config - order determines the order of items in the sidebar
 export const PagesConfig: PagesConfigItems = [
 	{
 		category: 2,
@@ -114,4 +116,26 @@ export const PagesConfig: PagesConfigItems = [
 		faIcon: faMagnifyingGlass,
 		advanced: true,
 	},
+]
+
+// Help items that are not documented on staking docs
+export const HelpNoDocs = [
+	'bondedInPool',
+	'decentralizationAnalyticsPeriod',
+	'geolocationOfEachNomination',
+	'ledgerAppNotOnLatestRuntimeVersion',
+	'ledgerHardwareWallets',
+	'ledgerRejectedTransaction',
+	'ledgerRequestTimeout',
+	'minimumToCreatePool',
+	'minimumToJoinPool',
+	'nominationPayoutDistribution',
+	'openAppOnLedger',
+	'poolRewardHistory',
+	'rewardsByCountryAndNetwork',
+	'selfStake',
+	'totalPayoutsAnalysed',
+	'validatorRewardHistory',
+	'yourBalance',
+	'halving',
 ]

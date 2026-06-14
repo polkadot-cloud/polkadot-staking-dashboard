@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { PageCategories, PagesConfig } from 'config/pages'
+import { PageCategories, PagesConfig } from 'config'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActivePool } from 'hooks/useActivePool'
