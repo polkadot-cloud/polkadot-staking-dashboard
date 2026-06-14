@@ -2,33 +2,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FiatCurrencyKey } from 'consts'
-import { useCallback, useSyncExternalStore } from 'react'
+import { useCallback } from 'react'
+import {
+	createSingletonStore,
+	type SingletonStore,
+	useSingletonStore,
+} from '../util'
 import type { CurrencyHookInterface } from './types'
 import { getUserFiatCurrency, persistCurrency } from './util'
 
 export type { CurrencyHookInterface } from './types'
 
-let currentCurrency: string | null = null
-const listeners = new Set<() => void>()
 let storageListenerAttached = false
-
-const getCurrencySnapshot = () => {
-	if (!currentCurrency) {
-		currentCurrency = getUserFiatCurrency()
-	}
-	return currentCurrency
-}
-
-const emitCurrencyChange = () => {
-	for (const listener of listeners) {
-		listener()
-	}
-}
+let currencyStore: SingletonStore<string>
 
 const handleStorageChange = (event: StorageEvent) => {
 	if (event.key === FiatCurrencyKey) {
-		currentCurrency = getUserFiatCurrency()
-		emitCurrencyChange()
+		currencyStore.setSnapshot(getUserFiatCurrency())
 	}
 }
 
@@ -48,32 +38,24 @@ const detachStorageListener = () => {
 	storageListenerAttached = false
 }
 
-const subscribeCurrency = (listener: () => void) => {
-	if (listeners.size === 0) {
-		currentCurrency = getUserFiatCurrency()
+currencyStore = createSingletonStore(getUserFiatCurrency, {
+	onBeforeFirstSubscribe: () => {
+		currencyStore.refreshSnapshot()
+	},
+	onFirstSubscribe: () => {
 		attachStorageListener()
-	}
-	listeners.add(listener)
-	return () => {
-		listeners.delete(listener)
-		if (listeners.size === 0) {
-			detachStorageListener()
-		}
-	}
-}
+	},
+	onLastUnsubscribe: detachStorageListener,
+	serverSnapshot: 'USD',
+})
 
 const setCurrencyState = (currency: string) => {
-	currentCurrency = currency
 	persistCurrency(currency)
-	emitCurrencyChange()
+	currencyStore.setSnapshot(currency)
 }
 
 export const useCurrency = (): CurrencyHookInterface => {
-	const currency = useSyncExternalStore(
-		subscribeCurrency,
-		getCurrencySnapshot,
-		() => 'USD',
-	)
+	const currency = useSingletonStore(currencyStore)
 
 	const setCurrency = useCallback((currency: string) => {
 		setCurrencyState(currency)

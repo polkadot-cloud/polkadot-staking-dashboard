@@ -3,7 +3,11 @@
 
 import { extractUrlValue, localStorageOrDefault } from '@w3ux/utils'
 import { AdvancedModeKey, PageWidthMediumThreshold, ShowHelpKey } from 'consts'
-import { useSyncExternalStore } from 'react'
+import {
+	createSingletonStore,
+	type SingletonStore,
+	useSingletonStore,
+} from '../util'
 import type { UiHookInterface } from './types'
 
 export type { UiHookInterface } from './types'
@@ -89,31 +93,14 @@ const getInitialUiState = (): UiState => {
 	}
 }
 
-const listeners = new Set<() => void>()
-let currentUiState: UiState = getInitialUiState()
 let resizeListenerAttached = false
 let braveDetectionStarted = false
-
-const emitUiChange = () => {
-	for (const listener of listeners) {
-		listener()
-	}
-}
-
-const getUiSnapshot = () => currentUiState
-
-const setUiState = (next: Partial<UiState>) => {
-	currentUiState = {
-		...currentUiState,
-		...next,
-	}
-	emitUiChange()
-}
+let uiStore: SingletonStore<UiState>
 
 const resizeCallback = () => {
-	setUiState({
+	uiStore.patchSnapshot({
 		sideMenuMinimised: getResponsiveSideMenuMinimised(
-			currentUiState.userSideMenuMinimised,
+			uiStore.getSnapshot().userSideMenuMinimised,
 		),
 	})
 }
@@ -127,7 +114,7 @@ const detectBraveBrowser = () => {
 		brave?: { isBrave?: () => Promise<boolean> }
 	}
 	void maybeNavigator.brave?.isBrave?.().then((isBrave) => {
-		setUiState({ isBraveBrowser: isBrave })
+		uiStore.patchSnapshot({ isBraveBrowser: isBrave })
 	})
 }
 
@@ -148,53 +135,45 @@ const detachUiListeners = () => {
 	resizeListenerAttached = false
 }
 
-const subscribeUi = (listener: () => void) => {
-	if (listeners.size === 0) {
-		attachUiListeners()
-	}
-	listeners.add(listener)
-	return () => {
-		listeners.delete(listener)
-		if (listeners.size === 0) {
-			detachUiListeners()
-		}
-	}
-}
+uiStore = createSingletonStore<UiState>(getInitialUiState, {
+	onFirstSubscribe: attachUiListeners,
+	onLastUnsubscribe: detachUiListeners,
+})
 
 const setSideMenu = (v: boolean) => {
-	setUiState({ sideMenuOpen: v })
+	uiStore.patchSnapshot({ sideMenuOpen: v })
 }
 
 const setUserSideMenuMinimised = (v: boolean) => {
 	if (hasLocalStorage()) {
 		localStorage.setItem(SideMenuMinimisedKey, String(v))
 	}
-	setUiState({
+	uiStore.patchSnapshot({
 		userSideMenuMinimised: v,
 		sideMenuMinimised: getResponsiveSideMenuMinimised(v),
 	})
 }
 
 const setContainerRefs = (v: UiState['containerRefs']) => {
-	setUiState({ containerRefs: v })
+	uiStore.patchSnapshot({ containerRefs: v })
 }
 
 const setAdvancedMode = (value: boolean) => {
 	if (hasLocalStorage()) {
 		localStorage.setItem(AdvancedModeKey, String(value))
 	}
-	setUiState({ advancedMode: value })
+	uiStore.patchSnapshot({ advancedMode: value })
 }
 
 const setShowHelp = (value: boolean) => {
 	if (hasLocalStorage()) {
 		localStorage.setItem(ShowHelpKey, String(value))
 	}
-	setUiState({ showHelp: value })
+	uiStore.patchSnapshot({ showHelp: value })
 }
 
 export const useUi = (): UiHookInterface => {
-	const state = useSyncExternalStore(subscribeUi, getUiSnapshot, getUiSnapshot)
+	const state = useSingletonStore(uiStore)
 
 	return {
 		...state,

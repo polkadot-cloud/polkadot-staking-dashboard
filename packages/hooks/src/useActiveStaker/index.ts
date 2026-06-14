@@ -4,13 +4,14 @@
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { fetchGetStakerWithNominees } from 'plugin-staking-api'
 import type { ActiveStatusWithNominees } from 'plugin-staking-api/types'
-import { useEffect, useSyncExternalStore } from 'react'
+import { useEffect } from 'react'
 import type { NetworkId } from 'types'
 import { useActivePool } from '../useActivePool'
 import { useApi } from '../useApi'
 import { useBalances } from '../useBalances'
 import { useNetwork } from '../useNetwork'
 import { usePlugins } from '../usePlugins'
+import { createSingletonStore, useSingletonStore } from '../util'
 import type { ActiveStakerHookInterface } from './types'
 
 export type { ActiveStakerHookInterface } from './types'
@@ -22,44 +23,22 @@ const defaultActiveStakerState: ActiveStakerHookInterface = {
 
 type ActiveStakerStateKey = keyof ActiveStakerHookInterface
 
-const listeners = new Set<() => void>()
-let currentState: ActiveStakerHookInterface = defaultActiveStakerState
+const activeStakerStore = createSingletonStore<ActiveStakerHookInterface>(
+	defaultActiveStakerState,
+)
 let nominatorRequestKey: string | null = null
 let poolRequestKey: string | null = null
 let nominatorRequestId = 0
 let poolRequestId = 0
 
-const emitActiveStakerChange = () => {
-	for (const listener of listeners) {
-		listener()
-	}
-}
-
-const subscribeActiveStaker = (listener: () => void) => {
-	listeners.add(listener)
-	return () => {
-		listeners.delete(listener)
-	}
-}
-
-const getActiveStakerSnapshot = () => currentState
-
-const setActiveStakerState = (next: Partial<ActiveStakerHookInterface>) => {
-	currentState = {
-		...currentState,
-		...next,
-	}
-	emitActiveStakerChange()
-}
-
 const setActiveStakerValue = (
 	key: ActiveStakerStateKey,
 	value: ActiveStatusWithNominees | undefined,
 ) => {
-	if (currentState[key] === value) {
+	if (activeStakerStore.getSnapshot()[key] === value) {
 		return
 	}
-	setActiveStakerState({ [key]: value })
+	activeStakerStore.patchSnapshot({ [key]: value })
 }
 
 const getRequestKey = (
@@ -140,11 +119,7 @@ export const useActiveStaker = (): ActiveStakerHookInterface => {
 	const { getNominations } = useBalances()
 	const { activeAddress } = useActiveAccount()
 	const { activePool, activePoolNominations } = useActivePool()
-	const state = useSyncExternalStore(
-		subscribeActiveStaker,
-		getActiveStakerSnapshot,
-		getActiveStakerSnapshot,
-	)
+	const state = useSingletonStore(activeStakerStore)
 
 	const stakingApiEnabled = pluginEnabled('staking_api')
 	const nominations = getNominations(activeAddress)
