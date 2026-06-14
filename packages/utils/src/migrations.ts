@@ -8,6 +8,7 @@
  * Migrations:
  * - active_extensions -> pc_active_extensions
  * - hardware_accounts -> pc_hardware_accounts
+ * - external_accounts -> pc_external_accounts
  * - activeProxies -> pc_activeProxies
  * - {network}_active_account -> pc_{network}_active_account
  */
