@@ -3,11 +3,11 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { TipsConfigAdvanced, TipsConfigSimple } from 'consts/tips'
-import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActivePool } from 'hooks/useActivePool'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { useStaking } from 'hooks/useStaking'
+import { useUi } from 'hooks/useUi'
 import { Tip } from 'library/Tips/Tip'
 import { DefaultLocale } from 'locales'
 import { useTranslation } from 'react-i18next'

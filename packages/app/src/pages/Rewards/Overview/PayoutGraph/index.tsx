@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useSize } from '@w3ux/hooks'
-import { useUi } from 'contexts/UI'
 import { useActivePool } from 'hooks/useActivePool'
 import { usePlugins } from 'hooks/usePlugins'
 import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'
+import { useUi } from 'hooks/useUi'
 import { StatusLabel } from 'library/StatusLabel'
 import { DefaultLocale, locales } from 'locales'
 import type { PayoutHistoryProps } from 'pages/Rewards/types'

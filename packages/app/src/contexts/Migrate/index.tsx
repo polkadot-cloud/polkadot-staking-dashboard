@@ -6,7 +6,7 @@ import { useApi } from 'hooks/useApi'
 import { useSyncing } from 'hooks/useSyncing'
 import type { ReactNode } from 'react'
 import { createContext, useState } from 'react'
-import { migrateLocalStorageKeys } from 'utils/localStorage'
+import { migrateLocalStorageKeys } from 'utils'
 import { version } from '../../../package.json'
 
 export const MigrateContext = createContext<null>(null)

@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useUi } from 'contexts/UI'
+import { useUi } from 'hooks/useUi'
 import { ButtonHelp as Wrapper } from 'ui-buttons'
 import type { ButtonHelpProps } from 'ui-buttons/types'
 
