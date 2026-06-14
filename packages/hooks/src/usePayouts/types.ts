@@ -3,7 +3,7 @@
 
 import type { UnclaimedRewards } from 'plugin-staking-api/types'
 
-export interface PayoutsContextInterface {
+export interface PayoutsHookInterface {
 	unclaimedRewards: UnclaimedRewards
 	setUnclaimedRewards: (unclaimedRewards: UnclaimedRewards) => void
 }
