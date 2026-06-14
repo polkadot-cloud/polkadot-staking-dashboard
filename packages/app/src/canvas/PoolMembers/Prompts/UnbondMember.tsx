@@ -7,7 +7,6 @@ import { ellipsisFn } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
-import { usePrompt } from 'contexts/Prompt'
 import { getUnixTime } from 'date-fns'
 import { useActiveProxy } from 'hooks/useActiveProxy'
 import { useApi } from 'hooks/useApi'
@@ -17,12 +16,13 @@ import { useSignerWarnings } from 'hooks/useSignerWarnings'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { Warning } from 'library/Form/Warning'
-import { Title } from 'library/Prompt/Title'
 import { SubmitTx } from 'library/SubmitTx'
 import { StaticNote } from 'modals/Utils/StaticNote'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Notes, Padding, Warnings } from 'ui-core/modal'
+import { Title } from 'ui-core/prompt'
+import { usePrompt } from 'ui-overlay'
 import { planckToUnitBn, timeleftAsString } from 'utils'
 
 export const UnbondMember = ({
@@ -82,7 +82,7 @@ export const UnbondMember = ({
 
 	return (
 		<>
-			<Title title={t('unbondPoolMember')} />
+			<Title title={t('unbondPoolMember')} onClose={closePrompt} />
 			<Padding>
 				{warnings.length > 0 ? (
 					<Warnings>

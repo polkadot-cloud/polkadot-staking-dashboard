@@ -54,10 +54,3 @@ export interface PromptProps {
 export interface RevertPromptProps {
 	onRevert: () => void
 }
-
-export interface RemoveSelectedProps {
-	text: string
-	controlKey: string
-	onRevert: () => void
-	onClose: () => void
-}
