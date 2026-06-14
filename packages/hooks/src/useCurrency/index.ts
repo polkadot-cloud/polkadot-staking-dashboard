@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { FiatCurrencyKey } from 'consts'
+import { getDefaultFiatCurrency, getUserFiatCurrency } from 'locales/util'
 import { useCallback } from 'react'
 import {
 	createSingletonStore,
@@ -9,16 +10,24 @@ import {
 	useSingletonStore,
 } from '../util'
 import type { CurrencyHookInterface } from './types'
-import { getUserFiatCurrency, persistCurrency } from './util'
+import { persistCurrency } from './util'
 
 export type { CurrencyHookInterface } from './types'
 
 let storageListenerAttached = false
 let currencyStore: SingletonStore<string>
 
+const getSafeUserFiatCurrency = () => {
+	try {
+		return getUserFiatCurrency()
+	} catch {
+		return getDefaultFiatCurrency()
+	}
+}
+
 const handleStorageChange = (event: StorageEvent) => {
 	if (event.key === FiatCurrencyKey) {
-		currencyStore.setSnapshot(getUserFiatCurrency())
+		currencyStore.setSnapshot(getSafeUserFiatCurrency())
 	}
 }
 
@@ -38,7 +47,7 @@ const detachStorageListener = () => {
 	storageListenerAttached = false
 }
 
-currencyStore = createSingletonStore(getUserFiatCurrency, {
+currencyStore = createSingletonStore(getSafeUserFiatCurrency, {
 	onBeforeFirstSubscribe: () => {
 		currencyStore.refreshSnapshot()
 	},
@@ -46,7 +55,7 @@ currencyStore = createSingletonStore(getUserFiatCurrency, {
 		attachStorageListener()
 	},
 	onLastUnsubscribe: detachStorageListener,
-	serverSnapshot: 'USD',
+	serverSnapshot: getDefaultFiatCurrency,
 })
 
 const setCurrencyState = (currency: string) => {

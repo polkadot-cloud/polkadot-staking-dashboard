@@ -403,6 +403,9 @@ importers:
       global-bus:
         specifier: workspace:*
         version: link:../global-bus
+      locales:
+        specifier: workspace:*
+        version: link:../locales
       plugin-staking-api:
         specifier: workspace:*
         version: link:../plugin-staking-api

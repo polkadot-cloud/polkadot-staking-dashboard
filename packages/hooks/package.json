@@ -19,6 +19,7 @@
 		"@w3ux/validator-assets": "^1.3.3",
 		"consts": "workspace:*",
 		"global-bus": "workspace:*",
+		"locales": "workspace:*",
 		"plugin-staking-api": "workspace:*",
 		"react": "^19.2.7",
 		"utils": "workspace:*"
