@@ -70,7 +70,8 @@
 		"ui-styles": "workspace:*",
 		"ui-tips": "workspace:*",
 		"usehooks-ts": "^3.0.2",
-		"utils": "workspace:*"
+		"utils": "workspace:*",
+		"validator-assets": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

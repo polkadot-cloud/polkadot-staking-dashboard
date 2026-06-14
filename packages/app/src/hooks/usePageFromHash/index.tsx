@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { PageCategories, PagesConfig } from 'config/pages'
+import { PageCategories, PagesConfig } from 'config'
 import { useLocation } from 'react-router-dom'
 import { getCategoryFromPage } from 'utils'
 
