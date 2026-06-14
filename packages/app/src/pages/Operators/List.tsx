@@ -5,7 +5,7 @@ import type {
 	ValidatorEntry,
 	ValidatorSupportedNetwork,
 } from '@w3ux/validator-assets'
-import { useOperators } from 'contexts/Operators'
+import { useOperators } from 'hooks/useOperators'
 import { useEffect, useState } from 'react'
 import { Page } from 'ui-core/base'
 import { useOperatorsSections } from './context'
