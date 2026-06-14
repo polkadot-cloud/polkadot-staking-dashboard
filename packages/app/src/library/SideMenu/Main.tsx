@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { PageCategories } from 'config/pages'
-import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
+import { PageCategories, PagesConfig } from 'config/pages'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActivePool } from 'hooks/useActivePool'
@@ -23,6 +22,7 @@ import type {
 	PagesConfigItems,
 } from 'types'
 import { Page } from 'ui-core/base'
+import { getPagesConfig, pageKeyExistsInCategory } from 'utils'
 import { Primary } from './Primary'
 
 export const Main = ({
@@ -58,6 +58,7 @@ export const Main = ({
 	)
 
 	const pages: PageItem[] = getPagesConfig(
+		PagesConfig,
 		network,
 		activeCategory,
 		advancedMode,
@@ -65,7 +66,7 @@ export const Main = ({
 	)
 
 	const pageChanged = activeCategory
-		? !pageKeyExistsInCategory(pathname, activeCategory)
+		? !pageKeyExistsInCategory(PagesConfig, pathname, activeCategory)
 		: false
 
 	let i = 0
