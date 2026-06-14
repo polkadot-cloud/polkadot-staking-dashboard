@@ -1,18 +1,17 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeString } from '@w3ux/types'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { NominateBuffer } from 'consts/nominate'
 import { getStakingChainData } from 'consts/util'
-import { useApi } from 'hooks/useApi'
-import { useBalances } from 'hooks/useBalances'
-import { useNetwork } from 'hooks/useNetwork'
-import type { AccountBalances } from 'types'
+import type { AccountBalances, MaybeAddress } from 'types'
 import { calculateAllBalances } from 'utils'
+import { useApi } from '../useApi'
+import { useBalances } from '../useBalances'
+import { useNetwork } from '../useNetwork'
 
-export const useAccountBalances = (address: MaybeString) => {
+export const useAccountBalances = (address: MaybeAddress) => {
 	const {
 		getPoolMembership,
 		getStakingLedger,

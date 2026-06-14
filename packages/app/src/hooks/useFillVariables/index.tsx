@@ -10,10 +10,10 @@ import {
 	getStakingChainData,
 } from 'consts/util'
 import { useApi } from 'hooks/useApi'
+import { useErasPerDay } from 'hooks/useErasPerDay'
 import { useNetwork } from 'hooks/useNetwork'
 import type { AnyJson } from 'types'
 import { planckToUnitBn } from 'utils'
-import { useErasPerDay } from '../useErasPerDay'
 
 export const useFillVariables = () => {
 	const {
