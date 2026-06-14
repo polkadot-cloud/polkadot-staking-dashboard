@@ -15,6 +15,7 @@ import {
 import { lazy, Suspense, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'
+import { getValidatorIconLoader } from 'validator-assets/icons'
 import { useOperatorsSections } from './context'
 import type { ItemProps } from './types'
 import { ItemWrapper } from './Wrappers'
@@ -60,10 +61,7 @@ export const Item = ({ item, actionable, network }: ItemProps) => {
 		},
 	}
 
-	const Thumbnail = useMemo(
-		() => lazy(() => import(`../../config/validators/${icon}.tsx`)),
-		[],
-	)
+	const Thumbnail = useMemo(() => lazy(getValidatorIconLoader(icon)), [icon])
 
 	return (
 		<ItemWrapper

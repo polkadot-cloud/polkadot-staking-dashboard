@@ -3,7 +3,7 @@
 
 import { useOutsideAlerter } from '@w3ux/hooks'
 import classNames from 'classnames'
-import { PageCategories } from 'config/pages'
+import { PageCategories } from 'config'
 import { useActivePageForCategory } from 'hooks/useActivePages'
 import { usePageFromHash } from 'hooks/usePageFromHash'
 import { type Dispatch, type SetStateAction, useRef } from 'react'

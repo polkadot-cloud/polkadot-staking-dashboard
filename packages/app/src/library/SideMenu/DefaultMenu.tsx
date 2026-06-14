@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
-import { PageCategories } from 'config/pages'
+import { PageCategories } from 'config'
 import { useTheme } from 'contexts/Themes'
 import { useActivePageForCategory } from 'hooks/useActivePages'
 import { useUi } from 'hooks/useUi'
