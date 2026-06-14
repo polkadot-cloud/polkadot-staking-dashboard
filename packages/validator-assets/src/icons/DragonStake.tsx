@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const DragonStake = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258.16 232.53">
 		<path

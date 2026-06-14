@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const Dionysus = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 646.47 652.6">
 		<circle fill="#e3187d" cx="158.39" cy="300.66" r="27.75" />

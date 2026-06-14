@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const Crifferent = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
 		<path fill="#2d2d2d" d="M0 0h500v500H0z" />
