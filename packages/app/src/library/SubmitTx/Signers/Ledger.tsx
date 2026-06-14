@@ -8,7 +8,7 @@ import {
 	useLedgerTxPrompt,
 	useLedgerTxSubmit,
 } from '@polkadot-cloud/connect-ledger'
-import { useHelp } from 'contexts/Help'
+import { useHelp } from 'hooks/useHelp'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { EstimatedTxFee } from 'library/EstimatedTxFee'
 import { SubmitButton } from 'library/SubmitTx/Signers/SubmitButton'

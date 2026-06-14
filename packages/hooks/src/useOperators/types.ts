@@ -3,7 +3,7 @@
 
 import type { ValidatorEntry } from '@w3ux/validator-assets'
 
-export interface OperatorsContextInterface {
+export interface OperatorsHookInterface {
 	validatorOperators: ValidatorEntry[]
 	getNetworkOperators: (network: string) => ValidatorEntry[]
 }

@@ -3,8 +3,8 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHelp } from 'contexts/Help'
 import { useActivePool } from 'hooks/useActivePool'
+import { useHelp } from 'hooks/useHelp'
 import { usePlugins } from 'hooks/usePlugins'
 import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'

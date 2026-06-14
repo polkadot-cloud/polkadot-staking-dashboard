@@ -394,6 +394,9 @@ importers:
       '@w3ux/utils':
         specifier: ^3.1.1
         version: 3.1.1
+      '@w3ux/validator-assets':
+        specifier: ^1.3.3
+        version: 1.3.3(react@19.2.7)
       consts:
         specifier: workspace:*
         version: link:../consts
