@@ -1,14 +1,15 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { getCategoryFromPage } from 'config/util'
+import { PageCategories, PagesConfig } from 'config/pages'
 import { useLocation } from 'react-router-dom'
+import { getCategoryFromPage } from 'utils'
 
 export const usePageFromHash = () => {
 	const { pathname } = useLocation()
 	const page = (pathname ?? '').replace(/^#?\/+/, '').split('?')[0]
 
-	const categoryKey = getCategoryFromPage(page)
+	const categoryKey = getCategoryFromPage(PageCategories, PagesConfig, page)
 
 	return { page, categoryKey }
 }
