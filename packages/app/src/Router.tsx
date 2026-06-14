@@ -7,7 +7,7 @@ import { StakingApi } from 'StakingApi'
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
-import { getPagesConfig } from 'config/util'
+import { PagesConfig } from 'config/pages'
 import { getUnixTime } from 'date-fns'
 import {
 	onConversionEvent,
@@ -46,6 +46,7 @@ import {
 } from 'react-router-dom'
 import { Page } from 'ui-core/base'
 import { Prompt } from 'ui-overlay'
+import { getPagesConfig } from 'utils'
 
 const RouterInner = () => {
 	const navigate = useNavigate()
@@ -130,7 +131,7 @@ const RouterInner = () => {
 							<Headers />
 							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
 								<Routes>
-									{getPagesConfig(network, null, advancedMode, {
+									{getPagesConfig(PagesConfig, network, null, advancedMode, {
 										inPool,
 										isBonding,
 									}).map((page) => (
