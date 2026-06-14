@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useApi } from 'hooks/useApi'
+import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import type { NominatorReward } from 'plugin-staking-api/types'
-import { useErasToTimeLeft } from '../useErasToTimeLeft'
 
 export const useInjectBlockTimestamp = () => {
 	const { activeEra } = useApi()

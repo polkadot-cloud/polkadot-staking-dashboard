@@ -3,9 +3,9 @@
 
 import { getActivePool, getSyncIds, syncStatus$ } from 'global-bus'
 import { getIdsFromSyncConfig } from 'global-bus/util'
-import { useBalances } from 'hooks/useBalances'
 import { useEffect, useState } from 'react'
 import type { MaybeAddress, SyncConfig, SyncId } from 'types'
+import { useBalances } from '../useBalances'
 
 export const useSyncing = (config: SyncConfig = '*') => {
 	const { getAccountBalance, getPoolMembership } = useBalances()

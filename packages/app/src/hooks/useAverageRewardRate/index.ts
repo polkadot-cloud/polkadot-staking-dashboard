@@ -6,9 +6,9 @@ import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useApi } from 'hooks/useApi'
+import { useErasPerDay } from 'hooks/useErasPerDay'
 import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
-import { useErasPerDay } from '../useErasPerDay'
 import type { UseAverageRewardRate } from './types'
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
