@@ -1,7 +1,7 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useTooltip } from 'contexts/Tooltip'
+import { useTooltip } from 'hooks/useTooltip'
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
 import { Wrapper } from './Wrapper'

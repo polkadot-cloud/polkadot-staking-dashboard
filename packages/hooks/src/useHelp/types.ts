@@ -1,10 +1,9 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeString } from '@w3ux/types'
-import type { ReactNode } from 'react'
+type MaybeString = string | null
 
-export interface HelpContextInterface {
+export interface HelpHookInterface {
 	openHelpTooltip: (
 		definition: MaybeString,
 		anchor: HTMLButtonElement | null,
@@ -15,12 +14,8 @@ export interface HelpContextInterface {
 	tooltipAnchor: HTMLElement | null
 }
 
-export interface HelpContextState {
+export interface HelpHookState {
 	isTooltipOpen: boolean
 	tooltipDefinition: MaybeString
 	tooltipAnchor: HTMLElement | null
-}
-
-export interface HelpContextProps {
-	children: ReactNode
 }

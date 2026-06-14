@@ -4,7 +4,7 @@
 import { faArrowUpRightDots } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Odometer } from '@w3ux/react-odometer'
-import { useHelp } from 'contexts/Help'
+import { useHelp } from 'hooks/useHelp'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Stat } from 'ui-core/base'
 import type { TickerProps } from './types'

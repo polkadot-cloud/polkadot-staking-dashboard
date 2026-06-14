@@ -11,14 +11,11 @@ import { getStakingChainData } from 'consts/util'
 import { ActiveStakerProvider } from 'contexts/ActiveStaker'
 import { EraStakersProvider } from 'contexts/EraStakers'
 import { FiltersProvider } from 'contexts/Filters'
-import { HelpProvider } from 'contexts/Help'
 import { MenuProvider } from 'contexts/Menu'
 import { MigrateProvider } from 'contexts/Migrate'
 import { NominatorSetupsProvider } from 'contexts/NominatorSetups'
-import { OperatorsProvider } from 'contexts/Operators'
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools'
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers'
-import { TooltipProvider } from 'contexts/Tooltip'
 import { UIProvider } from 'contexts/UI'
 import { ValidatorsProvider } from 'contexts/Validators/ValidatorEntries'
 import { useNetwork } from 'hooks/useNetwork'
@@ -43,7 +40,6 @@ export const Providers = () => {
 					adaptors: [LedgerAdaptor, createProxiesAdaptor(network)],
 				},
 			],
-			HelpProvider,
 			EraStakersProvider,
 			BondedPoolsProvider,
 			PoolMembersProvider,
@@ -51,10 +47,8 @@ export const Providers = () => {
 			NominatorSetupsProvider,
 			ActiveStakerProvider,
 			MenuProvider,
-			TooltipProvider,
 			MigrateProvider,
 			FiltersProvider,
-			OperatorsProvider,
 			Tooltip.Provider,
 		],
 		ThemedRouter,
