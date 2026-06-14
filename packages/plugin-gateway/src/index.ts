@@ -10,6 +10,7 @@ export interface AccountAddress {
 
 export interface AccountsTokenResponse {
 	token: string
+	accessCode: string
 }
 
 export const fetchAccountsToken = async (

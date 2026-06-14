@@ -13,14 +13,14 @@ import { minDecimalPlaces } from '@w3ux/utils'
 import { getChainIcons } from 'assets'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useCurrency } from 'contexts/Currency'
-import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
-import { useTokenPrices } from 'contexts/TokenPrice'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
+import { useCurrency } from 'hooks/useCurrency'
+import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
 import { useRewardOverviewStats } from 'hooks/useStats'
+import { useTokenPrices } from 'hooks/useTokenPrices'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Stats } from 'library/Stats'
@@ -62,19 +62,14 @@ export const Overview = (props: PayoutHistoryProps) => {
 
 	const annualRewardAfterCommission =
 		annualRewardBase * (1 - avgCommission / 100)
-	const monthlyRewardAfterCommission = annualRewardAfterCommission / 12
-	const dailyRewardAfterCommission = annualRewardAfterCommission / 365
 
-	const annualReward = showAdjusted
+	const activeAnnualReward = showAdjusted
 		? annualRewardAfterCommission
 		: annualRewardBase
 
-	const monthlyReward = showAdjusted
-		? monthlyRewardAfterCommission
-		: annualRewardBase / 12
-	const dailyReward = showAdjusted
-		? dailyRewardAfterCommission
-		: annualRewardBase / 365
+	const annualReward = activeAnnualReward
+	const monthlyReward = annualReward / 12
+	const dailyReward = annualReward / 365
 
 	// Format the currency with user's locale and currency preference
 	const formatLocalCurrency = (value: number) =>

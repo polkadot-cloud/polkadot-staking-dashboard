@@ -12,8 +12,9 @@ import { setActiveProxy } from '@polkadot-cloud/connect-proxies'
 import { useOutsideAlerter } from '@w3ux/hooks'
 import { ellipsisFn } from '@w3ux/utils'
 import SubscanSVG from 'assets/brands/subscan.svg?react'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useNetwork } from 'contexts/Network'
+import { AssetHubPolkadotSubscanURL } from 'consts'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useNetwork } from 'hooks/useNetwork'
 import { type Dispatch, type SetStateAction, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PopoverTab } from 'ui-buttons'
@@ -82,9 +83,13 @@ export const AccountPopover = ({
 			</ConnectItem.Container>
 			<MenuItemButton
 				style={{ border: 'none' }}
+				disabled={!activeAddress}
 				onClick={() => {
 					setOpen(false)
-					openModal({ key: 'Transfer', size: 'sm' })
+					window.open(
+						`${AssetHubPolkadotSubscanURL}/account/${activeAddress}`,
+						'_blank',
+					)
 				}}
 			>
 				<div>

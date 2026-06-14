@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
-import { useStaking } from 'contexts/Staking'
+import { useBalances } from 'hooks/useBalances'
+import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
+import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { useTranslation } from 'react-i18next'

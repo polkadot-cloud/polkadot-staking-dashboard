@@ -3,8 +3,8 @@
 
 import BigNumber from 'bignumber.js'
 import { getRelayChainConsts } from 'consts/util'
-import { useNetwork } from 'contexts/Network'
 import { intervalToDuration } from 'date-fns'
+import { useNetwork } from 'hooks/useNetwork'
 import { MinDelayInput } from 'library/Form/MinDelayInput'
 import { StyledSlider } from 'library/StyledSlider'
 import { SliderWrapper } from 'modals/ManagePool/Wrappers'

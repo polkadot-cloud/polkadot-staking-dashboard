@@ -12,6 +12,8 @@ interface ExtensionProps {
 	submitText: string
 	onSubmit: () => void
 	valid: boolean
+	submitted: boolean
+	notEnoughFunds: boolean
 }
 
 export const Extension = ({
@@ -19,8 +21,12 @@ export const Extension = ({
 	submitText,
 	onSubmit,
 	valid,
+	submitted,
+	notEnoughFunds,
 }: ExtensionProps) => {
-	const buttonDisabled = !valid
+	// Disable while submitting or when the account cannot cover the tx fee,
+	// matching the Vault and Ledger signers
+	const buttonDisabled = submitted || !valid || notEnoughFunds
 
 	return (
 		<SubmitButtonWrapper>

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { useBalances } from 'contexts/Balances'
-import { useStaking } from 'contexts/Staking'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useBalances } from 'hooks/useBalances'
+import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'
 import { WarningPrompt } from 'library/WarningPrompt'
 import { useTranslation } from 'react-i18next'

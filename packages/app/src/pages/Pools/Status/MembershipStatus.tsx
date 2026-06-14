@@ -3,8 +3,8 @@
 
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useApi } from 'contexts/Api'
 import { useActiveAccountPool } from 'hooks/useActiveAccountPool'
+import { useApi } from 'hooks/useApi'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
 import { useOverlay } from 'ui-overlay'

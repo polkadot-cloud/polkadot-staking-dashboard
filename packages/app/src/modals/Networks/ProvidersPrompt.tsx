@@ -4,13 +4,13 @@
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { SystemChainList } from 'consts/networks'
 import { getStakingChainData } from 'consts/util/chains'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
-import { usePrompt } from 'contexts/Prompt'
 import { getRpcEndpoints, setRpcEndpoints } from 'global-bus'
-import { Title } from 'library/Prompt/Title'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
 import { PromptSelectItem } from 'library/Prompt/Wrappers'
 import { useTranslation } from 'react-i18next'
+import { Title } from 'ui-core/prompt'
+import { usePrompt } from 'ui-overlay'
 
 export const ProvidersPrompt = () => {
 	const { t } = useTranslation()
@@ -23,7 +23,10 @@ export const ProvidersPrompt = () => {
 
 	return (
 		<>
-			<Title title={t('rpcProviders', { ns: 'modals' })} />
+			<Title
+				title={t('rpcProviders', { ns: 'modals' })}
+				onClose={closePrompt}
+			/>
 			<div className="padded">
 				<h4 className="subheading">
 					{t('selectRpcProvider', {

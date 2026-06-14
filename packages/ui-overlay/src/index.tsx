@@ -4,4 +4,5 @@
 export * from './Close'
 export * from './CloseCanvas'
 export * from './Overlay'
+export * from './Prompt'
 export * from './Provider'

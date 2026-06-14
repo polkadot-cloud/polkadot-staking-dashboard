@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { SupportedCurrencies } from 'consts/currencies'
-import { useCurrency } from 'contexts/Currency'
+import { useCurrency } from 'hooks/useCurrency'
 import { Title } from 'library/Modal/Title'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

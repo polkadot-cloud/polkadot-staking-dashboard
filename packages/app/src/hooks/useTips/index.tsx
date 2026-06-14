@@ -3,16 +3,16 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { TipsConfigAdvanced, TipsConfigSimple } from 'consts/tips'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { usePrompt } from 'contexts/Prompt'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActivePool } from 'hooks/useActivePool'
 import { useFillVariables } from 'hooks/useFillVariables'
+import { useStaking } from 'hooks/useStaking'
 import { Tip } from 'library/Tips/Tip'
 import { DefaultLocale } from 'locales'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { usePrompt } from 'ui-overlay'
 import type { TipDisplay } from 'ui-tips/types'
 
 export const useTips = () => {

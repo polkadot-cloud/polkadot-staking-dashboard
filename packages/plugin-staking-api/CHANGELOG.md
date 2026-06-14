@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.5.0...plugin-staking-api-v1.6.0) (2026-05-26)
+
+
+### Features
+
+* Enhanced rewards list pagination ([#3497](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3497)) ([31a3c32](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/31a3c32d04921d75143a65ebad302586ba939ed1))
+* Fetch validator identities from Staking API identity cache ([#3210](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3210)) ([77c9f87](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/77c9f87f050caac5ccc4c35e1ea31a4bfd4355c3))
+* **fix:** Fix reward trend API ([#3250](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3250)) ([2540c35](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2540c35fb74851e6c70bd4cf6714e0be84fec70d))
+* **refactor:** Add `era` arg to `getNomineesStatus` ([#3316](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3316)) ([d627ff9](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/d627ff9eb8f0c4dc3cec63af98a8995e8ac99538))
+* **refactor:** Unify pool warning queries ([#3232](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3232)) ([42c521d](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/42c521d8591974fd29a456baf12a47044dd73dce))
+* **refactor:** Use generic Staking API functions ([#3485](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3485)) ([e7f438b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e7f438bd70e9f0c1380c5333dd87ddf87f13cae2))
+* **ui:** Add pool shares to PayoutBar graphs ([#3484](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3484)) ([1410f36](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/1410f3605cee592b1bc779e5137cbe5f3c7f0f33))
+* **ux:** Add pool commission change rate warning ([#3230](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3230)) ([554d676](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/554d676099e74d1010c9ecd46ef230317cdcd052))
+* **ux:** Overview revisions ([#3217](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3217)) ([6aa82ef](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/6aa82ef8f0f329ce416f0deb8dbcba3490e68038))
+
 ## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/plugin-staking-api-v1.4.0...plugin-staking-api-v1.5.0) (2026-01-12)
 
 

@@ -3,8 +3,8 @@
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { useProxies } from '@polkadot-cloud/connect-proxies'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useBalances } from 'contexts/Balances'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useBalances } from 'hooks/useBalances'
 import { ActionItem } from 'library/ActionItem'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

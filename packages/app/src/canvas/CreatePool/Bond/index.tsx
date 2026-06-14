@@ -3,8 +3,8 @@
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import BigNumber from 'bignumber.js'
-import { usePoolSetups } from 'contexts/PoolSetups'
-import { useTxMeta } from 'contexts/TxMeta'
+import { usePoolSetups } from 'hooks/usePoolSetups'
+import { useTxMeta } from 'hooks/useTxMeta'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar'
 import { Footer } from 'library/SetupSteps/Footer'

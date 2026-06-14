@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { getStakingChainData } from 'consts/util'
-import { useCurrency } from 'contexts/Currency'
-import { useNetwork } from 'contexts/Network'
-import { useTokenPrices } from 'contexts/TokenPrice'
+import { useCurrency } from 'hooks/useCurrency'
+import { useNetwork } from 'hooks/useNetwork'
+import { useTokenPrices } from 'hooks/useTokenPrices'
 import { useMemo } from 'react'
 
 export const TokenPrice = () => {

@@ -4,7 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import type { Staker } from 'contexts/EraStakers/types'
-import type { ActiveAccountStaker } from 'contexts/Staking/types'
+import type { ActiveAccountStaker } from 'hooks/useStaking'
 import type { ProcessExposuresArgs } from './types'
 
 // biome-ignore lint/suspicious/noExplicitAny: <>

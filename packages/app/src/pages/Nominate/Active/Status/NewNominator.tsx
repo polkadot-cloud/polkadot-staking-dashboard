@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import { onNewNominatorButtonPressedEvent } from 'event-tracking'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
+import { useStaking } from 'hooks/useStaking'
 import { CallToActionButtons } from 'library/CallToActionButtons'
 import type { CallToActionSection } from 'library/CallToActionButtons/types'
 import { useTranslation } from 'react-i18next'

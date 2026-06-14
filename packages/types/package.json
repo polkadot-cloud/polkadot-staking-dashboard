@@ -1,6 +1,6 @@
 {
 	"name": "types",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"license": "GPL-3.0-only",
 	"type": "module",
 	"exports": {
@@ -17,6 +17,6 @@
 	},
 	"devDependencies": {
 		"@dedot/chaintypes": "^0.280.0",
-		"bignumber.js": "^11.1.1"
+		"bignumber.js": "^11.1.3"
 	}
 }

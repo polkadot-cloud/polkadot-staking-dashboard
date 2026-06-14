@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localeDefinitions } from 'consts/locales'
-import { de, enGB, es, ko, type Locale, ptBR, zhCN } from 'date-fns/locale'
+import { de, enGB, es, ko, type Locale, ptBR, tr, zhCN } from 'date-fns/locale'
 import appEn from './resources/en/app.json'
 import helpEn from './resources/en/help.json'
 import modalsEn from './resources/en/modals.json'
@@ -19,6 +19,7 @@ const dateFormats: Record<string, Locale> = {
 	de: de,
 	ko: ko,
 	pt: ptBR,
+	tr: tr,
 	zh: zhCN,
 	es: es,
 }

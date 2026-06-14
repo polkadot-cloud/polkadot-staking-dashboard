@@ -13,6 +13,7 @@ export const PlatformSupportEmail = 'staking@polkadot.cloud'
 export const PlatformGitHubURL =
 	'https://github.com/polkadot-cloud/polkadot-staking-dashboard'
 export const DiscordSupportURL = 'https://discord.gg/QY7CSSJm3D'
+export const AssetHubPolkadotSubscanURL = 'https://assethub-polkadot.subscan.io'
 export const ManualSigners = ['ledger', 'vault', 'wallet_connect']
 
 // Analytics

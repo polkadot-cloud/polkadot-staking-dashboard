@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
-import { useApi } from 'contexts/Api'
-import { usePayouts } from 'contexts/Payouts'
-import { defaultUnclaimedRewards } from 'contexts/Payouts/defaults'
+import { useApi } from 'hooks/useApi'
+import { defaultUnclaimedRewards, usePayouts } from 'hooks/usePayouts'
 import { useUnclaimedRewards } from 'plugin-staking-api'
 import { useEffect } from 'react'
 import type { Props } from './types'

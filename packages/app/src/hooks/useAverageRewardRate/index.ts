@@ -4,10 +4,10 @@
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useApi } from 'contexts/Api'
-import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useApi } from 'hooks/useApi'
+import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
 import { useErasPerDay } from '../useErasPerDay'
 import type { UseAverageRewardRate } from './types'
 

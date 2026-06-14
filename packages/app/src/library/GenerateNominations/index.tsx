@@ -4,21 +4,21 @@
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
 import { MaxNominations } from 'consts'
-import { useApi } from 'contexts/Api'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useManageNominations } from 'contexts/ManageNominations'
-import { usePrompt } from 'contexts/Prompt'
 import { useUi } from 'contexts/UI'
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { pluginEnabled } from 'global-bus'
+import { useApi } from 'hooks/useApi'
+import { useFavoriteValidators } from 'hooks/useFavoriteValidators'
 import { useFetchMethods } from 'hooks/useFetchMethods'
+import { Confirm } from 'library/Prompt/Confirm'
 import { ValidatorList } from 'library/ValidatorList'
 import { Subheading } from 'pages/Nominate/Wrappers'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { AnyFunction, AnyJson, Validator } from 'types'
-import { Confirm } from '../Prompt/Confirm'
+import { usePrompt } from 'ui-overlay'
 import { ListControls } from './Controls/ListControls'
 import { Methods } from './Methods'
 import { SearchValidators } from './Prompts/SearchValidators'
@@ -106,14 +106,14 @@ export const GenerateNominations = ({
 					selected: AnyJson
 					callback?: AnyFunction
 				}) => {
-					const newNominations = [...nominations].filter(
-						(n) =>
-							!selected
-								.map(({ address }: { address: string }) => address)
-								.includes(n.address),
+					const selectedAddresses = new Set(
+						selected.map(({ address }: { address: string }) => address),
 					)
-					setNominations([...newNominations])
-					updateSetters(setters, [...newNominations])
+					const newNominations = nominations.filter(
+						(n) => !selectedAddresses.has(n.address),
+					)
+					setNominations(newNominations)
+					updateSetters(setters, newNominations)
 					if (typeof callback === 'function') {
 						callback()
 					}

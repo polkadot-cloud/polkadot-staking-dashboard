@@ -5,15 +5,15 @@ import { useActiveAccount } from '@polkadot-cloud/connect'
 import { planckToUnit, unitToPlanck } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useActiveProxy } from 'contexts/ActiveProxy'
-import { useApi } from 'contexts/Api'
-import { useBalances } from 'contexts/Balances'
-import { useNetwork } from 'contexts/Network'
-import { useStaking } from 'contexts/Staking'
 import type { SubmittableExtrinsic } from 'dedot'
 import { useAccountBalances } from 'hooks/useAccountBalances'
+import { useActiveProxy } from 'hooks/useActiveProxy'
+import { useApi } from 'hooks/useApi'
+import { useBalances } from 'hooks/useBalances'
 import { useBondGreatestFee } from 'hooks/useBondGreatestFee'
+import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
+import { useStaking } from 'hooks/useStaking'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { BondFeedback } from 'library/Form/Bond/BondFeedback'
@@ -39,7 +39,7 @@ export const Bond = () => {
 	const { getSignerWarnings } = useSignerWarnings()
 	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
-	const { getPendingPoolRewards, feeReserve, getPoolMembership } = useBalances()
+	const { getPendingPoolRewards, getPoolMembership } = useBalances()
 
 	const { membership } = getPoolMembership(activeAddress)
 	const { unit, units } = getStakingChainData(network)
@@ -49,11 +49,13 @@ export const Bond = () => {
 	const isPooling = bondFor === 'pool'
 	const { nominator, transferableBalance } = balances
 
+	// `totalAdditionalBond` and `transferableBalance` already have `feeReserve`
+	// deducted.
 	const freeToBond = new BigNumber(
 		planckToUnit(
-			(bondFor === 'nominator'
+			bondFor === 'nominator'
 				? nominator.totalAdditionalBond
-				: transferableBalance) - feeReserve,
+				: transferableBalance,
 			units,
 		),
 	)

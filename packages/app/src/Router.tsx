@@ -8,10 +8,6 @@ import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
 import { getPagesConfig } from 'config/util'
-import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
-import { useActivePool } from 'contexts/Pools/ActivePool'
-import { useStaking } from 'contexts/Staking'
 import { useUi } from 'contexts/UI'
 import { getUnixTime } from 'date-fns'
 import {
@@ -21,7 +17,11 @@ import {
 } from 'event-tracking'
 import { useAccountFromUrl } from 'hooks/useAccountFromUrl'
 import { useAccountSwitchNavigation } from 'hooks/useAccountSwitchNavigation'
+import { useActivePool } from 'hooks/useActivePool'
+import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
 import { usePoolFromUrl } from 'hooks/usePoolFromUrl'
+import { useStaking } from 'hooks/useStaking'
 import { useValidatorFromUrl } from 'hooks/useValidatorFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
@@ -30,7 +30,6 @@ import { MainFooter } from 'library/MainFooter'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
 import { PageWithTitle } from 'library/PageWithTitle'
-import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
 import { ApolloProvider, client } from 'plugin-staking-api'
@@ -46,6 +45,7 @@ import {
 	useNavigate,
 } from 'react-router-dom'
 import { Page } from 'ui-core/base'
+import { Prompt } from 'ui-overlay'
 
 const RouterInner = () => {
 	const navigate = useNavigate()

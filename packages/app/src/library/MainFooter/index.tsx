@@ -12,10 +12,10 @@ import {
 	PlatformPrivacyURL,
 	PlatformURL,
 } from 'consts'
-import { useNetwork } from 'contexts/Network'
-import { usePlugins } from 'contexts/Plugins'
-import { IGNORE_NETWORKS } from 'contexts/TokenPrice'
 import { blockNumber$ } from 'global-bus'
+import { useNetwork } from 'hooks/useNetwork'
+import { usePlugins } from 'hooks/usePlugins'
+import { IGNORE_NETWORKS } from 'hooks/useTokenPrices'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Page } from 'ui-core/base'

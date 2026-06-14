@@ -54,7 +54,7 @@ export const ActiveGraph = ({
 			unit={unit}
 			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
 			labels={{
-				era: t('era', { ns: 'app' }),
+				era: t('date', { ns: 'app' }),
 				reward: t('reward', { ns: 'modals' }),
 				payouts: t('payouts', { ns: 'app' }),
 			}}

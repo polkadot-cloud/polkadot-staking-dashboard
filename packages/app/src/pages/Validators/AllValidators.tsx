@@ -1,8 +1,8 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useApi } from 'contexts/Api'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
+import { useApi } from 'hooks/useApi'
 import { useValidatorStats } from 'hooks/useStats'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { Stats } from 'library/Stats'

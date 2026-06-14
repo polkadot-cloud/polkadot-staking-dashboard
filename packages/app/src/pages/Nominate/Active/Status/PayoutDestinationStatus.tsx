@@ -3,9 +3,9 @@
 
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons'
 import { useActiveAccount, useImportedAccounts } from '@polkadot-cloud/connect'
-import { useBalances } from 'contexts/Balances'
-import { useStaking } from 'contexts/Staking'
+import { useBalances } from 'hooks/useBalances'
 import { usePayeeConfig } from 'hooks/usePayeeConfig'
+import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'
 import { Stat } from 'library/Stat'
 import { useTranslation } from 'react-i18next'
