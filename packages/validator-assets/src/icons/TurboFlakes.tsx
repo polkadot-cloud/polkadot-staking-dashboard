@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const TurboFlakes = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156.84 156.84">
 		<circle cx="78.42" cy="78.42" r="78.42" fill="#ed1c24" />

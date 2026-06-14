@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const Polkachu = () => (
 	<svg viewBox="0 0 44.426 44.424" xmlns="http://www.w3.org/2000/svg">
 		<path

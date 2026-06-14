@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const P2POrg = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 744 744">
 		<path fill="#136BFF" d="M0 0H744V744H0z"></path>

@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const PythagorasCapitalInvestment = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 481 481">
 		<path fill="#e5d3b0" stroke="#000" d="M.5.5h480v480H.5z" />

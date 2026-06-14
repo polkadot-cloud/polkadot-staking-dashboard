@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const PDP = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 		<path d="M0 0h512m0 512H0M0 0h512v512H0z" fill="#fff" />

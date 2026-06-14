@@ -1,3 +1,6 @@
+// Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: GPL-3.0-only
+
 const GoOpen = () => (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 266.33 196.67">
 		<path d="M224.78 60.19l41.55 55.23-13.26 49.68-37.49 24.03-45.57-7.73-19.74-30.61 3.22-8.92 21.05 32.63 39.42 6.7 32.92-21.08 10.82-43.13-35.96-48.8-59.99 7.55-10.36.12 1.9-6.64 71.49-9.03z" />
