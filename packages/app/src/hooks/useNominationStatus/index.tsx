@@ -1,10 +1,10 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { useActiveStaker } from 'contexts/ActiveStaker'
 import { useEraStakers } from 'contexts/EraStakers'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useActivePool } from 'hooks/useActivePool'
+import { useActiveStaker } from 'hooks/useActiveStaker'
 import { useBalances } from 'hooks/useBalances'
 import { usePlugins } from 'hooks/usePlugins'
 import { useStaking } from 'hooks/useStaking'

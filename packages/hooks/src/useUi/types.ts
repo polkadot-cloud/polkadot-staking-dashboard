@@ -3,7 +3,7 @@
 
 import type { RefObject } from 'react'
 
-export interface UIContextInterface {
+export interface UiHookInterface {
 	setSideMenu: (v: boolean) => void
 	setUserSideMenuMinimised: (v: boolean) => void
 	setContainerRefs: (

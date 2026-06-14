@@ -3,8 +3,8 @@
 
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import type { FetchedPoolMember } from 'contexts/Pools/PoolMembers/types'
 import { useNetwork } from 'hooks/useNetwork'
+import type { FetchedPoolMember } from 'hooks/usePoolMembers'
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers'
 import { useTranslation } from 'react-i18next'
 import { planckToUnitBn } from 'utils'

@@ -3,7 +3,7 @@
 
 import type { ActiveStatusWithNominees } from 'plugin-staking-api/types'
 
-export interface ActiveStakerContextInterface {
+export interface ActiveStakerHookInterface {
 	activePoolData: ActiveStatusWithNominees | null | undefined
 	activeNominatorData: ActiveStatusWithNominees | null | undefined
 }
