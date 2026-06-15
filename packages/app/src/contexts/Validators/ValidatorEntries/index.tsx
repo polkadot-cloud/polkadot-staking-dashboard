@@ -51,7 +51,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
-	const { getActiveValidator } = useEraStakers()
+	const { eraStakers, getActiveValidator } = useEraStakers()
 	const { erasPerDay, maxSupportedDays } = useErasPerDay()
 	const { isReady, serviceApi, getConsts, getApiStatus } = useApi()
 
@@ -226,9 +226,15 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	const injectValidatorListData = (
 		entries: Validator[],
 	): ValidatorListEntry[] => {
+		// Build an O(1) lookup of active validator addresses once, rather than a
+		// linear scan of all stakers per entry (previously O(entries × stakers))
+		const activeAddresses = new Set(
+			eraStakers.stakers.map((staker) => staker.address),
+		)
+
 		const injected: ValidatorListEntry[] =
 			entries.map((entry) => {
-				const inEra: boolean = !!getActiveValidator(entry.address)
+				const inEra: boolean = activeAddresses.has(entry.address)
 
 				let validatorStatus: ValidatorStatus = 'waiting'
 				if (inEra) {
