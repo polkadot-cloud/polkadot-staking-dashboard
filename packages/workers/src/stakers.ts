@@ -3,8 +3,7 @@
 
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
-import type { ActiveAccountStaker } from 'hooks/useStaking'
-import type { Staker } from 'types'
+import type { ActiveAccountOwnStake, Staker } from 'types'
 import type { ProcessExposuresArgs } from './types'
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
@@ -25,7 +24,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
 	const { task, networkName, era, units, exposures, activeAccount } = data
 
 	const stakers: Staker[] = []
-	const activeAccountOwnStake: ActiveAccountStaker[] = []
+	const activeAccountOwnStake: ActiveAccountOwnStake[] = []
 
 	exposures.forEach(({ keys, val }) => {
 		const address = keys[1]

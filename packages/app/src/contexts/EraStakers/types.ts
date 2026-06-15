@@ -1,7 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { MaybeAddress, NominationStatus, Staker } from 'types'
+import type {
+	ActiveAccountOwnStake,
+	MaybeAddress,
+	NominationStatus,
+	Staker,
+} from 'types'
 
 export interface EraStakersContextInterface {
 	eraStakers: EraStakers
@@ -20,10 +25,6 @@ export interface EraStakersContextInterface {
 	}
 }
 
-export interface ActiveAccountOwnStake {
-	address: string
-	value: string
-}
 export interface EraStakers {
 	activeAccountOwnStake: ActiveAccountOwnStake[]
 	stakers: Staker[]
