@@ -13,7 +13,7 @@ export const resetActivePools = () => {
 export const getActivePool = (poolId: number) =>
 	_activePools.getValue().find((pool) => pool.id === poolId)
 
-export const addActivePool = (value: ActivePool) => {
+export const setActivePool = (value: ActivePool) => {
 	const next = [..._activePools.getValue()]
 	const index = next.findIndex((pool) => pool.id === value.id)
 	if (index === -1) {

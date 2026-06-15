@@ -4,9 +4,9 @@
 import type { DedotClient } from 'dedot'
 import type { Unsub } from 'dedot/types'
 import {
-	addActivePool,
 	removeActivePool,
 	removePoolRoleIdentities,
+	setActivePool,
 } from 'global-bus'
 import type { ActivePool, ServiceInterface } from 'types'
 import { createPoolAccounts } from 'utils'
@@ -106,7 +106,7 @@ export class ActivePoolQuery<T extends StakingChain> {
 							submittedIn,
 						},
 					}
-					addActivePool(activePool)
+					setActivePool(activePool)
 				} else {
 					removeActivePool(this.poolId)
 				}
