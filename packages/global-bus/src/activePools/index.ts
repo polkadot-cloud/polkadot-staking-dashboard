@@ -15,8 +15,11 @@ export const getActivePool = (poolId: number) =>
 
 export const addActivePool = (value: ActivePool) => {
 	const next = [..._activePools.getValue()]
-	if (!next.find((pool) => pool.id === value.id)) {
+	const index = next.findIndex((pool) => pool.id === value.id)
+	if (index === -1) {
 		next.push(value)
+	} else {
+		next[index] = value
 	}
 	_activePools.next(next)
 }
