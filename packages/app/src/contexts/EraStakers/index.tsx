@@ -26,6 +26,10 @@ import { getLocalEraExposures, setLocalEraExposures } from './util'
 
 const worker = new Worker()
 
+// Max number of `erasStakersPagedEntries` queries to run concurrently when
+// fetching exposures on a cache miss, to avoid overwhelming light clients
+const QUERY_CONCURRENCY = 25
+
 export const [EraStakersContext, useEraStakers] =
 	createSafeContext<EraStakersContextInterface>()
 
@@ -124,11 +128,12 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 			exposures = localExposures
 		} else {
 			exposures = await getPagedErasStakers(era, overviews)
-		}
-
-		// For resource limitation concerns, only store the current era in local storage
-		if (era === activeEra.index.toString()) {
-			setLocalEraExposures(network, era, exposures)
+			// Only persist on a cache miss. On a hit we'd be re-writing (a
+			// multi-MB synchronous JSON.stringify) the exact data we just read.
+			// For resource limitation concerns, only store the current era.
+			if (era === activeEra.index.toString()) {
+				setLocalEraExposures(network, era, exposures)
+			}
 		}
 		return { exposures, totalNominators }
 	}
@@ -175,11 +180,24 @@ export const EraStakersProvider = ({ children }: { children: ReactNode }) => {
 		)
 
 		const validatorKeys = Object.keys(validators)
-		const pagedResults = await Promise.all(
-			validatorKeys.map((v) =>
-				serviceApi.query.erasStakersPagedEntries(Number(era), v),
-			),
-		)
+
+		// Query paged stakers in bounded batches rather than firing all ~600
+		// requests at once, which overwhelms light clients (smoldot). Batches run
+		// sequentially; each batch resolves up to QUERY_CONCURRENCY in parallel.
+		type ValidatorPages = Awaited<
+			ReturnType<typeof serviceApi.query.erasStakersPagedEntries>
+		>
+		const pagedResults: ValidatorPages[] = []
+		for (let i = 0; i < validatorKeys.length; i += QUERY_CONCURRENCY) {
+			const batch = validatorKeys.slice(i, i + QUERY_CONCURRENCY)
+			pagedResults.push(
+				...(await Promise.all(
+					batch.map((v) =>
+						serviceApi.query.erasStakersPagedEntries(Number(era), v),
+					),
+				)),
+			)
+		}
 
 		const result: Exposure[] = []
 		let i = 0
