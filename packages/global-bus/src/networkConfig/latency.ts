@@ -38,6 +38,9 @@ const measureEndpointLatency = (url: string): Promise<number> =>
 			ws = new WebSocket(url)
 			ws.onopen = () => finish(performance.now() - start)
 			ws.onerror = () => finish(Infinity)
+			// Some failures close the socket without firing onerror; resolve immediately rather
+			// than waiting out the full timeout. No-op after a successful open (finish is idempotent)
+			ws.onclose = () => finish(Infinity)
 		} catch {
 			finish(Infinity)
 		}

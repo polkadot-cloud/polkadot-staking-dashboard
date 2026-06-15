@@ -3,16 +3,16 @@
 
 import { capitalizeFirstLetter } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util/chains'
-import { usePrompt } from 'contexts/Prompt'
 import { getRpcEndpoints, setRpcEndpoints } from 'global-bus'
 import { measureChainLatencies } from 'global-bus/util'
 import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
-import { Title } from 'library/Prompt/Title'
 import { PromptSelectItem } from 'library/Prompt/Wrappers'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ChainId } from 'types'
+import { Title } from 'ui-core/prompt'
+import { usePrompt } from 'ui-overlay'
 
 export const OptimalRpcPrompt = () => {
 	const { t } = useTranslation('modals')
@@ -90,12 +90,14 @@ export const OptimalRpcPrompt = () => {
 				{ordered.map(([key, url]) => {
 					const isCurrent = currentKey === key
 					const isFastest = fastestKey === key
+					// Unreachable providers can't be selected — applying one would persist a broken config
+					const isUnavailable = done && !Number.isFinite(latencies[key])
 
 					return (
 						<PromptSelectItem
 							key={`optimal_rpc_${key}`}
-							className={isCurrent ? 'inactive' : undefined}
-							disabled={isCurrent}
+							className={isCurrent || isUnavailable ? 'inactive' : undefined}
+							disabled={isCurrent || isUnavailable}
 							onClick={() => apply(key)}
 						>
 							<h3>
