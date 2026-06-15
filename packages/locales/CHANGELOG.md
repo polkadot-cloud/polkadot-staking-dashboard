@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.6.0...locales-v1.7.0) (2026-06-15)
+
+
+### Features
+
+* add sync access code ([e0c1bcf](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e0c1bcf3c3d4d25570ddcb2e680189a2313c4408))
+* **locale:** Add Turkish (Türkçe) language support ([#3514](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3514)) ([b433484](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b4334844513bc595601736b8a9d0f27fef77f016))
+* **refactor:** `ActiveStaker`, `UI`, `PoolMembers` contexts to standalone hooks  ([#3557](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3557)) ([7f35f18](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7f35f182dd1a96372598907afb2f5c129b30c129))
+
 ## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/locales-v1.5.0...locales-v1.6.0) (2026-05-26)
 
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.6.0...ui-core-v1.7.0) (2026-06-15)
+
+
+### Features
+
+* **refactor:** Move Prompt components to`ui-overlay` ([#3555](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3555)) ([809ef97](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/809ef97fdac54205dc33b560b6a868ba3cfd4c4d))
+
 ## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-core-v1.5.0...ui-core-v1.6.0) (2026-05-26)
 
 

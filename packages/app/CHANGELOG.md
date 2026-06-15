@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.3.0...app-v2.4.0) (2026-06-15)
+
+
+### Features
+
+* add sync access code ([e0c1bcf](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e0c1bcf3c3d4d25570ddcb2e680189a2313c4408))
+* **fix:** Avoid double-subtracting fee reserve from bond amount ([#3536](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3536)) ([957d0d1](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/957d0d1b4c278377ae32e4da50f816fbf2663449))
+* **fix:** Disable extension submit when funds are insufficient or submitting ([#3553](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3553)) ([e52c29a](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e52c29a689f540f1d1a274ebd8b9948152695af9))
+* **fix:** Disable nominate submit for read-only accounts ([#3537](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3537)) ([c209a53](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/c209a53e824a76b97927a5c4cc99915ca821c8d2))
+* **fix:** Re-derive own stake on account change ([#3534](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3534)) ([4ad0004](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/4ad0004f68f7267c26971c5b75ae90cd8d8229a3))
+* **refactor:** `ActiveStaker`, `UI`, `PoolMembers` contexts to standalone hooks  ([#3557](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3557)) ([7f35f18](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7f35f182dd1a96372598907afb2f5c129b30c129))
+* **refactor:** `Invites`, `FavoritePools`, `PoolSetups` contexts to standalone hooks  ([#3552](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3552)) ([32acbc0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/32acbc043c2d6a09893045c11e80461a6da47b82))
+* **refactor:** `Operators`, `Help`, `Tooltip` contexts to standalone hooks  ([#3556](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3556)) ([381eee8](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/381eee8222b7967138f7e22c18461165848b314e))
+* **refactor:** `Staking`, `Payouts`, `FavoriteValidators` contexts to standalone hooks  ([#3554](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3554)) ([386a5be](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/386a5bee9aa3da1e10871f3f39d56eb1efb0d778))
+* **refactor:** Move hooks batch from `app` to `hooks` package ([#3558](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3558)) ([7f592ae](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7f592aedec8d030cbc767716a3c51159cfdfcdb2))
+* **refactor:** Move Prompt components to`ui-overlay` ([#3555](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3555)) ([809ef97](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/809ef97fdac54205dc33b560b6a868ba3cfd4c4d))
+* **refactor:** Move remaining tips components to `ui-tips` ([#3562](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3562)) ([e7bb811](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/e7bb811f0257bf4ef679be53914b2d9fcd4e8008))
+* **refactor:** Move worker to standalone package ([#3563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3563)) ([ff533dd](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ff533dd9feb198bec105e2c0719d69d76bd46364))
+* **refactor:** Page config utils to `utils` package ([#3559](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3559)) ([639b747](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/639b747d97a2f8b4cd75dccca253e8f68b02f40c))
+* **refactor:** Remove contexts that act as global bus proxy ([#3535](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3535)) ([b2a39f6](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b2a39f6cbfbad30f1487cb50eda1e1b41afd4925))
+* **refactor:** Validator assets and app config refactor ([#3560](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3560)) ([7fd158e](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/7fd158eb520efe16acc26d05719bc0be8d58dc82))
+* **ux:** browse validators in search before typing (Related to [#3362](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3362)) ([#3516](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3516)) ([da02e07](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/da02e07bc046a56298e994d3f86449180760efbd))
+
+
+### Bug Fixes
+
+* hooks, utils config ([#3546](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3546)) ([f31076b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f31076bed2101b6d0d56811f92a2b26e71e6d436))
+
 ## [2.3.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/app-v2.2.0...app-v2.3.0) (2026-05-26)
 
 

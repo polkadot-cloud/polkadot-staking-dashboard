@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.5.0...types-v1.6.0) (2026-06-15)
+
+
+### Features
+
+* **refactor:** Move worker to standalone package ([#3563](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3563)) ([ff533dd](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/ff533dd9feb198bec105e2c0719d69d76bd46364))
+
 ## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/types-v1.4.0...types-v1.5.0) (2026-05-26)
 
 

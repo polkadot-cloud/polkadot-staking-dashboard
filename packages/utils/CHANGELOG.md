@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.4.0...utils-v1.5.0) (2026-06-15)
+
+
+### Features
+
+* **refactor:** Page config utils to `utils` package ([#3559](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3559)) ([639b747](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/639b747d97a2f8b4cd75dccca253e8f68b02f40c))
+
+
+### Bug Fixes
+
+* hooks, utils config ([#3546](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3546)) ([f31076b](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/f31076bed2101b6d0d56811f92a2b26e71e6d436))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/utils-v1.3.0...utils-v1.4.0) (2026-05-26)
 
 
