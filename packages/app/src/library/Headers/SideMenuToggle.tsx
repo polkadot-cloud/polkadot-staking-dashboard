@@ -3,7 +3,7 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useUi } from 'contexts/UI'
+import { useUi } from 'hooks/useUi'
 import { MenuWrapper } from './Wrappers'
 
 export const SideMenuToggle = () => {

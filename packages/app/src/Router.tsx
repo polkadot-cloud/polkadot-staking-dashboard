@@ -7,8 +7,7 @@ import { StakingApi } from 'StakingApi'
 import { useActiveAccount } from '@polkadot-cloud/connect'
 import { useEffectIgnoreInitial } from '@w3ux/hooks'
 import { extractUrlValue } from '@w3ux/utils'
-import { getPagesConfig } from 'config/util'
-import { useUi } from 'contexts/UI'
+import { PagesConfig } from 'config'
 import { getUnixTime } from 'date-fns'
 import {
 	onConversionEvent,
@@ -22,6 +21,7 @@ import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
 import { usePoolFromUrl } from 'hooks/usePoolFromUrl'
 import { useStaking } from 'hooks/useStaking'
+import { useUi } from 'hooks/useUi'
 import { useValidatorFromUrl } from 'hooks/useValidatorFromUrl'
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary'
 import { Headers } from 'library/Headers'
@@ -30,7 +30,6 @@ import { MainFooter } from 'library/MainFooter'
 import { Menu } from 'library/Menu'
 import { NotificationPrompts } from 'library/NotificationPrompts'
 import { PageWithTitle } from 'library/PageWithTitle'
-import { Prompt } from 'library/Prompt'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
 import { ApolloProvider, client } from 'plugin-staking-api'
@@ -46,6 +45,8 @@ import {
 	useNavigate,
 } from 'react-router-dom'
 import { Page } from 'ui-core/base'
+import { Prompt } from 'ui-overlay'
+import { getPagesConfig } from 'utils'
 
 const RouterInner = () => {
 	const navigate = useNavigate()
@@ -130,7 +131,7 @@ const RouterInner = () => {
 							<Headers />
 							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
 								<Routes>
-									{getPagesConfig(network, null, advancedMode, {
+									{getPagesConfig(PagesConfig, network, null, advancedMode, {
 										inPool,
 										isBonding,
 									}).map((page) => (

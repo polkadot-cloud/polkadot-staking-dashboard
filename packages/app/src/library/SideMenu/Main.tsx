@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useActiveAccount } from '@polkadot-cloud/connect'
-import { PageCategories } from 'config/pages'
-import { getPagesConfig, pageKeyExistsInCategory } from 'config/util'
-import { useUi } from 'contexts/UI'
+import { PageCategories, PagesConfig } from 'config'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActivePool } from 'hooks/useActivePool'
@@ -12,6 +10,7 @@ import { useBalances } from 'hooks/useBalances'
 import { useNetwork } from 'hooks/useNetwork'
 import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'
+import { useUi } from 'hooks/useUi'
 import { useWarnings } from 'hooks/useWarnings'
 import { Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,6 +22,7 @@ import type {
 	PagesConfigItems,
 } from 'types'
 import { Page } from 'ui-core/base'
+import { getPagesConfig, pageKeyExistsInCategory } from 'utils'
 import { Primary } from './Primary'
 
 export const Main = ({
@@ -58,6 +58,7 @@ export const Main = ({
 	)
 
 	const pages: PageItem[] = getPagesConfig(
+		PagesConfig,
 		network,
 		activeCategory,
 		advancedMode,
@@ -65,7 +66,7 @@ export const Main = ({
 	)
 
 	const pageChanged = activeCategory
-		? !pageKeyExistsInCategory(pathname, activeCategory)
+		? !pageKeyExistsInCategory(PagesConfig, pathname, activeCategory)
 		: false
 
 	let i = 0

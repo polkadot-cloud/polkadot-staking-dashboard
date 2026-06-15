@@ -3,11 +3,11 @@
 
 import { useSize } from '@w3ux/hooks'
 import { getStakingChainData } from 'consts/util/chains'
-import { useHelp } from 'contexts/Help'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useUi } from 'contexts/UI'
 import { useHalving } from 'hooks/useHalving'
+import { useHelp } from 'hooks/useHelp'
 import { useNetwork } from 'hooks/useNetwork'
+import { useUi } from 'hooks/useUi'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { Countdown } from 'library/Countdown'
 import { useRef } from 'react'

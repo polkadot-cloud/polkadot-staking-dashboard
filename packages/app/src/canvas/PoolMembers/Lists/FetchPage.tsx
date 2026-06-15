@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ListProvider } from 'contexts/List'
-import { usePoolMembers } from 'contexts/Pools/PoolMembers'
 import { useNetwork } from 'hooks/useNetwork'
+import { usePoolMembers } from 'hooks/usePoolMembers'
 import { List, ListStatusHeader, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'

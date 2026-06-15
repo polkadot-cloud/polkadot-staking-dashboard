@@ -11,10 +11,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CloudSVG from 'assets/icons/cloud.svg?react'
-import { getCategoryId } from 'config/util'
+import { PageCategories } from 'config'
 import { useTheme } from 'contexts/Themes'
-import { useUi } from 'contexts/UI'
 import { useActivePageForCategory } from 'hooks/useActivePages'
+import { useUi } from 'hooks/useUi'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -22,6 +22,7 @@ import type { NavSection } from 'types'
 import { Page, Separator, Tooltip } from 'ui-core/base'
 import { Popover } from 'ui-core/popover'
 import { useOverlay } from 'ui-overlay'
+import { getCategoryId } from 'utils'
 import { CategoriesPopover } from './Categories'
 import { Main } from './Main'
 import { NavSimple } from './NavSimple'
@@ -178,7 +179,7 @@ export const DefaultMenu = ({
 								</CategoryHeader>
 							</Popover>
 							<Main
-								activeCategory={getCategoryId(localCategory)}
+								activeCategory={getCategoryId(PageCategories, localCategory)}
 								hidden={openCategories}
 							/>
 						</section>
