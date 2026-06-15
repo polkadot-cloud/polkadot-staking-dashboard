@@ -1,8 +1,13 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { ActiveAccountStaker } from 'hooks/useStaking'
-import type { Exposure, MaybeAddress, NetworkId, Staker } from 'types'
+import type {
+	ActiveAccountOwnStake,
+	Exposure,
+	MaybeAddress,
+	NetworkId,
+	Staker,
+} from 'types'
 
 export interface ProcessExposuresArgs {
 	task: string
@@ -18,6 +23,6 @@ export interface ProcessExposuresResponse {
 	networkName: NetworkId
 	era: string
 	stakers: Staker[]
-	activeAccountOwnStake: ActiveAccountStaker[]
+	activeAccountOwnStake: ActiveAccountOwnStake[]
 	who: MaybeAddress
 }
