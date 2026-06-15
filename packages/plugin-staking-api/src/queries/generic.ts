@@ -3,7 +3,7 @@
 
 import type { DefaultContext, DocumentNode } from '@apollo/client'
 import { useQuery } from '@apollo/client/react'
-import { client } from '../Client'
+import { getClient } from '../Client'
 import type { QueryReturn } from '../types'
 
 type Variables = Record<string, unknown>
@@ -23,7 +23,7 @@ export const fetchQuery = async <T>(
 	options?: FetchQueryOptions,
 ): Promise<T> => {
 	try {
-		const result = await client.query<T>({
+		const result = await getClient().query<T>({
 			query,
 			variables,
 			context: options?.context,

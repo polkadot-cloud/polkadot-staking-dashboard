@@ -3,8 +3,8 @@
 
 import { getStakingChainData } from 'consts/util'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
-import { DefaultLocale, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
 import { PayoutLine } from 'ui-graphs'
 
@@ -15,9 +15,10 @@ export const InactiveGraph = ({
 	width: string | number
 	height: string | number
 }) => {
-	const { i18n, t } = useTranslation()
+	const { t } = useTranslation()
 	const { network } = useNetwork()
 	const { getThemeValue } = useThemeValues()
+	const dateFormat = useDateFormat()
 	const { unit } = getStakingChainData(network)
 
 	return (
@@ -28,7 +29,7 @@ export const InactiveGraph = ({
 			height={height}
 			getThemeValue={getThemeValue}
 			unit={unit}
-			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+			dateFormat={dateFormat}
 			labels={{
 				era: t('era', { ns: 'app' }),
 				reward: t('reward', { ns: 'modals' }),
