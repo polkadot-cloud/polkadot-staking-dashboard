@@ -21,6 +21,26 @@ export default defineConfig({
 	},
 	build: {
 		outDir: 'build',
+		rollupOptions: {
+			output: {
+				// Split heavy vendor libraries into their own cacheable chunks so
+				// they stay out of the entry bundle
+				manualChunks: (id) => {
+					if (!id.includes('node_modules')) {
+						return
+					}
+					if (/chart\.js|chartjs|react-chartjs-2|chroma-js/.test(id)) {
+						return 'charts'
+					}
+					if (id.includes('dedot')) {
+						return 'dedot'
+					}
+					if (id.includes('@fortawesome')) {
+						return 'fontawesome'
+					}
+				},
+			},
+		},
 	},
 	server: {
 		fs: {
