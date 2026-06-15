@@ -39,6 +39,13 @@ export type Staker = ExposureValue & {
 	address: string
 }
 
+export interface ActiveAccountOwnStake {
+	address: string
+	value: string
+}
+
+export type ActiveAccountStaker = ActiveAccountOwnStake
+
 export interface Exposure {
 	keys: string[]
 	val: ExposureValue
