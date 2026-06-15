@@ -8,6 +8,7 @@ import { getStakingChainData } from 'consts/util'
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns'
 import { useActivePool } from 'hooks/useActivePool'
 import { useCurrency } from 'hooks/useCurrency'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
 import { useStaking } from 'hooks/useStaking'
@@ -15,7 +16,6 @@ import { useSyncing } from 'hooks/useSyncing'
 import { useUi } from 'hooks/useUi'
 import { Balance } from 'library/Balance'
 import { StatusLabel } from 'library/StatusLabel'
-import { DefaultLocale, locales } from 'locales'
 import type { RewardResult } from 'plugin-staking-api/types'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +26,7 @@ import { ActiveGraph } from './ActiveGraph'
 import { InactiveGraph } from './InactiveGraph'
 
 export const Payouts = () => {
-	const { i18n, t } = useTranslation('pages')
+	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { syncing } = useSyncing()
 	const { containerRefs } = useUi()
@@ -34,6 +34,7 @@ export const Payouts = () => {
 	const { currency } = useCurrency()
 	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
+	const dateFormat = useDateFormat()
 
 	const { units } = getStakingChainData(network)
 	const Token = getChainIcons(network).token
@@ -61,10 +62,10 @@ export const Payouts = () => {
 			formatTo: now,
 			formatOpts: {
 				addSuffix: true,
-				locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+				locale: dateFormat,
 			},
 		}
-	}, [lastReward, i18n.resolvedLanguage])
+	}, [lastReward, dateFormat])
 
 	const lastRewardUnit = planckToUnitBn(
 		new BigNumber(lastReward?.reward || 0),

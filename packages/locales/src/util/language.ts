@@ -8,6 +8,7 @@ import {
 	DefaultLocale,
 	fallbackResources,
 	lngNamespaces,
+	loadDateFormat,
 	locales,
 } from '../config'
 import type { LocaleJson, LocaleJsonValue } from '../types'
@@ -72,6 +73,9 @@ export const getResources = (lng: string, i18n?: i18n) => {
 
 export const changeLanguage = async (lng: string, i18next: i18n) => {
 	onLocaleFromModalEvent(lng)
+
+	// Warm the date format cache for the newly selected language
+	loadDateFormat(lng)
 
 	// check whether resources exist and need to by dynamically loaded.
 	const { resources, dynamicLoad } = getResources(lng, i18next)

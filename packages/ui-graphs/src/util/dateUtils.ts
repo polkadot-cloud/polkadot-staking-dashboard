@@ -115,7 +115,7 @@ export const filterAndSortRewards = (payouts: RewardResults) => {
 /**
  * Calculate the earliest date of a payout list
  */
-export const getPayoutsFromDate = (payouts: RewardResults, locale: Locale) => {
+export const getPayoutsFromDate = (payouts: RewardResults, locale?: Locale) => {
 	if (!payouts.length) {
 		return undefined
 	}
@@ -133,7 +133,7 @@ export const getPayoutsFromDate = (payouts: RewardResults, locale: Locale) => {
 /**
  * Calculate the latest date of a payout list
  */
-export const getPayoutsToDate = (payouts: RewardResults, locale: Locale) => {
+export const getPayoutsToDate = (payouts: RewardResults, locale?: Locale) => {
 	if (!payouts.length) {
 		return undefined
 	}
