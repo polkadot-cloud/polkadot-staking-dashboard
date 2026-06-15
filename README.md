@@ -2,8 +2,6 @@
 
 # Polkadot Cloud Staking
 
-![Polkadot Cloud Staking](https://github.com/user-attachments/assets/fddf659d-1547-453d-8175-d3c0cd4f4d14)
-
 - [**English:** Welcome to Polkadot Cloud Staking!](https://docs.staking.polkadot.cloud/en/developer-overview)
 - [**Deutsch:** Willkommen bei Polkadot Cloud Staking!](https://docs.staking.polkadot.cloud/de/developer-overview)
 - [**Español:** ¡Bienvenido a Polkadot Cloud Staking!](https://docs.staking.polkadot.cloud/es/developer-overview)
