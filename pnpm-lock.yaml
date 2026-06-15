@@ -774,6 +774,15 @@ importers:
       react-i18next:
         specifier: ^17.0.8
         version: 17.0.8(i18next@26.3.1(typescript@6.0.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@6.0.3)
+      ui-buttons:
+        specifier: workspace:*
+        version: link:../ui-buttons
+      ui-core:
+        specifier: workspace:*
+        version: link:../ui-core
+      ui-overlay:
+        specifier: workspace:*
+        version: link:../ui-overlay
       ui-styles:
         specifier: workspace:*
         version: link:../ui-styles
