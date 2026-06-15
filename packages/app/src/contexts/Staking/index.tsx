@@ -6,6 +6,7 @@ import { createSafeContext } from '@w3ux/hooks'
 import { useBalances } from 'hooks/useBalances'
 import type { StakingHookInterface } from 'hooks/useStaking'
 import type { ReactNode } from 'react'
+import { useMemo } from 'react'
 
 export const [StakingContext, useStaking] =
 	createSafeContext<StakingHookInterface>()
@@ -24,15 +25,16 @@ export const StakingProvider = ({ children }: { children: ReactNode }) => {
 	// Helper function to determine whether the active account is a nominator
 	const isNominator = activeAddress !== null && isBonding && isNominating
 
+	const value = useMemo(
+		() => ({
+			isBonding,
+			isNominating,
+			isNominator,
+		}),
+		[isBonding, isNominating, isNominator],
+	)
+
 	return (
-		<StakingContext.Provider
-			value={{
-				isBonding,
-				isNominating,
-				isNominator,
-			}}
-		>
-			{children}
-		</StakingContext.Provider>
+		<StakingContext.Provider value={value}>{children}</StakingContext.Provider>
 	)
 }
