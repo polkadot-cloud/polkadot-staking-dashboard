@@ -423,6 +423,7 @@
 		"webExtensions": "Extensión de Navegador",
 		"whenActivelyNominating": "cuando nominas activamente.",
 		"wrongTransaction": "Transacción incorrecta, Por favor firma de nuevo.",
-		"year": "año"
+		"year": "año",
+		"yourPayouts": "Tus Pagos"
 	}
 }

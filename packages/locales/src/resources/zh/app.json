@@ -413,6 +413,7 @@
 		"webExtensions": "浏览器扩展",
 		"whenActivelyNominating": "当活跃提名时",
 		"wrongTransaction": "错误交易，请重新签名",
-		"year": "年"
+		"year": "年",
+		"yourPayouts": "您的收益"
 	}
 }
