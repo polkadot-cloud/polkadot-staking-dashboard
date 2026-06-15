@@ -38,3 +38,10 @@ export interface TipDisplay {
 	description: string
 	page: string
 }
+
+export interface TipProps {
+	title: string
+	description: string[]
+	page?: string
+	onPromptClick: () => void
+}
