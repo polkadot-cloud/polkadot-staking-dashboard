@@ -4,7 +4,7 @@
 import { planckToUnit } from '@w3ux/utils'
 import { getStakingChainData } from 'consts/util'
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useDateFormat } from 'hooks/useDateFormat'
+import { DefaultLocale, locales } from 'locales'
 import { useRewards } from 'plugin-staking-api'
 import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
@@ -26,9 +26,8 @@ export const ActiveGraph = ({
 	height,
 	units,
 }: Props) => {
-	const { t } = useTranslation()
+	const { i18n, t } = useTranslation()
 	const { getThemeValue } = useThemeValues()
-	const dateFormat = useDateFormat()
 	const { unit } = getStakingChainData(network)
 	const {
 		data: { allRewards },
@@ -59,7 +58,7 @@ export const ActiveGraph = ({
 			height={height}
 			getThemeValue={getThemeValue}
 			unit={unit}
-			dateFormat={dateFormat}
+			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
 			labels={{
 				era: t('date', { ns: 'app' }),
 				reward: t('reward', { ns: 'modals' }),

@@ -3,12 +3,12 @@
 
 import { useSize } from '@w3ux/hooks'
 import { useActivePool } from 'hooks/useActivePool'
-import { useDateFormat } from 'hooks/useDateFormat'
 import { usePlugins } from 'hooks/usePlugins'
 import { useStaking } from 'hooks/useStaking'
 import { useSyncing } from 'hooks/useSyncing'
 import { useUi } from 'hooks/useUi'
 import { StatusLabel } from 'library/StatusLabel'
+import { DefaultLocale, locales } from 'locales'
 import type { PayoutHistoryProps } from 'pages/Rewards/types'
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,16 +25,21 @@ export const RecentPayouts = ({
 	payoutGraphData,
 	loading,
 }: PayoutHistoryProps) => {
-	const { t } = useTranslation('pages')
+	const { i18n, t } = useTranslation('pages')
 	const { syncing } = useSyncing()
 	const { containerRefs } = useUi()
 	const { inPool } = useActivePool()
 	const { isBonding } = useStaking()
 	const { pluginEnabled } = usePlugins()
-	const dateFormat = useDateFormat()
 
-	const payoutsFromDate = getPayoutsFromDate(payoutsList, dateFormat)
-	const payoutsToDate = getPayoutsToDate(payoutsList, dateFormat)
+	const payoutsFromDate = getPayoutsFromDate(
+		payoutsList,
+		locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+	)
+	const payoutsToDate = getPayoutsToDate(
+		payoutsList,
+		locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+	)
 	const staking = isBonding || inPool
 	const notStaking = !syncing && !staking
 

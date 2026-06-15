@@ -12,13 +12,13 @@ import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
 import { useApi } from 'hooks/useApi'
-import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
+import { DefaultLocale, locales } from 'locales'
 import { motion } from 'motion/react'
 import { isPoolReward, isPoolShareReward } from 'plugin-staking-api'
 import type {
@@ -43,7 +43,7 @@ export const PayoutList = ({
 	loading,
 	remotePagination,
 }: PayoutListProps) => {
-	const { t } = useTranslation('pages')
+	const { i18n, t } = useTranslation('pages')
 	const { isReady, activeEra } = useApi()
 	const { network } = useNetwork()
 	const { bondedPools } = useBondedPools()
@@ -55,7 +55,6 @@ export const PayoutList = ({
 		pagination: { page, setPage },
 	} = useList()
 	const { unit, units } = getStakingChainData(network)
-	const dateFormat = useDateFormat()
 
 	// Manipulated list (ordering, filtering) of payouts
 	const [payouts, setPayouts] = useState<RewardResults>(initialPayouts)
@@ -239,7 +238,10 @@ export const PayoutList = ({
 																new Date(),
 																{
 																	addSuffix: true,
-																	locale: dateFormat,
+																	locale:
+																		locales[
+																			i18n.resolvedLanguage ?? DefaultLocale
+																		].dateFormat,
 																},
 															)}
 														</h5>

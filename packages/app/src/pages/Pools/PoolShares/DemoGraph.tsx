@@ -41,7 +41,7 @@ const Fade = styled.div`
 
 export interface PoolSharesDemoGraphProps {
 	activeAddress?: string
-	dateFormat?: Locale
+	dateFormat: Locale
 	getThemeValue: (key: string) => string
 	height: string
 	poolId?: number

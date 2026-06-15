@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useThemeValues } from 'contexts/ThemeValues'
-import { useDateFormat } from 'hooks/useDateFormat'
+import { DefaultLocale, locales } from 'locales'
 import { useValidatorEraPoints } from 'plugin-staking-api'
 import { useTranslation } from 'react-i18next'
 import type { NetworkId } from 'types'
@@ -22,9 +22,8 @@ export const ActiveGraph = ({
 	width,
 	height,
 }: Props) => {
-	const { t } = useTranslation()
+	const { i18n, t } = useTranslation()
 	const { getThemeValue } = useThemeValues()
-	const dateFormat = useDateFormat()
 	const { data, loading, error } = useValidatorEraPoints({
 		network,
 		validator,
@@ -41,7 +40,7 @@ export const ActiveGraph = ({
 			width={width}
 			height={height}
 			getThemeValue={getThemeValue}
-			dateFormat={dateFormat}
+			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat}
 			labels={{
 				date: t('date', { ns: 'app' }),
 				era: t('era', { ns: 'app' }),

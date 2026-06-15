@@ -12,13 +12,13 @@ import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { useActivePool } from 'hooks/useActivePool'
 import { useCurrency } from 'hooks/useCurrency'
-import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
 import { useSyncing } from 'hooks/useSyncing'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusLabel } from 'library/StatusLabel'
+import { DefaultLocale, locales } from 'locales'
 import { fetchCombinedPoolRewards, isPoolShareReward } from 'plugin-staking-api'
 import type { CombinedPoolReward } from 'plugin-staking-api/types'
 import { useEffect, useMemo, useState } from 'react'
@@ -32,7 +32,7 @@ const POOL_SHARE_FETCH_LIMIT = 100
 const MAX_POOL_SHARE_FETCH_PAGES = 5
 
 export const PoolShares = () => {
-	const { t } = useTranslation('pages')
+	const { i18n, t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { currency } = useCurrency()
 	const { pluginEnabled } = usePlugins()
@@ -137,7 +137,7 @@ export const PoolShares = () => {
 		}
 	}, [graphActive, network, activeAddress, fromTimestamp])
 
-	const dateFormat = useDateFormat()
+	const dateFormat = locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
 	const graphHeight = '175px'
 	const graphLabels = {
 		poolShares: t('share', { ns: 'app' }),

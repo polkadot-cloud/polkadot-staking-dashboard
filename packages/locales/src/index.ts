@@ -3,14 +3,12 @@
 
 import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { DefaultLocale, loadDateFormat } from './config'
+import { DefaultLocale } from './config'
 
 export {
 	DefaultLocale,
 	fallbackResources,
-	getDateFormat,
 	lngNamespaces,
-	loadDateFormat,
 	locales,
 } from './config'
 
@@ -39,9 +37,6 @@ i18next
 		lng: defaultLng,
 		resources,
 	})
-
-// Warm the date format cache for the active language
-loadDateFormat(lng)
 
 // Dynamically load default language resources if needed
 if (dynamicLoad) {

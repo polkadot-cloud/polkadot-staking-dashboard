@@ -21,7 +21,7 @@ export interface EraPointsLineProps {
 	width: string | number
 	height: string | number
 	getThemeValue: (key: string) => string
-	dateFormat?: Locale
+	dateFormat: Locale
 	labels: {
 		date: string
 		era: string
@@ -39,7 +39,7 @@ export interface PayoutBarProps {
 	getThemeValue: (key: string) => string
 	unit: string
 	units: number
-	dateFormat?: Locale
+	dateFormat: Locale
 	labels: {
 		payout: string
 		poolClaim: string
@@ -57,7 +57,7 @@ export interface PayoutLineProps {
 	height: string | number
 	getThemeValue: (key: string) => string
 	unit: string
-	dateFormat?: Locale
+	dateFormat: Locale
 	labels: {
 		era: string
 		reward: string
@@ -75,7 +75,7 @@ export interface PoolSharesBarProps {
 	getThemeValue: (key: string) => string
 	unit: string
 	units: number
-	dateFormat?: Locale
+	dateFormat: Locale
 	labels: {
 		poolShares: string
 		claim: string
