@@ -4,7 +4,7 @@
 .btnHelp {
   background: var(--btn-help-bg);
   color: var(--gray-900);
-  fill: var(--accent-900);
+  fill: var(--gray-900);
   border-radius: 50%;
   padding: 0;
   width: 1.35rem;
@@ -27,6 +27,6 @@
 
 .btnHelpIcon {
   &:hover {
-    fill: var(--accent-1000);
+    fill: var(--gray-1000);
   }
 }

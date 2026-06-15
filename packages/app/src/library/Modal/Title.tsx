@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useHelp } from 'contexts/Help'
+import { useHelp } from 'hooks/useHelp'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import type { FunctionComponent, SVGProps } from 'react'
 import { Header, Title as Wrapper } from 'ui-core/modal'

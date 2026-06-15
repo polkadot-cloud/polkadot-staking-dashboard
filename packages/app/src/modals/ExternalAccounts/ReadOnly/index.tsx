@@ -12,7 +12,7 @@ import {
 	useImportedAccounts,
 } from '@polkadot-cloud/connect'
 import { Polkicon } from '@w3ux/react-polkicon'
-import { useHelp } from 'contexts/Help'
+import { useHelp } from 'hooks/useHelp'
 import { ButtonHelpTooltip } from 'library/ButtonHelpTooltip'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'

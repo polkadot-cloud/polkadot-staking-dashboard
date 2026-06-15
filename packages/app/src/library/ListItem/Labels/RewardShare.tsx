@@ -3,7 +3,7 @@
 
 import { faChartPie } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useTooltip } from 'contexts/Tooltip'
+import { useTooltip } from 'hooks/useTooltip'
 import { useTranslation } from 'react-i18next'
 import { TooltipArea } from 'ui-core/base'
 import { Label } from 'ui-core/list'

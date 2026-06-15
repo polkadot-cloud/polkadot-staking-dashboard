@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { localStorageOrDefault } from '@w3ux/utils'
-import { PageCategories, PagesConfig } from 'config/pages'
-import { getPagesConfig } from 'config/util'
+import { PageCategories, PagesConfig } from 'config'
 import { ActivePagesKey } from 'consts'
-import { useStaking } from 'contexts/Staking'
-import { useUi } from 'contexts/UI'
 import { useActivePool } from 'hooks/useActivePool'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStaking } from 'hooks/useStaking'
+import { useUi } from 'hooks/useUi'
 import type { NavSection } from 'types'
+import { getPagesConfig } from 'utils'
 import type { ActivePagesRecord } from './types'
 
 // Default active pages (using default routes from PageCategories)
@@ -66,6 +66,7 @@ export const useActivePageForCategory = () => {
 
 		if (categoryConfig) {
 			const pagesConfig = getPagesConfig(
+				PagesConfig,
 				network,
 				categoryConfig.id,
 				advancedMode,

@@ -2,20 +2,22 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { MaxNominations } from 'consts'
-import { useFavoriteValidators } from 'contexts/Validators/FavoriteValidators'
 import { emitNotification } from 'global-bus'
+import { useFavoriteValidators } from 'hooks/useFavoriteValidators'
 import { Identity } from 'library/ListItem/Labels/Identity'
-import { Title } from 'library/Prompt/Title'
 import { FooterWrapper, PromptListItem } from 'library/Prompt/Wrappers'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Validator } from 'types'
 import { ButtonPrimary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
+import { Title } from 'ui-core/prompt'
+import { usePrompt } from 'ui-overlay'
 import type { PromptProps } from '../types'
 
 export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
 	const { t } = useTranslation('modals')
+	const { closePrompt } = usePrompt()
 	const { favoritesList } = useFavoriteValidators()
 
 	// Store the total number of selected favorites
@@ -32,7 +34,7 @@ export const SelectFavorites = ({ callback, nominations }: PromptProps) => {
 
 	return (
 		<>
-			<Title title={t('nominateFavorites')} />
+			<Title title={t('nominateFavorites')} onClose={closePrompt} />
 			<div className="padded">
 				{remaining <= 0 ? (
 					<h4 className="subheading">
