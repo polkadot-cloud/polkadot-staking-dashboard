@@ -28,10 +28,10 @@ export const Tips = ({
 		setStateWithRef(getPage(), setPage, pageRef)
 	})
 
-	// re-sync page when active account changes
+	// re-sync page when the active account / network changes, or when the available items change
 	useEffect(() => {
 		setStateWithRef(getPage(), setPage, pageRef)
-	}, [activeAddress, network])
+	}, [activeAddress, network, syncing, items.length])
 
 	// store the current page
 	const [page, setPage] = useState<number>(1)
