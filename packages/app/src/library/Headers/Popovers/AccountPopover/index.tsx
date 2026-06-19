@@ -89,6 +89,7 @@ export const AccountPopover = ({
 					window.open(
 						`${AssetHubPolkadotSubscanURL}/account/${activeAddress}`,
 						'_blank',
+						'noopener,noreferrer',
 					)
 				}}
 			>
