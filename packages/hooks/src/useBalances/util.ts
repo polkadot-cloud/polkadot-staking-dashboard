@@ -8,7 +8,13 @@ export const getLocalFeeReserve = (
 	defaultReserve: bigint,
 	{ network }: { network: NetworkId; units: number },
 ): bigint => {
-	const reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}')
+	let reserves: Record<string, Record<string, string>> = {}
+	try {
+		reserves = JSON.parse(localStorage.getItem('reserve_balances') ?? '{}')
+	} catch {
+		// Corrupt local data; fall back to defaults
+		reserves = {}
+	}
 	const localReserve = BigInt(
 		reserves?.[network]?.[address || ''] || defaultReserve,
 	)
