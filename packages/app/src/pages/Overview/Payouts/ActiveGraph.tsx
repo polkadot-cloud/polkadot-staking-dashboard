@@ -7,8 +7,8 @@ import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { useActivePool } from 'hooks/useActivePool'
 import { useApi } from 'hooks/useApi'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
-import { DefaultLocale, locales } from 'locales'
 import {
 	usePoolEraRewards,
 	usePoolRewards,
@@ -42,6 +42,7 @@ export const ActiveGraph = ({
 	const { getThemeValue } = useThemeValues()
 	const { activeAddress } = useActiveAccount()
 	const { unit, units } = getStakingChainData(network)
+	const dateFormat = useDateFormat(i18n.resolvedLanguage)
 
 	const { data: nominatorRewardData, loading: rewardsLoading } = useRewards({
 		network,
@@ -108,7 +109,7 @@ export const ActiveGraph = ({
 				getThemeValue={getThemeValue}
 				unit={unit}
 				units={units}
-				dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+				dateFormat={dateFormat}
 				labels={{
 					payout: t('payouts', { ns: 'app' }),
 					poolClaim: t('poolClaim', { ns: 'app' }),

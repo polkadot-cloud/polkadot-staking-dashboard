@@ -10,7 +10,6 @@ import type {
 	PoolsConfig,
 	ProviderType,
 	ServiceInterface,
-	StakingMetrics,
 } from 'types'
 
 export interface ApiHookInterface {
@@ -23,6 +22,5 @@ export interface ApiHookInterface {
 	autoRpc: boolean
 	activeEra: ActiveEra
 	poolsConfig: PoolsConfig
-	stakingMetrics: StakingMetrics
 	serviceApi: ServiceInterface
 }
