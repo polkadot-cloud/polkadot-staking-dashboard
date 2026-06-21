@@ -52,9 +52,13 @@ export const loadDateFormat = async (lng: string): Promise<Locale> => {
 	if (cachedDateFormat) {
 		return cachedDateFormat
 	}
-	const dateFormat = await dateFormatLoaders[key]()
-	dateFormatCache[key] = dateFormat
-	return dateFormat
+	try {
+		const dateFormat = await dateFormatLoaders[key]()
+		dateFormatCache[key] = dateFormat
+		return dateFormat
+	} catch {
+		return enGB
+	}
 }
 
 // Supported namespaces
