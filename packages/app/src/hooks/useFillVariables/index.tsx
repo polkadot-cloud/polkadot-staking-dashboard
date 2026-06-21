@@ -12,6 +12,7 @@ import {
 import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import type { AnyJson } from 'types'
 import { planckToUnitBn } from 'utils'
 
@@ -19,9 +20,9 @@ export const useFillVariables = () => {
 	const {
 		getConsts,
 		getChainSpec,
-		stakingMetrics: { minimumActiveStake, minNominatorBond },
 		poolsConfig: { minJoinBond, minCreateBond },
 	} = useApi()
+	const { minimumActiveStake, minNominatorBond } = useStakingMetrics()
 	const { network } = useNetwork()
 	const { maxSupportedDays } = useErasPerDay()
 	const { maxExposurePageSize } = getConsts(network)
