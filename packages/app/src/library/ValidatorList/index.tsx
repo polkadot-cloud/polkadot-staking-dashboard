@@ -112,10 +112,10 @@ export const ValidatorListInner = ({
 	// Default list of validators
 	const [validatorsDefault, setValidatorsDefault] = useState<
 		ValidatorListEntry[]
-	>(prepareInitialValidators())
+	>(() => prepareInitialValidators())
 
 	// Manipulated list (custom ordering, filtering) of validators
-	const [validators, setValidators] = useState<ValidatorListEntry[]>(
+	const [validators, setValidators] = useState<ValidatorListEntry[]>(() =>
 		prepareInitialValidators(),
 	)
 
