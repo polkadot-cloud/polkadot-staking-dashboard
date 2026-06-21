@@ -12,13 +12,13 @@ import { useThemeValues } from 'contexts/ThemeValues'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
 import { formatDistance, fromUnixTime } from 'date-fns'
 import { useApi } from 'hooks/useApi'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
 import { Header, List, Wrapper as ListWrapper } from 'library/List'
 import { MotionContainer } from 'library/List/MotionContainer'
 import { Pagination } from 'library/List/Pagination'
 import { Identity } from 'library/ListItem/Labels/Identity'
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity'
-import { DefaultLocale, locales } from 'locales'
 import { motion } from 'motion/react'
 import { isPoolReward, isPoolShareReward } from 'plugin-staking-api'
 import type {
@@ -49,6 +49,7 @@ export const PayoutList = ({
 	const { bondedPools } = useBondedPools()
 	const { getValidators } = useValidators()
 	const { getThemeValue } = useThemeValues()
+	const dateFormat = useDateFormat(i18n.resolvedLanguage)
 	const {
 		listFormat,
 		setListFormat,
@@ -238,10 +239,7 @@ export const PayoutList = ({
 																new Date(),
 																{
 																	addSuffix: true,
-																	locale:
-																		locales[
-																			i18n.resolvedLanguage ?? DefaultLocale
-																		].dateFormat,
+																	locale: dateFormat,
 																},
 															)}
 														</h5>
