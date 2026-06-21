@@ -24,16 +24,15 @@ export const getValidatorEraPoints = (address: string) => {
 	return addressEntry?.[1] || 0
 }
 
-// Cached validator ranks, rebuilt once whenever era reward points change.
-// Previously these were recomputed (and the source array re-sorted in place)
-// on every call, which ran ~O(n log n) inside sort comparators and per list
-// row. The cache keeps reads O(1) and stops mutating the BehaviorSubject value.
+// Cached validator ranks, rebuilt once whenever era reward points change. The cache keeps reads
+// O(1) and stops mutating the BehaviorSubject value.
 let validatorRanks: { validator: string; rank: number }[] = []
 let validatorRankMap = new Map<string, number>()
 
 const rebuildValidatorRanks = ({ individual }: EraRewardPoints) => {
 	// Copy before sorting so we never mutate the value held by the subject
 	const sorted = [...individual].sort((a, b) => b[1] - a[1])
+
 	validatorRanks = sorted.map(([validator], index) => ({
 		validator,
 		rank: index + 1,
@@ -43,9 +42,8 @@ const rebuildValidatorRanks = ({ individual }: EraRewardPoints) => {
 	)
 }
 
-// Seed the cache and keep it in sync with future emissions. The BehaviorSubject
-// emits its current value synchronously on subscribe, so the cache is populated
-// immediately.
+// Seed the cache and keep it in sync with future emissions. The BehaviorSubject emits its current
+// value synchronously on subscribe, so the cache is populated immediately.
 _eraRewardPoints.subscribe(rebuildValidatorRanks)
 
 export const getValidatorRanks = () => validatorRanks
