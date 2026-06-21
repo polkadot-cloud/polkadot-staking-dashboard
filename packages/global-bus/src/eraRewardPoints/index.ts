@@ -7,15 +7,7 @@ import { _eraRewardPoints } from './private'
 
 export const eraRewardPoints$ = _eraRewardPoints.asObservable()
 
-export const resetEraRewardPoints = () => {
-	_eraRewardPoints.next(defaultEraRewardPoints)
-}
-
 export const getEraRewardPoints = () => _eraRewardPoints.getValue()
-
-export const setEraRewardPoints = (value: EraRewardPoints) => {
-	_eraRewardPoints.next(value)
-}
 
 export const getValidatorEraPoints = (address: string) => {
 	const addressEntry = getEraRewardPoints().individual.find(
@@ -42,9 +34,21 @@ const rebuildValidatorRanks = ({ individual }: EraRewardPoints) => {
 	)
 }
 
-// Seed the cache and keep it in sync with future emissions. The BehaviorSubject emits its current
-// value synchronously on subscribe, so the cache is populated immediately.
-_eraRewardPoints.subscribe(rebuildValidatorRanks)
+const commitEraRewardPoints = (value: EraRewardPoints) => {
+	rebuildValidatorRanks(value)
+	_eraRewardPoints.next(value)
+}
+
+// Seed derived rank cache for the initial BehaviorSubject value.
+rebuildValidatorRanks(defaultEraRewardPoints)
+
+export const resetEraRewardPoints = () => {
+	commitEraRewardPoints(defaultEraRewardPoints)
+}
+
+export const setEraRewardPoints = (value: EraRewardPoints) => {
+	commitEraRewardPoints(value)
+}
 
 export const getValidatorRanks = () => validatorRanks
 
