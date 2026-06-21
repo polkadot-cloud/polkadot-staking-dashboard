@@ -13,6 +13,7 @@ import { useAverageRewardRate } from 'hooks/useAverageRewardRate'
 import { useCurrency } from 'hooks/useCurrency'
 import { useNetwork } from 'hooks/useNetwork'
 import { useNextRewards } from 'hooks/useNextRewards'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { useSupplyStaked } from 'hooks/useSupplyStaked'
 import { type StatConfig, StatType } from 'library/Stats/types'
 import { useTranslation } from 'react-i18next'
@@ -92,13 +93,8 @@ export const useValidatorStats = (): StatPick<
 	const { t } = useTranslation('pages')
 	const { activeValidators } = useEraStakers()
 	const { avgCommission } = useValidators()
-	const {
-		stakingMetrics: {
-			validatorCount,
-			counterForValidators,
-			maxValidatorsCount,
-		},
-	} = useApi()
+	const { validatorCount, counterForValidators, maxValidatorsCount } =
+		useStakingMetrics()
 
 	return {
 		activeValidators: {
@@ -195,13 +191,8 @@ export const useNominatorStats = (): StatPick<
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { unit, units } = getStakingChainData(network)
-	const {
-		stakingMetrics: {
-			counterForNominators,
-			minNominatorBond,
-			minimumActiveStake,
-		},
-	} = useApi()
+	const { counterForNominators, minNominatorBond, minimumActiveStake } =
+		useStakingMetrics()
 	const { activeNominatorsCount } = useEraStakers()
 	const minToEarnRewards = BigNumber.max(minNominatorBond, minimumActiveStake)
 

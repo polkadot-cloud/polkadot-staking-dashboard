@@ -12,13 +12,13 @@ import { useThemeValues } from 'contexts/ThemeValues'
 import { getUnixTime } from 'date-fns'
 import { useActivePool } from 'hooks/useActivePool'
 import { useCurrency } from 'hooks/useCurrency'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
 import { useSyncing } from 'hooks/useSyncing'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { StatusLabel } from 'library/StatusLabel'
-import { DefaultLocale, locales } from 'locales'
 import { fetchCombinedPoolRewards, isPoolShareReward } from 'plugin-staking-api'
 import type { CombinedPoolReward } from 'plugin-staking-api/types'
 import { useEffect, useMemo, useState } from 'react'
@@ -137,7 +137,7 @@ export const PoolShares = () => {
 		}
 	}, [graphActive, network, activeAddress, fromTimestamp])
 
-	const dateFormat = locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat
+	const dateFormat = useDateFormat(i18n.resolvedLanguage)
 	const graphHeight = '175px'
 	const graphLabels = {
 		poolShares: t('share', { ns: 'app' }),
