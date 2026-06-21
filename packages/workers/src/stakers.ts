@@ -34,9 +34,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
 			})) ?? []
 
 		if (others.length) {
-			// Sort `others` by value bonded, largest first. Values are planck
-			// integer strings, so a BigInt compare avoids per-comparison BigNumber
-			// allocation.
+			// Sort `others` by value bonded, largest first.
 			others = others.sort((a, b) => {
 				const r = BigInt(b.value) - BigInt(a.value)
 				return r === 0n ? 0 : r < 0n ? -1 : 1
