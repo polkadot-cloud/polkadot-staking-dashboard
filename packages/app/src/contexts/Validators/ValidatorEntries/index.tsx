@@ -226,8 +226,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	const injectValidatorListData = (
 		entries: Validator[],
 	): ValidatorListEntry[] => {
-		// Build an O(1) lookup of active validator addresses once, rather than a
-		// linear scan of all stakers per entry (previously O(entries × stakers))
+		// Build an O(1) lookup of active validator addresses.
 		const activeAddresses = new Set(
 			eraStakers.stakers.map((staker) => staker.address),
 		)
