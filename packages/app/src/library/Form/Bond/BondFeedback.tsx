@@ -9,6 +9,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActivePool } from 'hooks/useActivePool'
 import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BalanceInput } from '../BalanceInput'
@@ -35,8 +36,8 @@ export const BondFeedback = ({
 	const { activeAddress } = useActiveAccount()
 	const {
 		poolsConfig: { minJoinBond, minCreateBond },
-		stakingMetrics: { minNominatorBond },
 	} = useApi()
+	const { minNominatorBond } = useStakingMetrics()
 	const { unit, units } = getStakingChainData(network)
 	const {
 		balances: {

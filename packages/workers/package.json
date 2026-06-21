@@ -1,22 +1,22 @@
 {
-	"name": "tests",
-	"version": "1.0.0",
+	"name": "workers",
+	"version": "0.1.0",
 	"license": "GPL-3.0-only",
 	"type": "module",
+	"exports": {
+		"./stakers": "./src/stakers.ts",
+		"./types": "./src/types.ts"
+	},
 	"scripts": {
-		"test": "vitest run",
 		"clear": "rm -rf build tsconfig.tsbuildinfo dist node_modules",
 		"check": "biome check .",
 		"lint": "biome check --write ."
 	},
 	"dependencies": {
-		"date-fns": "^4.4.0",
-		"ui-graphs": "workspace:*",
-		"utils": "workspace:*"
+		"@w3ux/utils": "^3.1.1",
+		"bignumber.js": "^11.1.3"
 	},
 	"devDependencies": {
-		"types": "workspace:*",
-		"typescript": "^6.0.3",
-		"vitest": "^4.1.9"
+		"types": "workspace:*"
 	}
 }

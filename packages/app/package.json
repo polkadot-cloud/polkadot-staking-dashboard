@@ -51,7 +51,7 @@
 		"plugin-gateway": "workspace:*",
 		"plugin-staking-api": "workspace:*",
 		"qrcode-generator": "1.5.0",
-		"radix-ui": "^1.5.0",
+		"radix-ui": "^1.6.0",
 		"rc-slider": "^11.1.6",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
@@ -71,7 +71,8 @@
 		"ui-tips": "workspace:*",
 		"usehooks-ts": "^3.0.2",
 		"utils": "workspace:*",
-		"validator-assets": "workspace:*"
+		"validator-assets": "workspace:*",
+		"workers": "workspace:*"
 	},
 	"devDependencies": {
 		"types": "workspace:*",

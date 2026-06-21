@@ -1,8 +1,12 @@
 // Copyright 2026 @polkadot-cloud/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { NetworkId } from 'types'
-import type { Exposure, LocalExposure, LocalExposuresData } from './types'
+import type {
+	Exposure,
+	LocalExposure,
+	LocalExposuresData,
+	NetworkId,
+} from 'types'
 
 // Get local `erasStakers` entries for an era
 export const getLocalEraExposures = (

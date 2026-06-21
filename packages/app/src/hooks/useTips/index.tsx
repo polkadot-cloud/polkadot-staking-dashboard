@@ -8,12 +8,11 @@ import { useActivePool } from 'hooks/useActivePool'
 import { useFillVariables } from 'hooks/useFillVariables'
 import { useStaking } from 'hooks/useStaking'
 import { useUi } from 'hooks/useUi'
-import { Tip } from 'library/Tips/Tip'
 import { DefaultLocale } from 'locales'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { usePrompt } from 'ui-overlay'
-import type { TipDisplay } from 'ui-tips/types'
+import { Tip, type TipDisplay } from 'ui-tips'
 
 export const useTips = () => {
 	const { i18n, t } = useTranslation()
