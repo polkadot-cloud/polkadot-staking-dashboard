@@ -11,10 +11,9 @@ const stakingMetricsStore = createObservableStore<StakingMetrics>(
 	defaultStakingMetrics,
 )
 
-// Subscribes only to staking metrics. Kept separate from `useApi` because
-// staking metrics (e.g. `totalIssuance`) emit a new object roughly every block
-// (~6s); bundling this subscription into `useApi` re-rendered every one of its
-// ~90 consumers on each emission.
+// Subscribes only to staking metrics. Kept separate from `useApi` because staking metrics (e.g.
+// `totalIssuance`) emit a new object roughly every block; bundling this subscription into `useApi`
+// re-rendered every one of its ~90 consumers on each emission.
 export const useStakingMetrics = (): StakingMetrics =>
 	useSyncExternalStore(
 		stakingMetricsStore.subscribe,
