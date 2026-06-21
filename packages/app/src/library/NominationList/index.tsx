@@ -88,7 +88,7 @@ export const NominationList = ({
 	}
 
 	// Manipulated list (custom ordering, filtering) of validators
-	const [validators, setValidators] = useState<ValidatorListEntry[]>(
+	const [validators, setValidators] = useState<ValidatorListEntry[]>(() =>
 		prepareInitialValidators(),
 	)
 
