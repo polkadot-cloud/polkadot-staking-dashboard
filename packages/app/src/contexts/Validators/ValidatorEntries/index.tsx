@@ -8,8 +8,8 @@ import { PerbillMultiplier } from 'consts'
 import { getPeopleChainId } from 'consts/util'
 import { useEraStakers } from 'contexts/EraStakers'
 import {
+	countValidatorRanks,
 	getValidatorRank as getValidatorRankBus,
-	getValidatorRanks,
 } from 'global-bus'
 import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
@@ -343,7 +343,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 			if (!rank) {
 				return fallbackSegment
 			}
-			const percentile = (rank / getValidatorRanks().length) * 100
+			const percentile = (rank / countValidatorRanks()) * 100
 			const segment = Math.ceil(percentile / 10) * 10
 			return segment
 		}

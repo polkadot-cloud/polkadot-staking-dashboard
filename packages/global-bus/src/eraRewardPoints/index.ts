@@ -50,7 +50,7 @@ export const setEraRewardPoints = (value: EraRewardPoints) => {
 	commitEraRewardPoints(value)
 }
 
-export const getValidatorRanks = () => validatorRanks
+export const countValidatorRanks = () => validatorRanks.length
 
 export const getValidatorRank = (address: string) =>
 	validatorRankMap.get(address) ?? null
