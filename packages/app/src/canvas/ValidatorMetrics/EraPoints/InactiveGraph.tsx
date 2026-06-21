@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useThemeValues } from 'contexts/ThemeValues'
-import { DefaultLocale, locales } from 'locales'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useTranslation } from 'react-i18next'
 import { EraPointsLine } from 'ui-graphs'
 
@@ -15,6 +15,7 @@ export const InactiveGraph = ({
 }) => {
 	const { i18n, t } = useTranslation()
 	const { getThemeValue } = useThemeValues()
+	const dateFormat = useDateFormat(i18n.resolvedLanguage)
 
 	return (
 		<EraPointsLine
@@ -23,7 +24,7 @@ export const InactiveGraph = ({
 			width={width}
 			height={height}
 			getThemeValue={getThemeValue}
-			dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale]?.dateFormat}
+			dateFormat={dateFormat}
 			labels={{
 				date: t('date', { ns: 'app' }),
 				era: t('era', { ns: 'app' }),

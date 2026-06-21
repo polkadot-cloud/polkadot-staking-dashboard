@@ -15,6 +15,7 @@ import { useBalances } from 'hooks/useBalances'
 import { useErasToTimeLeft } from 'hooks/useErasToTimeLeft'
 import { useNetwork } from 'hooks/useNetwork'
 import { useSignerWarnings } from 'hooks/useSignerWarnings'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { useSubmitExtrinsic } from 'hooks/useSubmitExtrinsic'
 import { formatFromProp } from 'hooks/useSubmitExtrinsic/util'
 import { useTxMeta } from 'hooks/useTxMeta'
@@ -39,10 +40,8 @@ export const Unbond = () => {
 	const { activeAddress, activeAccount } = useActiveAccount()
 	const { balances } = useAccountBalances(activeAddress)
 	const { isDepositor, activePool } = useActivePool()
-	const {
-		serviceApi,
-		stakingMetrics: { minNominatorBond: minNominatorBondBigInt },
-	} = useApi()
+	const { serviceApi } = useApi()
+	const { minNominatorBond: minNominatorBondBigInt } = useStakingMetrics()
 	const {
 		closeModal,
 		replaceModal,
