@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { useSyncing } from 'hooks/useSyncing'
 import { useTranslation } from 'react-i18next'
 import type { NominateStatusBarProps } from '../types'
@@ -15,9 +15,7 @@ import { Wrapper } from './Wrapper'
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
 	const { t } = useTranslation('app')
-	const {
-		stakingMetrics: { minNominatorBond, minimumActiveStake },
-	} = useApi()
+	const { minNominatorBond, minimumActiveStake } = useStakingMetrics()
 	const { network } = useNetwork()
 	const { syncing } = useSyncing(['initialization'])
 	const { unit, units } = getStakingChainData(network)

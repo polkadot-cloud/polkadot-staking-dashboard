@@ -4,13 +4,11 @@
 import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
-import { useApi } from '../useApi'
 import { useNetwork } from '../useNetwork'
+import { useStakingMetrics } from '../useStakingMetrics'
 
 export const useSupplyStaked = () => {
-	const {
-		stakingMetrics: { lastTotalStake, totalIssuance },
-	} = useApi()
+	const { lastTotalStake, totalIssuance } = useStakingMetrics()
 	const { network } = useNetwork()
 	const { units } = getStakingChainData(network)
 

@@ -12,6 +12,23 @@ import type {
 	UnlockChunk,
 } from 'types'
 
+// Resolves a stored fee reserve against the default, guarding malformed input.
+// Returns the larger of the stored reserve and the default; falls back to the
+// default if the stored value is missing or cannot be parsed as a bigint.
+export const getFeeReserve = (
+	stored: string | number | bigint | undefined | null,
+	defaultReserve: bigint,
+): bigint => {
+	if (stored === undefined || stored === null || stored === '') {
+		return defaultReserve
+	}
+	try {
+		return maxBigInt(BigInt(stored), defaultReserve)
+	} catch {
+		return defaultReserve
+	}
+}
+
 // Gets the total unlocking and unlocked amount from unlock chunks
 export const getUnlocking = (chunks: UnlockChunk[], currentEra: number) => {
 	let totalUnlocking = 0n

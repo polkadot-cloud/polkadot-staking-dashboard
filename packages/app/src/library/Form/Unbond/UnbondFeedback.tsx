@@ -9,6 +9,7 @@ import { useAccountBalances } from 'hooks/useAccountBalances'
 import { useActivePool } from 'hooks/useActivePool'
 import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { UnbondFeedbackProps } from '../types'
@@ -32,9 +33,9 @@ export const UnbondFeedback = ({
 	const { isDepositor } = useActivePool()
 	const { activeAddress } = useActiveAccount()
 	const {
-		stakingMetrics: { minNominatorBond },
 		poolsConfig: { minJoinBond, minCreateBond },
 	} = useApi()
+	const { minNominatorBond } = useStakingMetrics()
 	const { balances } = useAccountBalances(activeAddress)
 
 	const { unit, units } = getStakingChainData(network)
