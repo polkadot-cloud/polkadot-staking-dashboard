@@ -259,8 +259,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1(rolldown@1.0.3)
       vite-plugin-checker:
-        specifier: ^0.14.1
-        version: 0.14.1(@biomejs/biome@2.5.0)(meow@14.1.0)(stylelint@17.13.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(sass@1.101.0)(tsx@4.22.4))
+        specifier: ^0.14.4
+        version: 0.14.4(@biomejs/biome@2.5.0)(meow@14.1.0)(stylelint@17.13.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(sass@1.101.0)(tsx@4.22.4))
       vite-plugin-svgr:
         specifier: ^5.2.0
         version: 5.2.0(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(sass@1.101.0)(tsx@4.22.4))
@@ -4260,8 +4260,8 @@ packages:
     engines: {node: ^18.19.0 || >=20.6.0}
     hasBin: true
 
-  vite-plugin-checker@0.14.1:
-    resolution: {integrity: sha512-Mv8oQc9XYBYf+XkP/riqqQCt8lBP6Iad75PZPho1lHRrpxQI0BwX2gwE10enn4f6Hgc+PvR1F7N38KARcaJtzw==}
+  vite-plugin-checker@0.14.4:
+    resolution: {integrity: sha512-Tw0U9UgHIRiZ+Yoe4Gh0RrYoBiCVmO9j4tomVdYr0KUjUsqXMPhqW8ouoSWmOzGp5Iimipbl3bNXZcK7OeP7Qg==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@biomejs/biome': '>=2.4.12'
@@ -7911,7 +7911,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-checker@0.14.1(@biomejs/biome@2.5.0)(meow@14.1.0)(stylelint@17.13.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(sass@1.101.0)(tsx@4.22.4)):
+  vite-plugin-checker@0.14.4(@biomejs/biome@2.5.0)(meow@14.1.0)(stylelint@17.13.0(typescript@6.0.3))(typescript@6.0.3)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.28.0)(sass@1.101.0)(tsx@4.22.4)):
     dependencies:
       '@babel/code-frame': 7.29.7
       chokidar: 5.0.0
