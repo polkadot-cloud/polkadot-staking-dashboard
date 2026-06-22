@@ -5,8 +5,8 @@ import { useActiveAccount } from '@polkadot-cloud/connect'
 import { MaxPayoutDays } from 'consts'
 import { getStakingChainData } from 'consts/util'
 import { useThemeValues } from 'contexts/ThemeValues'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
-import { DefaultLocale, locales } from 'locales'
 import type { PayoutHistoryProps } from 'pages/Rewards/types'
 import { useTranslation } from 'react-i18next'
 import { AveragePayoutLine, PayoutBar } from 'ui-graphs'
@@ -30,6 +30,7 @@ export const ActiveGraph = ({
 	const { activeAddress } = useActiveAccount()
 	const { getThemeValue } = useThemeValues()
 	const { unit, units } = getStakingChainData(network)
+	const dateFormat = useDateFormat(i18n.resolvedLanguage)
 
 	return (
 		<>
@@ -43,7 +44,7 @@ export const ActiveGraph = ({
 				getThemeValue={getThemeValue}
 				unit={unit}
 				units={units}
-				dateFormat={locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat}
+				dateFormat={dateFormat}
 				labels={{
 					payout: t('payouts', { ns: 'app' }),
 					poolClaim: t('poolClaim', { ns: 'app' }),

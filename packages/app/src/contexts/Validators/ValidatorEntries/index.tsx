@@ -8,8 +8,8 @@ import { PerbillMultiplier } from 'consts'
 import { getPeopleChainId } from 'consts/util'
 import { useEraStakers } from 'contexts/EraStakers'
 import {
+	countValidatorRanks,
 	getValidatorRank as getValidatorRankBus,
-	getValidatorRanks,
 } from 'global-bus'
 import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
@@ -51,7 +51,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	const { activeEra } = useApi()
 	const { network } = useNetwork()
 	const { pluginEnabled } = usePlugins()
-	const { getActiveValidator } = useEraStakers()
+	const { eraStakers, getActiveValidator } = useEraStakers()
 	const { erasPerDay, maxSupportedDays } = useErasPerDay()
 	const { isReady, serviceApi, getConsts, getApiStatus } = useApi()
 
@@ -226,9 +226,14 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 	const injectValidatorListData = (
 		entries: Validator[],
 	): ValidatorListEntry[] => {
+		// Build an O(1) lookup of active validator addresses.
+		const activeAddresses = new Set(
+			eraStakers.stakers.map((staker) => staker.address),
+		)
+
 		const injected: ValidatorListEntry[] =
 			entries.map((entry) => {
-				const inEra: boolean = !!getActiveValidator(entry.address)
+				const inEra: boolean = activeAddresses.has(entry.address)
 
 				let validatorStatus: ValidatorStatus = 'waiting'
 				if (inEra) {
@@ -338,7 +343,7 @@ export const ValidatorsProvider = ({ children }: { children: ReactNode }) => {
 			if (!rank) {
 				return fallbackSegment
 			}
-			const percentile = (rank / getValidatorRanks().length) * 100
+			const percentile = (rank / countValidatorRanks()) * 100
 			const segment = Math.ceil(percentile / 10) * 10
 			return segment
 		}
