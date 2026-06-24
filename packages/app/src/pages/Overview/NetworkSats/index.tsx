@@ -6,6 +6,7 @@ import { getStakingChainData } from 'consts/util/chains'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
 import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { useSupplyStaked } from 'hooks/useSupplyStaked'
 import type { AnnouncementItem } from 'library/Announcements/types'
 import { CardWrapper } from 'library/Card/Wrappers'
@@ -23,7 +24,7 @@ export const NetworkStats = () => {
 		activeEra,
 	} = useApi()
 	const { supplyString } = useSupplyStaked()
-	const { counterForNominators, counterForValidators } = useApi().stakingMetrics
+	const { counterForNominators, counterForValidators } = useStakingMetrics()
 	const { unit } = getStakingChainData(network)
 
 	const items: AnnouncementItem[] = [
