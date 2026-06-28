@@ -29,6 +29,7 @@ const dateFormatLoaders = {
 	zh: () => import('date-fns/locale/zh-CN').then(({ zhCN }) => zhCN),
 	es: () => import('date-fns/locale/es').then(({ es }) => es),
 	ja: () => import('date-fns/locale/ja').then(({ ja }) => ja),
+	fr: () => import('date-fns/locale/fr').then(({ fr }) => fr),
 } satisfies Record<LocaleKey, () => Promise<Locale>>
 
 // Keep the default date format synchronously available and cache lazy-loaded formats.
