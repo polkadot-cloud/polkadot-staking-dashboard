@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { planckToUnit } from '@w3ux/utils'
-import BigNumber from 'bignumber.js'
-import type { Staker } from 'contexts/EraStakers/types'
-import type { ActiveAccountStaker } from 'hooks/useStaking'
+import type { ActiveAccountOwnStake, Staker } from 'types'
 import type { ProcessExposuresArgs } from './types'
 
 // biome-ignore lint/suspicious/noExplicitAny: <>
@@ -25,7 +23,7 @@ const processExposures = (data: ProcessExposuresArgs) => {
 	const { task, networkName, era, units, exposures, activeAccount } = data
 
 	const stakers: Staker[] = []
-	const activeAccountOwnStake: ActiveAccountStaker[] = []
+	const activeAccountOwnStake: ActiveAccountOwnStake[] = []
 
 	exposures.forEach(({ keys, val }) => {
 		const address = keys[1]
@@ -38,8 +36,8 @@ const processExposures = (data: ProcessExposuresArgs) => {
 		if (others.length) {
 			// Sort `others` by value bonded, largest first.
 			others = others.sort((a, b) => {
-				const r = new BigNumber(b.value).minus(a.value)
-				return r.isZero() ? 0 : r.isLessThan(0) ? -1 : 1
+				const r = BigInt(b.value) - BigInt(a.value)
+				return r === 0n ? 0 : r < 0n ? -1 : 1
 			})
 			stakers.push({
 				address,

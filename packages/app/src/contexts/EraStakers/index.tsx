@@ -14,13 +14,14 @@ import type { ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import type {
 	ErasStakersOverviewEntries,
+	Exposure,
 	MaybeAddress,
 	NominationStatus,
 } from 'types'
 import Worker from 'workers/stakers?worker'
 import type { ProcessExposuresResponse } from 'workers/types'
 import { defaultEraStakers } from './defaults'
-import type { EraStakers, EraStakersContextInterface, Exposure } from './types'
+import type { EraStakers, EraStakersContextInterface } from './types'
 import { getLocalEraExposures, setLocalEraExposures } from './util'
 
 const worker = new Worker()

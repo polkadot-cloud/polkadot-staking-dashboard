@@ -34,3 +34,44 @@ export interface UnlockChunk {
 	era: number
 	value: bigint
 }
+
+export type Staker = ExposureValue & {
+	address: string
+}
+
+export interface ActiveAccountOwnStake {
+	address: string
+	value: string
+}
+
+export type ActiveAccountStaker = ActiveAccountOwnStake
+
+export interface Exposure {
+	keys: string[]
+	val: ExposureValue
+}
+
+export interface ExposureValue {
+	others: ExposureOther[]
+	own: string
+	total: string
+}
+
+export interface ExposureOther {
+	who: string
+	value: string
+}
+
+export interface LocalExposuresData {
+	era: string
+	exposures: LocalExposure[]
+}
+
+export interface LocalExposure {
+	k: [string, string]
+	v: {
+		o: [string, string]
+		w: string
+		t: string
+	}
+}
