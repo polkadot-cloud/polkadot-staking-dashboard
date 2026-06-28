@@ -3,13 +3,13 @@
 
 import { getChainIcons } from 'assets'
 import { format, startOfToday, subDays } from 'date-fns'
+import { useDateFormat } from 'hooks/useDateFormat'
 import { useNetwork } from 'hooks/useNetwork'
 import { AnnouncementsList } from 'library/Announcements/AnnouncementsList'
 import type { AnnouncementItem } from 'library/Announcements/types'
 import { Balance } from 'library/Balance'
 import { CardWrapper } from 'library/Card/Wrappers'
 import { NominatorList } from 'library/NominatorList'
-import { DefaultLocale, locales } from 'locales'
 import { useTranslation } from 'react-i18next'
 import { CardHeader, Separator } from 'ui-core/base'
 import type { IncomingProjectionAccount } from './mockIncomingProjection'
@@ -28,6 +28,7 @@ export const IncomingPayouts = ({
 	const { i18n, t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const Token = getChainIcons(network).token
+	const dateFormat = useDateFormat(i18n.resolvedLanguage)
 
 	const totalIncoming30d = accounts.reduce(
 		(acc, item) => acc + item.incomingPayouts30d,
@@ -50,10 +51,10 @@ export const IncomingPayouts = ({
 	]
 
 	const fromDate = format(subDays(startOfToday(), 30), 'do MMM', {
-		locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+		locale: dateFormat,
 	})
 	const toDate = format(startOfToday(), 'do MMM', {
-		locale: locales[i18n.resolvedLanguage ?? DefaultLocale].dateFormat,
+		locale: dateFormat,
 	})
 
 	return (
