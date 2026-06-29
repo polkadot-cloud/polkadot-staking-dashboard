@@ -18,6 +18,7 @@ import { ButtonTertiary } from 'ui-buttons'
 import { Checkbox } from 'ui-core/list'
 import { Padding } from 'ui-core/modal'
 import { useOverlay, usePrompt } from 'ui-overlay'
+import { OptimalRpcPrompt } from './OptimalRpcPrompt'
 import { ProvidersPrompt } from './ProvidersPrompt'
 import {
 	ConnectionButton,
@@ -125,15 +126,24 @@ export const Networks = () => {
 								<p style={{ marginLeft: '0.5rem' }}>{t('autoRpc')}</p>
 							</div>
 							{!autoRpc && (
-								<div className="provider">
-									<p>{t('provider')}:</p>
-									<ButtonTertiary
-										text={getRpcEndpoint(name as ChainId)}
-										onClick={() => openPromptWith(<ProvidersPrompt />)}
-										marginLeft
-										disabled={autoRpc}
-									/>
-								</div>
+								<>
+									<div className="provider">
+										<p>{t('provider')}:</p>
+										<ButtonTertiary
+											text={getRpcEndpoint(name as ChainId)}
+											onClick={() => openPromptWith(<ProvidersPrompt />)}
+											marginLeft
+											disabled={autoRpc}
+										/>
+									</div>
+									<div className="provider">
+										<ButtonTertiary
+											text={t('optimalRpc')}
+											onClick={() => openPromptWith(<OptimalRpcPrompt />)}
+											disabled={autoRpc}
+										/>
+									</div>
+								</>
 							)}
 						</div>
 					</ConnectionsWrapper>
