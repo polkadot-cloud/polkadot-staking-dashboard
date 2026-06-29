@@ -8,7 +8,9 @@ import { DefaultLocale } from './config'
 export {
 	DefaultLocale,
 	fallbackResources,
+	getLoadedDateFormat,
 	lngNamespaces,
+	loadDateFormat,
 	locales,
 } from './config'
 
