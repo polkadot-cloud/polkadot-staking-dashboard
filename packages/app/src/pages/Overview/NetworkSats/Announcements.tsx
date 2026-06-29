@@ -5,8 +5,8 @@ import { planckToUnit, sortWithNull } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useBondedPools } from 'contexts/Pools/BondedPools'
-import { useApi } from 'hooks/useApi'
 import { useNetwork } from 'hooks/useNetwork'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import { AnnouncementsList } from 'library/Announcements/AnnouncementsList'
 import type { AnnouncementItem } from 'library/Announcements/types'
 import { useTranslation } from 'react-i18next'
@@ -17,9 +17,7 @@ export const Announcements = ({ items }: { items: AnnouncementItem[] }) => {
 	const { t } = useTranslation('pages')
 	const { network } = useNetwork()
 	const { bondedPools } = useBondedPools()
-	const {
-		stakingMetrics: { totalStaked, lastReward },
-	} = useApi()
+	const { totalStaked, lastReward } = useStakingMetrics()
 
 	const { unit, units } = getStakingChainData(network)
 	const lastRewardUnit = new BigNumber(planckToUnit(lastReward || 0, units))

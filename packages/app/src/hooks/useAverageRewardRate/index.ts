@@ -5,20 +5,17 @@ import { planckToUnit } from '@w3ux/utils'
 import BigNumber from 'bignumber.js'
 import { getStakingChainData } from 'consts/util'
 import { useValidators } from 'contexts/Validators/ValidatorEntries'
-import { useApi } from 'hooks/useApi'
 import { useErasPerDay } from 'hooks/useErasPerDay'
 import { useNetwork } from 'hooks/useNetwork'
 import { usePlugins } from 'hooks/usePlugins'
+import { useStakingMetrics } from 'hooks/useStakingMetrics'
 import type { UseAverageRewardRate } from './types'
 
 export const useAverageRewardRate = (): UseAverageRewardRate => {
-	const {
-		stakingMetrics: { totalIssuance },
-	} = useApi()
+	const { totalIssuance, lastTotalStake } = useStakingMetrics()
 	const { network } = useNetwork()
 	const { erasPerDay } = useErasPerDay()
 	const { pluginEnabled } = usePlugins()
-	const { lastTotalStake } = useApi().stakingMetrics
 	const { avgCommission, averageEraValidatorReward, avgRewardRate } =
 		useValidators()
 

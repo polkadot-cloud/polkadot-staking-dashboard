@@ -68,7 +68,9 @@ export const PoolList = ({
 	}
 
 	// Manipulated pool list items after filtering.
-	const [listPools, setListPools] = useState<BondedPool[]>(filterPoolList())
+	const [listPools, setListPools] = useState<BondedPool[]>(() =>
+		filterPoolList(),
+	)
 
 	// Whether this the initial render.
 	const [synced, setSynced] = useState<boolean>(false)
