@@ -22,7 +22,7 @@
 		"vite": "8.0.16",
 		"@w3ux/types": "^2.4.2",
 		"globals": "^17.7.0",
-		"postcss": "^8.5.15",
+		"postcss": "^8.5.16",
 		"postcss-scss": "^4.0.9",
 		"prettier": "^3.8.4",
 		"prettier-plugin-organize-imports": "^4.1.0",
