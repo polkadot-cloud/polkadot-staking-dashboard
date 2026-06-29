@@ -32,7 +32,7 @@ import { NotificationPrompts } from 'library/NotificationPrompts'
 import { PageWithTitle } from 'library/PageWithTitle'
 import { SideMenu } from 'library/SideMenu'
 import { Tooltip } from 'library/Tooltip'
-import { ApolloProvider, client } from 'plugin-staking-api'
+import { ApolloProvider, getClient } from 'plugin-staking-api'
 import { useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { HelmetProvider } from 'react-helmet-async'
@@ -112,48 +112,61 @@ const RouterInner = () => {
 		handleVisit(utmSource)
 	}, [])
 
+	const stakingApiEnabled = pluginEnabled('staking_api')
+
+	const tree = (
+		<>
+			{stakingApiEnabled && activeAddress && (
+				<StakingApi who={activeAddress} network={network} />
+			)}
+			<NotificationPrompts />
+			<Page.Body id="portal-root">
+				<HelpTooltip />
+				<Overlays />
+				<Menu />
+				<Tooltip />
+				<Prompt />
+				<SideMenu />
+				<Page.Main ref={mainInterfaceRef}>
+					<HelmetProvider>
+						<Headers />
+						<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
+							<Routes>
+								{getPagesConfig(PagesConfig, network, null, advancedMode, {
+									inPool,
+									isBonding,
+								}).map((page) => (
+									<Route
+										key={`main_interface_page_${page.key}`}
+										path={page.hash}
+										element={<PageWithTitle page={page} />}
+									/>
+								))}
+								<Route
+									key="main_interface_navigate"
+									path="*"
+									element={<Navigate to="/overview" />}
+								/>
+							</Routes>
+						</ErrorBoundary>
+						<MainFooter />
+					</HelmetProvider>
+				</Page.Main>
+			</Page.Body>
+			<Offline />
+		</>
+	)
+
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-			<ApolloProvider client={client}>
-				{pluginEnabled('staking_api') && activeAddress && (
-					<StakingApi who={activeAddress} network={network} />
-				)}
-				<NotificationPrompts />
-				<Page.Body id="portal-root">
-					<HelpTooltip />
-					<Overlays />
-					<Menu />
-					<Tooltip />
-					<Prompt />
-					<SideMenu />
-					<Page.Main ref={mainInterfaceRef}>
-						<HelmetProvider>
-							<Headers />
-							<ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
-								<Routes>
-									{getPagesConfig(PagesConfig, network, null, advancedMode, {
-										inPool,
-										isBonding,
-									}).map((page) => (
-										<Route
-											key={`main_interface_page_${page.key}`}
-											path={page.hash}
-											element={<PageWithTitle page={page} />}
-										/>
-									))}
-									<Route
-										key="main_interface_navigate"
-										path="*"
-										element={<Navigate to="/overview" />}
-									/>
-								</Routes>
-							</ErrorBoundary>
-							<MainFooter />
-						</HelmetProvider>
-					</Page.Main>
-				</Page.Body>
-				<Offline />
-			</ApolloProvider>
+			{/* Only mount the Apollo provider (and instantiate its client) when the
+			staking_api plugin is enabled. All components that use Apollo hooks are
+			gated behind this same flag, so they never render without a provider. */}
+			{stakingApiEnabled ? (
+				<ApolloProvider client={getClient()}>{tree}</ApolloProvider>
+			) : (
+				tree
+			)}
 		</ErrorBoundary>
 	)
 }
