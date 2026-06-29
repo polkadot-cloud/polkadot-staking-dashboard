@@ -247,7 +247,11 @@ export const MenuPopover = ({
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(`${PlatformDocsURL}/${i18n.language}`, '_blank')
+					window.open(
+						`${PlatformDocsURL}/${i18n.language}`,
+						'_blank',
+						'noopener,noreferrer',
+					)
 				}}
 			/>
 			<DefaultButton
@@ -256,7 +260,7 @@ export const MenuPopover = ({
 				iconRight={faExternalLinkAlt}
 				onClick={() => {
 					setOpen(false)
-					window.open(PlatformGitHubURL, '_blank')
+					window.open(PlatformGitHubURL, '_blank', 'noopener,noreferrer')
 				}}
 			/>
 			<DefaultButton
@@ -266,7 +270,7 @@ export const MenuPopover = ({
 				accent
 				onClick={() => {
 					setOpen(false)
-					window.open(PlatformURL, '_blank')
+					window.open(PlatformURL, '_blank', 'noopener,noreferrer')
 				}}
 			/>
 		</div>
