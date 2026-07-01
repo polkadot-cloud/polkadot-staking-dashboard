@@ -23,7 +23,7 @@ SPDX-License-Identifier: GPL-3.0-only */
 	&.transparent {
 		box-shadow: none;
 		background: transparent;
-		border-radius: none;
+		border-radius: 0;
 	}
 
 	> div > p {
