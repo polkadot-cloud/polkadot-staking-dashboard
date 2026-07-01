@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.5.0...consts-v1.6.0) (2026-07-01)
+
+
+### Features
+
+* **locale:** Add Turkish (Türkçe) language support ([#3514](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3514)) ([b433484](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/b4334844513bc595601736b8a9d0f27fef77f016))
+* **locales:** add French (fr) language support ([#3593](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3593)) ([21de8e4](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/21de8e494bbf6aa954455b9db1971ab22da29cec))
+
 ## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/consts-v1.4.0...consts-v1.5.0) (2026-05-26)
 
 
