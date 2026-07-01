@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .card {
-  background: var(--bg-modal);
-  transition: opacity 0.15s;
+	background: var(--bg-modal);
+	transition: opacity 0.15s;
 
-  &.dimmed {
-    opacity: 0;
-  }
+	&.dimmed {
+		opacity: 0;
+	}
 }
-
