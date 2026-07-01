@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/ui-styles-v1.4.0...ui-styles-v1.5.0) (2026-07-01)
+
+
+### Features
+
+* **fix:** Biome deprecation, lint CSS ([#3609](https://github.com/polkadot-cloud/polkadot-staking-dashboard/issues/3609)) ([2554736](https://github.com/polkadot-cloud/polkadot-staking-dashboard/commit/2554736f2fa465aa82e62b1e8c1c9321c40dbc96))
+
 ## [1.4.0](https://github.com/polkadot-cloud/polkadot-staking-dashboard/compare/styles-v1.3.0...styles-v1.4.0) (2026-01-12)
 
 
