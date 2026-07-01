@@ -423,6 +423,7 @@
 		"webExtensions": "Web-Erweiterungen",
 		"whenActivelyNominating": "wenn du aktiv nominierst.",
 		"wrongTransaction": "Falsche Transaktion, bitte signiere erneut.",
-		"year": "Jahr"
+		"year": "Jahr",
+		"yourPayouts": "Deine Auszahlungen"
 	}
 }

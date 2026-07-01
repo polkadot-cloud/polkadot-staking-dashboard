@@ -423,6 +423,7 @@
 		"webExtensions": "Extensions de navigateur",
 		"whenActivelyNominating": "lorsque vous êtes en train de nominer.",
 		"wrongTransaction": "Transaction incorrecte, veuillez signer à nouveau.",
-		"year": "année"
+		"year": "année",
+		"yourPayouts": "Vos paiements"
 	}
 }
