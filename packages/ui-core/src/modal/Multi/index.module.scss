@@ -2,20 +2,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 .multi {
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  overflow: hidden auto;
-  flex-grow: 1;
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	overflow: hidden auto;
+	flex-grow: 1;
 
-  .two {
-    flex-basis: 50%;
-    min-width: 50%;
-  }
+	.two {
+		flex-basis: 50%;
+		min-width: 50%;
+	}
 
-  .three {
-    flex-basis: 33.33%;
-    min-width: 33.33%;
-  }
+	.three {
+		flex-basis: 33.33%;
+		min-width: 33.33%;
+	}
 }
